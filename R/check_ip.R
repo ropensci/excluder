@@ -1,14 +1,12 @@
-check_ip <- function(df) {
-  iana_assignments <- data(iana_assignments, package = "iptools")
-  iana_assignments_refresh()
-  # extract information from US IP addresses
-  us_ip_data <- dplyr::filter(iana_assignments,
-                              stringr::str_detect(designation, "ARIN") |
-                                stringr::str_detect(designation, "PSINet") |
-                                stringr::str_detect(designation, "AT&T"))
-  us_ip_ranges <- dplyr::pull(us_ip_data, prefix)
-  survey_ips <- dplyr::pull(df, `IP Address`)
-  outside_us <- dplyr::filter(df, !ip_in_any(survey_ips, us_ip_ranges)) %>%
-    dplyr::mutate(outside_us = "Outside US") %>%
-    dplyr::select(`Response ID`, outside_us)
+check_ip <- function(df, ip_col = "IPAddress", country = "US", quiet = FALSE) {
+  country_ip_ranges <- unlist(iptools::country_ranges(country))
+  survey_ips <- dplyr::pull(df, ip_col)
+  outside_country <- !iptools::ip_in_any(survey_ips, us_ip_ranges)
+  df2 <- dplyr::bind_cols(df, outside = outside_country)
+  outside_df <- dplyr::filter(df2, outside == TRUE)
+  n_outside_country <- nrow(outside_df)
+  if (quiet == FALSE) {
+    message(n_outside_country, " participants have IP addresses outside of ", country, ".")
+  }
+  return(outside_df)
 }
