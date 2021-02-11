@@ -1,12 +1,10 @@
-check_duplicates <- function(df, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), check_ip = TRUE, check_location = TRUE, include_na = FALSE, quiet = FALSE) {
+check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), check_ip = TRUE, check_location = TRUE, include_na = FALSE, quiet = FALSE) {
   # Check for duplicate locations
   if (check_location == TRUE) {
     if (include_na == FALSE) {
-      df2 <- tidyr::drop_na(df, dplyr::any_of(location_col))
-    } else {
-      df2 <- df
+      .data <- tidyr::drop_na(.data, dplyr::any_of(location_col))
     }
-    same_location <- janitor::get_dupes(df2, dplyr::all_of(location_col))
+    same_location <- janitor::get_dupes(.data, dplyr::all_of(location_col))
     n_same_location <- nrow(same_location)
     if (quiet == FALSE) {
       message(n_same_location, " participants have duplicate locations.")
@@ -15,11 +13,9 @@ check_duplicates <- function(df, ip_col = "IPAddress", location_col = c("Locatio
   # Check for duplicate IP addresses
   if (check_ip == TRUE) {
     if (include_na == FALSE) {
-      df2 <- tidyr::drop_na(df, dplyr::all_of(ip_col))
-    } else {
-      df2 <- df
+      .data <- tidyr::drop_na(.data, dplyr::all_of(ip_col))
     }
-    same_ip <- janitor::get_dupes(df2, dplyr::all_of(ip_col))
+    same_ip <- janitor::get_dupes(.data, dplyr::all_of(ip_col))
     n_same_ip <- nrow(same_ip)
     if (quiet == FALSE) {
       message(n_same_ip, " participants have duplicate IP addresses.")
