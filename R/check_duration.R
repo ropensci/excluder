@@ -1,16 +1,16 @@
 #' Title
 #'
 #' @param .data
-#' @param duration_col
 #' @param min
 #' @param max
+#' @param duration_col
 #' @param quiet
 #'
 #' @return
 #' @export
 #'
 #' @examples
-check_duration <- function(.data, duration_col = "Duration (in seconds)", min = NULL, max = NULL, quiet = FALSE) {
+check_duration <- function(.data, min = NULL, max = NULL, duration_col = "Duration (in seconds)", quiet = FALSE) {
 
   # Quote column names
   duration_col <- dplyr::ensym(duration_col)

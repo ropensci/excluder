@@ -1,16 +1,18 @@
 #' Title
 #'
 #' @param .data
-#' @param ip_col
-#' @param country
 #' @param id_col
-#' @param quiet
+#' @param ...
 #'
 #' @return
 #' @export
 #'
 #' @examples
-exclude_ip <- function(.data, ip_col = "IPAddress", country = "US", id_col = "ResponseId", quiet = FALSE) {
-  exclusions <- check_ip(.data, ip_col, country, quiet = quiet)
+exclude_ip <- function(.data, id_col = "ResponseId", ...) {
+
+  # Find rows to exclude
+  exclusions <- check_ip(.data, ...)
+
+  # Exclude rows
   dplyr::anti_join(.data, exclusions, by = id_col)
 }

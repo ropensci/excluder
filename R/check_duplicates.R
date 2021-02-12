@@ -3,8 +3,8 @@
 #' @param .data
 #' @param ip_col
 #' @param location_col
-#' @param check_ip
-#' @param check_location
+#' @param dupl_ip
+#' @param dupl_location
 #' @param include_na
 #' @param quiet
 #'
@@ -12,10 +12,10 @@
 #' @export
 #'
 #' @examples
-check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), check_ip = TRUE, check_location = TRUE, include_na = FALSE, quiet = FALSE) {
+check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), dupl_ip = TRUE, dupl_location = TRUE, include_na = FALSE, quiet = FALSE) {
 
   # Check for duplicate locations
-  if (check_location == TRUE) {
+  if (dupl_location == TRUE) {
     if (include_na == FALSE) {
       .data <- tidyr::drop_na(.data, dplyr::any_of(location_col))
     }
@@ -27,7 +27,7 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
   }
 
   # Check for duplicate IP addresses
-  if (check_ip == TRUE) {
+  if (dupl_ip == TRUE) {
     if (include_na == FALSE) {
       .data <- tidyr::drop_na(.data, dplyr::all_of(ip_col))
     }
@@ -39,15 +39,15 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
   }
 
   # Create data frame of duplicates if both location and IP address are used
-  if (check_location == TRUE & check_ip == TRUE) {
+  if (dupl_location == TRUE & dupl_ip == TRUE) {
     duplicates <- rbind(same_location, same_ip)
-  } else if (check_location == TRUE) {
+  } else if (dupl_location == TRUE) {
     duplicates <- same_location
-  } else if (check_ip == TRUE) {
+  } else if (dupl_ip == TRUE) {
     duplicates <- same_ip
   } else {
     duplicates <- NULL
-    warning("No check run. Please allow either location or IP address checks by setting check_location or check_ip to TRUE.")
+    warning("No check run. Please allow either location or IP address checks by setting dupl_location or dupl_ip to TRUE.")
   }
   return(duplicates)
 }
