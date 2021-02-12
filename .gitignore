@@ -6,4 +6,5 @@
 
 
 R/prepare_data.R
-data/*DONOTCOMMIT*
+data/data-raw/
+*DONOTCOMMIT*

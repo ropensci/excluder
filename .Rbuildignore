@@ -1,2 +1,5 @@
 ^qualtricscheckr\.Rproj$
 ^\.Rproj\.user$
+^.*\.Rproj$
+^data-raw$
+^LICENSE\.md$
