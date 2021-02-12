@@ -4,17 +4,10 @@
 \alias{exclude_duration}
 \title{Title}
 \usage{
-exclude_duration(
-  .data,
-  duration_col = "Duration (in seconds)",
-  min = NULL,
-  max = NULL,
-  id_col = "ResponseId",
-  quiet = FALSE
-)
+exclude_duration(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{quiet}{}
+\item{...}{}
 }
 \value{
 

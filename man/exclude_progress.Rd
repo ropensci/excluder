@@ -4,17 +4,10 @@
 \alias{exclude_progress}
 \title{Title}
 \usage{
-exclude_progress(
-  .data,
-  min = 100,
-  finished_col = "Finished",
-  progress_col = "Progress",
-  id_col = "ResponseId",
-  quiet = FALSE
-)
+exclude_progress(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{quiet}{}
+\item{...}{}
 }
 \value{
 

@@ -4,19 +4,10 @@
 \alias{exclude_duplicates}
 \title{Title}
 \usage{
-exclude_duplicates(
-  .data,
-  ip_col = "IPAddress",
-  location_col = c("LocationLatitude", "LocationLongitude"),
-  check_ip = TRUE,
-  check_location = TRUE,
-  include_na = FALSE,
-  id_col = "ResponseId",
-  quiet = FALSE
-)
+exclude_duplicates(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{quiet}{}
+\item{...}{}
 }
 \value{
 

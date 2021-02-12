@@ -8,8 +8,8 @@ check_duplicates(
   .data,
   ip_col = "IPAddress",
   location_col = c("LocationLatitude", "LocationLongitude"),
-  check_ip = TRUE,
-  check_location = TRUE,
+  dupl_ip = TRUE,
+  dupl_location = TRUE,
   include_na = FALSE,
   quiet = FALSE
 )
