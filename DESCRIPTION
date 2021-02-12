@@ -23,4 +23,5 @@ Imports:
     iptools,
     janitor,
     maps,
-    tidyr
+    tidyr,
+    magrittr
