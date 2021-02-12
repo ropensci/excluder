@@ -1,3 +1,17 @@
+#' Title
+#'
+#' @param .data
+#' @param ip_col
+#' @param location_col
+#' @param check_ip
+#' @param check_location
+#' @param include_na
+#' @param quiet
+#'
+#' @return
+#' @export
+#'
+#' @examples
 check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), check_ip = TRUE, check_location = TRUE, include_na = FALSE, quiet = FALSE) {
 
   # Check for duplicate locations

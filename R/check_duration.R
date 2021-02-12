@@ -1,3 +1,15 @@
+#' Title
+#'
+#' @param .data
+#' @param duration_col
+#' @param min
+#' @param max
+#' @param quiet
+#'
+#' @return
+#' @export
+#'
+#' @examples
 check_duration <- function(.data, duration_col = "Duration (in seconds)", min = NULL, max = NULL, quiet = FALSE) {
 
   # Quote column names

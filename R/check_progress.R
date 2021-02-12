@@ -1,3 +1,15 @@
+#' Title
+#'
+#' @param .data
+#' @param min
+#' @param finished_col
+#' @param progress_col
+#' @param quiet
+#'
+#' @return
+#' @export
+#'
+#' @examples
 check_progress <- function(.data, min = 100, finished_col = "Finished", progress_col = "Progress", quiet = FALSE) {
 
   # Quote column names

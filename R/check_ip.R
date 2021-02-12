@@ -1,3 +1,14 @@
+#' Title
+#'
+#' @param .data
+#' @param ip_col
+#' @param country
+#' @param quiet
+#'
+#' @return
+#' @export
+#'
+#' @examples
 check_ip <- function(.data, ip_col = "IPAddress", country = "US", quiet = FALSE) {
 
   # Get IP ranges for specified country
