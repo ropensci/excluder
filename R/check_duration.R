@@ -1,19 +1,21 @@
 check_duration <- function(.data, duration_col = "Duration (in seconds)", min = NULL, max = NULL, quiet = FALSE) {
-  # Rename duration column
-  .data <- rename(.data, duration = as.name(duration_col))
+
+  # Quote column names
+  duration_col <- dplyr::ensym(duration_col)
+
   # Find participants quicker than minimum
   if (!is.null(min)) {
-    too_quick <- too_quick_slow <- dplyr::filter(.data, duration < min)
+    too_quick <- too_quick_slow <- dplyr::filter(.data, !!duration_col < min)
     n_too_quick <- nrow(too_quick)
-    if(quiet == FALSE) {
+    if (quiet == FALSE) {
       message(n_too_quick, " participants took less time than the minimum duration of ", min, ".")
     }
   }
   # Find participants slower than minimum
   if (!is.null(max)) {
-    too_slow <- too_quick_slow <- dplyr::filter(.data, duration > max)
+    too_slow <- too_quick_slow <- dplyr::filter(.data, !!duration_col > max)
     n_too_slow <- nrow(too_slow)
-    if(quiet == FALSE) {
+    if (quiet == FALSE) {
       message(n_too_slow, " participants took more time than the maximum duration of ", max, ".")
     }
   }
