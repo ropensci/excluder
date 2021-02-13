@@ -1,8 +1,8 @@
 #' Title
 #'
 #' @param .data
-#' @param min
-#' @param max
+#' @param min_duration
+#' @param max_duration
 #' @param duration_col
 #' @param quiet
 #'
@@ -10,31 +10,31 @@
 #' @export
 #'
 #' @examples
-check_duration <- function(.data, min = NULL, max = NULL, duration_col = "Duration (in seconds)", quiet = FALSE) {
+check_duration <- function(.data, min_duration = NULL, max_duration = NULL, duration_col = "Duration (in seconds)", quiet = FALSE) {
 
   # Quote column names
   duration_col <- dplyr::ensym(duration_col)
 
   # Find participants quicker than minimum
-  if (!is.null(min)) {
-    too_quick <- too_quick_slow <- dplyr::filter(.data, !!duration_col < min)
+  if (!is.null(min_duration)) {
+    too_quick <- too_quick_slow <- dplyr::filter(.data, !!duration_col < min_duration)
     n_too_quick <- nrow(too_quick)
     if (quiet == FALSE) {
-      message(n_too_quick, " participants took less time than the minimum duration of ", min, ".")
+      message(n_too_quick, " participants took less time than the minimum duration of ", min_duration, ".")
     }
   }
-  # Find participants slower than minimum
-  if (!is.null(max)) {
-    too_slow <- too_quick_slow <- dplyr::filter(.data, !!duration_col > max)
+  # Find participants slower than maximum
+  if (!is.null(max_duration)) {
+    too_slow <- too_quick_slow <- dplyr::filter(.data, !!duration_col > max_duration)
     n_too_slow <- nrow(too_slow)
     if (quiet == FALSE) {
-      message(n_too_slow, " participants took more time than the maximum duration of ", max, ".")
+      message(n_too_slow, " participants took more time than the maximum duration of ", max_duration, ".")
     }
   }
   # Combine quick and slow participants
-  if (!is.null(min) & !is.null(max)) {
+  if (!is.null(min_duration) & !is.null(max_duration)) {
     too_quick_slow <- rbind(too_quick, too_slow)
-  } else if (is.null(min) & is.null(max)) {
+  } else if (is.null(min_duration) & is.null(max_duration)) {
     warning("You must specify either a minimum or maximum duration.")
     too_quick_slow <- NULL
   }
