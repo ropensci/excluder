@@ -4,6 +4,7 @@ collapse_exclusions <- function(.data, exclusion_types = c("duplicates", "durati
   exclusion_columns <- paste0("exclusion_", exclusion_types)
 
   # Collapse and delete columns
-  .data %>% tidyr::unite(exclusions, exclusion_columns, sep = ",", na.rm = TRUE) %>%
+  .data %>%
+    tidyr::unite(exclusions, exclusion_columns, sep = ",", na.rm = TRUE) %>%
     dplyr::mutate(exclusions = ifelse(exclusions == "", NA, exclusions))
 }
