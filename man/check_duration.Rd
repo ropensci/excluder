@@ -6,8 +6,8 @@
 \usage{
 check_duration(
   .data,
-  min = NULL,
-  max = NULL,
+  min_duration = NULL,
+  max_duration = NULL,
   duration_col = "Duration (in seconds)",
   quiet = FALSE
 )

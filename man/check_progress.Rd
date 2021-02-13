@@ -6,7 +6,7 @@
 \usage{
 check_progress(
   .data,
-  min = 100,
+  min_progress = 100,
   finished_col = "Finished",
   progress_col = "Progress",
   quiet = FALSE
