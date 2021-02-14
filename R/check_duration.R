@@ -12,6 +12,10 @@
 #' @examples
 check_duration <- function(.data, min_duration = NULL, max_duration = NULL, duration_col = "Duration (in seconds)", quiet = FALSE) {
 
+    # Check for presence of required column
+  column_names <- names(.data)
+  if (!duration_col %in% column_names) stop("The column specifying duration (duration_col) is incorrect. Please check your data and specify duration_col.")
+
   # Quote column names
   duration_col <- dplyr::ensym(duration_col)
 

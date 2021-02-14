@@ -11,6 +11,10 @@
 #' @examples
 check_ip <- function(.data, ip_col = "IPAddress", country = "US", quiet = FALSE) {
 
+  # Check for presence of required column
+  column_names <- names(.data)
+  if (!ip_col %in% column_names) stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
+
   # Get IP ranges for specified country
   country_ip_ranges <- unlist(iptools::country_ranges(country))
 

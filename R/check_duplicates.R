@@ -14,6 +14,12 @@
 #' @examples
 check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), dupl_ip = TRUE, dupl_location = TRUE, include_na = FALSE, quiet = FALSE) {
 
+  # Check for presence of required columns
+  column_names <- names(.data)
+  if (length(location_col) != 2) stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
+  if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
+  if (!ip_col %in% column_names) stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
+
   # Check for duplicate locations
   if (dupl_location == TRUE) {
     if (include_na == FALSE) {

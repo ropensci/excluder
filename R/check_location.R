@@ -11,6 +11,11 @@
 #' @examples
 check_location <- function(.data, location_col = c("LocationLatitude", "LocationLongitude"), include_na = FALSE, quiet = FALSE) {
 
+  # Check for presence of required columns
+  column_names <- names(.data)
+  if (length(location_col) != 2) stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
+  if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
+
   # Quote column names
   location_col_enquo <- dplyr::enquo(location_col)
 
