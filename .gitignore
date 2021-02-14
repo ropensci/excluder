@@ -5,6 +5,6 @@
 .DS_Store
 
 
-R/prepare_data.R
+R/create_data/
 data/data-raw/
 *DONOTCOMMIT*

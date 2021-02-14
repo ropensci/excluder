@@ -1,5 +1,8 @@
-^qualtricscheckr\.Rproj$
+^excluder\.Rproj$
 ^\.Rproj\.user$
 ^.*\.Rproj$
 ^data-raw$
 ^LICENSE\.md$
+^*DONOTCOMMIT*$
+^create_data$
+
