@@ -3,6 +3,6 @@
 ^.*\.Rproj$
 ^data-raw$
 ^LICENSE\.md$
-^*DONOTCOMMIT*$
+^.*DONOTCOMMIT*$
 ^create_data$
 
