@@ -4,13 +4,14 @@
 #' @param min_progress
 #' @param finished_col
 #' @param progress_col
+#' @param print_tibble
 #' @param quiet
 #'
 #' @return
 #' @export
 #'
 #' @examples
-check_progress <- function(.data, min_progress = 100, finished_col = "Finished", progress_col = "Progress", quiet = FALSE) {
+check_progress <- function(.data, min_progress = 100, finished_col = "Finished", progress_col = "Progress", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns
   column_names <- names(.data)
@@ -37,5 +38,9 @@ check_progress <- function(.data, min_progress = 100, finished_col = "Finished",
       message(n_incomplete, " participants did not complete the study.")
     }
   }
-  return(incomplete)
+  if (print_tibble == TRUE) {
+    return(incomplete)
+  } else {
+    invisible(incomplete)
+  }
 }

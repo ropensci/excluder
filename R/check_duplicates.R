@@ -6,13 +6,14 @@
 #' @param dupl_ip
 #' @param dupl_location
 #' @param include_na
+#' @param print_tibble
 #' @param quiet
 #'
 #' @return
 #' @export
 #'
 #' @examples
-check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), dupl_ip = TRUE, dupl_location = TRUE, include_na = FALSE, quiet = FALSE) {
+check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), dupl_ip = TRUE, dupl_location = TRUE, include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns
   column_names <- names(.data)
@@ -55,5 +56,9 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
     duplicates <- NULL
     warning("No check run. Please allow either location or IP address checks by setting dupl_location or dupl_ip to TRUE.")
   }
-  return(duplicates)
+  if (print_tibble == TRUE) {
+    return(duplicates)
+  } else {
+    invisible(duplicates)
+  }
 }

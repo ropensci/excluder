@@ -9,6 +9,7 @@ check_duration(
   min_duration = NULL,
   max_duration = NULL,
   duration_col = "Duration (in seconds)",
+  print_tibble = TRUE,
   quiet = FALSE
 )
 }

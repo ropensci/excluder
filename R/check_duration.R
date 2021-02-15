@@ -4,13 +4,14 @@
 #' @param min_duration
 #' @param max_duration
 #' @param duration_col
+#' @param print_tibble
 #' @param quiet
 #'
 #' @return
 #' @export
 #'
 #' @examples
-check_duration <- function(.data, min_duration = NULL, max_duration = NULL, duration_col = "Duration (in seconds)", quiet = FALSE) {
+check_duration <- function(.data, min_duration = NULL, max_duration = NULL, duration_col = "Duration (in seconds)", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column
   column_names <- names(.data)
@@ -42,5 +43,9 @@ check_duration <- function(.data, min_duration = NULL, max_duration = NULL, dura
     warning("You must specify either a minimum or maximum duration.")
     too_quick_slow <- NULL
   }
-  return(too_quick_slow)
+  if (print_tibble == TRUE) {
+    return(too_quick_slow)
+  } else {
+    invisible(too_quick_slow)
+  }
 }

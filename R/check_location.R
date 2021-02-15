@@ -3,13 +3,14 @@
 #' @param .data Data frame (preferably directly from Qualtrics imported using {qualtRics}.)
 #' @param location_col Two element vector specifying columns for latitude and longitude (in that order).
 #' @param include_na Logical indicating whether to include rows with NA in latitude and longitude columns in the output list of potentially excluded data.
-#' @param quiet Logical indicating whether to print results to console.
+#' @param print_tibble Logical indicating whether to print the tibble to the console.
+#' @param quiet Logical indicating whether to print message to console.
 #'
 #' @return The output is a data frame of the rows that are located outside of the US and (if \code{include_na == FALSE}) rows with no location information. For a function that excludes these rows, use [exclude_location].
 #' @export
 #'
 #' @examples
-check_location <- function(.data, location_col = c("LocationLatitude", "LocationLongitude"), include_na = FALSE, quiet = FALSE) {
+check_location <- function(.data, location_col = c("LocationLatitude", "LocationLongitude"), include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns
   column_names <- names(.data)
@@ -46,5 +47,9 @@ check_location <- function(.data, location_col = c("LocationLatitude", "Location
     message(n_no_location, " participants had no information on location.")
     message(n_outside_us, " participants were located outside of the US.")
   }
-  return(location_issues)
+  if (print_tibble == TRUE) {
+    return(location_issues)
+  } else {
+    invisible(location_issues)
+  }
 }

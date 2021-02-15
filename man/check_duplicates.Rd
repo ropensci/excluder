@@ -11,6 +11,7 @@ check_duplicates(
   dupl_ip = TRUE,
   dupl_location = TRUE,
   include_na = FALSE,
+  print_tibble = TRUE,
   quiet = FALSE
 )
 }

@@ -4,7 +4,13 @@
 \alias{check_ip}
 \title{Title}
 \usage{
-check_ip(.data, ip_col = "IPAddress", country = "US", quiet = FALSE)
+check_ip(
+  .data,
+  ip_col = "IPAddress",
+  country = "US",
+  print_tibble = TRUE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{quiet}{}

@@ -9,6 +9,7 @@ check_progress(
   min_progress = 100,
   finished_col = "Finished",
   progress_col = "Progress",
+  print_tibble = TRUE,
   quiet = FALSE
 )
 }

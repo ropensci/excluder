@@ -8,6 +8,7 @@ check_location(
   .data,
   location_col = c("LocationLatitude", "LocationLongitude"),
   include_na = FALSE,
+  print_tibble = TRUE,
   quiet = FALSE
 )
 }
@@ -18,7 +19,9 @@ check_location(
 
 \item{include_na}{Logical indicating whether to include rows with NA in latitude and longitude columns in the output list of potentially excluded data.}
 
-\item{quiet}{Logical indicating whether to print results to console.}
+\item{print_tibble}{Logical indicating whether to print the tibble to the console.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
 The output is a data frame of the rows that are located outside of the US and (if \code{include_na == FALSE}) rows with no location information. For a function that excludes these rows, use \link{exclude_location}.
