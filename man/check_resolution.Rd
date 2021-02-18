@@ -6,7 +6,7 @@
 \usage{
 check_resolution(
   .data,
-  width_min = 0,
+  width_min = 1000,
   height_min = 0,
   res_col = "Resolution",
   print_tibble = TRUE,

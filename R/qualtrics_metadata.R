@@ -2,7 +2,7 @@
 #'
 #' A dataset containing the metadata from a standard Qualtrics survey with
 #' browser metadata collected. These data were randomly generated using
-#' [ip_tools::rand_ip] and [rgeolocate::ip2location] functions.
+#' [iptools::ip_random] and [rgeolocate::ip2location] functions.
 #'
 #' @format A data frame with 100 rows and 16 variables:
 #' \describe{

@@ -21,16 +21,16 @@ check_preview <- function(.data, preview_col = "Status", print_tibble = TRUE, qu
   preview_col <- dplyr::ensym(preview_col)
 
   # Check for preview rows
-  .data <- filter(.data, !!preview_col == "Survey Preview")
-  n_previews <- nrow(.data)
+  filtered_data <- dplyr::filter(.data, !!preview_col == "Survey Preview")
+  n_previews <- nrow(filtered_data)
 
   # Print message and return output
   if (quiet == FALSE) {
     message(n_previews, " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
   }
   if (print_tibble == TRUE) {
-    return(.data)
+    return(filtered_data)
   } else {
-    invisible(.data)
+    invisible(filtered_data)
   }
 }

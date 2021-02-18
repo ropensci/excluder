@@ -1,3 +1,13 @@
+#' Title
+#'
+#' @param .data
+#' @param exclusion_types
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
 check_exclusions <- function(.data, exclusion_types = c("duplicates", "duration", "ip", "language", "location", "preview", "progress", "resolution"), ...) {
 
   # Create vector of exclusion types to mark
@@ -22,10 +32,10 @@ check_exclusions <- function(.data, exclusion_types = c("duplicates", "duration"
   if ("check_language" %in% exclusion_types) {
     check_language(.data, print_tibble = FALSE, ...)
   }
-  # if ("check_resolution" %in% exclusion_types) {
-  #   check_resolution(.data, print_tibble = FALSE, ...)
-  # }
-  # if("check_duration" %in% exclusion_types) {
-  # check_duration(.data, ...)
-  # }
+  if ("check_resolution" %in% exclusion_types) {
+    check_resolution(.data, print_tibble = FALSE, ...)
+  }
+  if("check_duration" %in% exclusion_types) {
+  check_duration(.data, ...)
+  }
 }

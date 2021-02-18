@@ -6,7 +6,7 @@
 \usage{
 check_duration(
   .data,
-  min_duration = NULL,
+  min_duration = 10,
   max_duration = NULL,
   duration_col = "Duration (in seconds)",
   print_tibble = TRUE,

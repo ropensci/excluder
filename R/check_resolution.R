@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-check_resolution <- function(.data, width_min = 0, height_min = 0, res_col = "Resolution", print_tibble = TRUE, quiet = FALSE) {
+check_resolution <- function(.data, width_min = 1000, height_min = 0, res_col = "Resolution", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column
   column_names <- names(.data)
@@ -24,22 +24,22 @@ check_resolution <- function(.data, width_min = 0, height_min = 0, res_col = "Re
     stop("This check requires a minimum resolution for resolution width or height. Please include 'width_min' and/or 'height_min'.")
   }
 
-  .data <- .data %>%
-    separate(res_col, c("width", "height"), sep = "x", remove = FALSE) %>%
-    mutate(
-      width = parse_number(width),
-      height = parse_number(height)
+  filtered_data <- .data %>%
+    tidyr::separate(res_col, c("width", "height"), sep = "x", remove = FALSE) %>%
+    dplyr::mutate(
+      width = readr::parse_number(width),
+      height = readr::parse_number(height)
     ) %>%
-    filter(width < width_min | height < height_min)
-  n_wrong_resolution <- nrow(.data)
+    dplyr::filter(width < width_min | height < height_min)
+  n_wrong_resolution <- nrow(filtered_data)
 
   # Print message and return output
   if (quiet == FALSE) {
-    message(n_wrong_resolution, " participants have inappropriate screen resolution.")
+    message(n_wrong_resolution, " participants have screen resolution width less than ", width_min, " or height less than ", height_min, ".")
   }
   if (print_tibble == TRUE) {
-    return(.data)
+    return(filtered_data)
   } else {
-    invisible(.data)
+    invisible(filtered_data)
   }
 }

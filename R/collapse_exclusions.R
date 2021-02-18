@@ -1,3 +1,12 @@
+#' Title
+#'
+#' @param .data
+#' @param exclusion_types
+#'
+#' @return
+#' @export
+#'
+#' @examples
 collapse_exclusions <- function(.data, exclusion_types = c("duplicates", "duration", "ip", "location", "progress")) {
 
   # Create vector of exclusion columns to collapse

@@ -22,16 +22,16 @@ check_language <- function(.data, language = "EN", lang_col = "UserLanguage", pr
   lang_col <- dplyr::ensym(lang_col)
 
   # Check for preview rows
-  .data <- filter(.data, !!lang_col != language)
-  n_wrong_languate <- nrow(.data)
+  filtered_data <- dplyr::filter(.data, !!lang_col != language)
+  n_wrong_languate <- nrow(filtered_data)
 
   # Print message and return output
   if (quiet == FALSE) {
     message(n_wrong_languate, " participants experienced the survey in the wrong language.")
   }
   if (print_tibble == TRUE) {
-    return(.data)
+    return(filtered_data)
   } else {
-    invisible(.data)
+    invisible(filtered_data)
   }
 }
