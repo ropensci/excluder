@@ -23,12 +23,12 @@ check_progress <- function(.data, min_progress = 100, finished_col = "Finished",
   progress_col_sym <- dplyr::ensym(progress_col)
 
   # Find incomplete cases
-  if (is.character(dplyr::pull(.data, !!preview_col_sym))) {
+  if (is.logical(dplyr::pull(.data, !!finished_col_sym))) {
     incomplete <- dplyr::filter(.data, !!finished_col_sym == FALSE)
-  } else if (is.numeric(dplyr::pull(.data, !!preview_col_sym))) {
+  } else if (is.numeric(dplyr::pull(.data, !!finished_col_sym))) {
     incomplete <- dplyr::filter(.data, !!finished_col_sym == 0)
   } else {
-    stop("The column ", finished_col, " is not of type character or numeric, so it cannot be checked.")
+    stop("The column ", finished_col, " is not of type logical or numeric, so it cannot be checked.")
   }
   n_incomplete <- nrow(incomplete)
 

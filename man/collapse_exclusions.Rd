@@ -6,7 +6,8 @@
 \usage{
 collapse_exclusions(
   .data,
-  exclusion_types = c("duplicates", "duration", "ip", "location", "progress")
+  exclusion_types = c("duplicates", "duration", "ip", "language", "location",
+    "preview", "progress", "resolution")
 )
 }
 \arguments{

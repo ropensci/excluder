@@ -24,7 +24,7 @@ check_preview <- function(.data, preview_col = "Status", print_tibble = TRUE, qu
   if (is.character(dplyr::pull(.data, !!preview_col_sym))) {
     filtered_data <- dplyr::filter(.data, !!preview_col_sym == "Survey Preview")
   } else if (is.numeric(dplyr::pull(.data, !!preview_col_sym))) {
-    filtered_data <- dplyr::filter(.data, !!preview_col_sym == 0)
+    filtered_data <- dplyr::filter(.data, !!preview_col_sym == 1)
   } else {
     stop("The column ", preview_col, " is not of type character or numeric, so it cannot be checked.")
   }

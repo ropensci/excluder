@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-collapse_exclusions <- function(.data, exclusion_types = c("duplicates", "duration", "ip", "location", "progress")) {
+collapse_exclusions <- function(.data, exclusion_types = c("duplicates", "duration", "ip", "language", "location", "preview", "progress", "resolution")) {
 
   # Create vector of exclusion columns to collapse
   exclusion_columns <- paste0("exclusion_", exclusion_types)
