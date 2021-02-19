@@ -35,7 +35,7 @@ check_exclusions <- function(.data, exclusion_types = c("duplicates", "duration"
   if ("check_resolution" %in% exclusion_types) {
     check_resolution(.data, print_tibble = FALSE, ...)
   }
-  if("check_duration" %in% exclusion_types) {
-  check_duration(.data, ...)
+  if ("check_duration" %in% exclusion_types) {
+    check_duration(.data, ...)
   }
 }

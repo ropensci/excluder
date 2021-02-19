@@ -35,7 +35,7 @@ mark_exclusions <- function(.data, exclusion_types = c("duplicates", "duration",
   if ("mark_resolution" %in% exclusion_types) {
     .data <- mark_resolution(.data, print_tibble = FALSE, ...)
   }
-  if("mark_duration" %in% exclusion_types) {
+  if ("mark_duration" %in% exclusion_types) {
     .data <- mark_duration(.data, ...)
   }
 }

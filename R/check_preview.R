@@ -18,10 +18,16 @@ check_preview <- function(.data, preview_col = "Status", print_tibble = TRUE, qu
   }
 
   # Quote column names
-  preview_col <- dplyr::ensym(preview_col)
+  preview_col_sym <- dplyr::ensym(preview_col)
 
   # Check for preview rows
-  filtered_data <- dplyr::filter(.data, !!preview_col == "Survey Preview")
+  if (is.character(dplyr::pull(.data, !!preview_col_sym))) {
+    filtered_data <- dplyr::filter(.data, !!preview_col_sym == "Survey Preview")
+  } else if (is.numeric(dplyr::pull(.data, !!preview_col_sym))) {
+    filtered_data <- dplyr::filter(.data, !!preview_col_sym == 0)
+  } else {
+    stop("The column ", preview_col, " is not of type character or numeric, so it cannot be checked.")
+  }
   n_previews <- nrow(filtered_data)
 
   # Print message and return output

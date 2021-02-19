@@ -38,7 +38,7 @@ exclude <- function(.data, exclusion_types = c("duplicates", "duration", "ip", "
   if ("exclude_resolution" %in% exclusion_types) {
     .data <- exclude_resolution(.data, print_tibble = FALSE, ...)
   }
-  if("exclude_duration" %in% exclusion_types) {
+  if ("exclude_duration" %in% exclusion_types) {
     .data <- exclude_duration(.data, ...)
   }
 
