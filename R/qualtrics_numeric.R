@@ -9,7 +9,7 @@
 #' \describe{
 #'   \item{StartDate}{date and time data collection started, in ISO 8601 format}
 #'   \item{EndDate}{date and time data collection ended, in ISO 8601 format}
-#'   \item{Status}{numeric flag for preview (0) vs. implemented survey (1) entries}
+#'   \item{Status}{numeric flag for preview (1) vs. implemented survey (0) entries}
 #'   \item{IPAddress}{participant IP address (truncated for anonymity)}
 #'   \item{Progress}{percentage of survey completed}
 #'   \item{Duration (in seconds)}{duration of time required to complete survey, in seconds}
@@ -24,4 +24,4 @@
 #'   \item{Operation System}{user operating system}
 #'   \item{Resolution}{user screen resolution}
 #' }
-"qualtrics_text"
+"qualtrics_numeric"
