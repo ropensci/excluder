@@ -10,6 +10,12 @@
 #' @examples
 exclude <- function(.data, exclusion_types = c("duplicates", "duration", "ip", "language", "location", "preview", "progress", "resolution"), quiet = FALSE, ...) {
 
+  # Check for presence of required column
+  column_names <- names(.data)
+  if (!id_col %in% column_names) {
+    stop("The column specifying the participant ID (id_col) is incorrect. Please check your data and specify 'id_col'.")
+  }
+
   # Create vector of exclusion types to exclude
   exclusion_types <- paste0("exclude_", exclusion_types)
 
