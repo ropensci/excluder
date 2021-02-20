@@ -2,16 +2,57 @@
 % Please edit documentation in R/exclude_duplicates.R
 \name{exclude_duplicates}
 \alias{exclude_duplicates}
-\title{Title}
+\title{Exclude rows with duplicate IP addresses and/or locations}
 \usage{
 exclude_duplicates(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from \link{check_duplicates}.}
 }
 \value{
-
+An object of the same type as \code{.data} that excludes rows with duplicate
+IP addresses and/or locations.
 }
 \description{
-Title
+The \code{exclude_duplicates()} function removes
+rows of data that have the same IP address and/or same latitude and
+longitude. The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\link[qualtRics:fetch_survey]{qualtRics::fetch_survey}. By default, IP address and location are both
+checked, but they can be checked separately with the \code{dupl_ip} and
+\code{dupl_location} arguments. The function outputs to console separate
+messages about the number of rows with duplicate IP addresses and rows
+with duplicate locations.
+These counts are computed independently, so rows may be counted for both
+types of duplicates.
+
+This function returns the original data with the duplicate rows removed.
+For a function that just checks for and returns duplicate rows,
+use \link{check_duplicates}. For a function that marks these rows,
+use \link{mark_duplicates}.
+}
+\examples{
+# Exclude duplicate IP addresses and locations
+data(qualtrics_text)
+df <- exclude_duplicates(qualtrics_text)
+
+# Exclude only for duplicate locations
+df <- exclude_duplicates(qualtrics_text, dupl_location = FALSE)
+
+# Do not print message to console
+df <- exclude_duplicates(qualtrics_text, quiet = TRUE)
+}
+\seealso{
+Other duplicates functions: 
+\code{\link{check_duplicates}()},
+\code{\link{mark_duplicates}()}
+}
+\concept{duplicates functions}
+\concept{exclude functions}

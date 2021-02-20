@@ -2,16 +2,59 @@
 % Please edit documentation in R/mark_duplicates.R
 \name{mark_duplicates}
 \alias{mark_duplicates}
-\title{Title}
+\title{Mark rows with duplicate IP addresses and/or locations}
 \usage{
 mark_duplicates(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from \link{check_duplicates}.}
 }
 \value{
-
+An object of the same type as \code{.data} that includes a column marking rows
+with duplicate IP addresses and/or locations.
 }
 \description{
-Title
+The \code{mark_duplicates()} function creates a column that labels
+rows of data that have the same IP address and/or same latitude and
+longitude. The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\link[qualtRics:fetch_survey]{qualtRics::fetch_survey}. By default, IP address and location are both
+checked, but they can be checked separately with the \code{dupl_ip} and
+\code{dupl_location} arguments. The function outputs to console separate
+messages about the number of rows with duplicate IP addresses and rows
+with duplicate locations.
+These counts are computed independently, so rows may be counted for both
+types of duplicates.
+
+This function returns the original data with a column called
+\code{exclusion_duplicates} that includes values \code{duplicates} for rows with
+duplicate IP addresses and/or location and \code{NA} for rows without duplicates.
+For a function that just checks for and returns duplicate rows,
+use \link{check_duplicates}. For a function that excludes these rows,
+use \link{exclude_duplicates}.
+}
+\examples{
+# Mark duplicate IP addresses and locations
+data(qualtrics_text)
+df <- mark_duplicates(qualtrics_text)
+
+# Mark only for duplicate locations
+df <- mark_duplicates(qualtrics_text, dupl_location = FALSE)
+
+# Do not print message to console
+df <- mark_duplicates(qualtrics_text, quiet = TRUE)
+}
+\seealso{
+Other duplicates functions: 
+\code{\link{check_duplicates}()},
+\code{\link{exclude_duplicates}()}
+}
+\concept{duplicates functions}
+\concept{mark functions}

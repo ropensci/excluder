@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_duplicates.R
 \name{check_duplicates}
 \alias{check_duplicates}
-\title{Title}
+\title{Check for duplicate IP addresses and/or locations}
 \usage{
 check_duplicates(
   .data,
@@ -16,11 +16,71 @@ check_duplicates(
 )
 }
 \arguments{
-\item{quiet}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{ip_col}{Column name for IP addresses.}
+
+\item{location_col}{Two element vector specifying columns for latitude and
+longitude (in that order).}
+
+\item{dupl_ip}{Logical indicating whether to check IP addresses.}
+
+\item{dupl_location}{Logical indicating whether to check latitude and
+longitude.}
+
+\item{include_na}{Logical indicating whether to include rows with NAs for
+IP address and location as potentially excluded rows.}
+
+\item{print_tibble}{Logical indicating whether to print returned tibble to
+console.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-
+An object of the same type as \code{.data} that includes the rows with duplicate
+IP addresses and/or locations.
 }
 \description{
-Title
+The \code{check_duplicates()} function subsets rows of data, retaining rows
+that have the same IP address and/or same latitude and longitude. The
+function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\link[qualtRics:fetch_survey]{qualtRics::fetch_survey}. By default, IP address and location are both
+checked, but they can be checked separately with the \code{dupl_ip} and
+\code{dupl_location} arguments. The function outputs to console separate
+messages about the number of rows with duplicate IP addresses and rows
+with duplicate locations.
+These counts are computed independently, so rows may be counted for both
+types of duplicates.
+
+This function returns the rows of duplicates. For a function that excludes
+these rows, use \link{exclude_duplicates}. For a function that marks these rows,
+use \link{mark_duplicates}.
+}
+\examples{
+# Check for duplicate IP addresses and locations
+data(qualtrics_text)
+check_duplicates(qualtrics_text)
+
+# Check only for duplicate locations
+check_duplicates(qualtrics_text, dupl_location = FALSE)
+
+# Do not print rows to console
+check_duplicates(qualtrics_text, print_tibble = FALSE)
+
+# Do not print message to console
+check_duplicates(qualtrics_text, quiet = TRUE)
+}
+\seealso{
+Other check functions: 
+\code{\link{check_location}()}
+
+Other duplicates functions: 
+\code{\link{exclude_duplicates}()},
+\code{\link{mark_duplicates}()}
+}
+\concept{check functions}
+\concept{duplicates functions}

@@ -29,3 +29,8 @@ The output is a data frame of the rows that are located outside of the US and (i
 \description{
 Check data rows where location information is absent and outside of the the US
 }
+\seealso{
+Other check functions: 
+\code{\link{check_duplicates}()}
+}
+\concept{check functions}
