@@ -86,11 +86,11 @@ check_progress <- function(.data, min_progress = 100, finished_col = "Finished",
     incomplete <- dplyr::filter(.data, !!progress_col_sym < min_progress)
     n_below_min <- nrow(incomplete)
     if (quiet == FALSE) {
-      message(n_incomplete, " participants did not complete the study, and ", n_below_min, " of those completed less than ", min_progress, "% of the study.")
+      message(n_incomplete, " rows did not complete the study, and ", n_below_min, " of those completed less than ", min_progress, "% of the study.")
     }
   } else {
     if (quiet == FALSE) {
-      message(n_incomplete, " participants did not complete the study.")
+      message(n_incomplete, " rows did not complete the study.")
     }
   }
   if (print_tibble == TRUE) {

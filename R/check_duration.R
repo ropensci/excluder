@@ -72,7 +72,7 @@ check_duration <- function(.data, min_duration = 10, max_duration = NULL, durati
     too_quick <- too_quick_slow <- dplyr::filter(.data, !!duration_col < min_duration)
     n_too_quick <- nrow(too_quick)
     if (quiet == FALSE) {
-      message(n_too_quick, " participants took less time than the minimum duration of ", min_duration, " seconds.")
+      message(n_too_quick, " rows took less time than the minimum duration of ", min_duration, " seconds.")
     }
   }
   # Find participants slower than maximum
@@ -80,7 +80,7 @@ check_duration <- function(.data, min_duration = 10, max_duration = NULL, durati
     too_slow <- too_quick_slow <- dplyr::filter(.data, !!duration_col > max_duration)
     n_too_slow <- nrow(too_slow)
     if (quiet == FALSE) {
-      message(n_too_slow, " participants took more time than the maximum duration of ", max_duration, " seconds.")
+      message(n_too_slow, " rows took more time than the maximum duration of ", max_duration, " seconds.")
     }
   }
   # Combine quick and slow participants

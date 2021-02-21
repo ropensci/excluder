@@ -79,7 +79,7 @@ check_ip <- function(.data, ip_col = "IPAddress", country = "US", print_tibble =
   na_rows <- dplyr::filter(.data, is.na(!!ip_col))
   n_na_rows <- nrow(na_rows)
   if (n_na_rows > 0 & quiet == FALSE) {
-    message(n_na_rows, " participants have NA values for IP addresses (likely because it includes preview data).")
+    message(n_na_rows, " rows have NA values for IP addresses (likely because it includes preview data).")
   }
   filtered_data <- dplyr::filter(.data, !is.na(!!ip_col))
 
