@@ -38,11 +38,6 @@
 #'   exclude_preview() %>%
 #'   mark_duplicates(dupl_location = FALSE)
 #'
-#' # Do not print message to console
-#' df <- qualtrics_text %>%
-#'   exclude_preview() %>%
-#'   mark_duplicates(quiet = TRUE)
-#'
 mark_duplicates <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

@@ -42,11 +42,6 @@ df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   mark_resolution()
 
-# Do not print message to console
-df <- qualtrics_text \%>\%
-  exclude_preview() \%>\%
-  mark_resolution(quiet = TRUE)
-
 }
 \seealso{
 Other resolution functions: 

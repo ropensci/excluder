@@ -30,11 +30,6 @@
 #'   exclude_preview() %>%
 #'   mark_location()
 #'
-#' # Do not print message to console
-#' df <- qualtrics_text %>%
-#'   exclude_preview() %>%
-#'   mark_location(quiet = TRUE)
-#'
 mark_location <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

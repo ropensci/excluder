@@ -34,11 +34,6 @@
 #'   exclude_preview() %>%
 #'   mark_duration(max_duration = 800)
 #'
-#' # Do not print message to console
-#' df <- qualtrics_text %>%
-#'   exclude_preview() %>%
-#'   mark_duration(min_duration = 100, quiet = TRUE)
-#'
 mark_duration <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

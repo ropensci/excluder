@@ -52,11 +52,6 @@ df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   mark_ip(country = "DE")
 
-# Do not print message to console
-df <- qualtrics_text \%>\%
-  exclude_preview() \%>\%
-  mark_ip(quiet = TRUE)
-
 }
 \seealso{
 Other ip functions: 
