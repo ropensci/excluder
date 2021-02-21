@@ -46,7 +46,7 @@ mark_preview <- function(.data, id_col = "ResponseId", ...) {
 
   # Find rows to mark
   exclusions <- excluder::check_preview(.data, ...) %>%
-    dplyr::mutate(exclusion_preview = "preview_exclusion") %>%
+    dplyr::mutate(exclusion_preview = "preview") %>%
     dplyr::select(dplyr::all_of(id_col), exclusion_preview)
 
   # Mark rows

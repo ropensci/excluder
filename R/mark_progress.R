@@ -54,7 +54,7 @@ mark_progress <- function(.data, id_col = "ResponseId", ...) {
 
   # Find rows to mark
   exclusions <- excluder::check_progress(.data, ...) %>%
-    dplyr::mutate(exclusion_progress = "progress_exclusion") %>%
+    dplyr::mutate(exclusion_progress = "incomplete_progress") %>%
     dplyr::select(dplyr::all_of(id_col), exclusion_progress)
 
   # Mark rows

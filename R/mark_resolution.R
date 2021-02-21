@@ -44,7 +44,7 @@ mark_resolution <- function(.data, id_col = "ResponseId", ...) {
 
   # Find rows to mark
   exclusions <- excluder::check_resolution(.data, ...) %>%
-    dplyr::mutate(exclusion_resolution = "resolution_exclusion") %>%
+    dplyr::mutate(exclusion_resolution = "unacceptable_resolution") %>%
     dplyr::select(dplyr::all_of(id_col), exclusion_resolution)
 
   # Mark rows
