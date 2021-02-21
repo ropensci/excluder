@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 ^.*\.Rproj$
 ^data-raw$
+^deprecated$
 ^LICENSE\.md$
 ^.*DONOTCOMMIT*$
 ^create_data$
