@@ -71,7 +71,7 @@ check_preview <- function(.data, preview_col = "Status", print_tibble = TRUE, qu
 
   # Print message and return output
   if (quiet == FALSE) {
-    message(n_previews, " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
+    message(n_previews, " out of ", nrow(.data), " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
   }
   if (print_tibble == TRUE) {
     return(filtered_data)

@@ -51,6 +51,6 @@ exclude_preview <- function(.data, id_col = "ResponseId", ...) {
   # Exclude rows
   remaining_data <- dplyr::anti_join(.data, exclusions, by = id_col)
   n_remaining <- nrow(remaining_data)
-  message(n_exclusions, " preview rows were excluded, leaving ", n_remaining, " rows.")
+  message(n_exclusions, " out of ", nrow(.data), " preview rows were excluded, leaving ", n_remaining, " rows.")
   return(remaining_data)
 }

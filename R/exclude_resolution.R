@@ -49,6 +49,6 @@ exclude_resolution <- function(.data, id_col = "ResponseId", ...) {
   # Exclude rows
   remaining_data <- dplyr::anti_join(.data, exclusions, by = id_col)
   n_remaining <- nrow(remaining_data)
-  message(n_exclusions, " rows with unacceptable screen resolution were excluded, leaving ", n_remaining, " rows.")
+  message(n_exclusions, " out of ", nrow(.data), " rows with unacceptable screen resolution were excluded, leaving ", n_remaining, " rows.")
   return(remaining_data)
 }

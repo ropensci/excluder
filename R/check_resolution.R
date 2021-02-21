@@ -75,7 +75,7 @@ check_resolution <- function(.data, width_min = 1000, height_min = 0, res_col = 
 
   # Print message and return output
   if (quiet == FALSE) {
-    message(n_wrong_resolution, " rows have screen resolution width less than ", width_min, " or height less than ", height_min, ".")
+    message(n_wrong_resolution, " out of ", nrow(.data), " rows have screen resolution width less than ", width_min, " or height less than ", height_min, ".")
   }
   if (print_tibble == TRUE) {
     return(filtered_data)

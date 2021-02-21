@@ -90,7 +90,7 @@ check_progress <- function(.data, min_progress = 100, finished_col = "Finished",
     }
   } else {
     if (quiet == FALSE) {
-      message(n_incomplete, " rows did not complete the study.")
+      message(n_incomplete, " out of ", nrow(.data), " rows did not complete the study.")
     }
   }
   if (print_tibble == TRUE) {

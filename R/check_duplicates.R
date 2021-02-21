@@ -69,11 +69,14 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
   if (dupl_location == TRUE) {
     if (include_na == FALSE) {
       .data <- tidyr::drop_na(.data, dplyr::any_of(location_col))
+      if (quiet == FALSE) {
+        message()
+      }
     }
     same_location <- janitor::get_dupes(.data, dplyr::all_of(location_col))
     n_same_location <- nrow(same_location)
     if (quiet == FALSE) {
-      message(n_same_location, " rows have duplicate locations.")
+      message(n_same_location, " out of ", nrow(.data), " rows have duplicate locations.")
     }
   }
 
@@ -85,7 +88,7 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
     same_ip <- janitor::get_dupes(.data, dplyr::all_of(ip_col))
     n_same_ip <- nrow(same_ip)
     if (quiet == FALSE) {
-      message(n_same_ip, " rows have duplicate IP addresses.")
+      message(n_same_ip, " out of ", nrow(.data), " rows have duplicate IP addresses.")
     }
   }
 

@@ -88,8 +88,8 @@ check_location <- function(.data, location_col = c("LocationLatitude", "Location
 
   # Print messages and return output
   if (quiet == FALSE) {
-    message(n_no_location, " rows had no information on location.")
-    message(n_outside_us, " rows were located outside of the US.")
+    message(n_no_location, " out of ", nrow(.data), " rows had no information on location.")
+    message(n_outside_us, " out of ", nrow(.data), " rows were located outside of the US.")
   }
   if (print_tibble == TRUE) {
     return(location_issues)
