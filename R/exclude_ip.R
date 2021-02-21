@@ -1,13 +1,44 @@
-#' Title
+#' Exclude IP addresses that come from a specified country.
 #'
-#' @param .data
-#' @param id_col
-#' @param ...
+#' @description
+#' The `exclude_ip()` function removes
+#' rows of data that have IP addresses in the specified country.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
+#' @inherit check_ip details
+#'
+#' @inheritParams exclude_duplicates
+#'
+#' @family ip functions
+#' @family exclude functions
 #' @return
+#' An object of the same type as `.data` that excludes rows
+#' with IP addresses outside of the specified country.
+#' For a function that checks these rows, use [check_ip()].
+#' For a function that marks these rows, use [mark_ip()].
 #' @export
 #'
 #' @examples
+#' # Exclude IP addresses outside of the US
+#' data(qualtrics_text)
+#' df <- exclude_ip(qualtrics_text)
+#'
+#' # Remove preview data first
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_ip()
+#'
+#' # Exclude IP addresses outside of Germany
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_ip(country = "DE")
+#'
+#' # Do not print message to console
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_ip(quiet = TRUE)
+#'
 exclude_ip <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

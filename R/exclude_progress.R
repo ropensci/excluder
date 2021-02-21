@@ -1,13 +1,49 @@
-#' Title
+#' Exclude survey progress
 #'
-#' @param .data
-#' @param id_col
-#' @param ...
+#' @description
+#' The `exclude_progress()` function removes
+#' rows that have incomplete progress.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
+#' @inherit check_progress details
+#'
+#' @inheritParams exclude_duplicates
+#'
+#' @family progress functions
+#' @family exclude functions
 #' @return
+#' An object of the same type as `.data` that excludes rows
+#' that have incomplete progress.
+#' For a function that checs for these rows, use [check_progress()].
+#' For a function that marks these rows, use [mark_progress()].
 #' @export
 #'
 #' @examples
+#' # Exclude rows with incomplete progress
+#' data(qualtrics_text)
+#' df <- exclude_progress(qualtrics_text)
+#'
+#' # Remove preview data first
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_progress()
+#'
+#' # Include a lower acceptable completion percentage
+#' df <- qualtrics_numeric %>%
+#'   exclude_preview() %>%
+#'   exclude_progress(min_progress = 98)
+#'
+#' # Do not print rows to console
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_progress(print_tibble = FALSE)
+#'
+#' # Do not print message to console
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_progress(quiet = TRUE)
+#'
 exclude_progress <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

@@ -1,13 +1,41 @@
-#' Title
+#' Exclude survey previews
 #'
-#' @param .data
-#' @param id_col
-#' @param ...
+#' @description
+#' The `exclude_preview()` function removes
+#' rows that are survey previews.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
+#' @inherit check_preview details
+#'
+#' @inheritParams exclude_duplicates
+#'
+#' @family preview functions
+#' @family exclude functions
 #' @return
+#' An object of the same type as `.data` that excludes rows
+#' that are survey previews.
+#' For a function that checks for these rows, use [check_preview()].
+#' For a function that marks these rows, use [mark_preview()].
 #' @export
 #'
 #' @examples
+#' # Exclude survey previews
+#' data(qualtrics_text)
+#' df <- exclude_preview(qualtrics_text)
+#'
+#' # Works for Qualtrics data exported as numeric values, too
+#' df <- qualtrics_numeric %>%
+#'   exclude_preview()
+#'
+#' # Do not print rows to console
+#' df <- qualtrics_text %>%
+#'   exclude_preview(print_tibble = FALSE)
+#'
+#' # Do not print message to console
+#' df <- qualtrics_text %>%
+#'   exclude_preview(quiet = TRUE)
+#'
 exclude_preview <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

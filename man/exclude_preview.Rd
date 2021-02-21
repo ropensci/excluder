@@ -2,16 +2,68 @@
 % Please edit documentation in R/exclude_preview.R
 \name{exclude_preview}
 \alias{exclude_preview}
-\title{Title}
+\title{Exclude survey previews}
 \usage{
 exclude_preview(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-
+An object of the same type as \code{.data} that excludes rows
+that are survey previews.
+For a function that checks for these rows, use \code{\link[=check_preview]{check_preview()}}.
+For a function that marks these rows, use \code{\link[=mark_preview]{mark_preview()}}.
 }
 \description{
-Title
+The \code{exclude_preview()} function removes
+rows that are survey previews.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+The preview column in Qualtrics can be a numeric or character vector
+depending on whether it is exported as choice text or numeric values.
+This function works for both.
+
+The function outputs to console a message about the number of rows
+that are survey previews.
+}
+\examples{
+# Exclude survey previews
+data(qualtrics_text)
+df <- exclude_preview(qualtrics_text)
+
+# Works for Qualtrics data exported as numeric values, too
+df <- qualtrics_numeric \%>\%
+  exclude_preview()
+
+# Do not print rows to console
+df <- qualtrics_text \%>\%
+  exclude_preview(print_tibble = FALSE)
+
+# Do not print message to console
+df <- qualtrics_text \%>\%
+  exclude_preview(quiet = TRUE)
+
+}
+\seealso{
+Other preview functions: 
+\code{\link{check_preview}()},
+\code{\link{mark_preview}()}
+
+Other exclude functions: 
+\code{\link{exclude_duplicates}()},
+\code{\link{exclude_duration}()},
+\code{\link{exclude_ip}()},
+\code{\link{exclude_progress}()},
+\code{\link{exclude_resolution}()}
+}
+\concept{exclude functions}
+\concept{preview functions}

@@ -2,16 +2,78 @@
 % Please edit documentation in R/exclude_progress.R
 \name{exclude_progress}
 \alias{exclude_progress}
-\title{Title}
+\title{Exclude survey progress}
 \usage{
 exclude_progress(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-
+An object of the same type as \code{.data} that excludes rows
+that have incomplete progress.
+For a function that checs for these rows, use \code{\link[=check_progress]{check_progress()}}.
+For a function that marks these rows, use \code{\link[=mark_progress]{mark_progress()}}.
 }
 \description{
-Title
+The \code{exclude_progress()} function removes
+rows that have incomplete progress.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+The default requires 100\% completion, but lower levels of completion
+maybe acceptable and can be allowed by specifying the \code{min_progress} argument.
+The finished column in Qualtrics can be a numeric or character vector
+depending on whether it is exported as choice text or numeric values.
+This function works for both.
+
+The function outputs to console a message about the number of rows
+that have incomplete progress.
+}
+\examples{
+# Exclude rows with incomplete progress
+data(qualtrics_text)
+df <- exclude_progress(qualtrics_text)
+
+# Remove preview data first
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_progress()
+
+# Include a lower acceptable completion percentage
+df <- qualtrics_numeric \%>\%
+  exclude_preview() \%>\%
+  exclude_progress(min_progress = 98)
+
+# Do not print rows to console
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_progress(print_tibble = FALSE)
+
+# Do not print message to console
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_progress(quiet = TRUE)
+
+}
+\seealso{
+Other progress functions: 
+\code{\link{check_progress}()},
+\code{\link{mark_progress}()}
+
+Other exclude functions: 
+\code{\link{exclude_duplicates}()},
+\code{\link{exclude_duration}()},
+\code{\link{exclude_ip}()},
+\code{\link{exclude_preview}()},
+\code{\link{exclude_resolution}()}
+}
+\concept{exclude functions}
+\concept{progress functions}

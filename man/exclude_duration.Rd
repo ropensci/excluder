@@ -2,16 +2,71 @@
 % Please edit documentation in R/exclude_duration.R
 \name{exclude_duration}
 \alias{exclude_duration}
-\title{Title}
+\title{Exclude rows with minimum or maximum durations}
 \usage{
 exclude_duration(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-
+An object of the same type as \code{.data} that excludes rows
+with fast and/or slow duration.
+For a function that checks for these rows, use \code{\link[=check_duration]{check_duration()}}.
+For a function that marks these rows, use \code{\link[=mark_duration]{mark_duration()}}.
 }
 \description{
-Title
+The \code{exclude_duration()} function removes
+rows of data that have durations that are too fast or too slow.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+By default, minimum durations of 10 seconds are checked, but either
+minima or maxima can be checked with the \code{min_duration} and
+\code{max_duration} arguments. The function outputs to console separate
+messages about the number of rows that are too fast or too slow.
+
+This function returns the fast and slow rows.
+}
+\examples{
+# Exclude durations faster than 100 seconds
+data(qualtrics_text)
+df <- exclude_duration(qualtrics_text, min_duration = 100)
+
+# Remove preview data first
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_duration()
+
+# Exclude only for durations slower than 800 seconds
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_duration(max_duration = 800)
+
+# Do not print message to console
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_duration(min_duration = 100, quiet = TRUE)
+
+}
+\seealso{
+Other duration functions: 
+\code{\link{check_duration}()},
+\code{\link{mark_duration}()}
+
+Other exclude functions: 
+\code{\link{exclude_duplicates}()},
+\code{\link{exclude_ip}()},
+\code{\link{exclude_preview}()},
+\code{\link{exclude_progress}()},
+\code{\link{exclude_resolution}()}
+}
+\concept{duration functions}
+\concept{exclude functions}

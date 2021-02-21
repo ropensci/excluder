@@ -11,11 +11,14 @@ exclude_duplicates(.data, id_col = "ResponseId", ...)
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{...}{Inherit parameters from \link{check_duplicates}.}
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-An object of the same type as \code{.data} that excludes rows with duplicate
-IP addresses and/or locations.
+An object of the same type as \code{.data} that excludes rows
+with duplicate IP addresses and/or locations.
+For a function that just checks for and returns duplicate rows,
+use \code{\link[=check_duplicates]{check_duplicates()}}. For a function that marks these rows,
+use \code{\link[=mark_duplicates]{mark_duplicates()}}.
 }
 \description{
 The \code{exclude_duplicates()} function removes
@@ -25,34 +28,47 @@ longitude. The function is written to work with data from
 }
 \details{
 Default column names are set based on output from the
-\link[qualtRics:fetch_survey]{qualtRics::fetch_survey}. By default, IP address and location are both
-checked, but they can be checked separately with the \code{dupl_ip} and
-\code{dupl_location} arguments. The function outputs to console separate
-messages about the number of rows with duplicate IP addresses and rows
-with duplicate locations.
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+By default, IP address and location are both checked, but they can be
+checked separately with the \code{dupl_ip} and \code{dupl_location} arguments.
+
+The function outputs to console separate messages about the number of
+rows with duplicate IP addresses and rows with duplicate locations.
 These counts are computed independently, so rows may be counted for both
 types of duplicates.
-
-This function returns the original data with the duplicate rows removed.
-For a function that just checks for and returns duplicate rows,
-use \link{check_duplicates}. For a function that marks these rows,
-use \link{mark_duplicates}.
 }
 \examples{
 # Exclude duplicate IP addresses and locations
 data(qualtrics_text)
 df <- exclude_duplicates(qualtrics_text)
 
+# Remove preview data first
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_duplicates()
+
 # Exclude only for duplicate locations
-df <- exclude_duplicates(qualtrics_text, dupl_location = FALSE)
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_duplicates(dupl_location = FALSE)
 
 # Do not print message to console
-df <- exclude_duplicates(qualtrics_text, quiet = TRUE)
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_duplicates(quiet = TRUE)
+
 }
 \seealso{
 Other duplicates functions: 
 \code{\link{check_duplicates}()},
 \code{\link{mark_duplicates}()}
+
+Other exclude functions: 
+\code{\link{exclude_duration}()},
+\code{\link{exclude_ip}()},
+\code{\link{exclude_preview}()},
+\code{\link{exclude_progress}()},
+\code{\link{exclude_resolution}()}
 }
 \concept{duplicates functions}
 \concept{exclude functions}

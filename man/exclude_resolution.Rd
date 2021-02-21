@@ -2,16 +2,63 @@
 % Please edit documentation in R/exclude_resolution.R
 \name{exclude_resolution}
 \alias{exclude_resolution}
-\title{Title}
+\title{Exclude unacceptable screen resolution}
 \usage{
 exclude_resolution(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-
+An object of the same type as \code{.data} that excludes rows
+that have unacceptable screen resolutions.
+For a function that checks for these rows, use \code{\link[=check_resolution]{check_resolution()}}.
+For a function that marks these rows, use \code{\link[=mark_resolution]{mark_resolution()}}.
 }
 \description{
-Title
+The \code{exclude_resolution()} function removes
+rows that have unacceptable screen resolution.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+
+The function outputs to console a message about the number of rows
+with unacceptable screen resolution.
+}
+\examples{
+# Exclude low screen resolutions
+data(qualtrics_text)
+df <- exclude_resolution(qualtrics_text)
+
+# Remove preview data first
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_resolution()
+
+# Do not print message to console
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  exclude_resolution(quiet = TRUE)
+
+}
+\seealso{
+Other resolution functions: 
+\code{\link{check_resolution}()},
+\code{\link{mark_resolution}()}
+
+Other exclude functions: 
+\code{\link{exclude_duplicates}()},
+\code{\link{exclude_duration}()},
+\code{\link{exclude_ip}()},
+\code{\link{exclude_preview}()},
+\code{\link{exclude_progress}()}
+}
+\concept{exclude functions}
+\concept{resolution functions}

@@ -1,13 +1,39 @@
-#' Title
+#' Exclude unacceptable screen resolution
 #'
-#' @param .data
-#' @param id_col
-#' @param ...
+#' @description
+#' The `exclude_resolution()` function removes
+#' rows that have unacceptable screen resolution.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
+#' @inherit check_resolution details
+#'
+#' @inheritParams exclude_duplicates
+#'
+#' @family resolution functions
+#' @family exclude functions
 #' @return
+#' An object of the same type as `.data` that excludes rows
+#' that have unacceptable screen resolutions.
+#' For a function that checks for these rows, use [check_resolution()].
+#' For a function that marks these rows, use [mark_resolution()].
 #' @export
 #'
 #' @examples
+#' # Exclude low screen resolutions
+#' data(qualtrics_text)
+#' df <- exclude_resolution(qualtrics_text)
+#'
+#' # Remove preview data first
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_resolution()
+#'
+#' # Do not print message to console
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_resolution(quiet = TRUE)
+#'
 exclude_resolution <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column
