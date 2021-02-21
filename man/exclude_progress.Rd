@@ -57,11 +57,6 @@ df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   exclude_progress(print_tibble = FALSE)
 
-# Do not print message to console
-df <- qualtrics_text \%>\%
-  exclude_preview() \%>\%
-  exclude_progress(quiet = TRUE)
-
 }
 \seealso{
 Other progress functions: 

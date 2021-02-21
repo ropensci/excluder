@@ -48,10 +48,6 @@ df <- qualtrics_numeric \%>\%
 df <- qualtrics_text \%>\%
   exclude_preview(print_tibble = FALSE)
 
-# Do not print message to console
-df <- qualtrics_text \%>\%
-  exclude_preview(quiet = TRUE)
-
 }
 \seealso{
 Other preview functions: 

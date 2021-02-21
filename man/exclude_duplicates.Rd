@@ -52,11 +52,6 @@ df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   exclude_duplicates(dupl_location = FALSE)
 
-# Do not print message to console
-df <- qualtrics_text \%>\%
-  exclude_preview() \%>\%
-  exclude_duplicates(quiet = TRUE)
-
 }
 \seealso{
 Other duplicates functions: 

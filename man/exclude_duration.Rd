@@ -50,11 +50,6 @@ df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   exclude_duration(max_duration = 800)
 
-# Do not print message to console
-df <- qualtrics_text \%>\%
-  exclude_preview() \%>\%
-  exclude_duration(min_duration = 100, quiet = TRUE)
-
 }
 \seealso{
 Other duration functions: 
