@@ -52,8 +52,12 @@ exclude_duplicates <- function(.data, id_col = "ResponseId", ...) {
   }
 
   # Find rows to exclude
-  exclusions <- check_duplicates(.data, ...)
+  exclusions <- check_duplicates(.data, quiet = TRUE, ...)
+  n_exclusions <- nrow(exclusions)
 
   # Exclude rows
-  dplyr::anti_join(.data, exclusions, by = id_col)
+  remaining_data <- dplyr::anti_join(.data, exclusions, by = id_col)
+  n_remaining <- nrow(remaining_data)
+  message(n_exclusions, " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+  return(remaining_data)
 }

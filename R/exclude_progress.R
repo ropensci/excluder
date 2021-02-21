@@ -53,8 +53,12 @@ exclude_progress <- function(.data, id_col = "ResponseId", ...) {
   }
 
   # Find rows to exclude
-  exclusions <- check_progress(.data, ...)
+  exclusions <- check_progress(.data, quiet = TRUE, ...)
+  n_exclusions <- nrow(exclusions)
 
   # Exclude rows
-  dplyr::anti_join(.data, exclusions, by = id_col)
+  remaining_data <- dplyr::anti_join(.data, exclusions, by = id_col)
+  n_remaining <- nrow(remaining_data)
+  message(n_exclusions, " rows with incomplete progress were excluded, leaving ", n_remaining, " rows.")
+  return(remaining_data)
 }

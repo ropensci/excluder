@@ -45,8 +45,12 @@ exclude_preview <- function(.data, id_col = "ResponseId", ...) {
   }
 
   # Find rows to exclude
-  exclusions <- check_preview(.data, ...)
+  exclusions <- check_preview(.data, quiet = TRUE, ...)
+  n_exclusions <- nrow(exclusions)
 
   # Exclude rows
-  dplyr::anti_join(.data, exclusions, by = id_col)
+  remaining_data <- dplyr::anti_join(.data, exclusions, by = id_col)
+  n_remaining <- nrow(remaining_data)
+  message(n_exclusions, " preview rows were excluded, leaving ", n_remaining, " rows.")
+  return(remaining_data)
 }
