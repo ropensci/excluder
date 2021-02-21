@@ -27,8 +27,8 @@
 #' @family check functions
 #' @return The output is a data frame of the rows
 #' that are survey previews.
-#' For a function that marks these rows, use [mark_preview].
-#' For a function that excludes these rows, use [exclude_preview].
+#' For a function that marks these rows, use [mark_preview()].
+#' For a function that excludes these rows, use [exclude_preview()].
 #' @export
 #'
 #' @examples

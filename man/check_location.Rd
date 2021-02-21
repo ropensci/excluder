@@ -30,8 +30,8 @@ console.}
 \value{
 The output is a data frame of the rows that are located outside of
 the US and (if \code{include_na == FALSE}) rows with no location information.
-For a function that marks these rows, use \link{mark_location}.
-For a function that excludes these rows, use \link{exclude_location}.
+For a function that marks these rows, use \code{\link[=mark_location]{mark_location()}}.
+For a function that excludes these rows, use \code{\link[=exclude_location]{exclude_location()}}.
 }
 \description{
 The \code{check_location()} function subsets rows of data, retaining rows
@@ -62,12 +62,12 @@ qualtrics_text \%>\%
 # Do not print rows to console
 qualtrics_text \%>\%
   exclude_preview() \%>\%
-  check_location(qualtrics_text, print_tibble = FALSE)
+  check_location(print_tibble = FALSE)
 
 # Do not print message to console
 qualtrics_text \%>\%
   exclude_preview() \%>\%
-  check_location(qualtrics_text, quiet = TRUE)
+  check_location(quiet = TRUE)
 
 }
 \seealso{

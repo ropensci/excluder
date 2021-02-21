@@ -30,8 +30,8 @@
 #' @family check functions
 #' @return The output is a data frame of the rows that are located outside of
 #' the US and (if \code{include_na == FALSE}) rows with no location information.
-#' For a function that marks these rows, use [mark_location].
-#' For a function that excludes these rows, use [exclude_location].
+#' For a function that marks these rows, use [mark_location()].
+#' For a function that excludes these rows, use [exclude_location()].
 #' @export
 #'
 #' @examples

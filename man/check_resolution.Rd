@@ -31,8 +31,8 @@ console.}
 \value{
 The output is a data frame of the rows
 that have unacceptable screen resolutions.
-For a function that marks these rows, use \link{mark_resolution}.
-For a function that excludes these rows, use \link{exclude_resolution}.
+For a function that marks these rows, use \code{\link[=mark_resolution]{mark_resolution()}}.
+For a function that excludes these rows, use \code{\link[=exclude_resolution]{exclude_resolution()}}.
 }
 \description{
 The \code{check_resolution()} function subsets rows of data, retaining rows

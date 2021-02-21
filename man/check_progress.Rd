@@ -31,8 +31,8 @@ console.}
 \value{
 The output is a data frame of the rows
 that have incomplete progress.
-For a function that marks these rows, use \link{mark_progress}.
-For a function that excludes these rows, use \link{exclude_progress}.
+For a function that marks these rows, use \code{\link[=mark_progress]{mark_progress()}}.
+For a function that excludes these rows, use \code{\link[=exclude_progress]{exclude_progress()}}.
 }
 \description{
 The \code{check_progress()} function subsets rows of data, retaining rows

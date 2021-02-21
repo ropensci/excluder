@@ -25,8 +25,8 @@ console.}
 \value{
 The output is a data frame of the rows
 that are survey previews.
-For a function that marks these rows, use \link{mark_preview}.
-For a function that excludes these rows, use \link{exclude_preview}.
+For a function that marks these rows, use \code{\link[=mark_preview]{mark_preview()}}.
+For a function that excludes these rows, use \code{\link[=exclude_preview]{exclude_preview()}}.
 }
 \description{
 The \code{check_preview()} function subsets rows of data, retaining rows

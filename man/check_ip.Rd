@@ -66,17 +66,17 @@ qualtrics_text \%>\%
 # Check for IP addresses outside of Germany
 qualtrics_text \%>\%
   exclude_preview() \%>\%
-  check_ip(qualtrics_text, country = "DE")
+  check_ip(country = "DE")
 
 # Do not print rows to console
 qualtrics_text \%>\%
   exclude_preview() \%>\%
-  check_ip(qualtrics_text, print_tibble = FALSE)
+  check_ip(print_tibble = FALSE)
 
 # Do not print message to console
 qualtrics_text \%>\%
   exclude_preview() \%>\%
-  check_ip(qualtrics_text, quiet = TRUE)
+  check_ip(quiet = TRUE)
 
 }
 \seealso{

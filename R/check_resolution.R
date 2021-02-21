@@ -27,8 +27,8 @@
 #' @family check functions
 #' @return The output is a data frame of the rows
 #' that have unacceptable screen resolutions.
-#' For a function that marks these rows, use [mark_resolution].
-#' For a function that excludes these rows, use [exclude_resolution].
+#' For a function that marks these rows, use [mark_resolution()].
+#' For a function that excludes these rows, use [exclude_resolution()].
 #' @export
 #'
 #' @examples

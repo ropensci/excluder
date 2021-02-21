@@ -31,8 +31,8 @@
 #' @family check functions
 #' @return The output is a data frame of the rows
 #' that have incomplete progress.
-#' For a function that marks these rows, use [mark_progress].
-#' For a function that excludes these rows, use [exclude_progress].
+#' For a function that marks these rows, use [mark_progress()].
+#' For a function that excludes these rows, use [exclude_progress()].
 #' @export
 #'
 #' @examples
