@@ -1,13 +1,41 @@
-#' Title
+#' Mark survey preview status
 #'
-#' @param .data
-#' @param id_col
-#' @param ...
+#' @description
+#' The `mark_preview()` function creates a column labeling
+#' rows that are survey previews.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
+#' @inherit check_preview details
+#'
+#' @inheritParams mark_duplicates
+#'
+#' @family preview functions
+#' @family mark functions
 #' @return
+#' An object of the same type as `.data` that includes a column marking rows
+#' that are survey previews.
+#' For a function that excludes these rows, use [exclude_preview()].
+#' For a function that marks these rows, use [mark_preview()].
 #' @export
 #'
 #' @examples
+#' # Mark survey previews
+#' data(qualtrics_text)
+#' df <- mark_preview(qualtrics_text)
+#'
+#' # Works for Qualtrics data exported as numeric values, too
+#' df <- qualtrics_numeric %>%
+#'   mark_preview()
+#'
+#'# Do not print rows to console
+#' df <- qualtrics_text %>%
+#'   mark_preview(print_tibble = FALSE)
+#'
+#' # Do not print message to console
+#' df <- qualtrics_text %>%
+#'   mark_preview(quiet = TRUE)
+#'
 mark_preview <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

@@ -2,16 +2,72 @@
 % Please edit documentation in R/mark_duration.R
 \name{mark_duration}
 \alias{mark_duration}
-\title{Title}
+\title{Mark minimum or maximum durations}
 \usage{
 mark_duration(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-
+An object of the same type as \code{.data} that includes a column marking rows
+with fast and slow duration.
+For a function that excludes these rows, use \code{\link[=exclude_duration]{exclude_duration()}}.
+For a function that marks these rows, use \code{\link[=mark_duration]{mark_duration()}}.
 }
 \description{
-Title
+The \code{mark_duration()} function creates a column labeling
+rows with fast and/or slow duration.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+By default, minimum durations of 10 seconds are checked, but either
+minima or maxima can be checked with the \code{min_duration} and
+\code{max_duration} arguments. The function outputs to console separate
+messages about the number of rows that are too fast or too slow.
+
+This function returns the fast and slow rows.
+}
+\examples{
+# Mark durations faster than 100 seconds
+data(qualtrics_text)
+df <- mark_duration(qualtrics_text, min_duration = 100)
+
+# Remove preview data first
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_duration()
+
+# Mark only for durations slower than 800 seconds
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_duration(max_duration = 800)
+
+# Do not print message to console
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_duration(min_duration = 100, quiet = TRUE)
+
+}
+\seealso{
+Other duration functions: 
+\code{\link{check_duration}()},
+\code{\link{exclude_duration}()}
+
+Other mark functions: 
+\code{\link{mark_duplicates}()},
+\code{\link{mark_ip}()},
+\code{\link{mark_location}()},
+\code{\link{mark_preview}()},
+\code{\link{mark_progress}()},
+\code{\link{mark_resolution}()}
+}
+\concept{duration functions}
+\concept{mark functions}

@@ -2,16 +2,67 @@
 % Please edit documentation in R/mark_location.R
 \name{mark_location}
 \alias{mark_location}
-\title{Title}
+\title{Mark locations outside of US}
 \usage{
 mark_location(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-
+An object of the same type as \code{.data} that includes a column marking rows
+that are located outside of the US and (if \code{include_na == FALSE}) rows with
+no location information.
+For a function that excludes these rows, use \code{\link[=exclude_location]{exclude_location()}}.
+For a function that marks these rows, use \code{\link[=mark_location]{mark_location()}}.
 }
 \description{
-Title
+The \code{mark_location()} function creates a column labeling
+rows that have locations outside of the US.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+The function only works for the United States.
+It uses the #' \code{\link[maps:map.where]{maps::map.where()}} to determine if latitude and longitude
+are inside the US.
+
+The function outputs to console a message about the number of rows
+with locations outside of the US.
+}
+\examples{
+# Mark locations outside of the US
+data(qualtrics_text)
+df <- mark_location(qualtrics_text)
+
+# Remove preview data first
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_location()
+
+# Do not print message to console
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_location(quiet = TRUE)
+
+}
+\seealso{
+Other location functions: 
+\code{\link{check_location}()}
+
+Other mark functions: 
+\code{\link{mark_duplicates}()},
+\code{\link{mark_duration}()},
+\code{\link{mark_ip}()},
+\code{\link{mark_preview}()},
+\code{\link{mark_progress}()},
+\code{\link{mark_resolution}()}
+}
+\concept{location functions}
+\concept{mark functions}

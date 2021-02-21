@@ -2,16 +2,74 @@
 % Please edit documentation in R/mark_ip.R
 \name{mark_ip}
 \alias{mark_ip}
-\title{Title}
+\title{Mark IP addresses that come from a specified country.}
 \usage{
 mark_ip(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-
+An object of the same type as \code{.data} that includes a column marking rows
+with IP addresses outside of the specified country.
+For a function that checks these rows, use \code{\link[=check_ip]{check_ip()}}.
+For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip()}}.
 }
 \description{
-Title
+The \code{mark_ip()} function creates a column labeling
+rows of data that have IP addresses in the specified country.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+The function uses \code{\link[iptools:country_ranges]{iptools::country_ranges()}} to assign IP addresses to
+specific countries using
+\href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2}{ISO 3166-1 alpha-2 country codes}.
+
+The function outputs to console a message about the number of rows
+with IP addresses outside of the specified country. If there are \code{NA}s for IP
+addresses (likely due to including preview data---see \code{\link[=check_preview]{check_preview()}}), it
+will print a message alerting to the number of rows with \code{NA}s.
+}
+\examples{
+# Mark IP addresses outside of the US
+data(qualtrics_text)
+df <- mark_ip(qualtrics_text)
+
+# Remove preview data first
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_ip()
+
+# Mark IP addresses outside of Germany
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_ip(country = "DE")
+
+# Do not print message to console
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_ip(quiet = TRUE)
+
+}
+\seealso{
+Other ip functions: 
+\code{\link{check_ip}()},
+\code{\link{exclude_ip}()}
+
+Other mark functions: 
+\code{\link{mark_duplicates}()},
+\code{\link{mark_duration}()},
+\code{\link{mark_location}()},
+\code{\link{mark_preview}()},
+\code{\link{mark_progress}()},
+\code{\link{mark_resolution}()}
+}
+\concept{ip functions}
+\concept{mark functions}

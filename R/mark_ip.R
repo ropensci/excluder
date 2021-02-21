@@ -1,13 +1,44 @@
-#' Title
+#' Mark IP addresses that come from a specified country.
 #'
-#' @param .data
-#' @param id_col
-#' @param ...
+#' @description
+#' The `mark_ip()` function creates a column labeling
+#' rows of data that have IP addresses in the specified country.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
+#' @inherit check_ip details
+#'
+#' @inheritParams mark_duplicates
+#'
+#' @family ip functions
+#' @family mark functions
 #' @return
+#' An object of the same type as `.data` that includes a column marking rows
+#' with IP addresses outside of the specified country.
+#' For a function that checks these rows, use [check_ip()].
+#' For a function that excludes these rows, use [exclude_ip()].
 #' @export
 #'
 #' @examples
+#' # Mark IP addresses outside of the US
+#' data(qualtrics_text)
+#' df <- mark_ip(qualtrics_text)
+#'
+#' # Remove preview data first
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   mark_ip()
+#'
+#' # Mark IP addresses outside of Germany
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   mark_ip(country = "DE")
+#'
+#' # Do not print message to console
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   mark_ip(quiet = TRUE)
+#'
 mark_ip <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column
@@ -18,7 +49,7 @@ mark_ip <- function(.data, id_col = "ResponseId", ...) {
 
   # Find rows to mark
   exclusions <- excluder::check_ip(.data, ...) %>%
-    dplyr::mutate(exclusion_ip = "ip_exclusion") %>%
+    dplyr::mutate(exclusion_ip = "ip_outside_country") %>%
     dplyr::select(dplyr::all_of(id_col), exclusion_ip)
 
   # Mark rows

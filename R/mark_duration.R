@@ -1,13 +1,44 @@
-#' Title
+#' Mark minimum or maximum durations
 #'
-#' @param .data
-#' @param id_col
-#' @param ...
+#' @description
+#' The `mark_duration()` function creates a column labeling
+#' rows with fast and/or slow duration.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
+#' @inherit check_duration details
+#'
+#' @inheritParams mark_duplicates
+#'
+#' @family duration functions
+#' @family mark functions
 #' @return
+#' An object of the same type as `.data` that includes a column marking rows
+#' with fast and slow duration.
+#' For a function that excludes these rows, use [exclude_duration()].
+#' For a function that marks these rows, use [mark_duration()].
 #' @export
 #'
 #' @examples
+#' # Mark durations faster than 100 seconds
+#' data(qualtrics_text)
+#' df <- mark_duration(qualtrics_text, min_duration = 100)
+#'
+#' # Remove preview data first
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   mark_duration()
+#'
+#' # Mark only for durations slower than 800 seconds
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   mark_duration(max_duration = 800)
+#'
+#' # Do not print message to console
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   mark_duration(min_duration = 100, quiet = TRUE)
+#'
 mark_duration <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column
@@ -18,7 +49,7 @@ mark_duration <- function(.data, id_col = "ResponseId", ...) {
 
   # Find rows to mark
   exclusions <- check_duration(.data, ...) %>%
-    dplyr::mutate(exclusion_duration = "duration_exclusion") %>%
+    dplyr::mutate(exclusion_duration = "duration") %>%
     dplyr::select(dplyr::all_of(id_col), exclusion_duration)
 
   # Mark rows

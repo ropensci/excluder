@@ -2,7 +2,7 @@
 % Please edit documentation in R/mark_duplicates.R
 \name{mark_duplicates}
 \alias{mark_duplicates}
-\title{Mark rows with duplicate IP addresses and/or locations}
+\title{Mark duplicate IP addresses and/or locations}
 \usage{
 mark_duplicates(.data, id_col = "ResponseId", ...)
 }
@@ -11,50 +11,65 @@ mark_duplicates(.data, id_col = "ResponseId", ...)
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{...}{Inherit parameters from \link{check_duplicates}.}
+\item{...}{Inherit parameters from check function.}
 }
 \value{
 An object of the same type as \code{.data} that includes a column marking rows
 with duplicate IP addresses and/or locations.
+For a function that just checks for and returns duplicate rows,
+use \code{\link[=check_duplicates]{check_duplicates()}}. For a function that excludes these rows,
+use \code{\link[=exclude_duplicates]{exclude_duplicates()}}.
 }
 \description{
-The \code{mark_duplicates()} function creates a column that labels
+The \code{mark_duplicates()} function creates a column labeling
 rows of data that have the same IP address and/or same latitude and
 longitude. The function is written to work with data from
 \href{https://qualtrics.com}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the
-\link[qualtRics:fetch_survey]{qualtRics::fetch_survey}. By default, IP address and location are both
-checked, but they can be checked separately with the \code{dupl_ip} and
-\code{dupl_location} arguments. The function outputs to console separate
-messages about the number of rows with duplicate IP addresses and rows
-with duplicate locations.
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+By default, IP address and location are both checked, but they can be
+checked separately with the \code{dupl_ip} and \code{dupl_location} arguments.
+
+The function outputs to console separate messages about the number of
+rows with duplicate IP addresses and rows with duplicate locations.
 These counts are computed independently, so rows may be counted for both
 types of duplicates.
-
-This function returns the original data with a column called
-\code{exclusion_duplicates} that includes values \code{duplicates} for rows with
-duplicate IP addresses and/or location and \code{NA} for rows without duplicates.
-For a function that just checks for and returns duplicate rows,
-use \link{check_duplicates}. For a function that excludes these rows,
-use \link{exclude_duplicates}.
 }
 \examples{
 # Mark duplicate IP addresses and locations
 data(qualtrics_text)
 df <- mark_duplicates(qualtrics_text)
 
+# Remove preview data first
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_duplicates()
+
 # Mark only for duplicate locations
-df <- mark_duplicates(qualtrics_text, dupl_location = FALSE)
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_duplicates(dupl_location = FALSE)
 
 # Do not print message to console
-df <- mark_duplicates(qualtrics_text, quiet = TRUE)
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_duplicates(quiet = TRUE)
+
 }
 \seealso{
 Other duplicates functions: 
 \code{\link{check_duplicates}()},
 \code{\link{exclude_duplicates}()}
+
+Other mark functions: 
+\code{\link{mark_duration}()},
+\code{\link{mark_ip}()},
+\code{\link{mark_location}()},
+\code{\link{mark_preview}()},
+\code{\link{mark_progress}()},
+\code{\link{mark_resolution}()}
 }
 \concept{duplicates functions}
 \concept{mark functions}

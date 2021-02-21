@@ -2,16 +2,63 @@
 % Please edit documentation in R/mark_resolution.R
 \name{mark_resolution}
 \alias{mark_resolution}
-\title{Title}
+\title{Mark unacceptable screen resolution}
 \usage{
 mark_resolution(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-
+An object of the same type as \code{.data} that includes a column marking rows
+that have unacceptable screen resolutions.
+For a function that excludes these rows, use \code{\link[=exclude_resolution]{exclude_resolution()}}.
+For a function that marks these rows, use \code{\link[=mark_resolution]{mark_resolution()}}.
 }
 \description{
-Title
+The \code{mark_resolution()} function creates a column labeling
+rows that have unacceptable screen resolution.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+
+The function outputs to console a message about the number of rows
+with unacceptable screen resolution.
+}
+\examples{
+# Mark low screen resolutions
+data(qualtrics_text)
+df <- mark_resolution(qualtrics_text)
+
+# Remove preview data first
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_resolution()
+
+# Do not print message to console
+df <- qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  mark_resolution(quiet = TRUE)
+
+}
+\seealso{
+Other resolution functions: 
+\code{\link{check_resolution}()}
+
+Other mark functions: 
+\code{\link{mark_duplicates}()},
+\code{\link{mark_duration}()},
+\code{\link{mark_ip}()},
+\code{\link{mark_location}()},
+\code{\link{mark_preview}()},
+\code{\link{mark_progress}()}
+}
+\concept{mark functions}
+\concept{resolution functions}

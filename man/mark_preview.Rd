@@ -2,16 +2,67 @@
 % Please edit documentation in R/mark_preview.R
 \name{mark_preview}
 \alias{mark_preview}
-\title{Title}
+\title{Mark survey preview status}
 \usage{
 mark_preview(.data, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{...}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{...}{Inherit parameters from check function.}
 }
 \value{
-
+An object of the same type as \code{.data} that includes a column marking rows
+that are survey previews.
+For a function that excludes these rows, use \code{\link[=exclude_preview]{exclude_preview()}}.
+For a function that marks these rows, use \code{\link[=mark_preview]{mark_preview()}}.
 }
 \description{
-Title
+The \code{mark_preview()} function creates a column labeling
+rows that are survey previews.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+The preview column in Qualtrics can be a numeric or character vector
+depending on whether it is exported as choice text or numeric values.
+This function works for both.
+
+The function outputs to console a message about the number of rows
+that are survey previews.
+}
+\examples{
+# Mark survey previews
+data(qualtrics_text)
+df <- mark_preview(qualtrics_text)
+
+# Works for Qualtrics data exported as numeric values, too
+df <- qualtrics_numeric \%>\%
+  mark_preview()
+
+# Do not print rows to console
+df <- qualtrics_text \%>\%
+  mark_preview(print_tibble = FALSE)
+# Do not print message to console
+df <- qualtrics_text \%>\%
+  mark_preview(quiet = TRUE)
+
+}
+\seealso{
+Other preview functions: 
+\code{\link{check_preview}()}
+
+Other mark functions: 
+\code{\link{mark_duplicates}()},
+\code{\link{mark_duration}()},
+\code{\link{mark_ip}()},
+\code{\link{mark_location}()},
+\code{\link{mark_progress}()},
+\code{\link{mark_resolution}()}
+}
+\concept{mark functions}
+\concept{preview functions}
