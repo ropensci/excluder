@@ -2,7 +2,7 @@
 #'
 #' @description
 #' The `check_progress()` function subsets rows of data, retaining rows
-#' that are incomplete.
+#' that have incomplete progress.
 #' The function is written to work with data from
 #' [Qualtrics](https://qualtrics.com) surveys.
 #'
@@ -16,7 +16,7 @@
 #' This function works for both.
 #'
 #' The function outputs to console a message about the number of rows
-#' that are incomplete.
+#' that have incomplete progress.
 #'
 #' @param .data Data frame (preferably directly from Qualtrics imported
 #' using {qualtRics}.)
@@ -30,13 +30,13 @@
 #' @family progress functions
 #' @family check functions
 #' @return The output is a data frame of the rows
-#' that are incomplete.
+#' that have incomplete progress.
 #' For a function that marks these rows, use [mark_progress].
 #' For a function that excludes these rows, use [exclude_progress].
 #' @export
 #'
 #' @examples
-#' # Check for survey previews
+#' # Check for rows with incomplete progress
 #' data(qualtrics_text)
 #' check_progress(qualtrics_text)
 #'

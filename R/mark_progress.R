@@ -15,8 +15,8 @@
 #' @return
 #' An object of the same type as `.data` that includes a column marking rows
 #' that have incomplete progress.
+#' For a function that checks for these rows, use [check_progress()].
 #' For a function that excludes these rows, use [exclude_progress()].
-#' For a function that marks these rows, use [mark_progress()].
 #' @export
 #'
 #' @examples

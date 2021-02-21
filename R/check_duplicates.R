@@ -35,8 +35,8 @@
 #' @return
 #' An object of the same type as `.data` that includes the rows with
 #' duplicate IP addresses and/or locations.
-#' For a function that excludes these rows, use [exclude_duplicates()].
 #' For a function that marks these rows, use [mark_duplicates()].
+#' For a function that excludes these rows, use [exclude_duplicates()].
 #'
 #' @export
 #'

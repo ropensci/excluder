@@ -30,8 +30,8 @@
 #' @return
 #' An object of the same type as `.data` that includes the rows with
 #' IP addresses outside of the specified country.
-#' For a function that excludes these rows, use [exclude_ip()].
 #' For a function that marks these rows, use [mark_ip()].
+#' For a function that excludes these rows, use [exclude_ip()].
 #'
 #' @note
 #' This function requires internet connectivity as it uses the

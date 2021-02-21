@@ -15,8 +15,8 @@
 #' @return
 #' An object of the same type as `.data` that includes a column marking rows
 #' with fast and slow duration.
+#' For a function that checks for these rows, use [check_duration()].
 #' For a function that excludes these rows, use [exclude_duration()].
-#' For a function that marks these rows, use [mark_duration()].
 #' @export
 #'
 #' @examples

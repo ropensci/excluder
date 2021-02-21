@@ -1,4 +1,4 @@
-#' Check for survey preview status
+#' Check for survey previews
 #'
 #' @description
 #' The `check_preview()` function subsets rows of data, retaining rows

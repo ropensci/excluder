@@ -16,8 +16,8 @@ mark_resolution(.data, id_col = "ResponseId", ...)
 \value{
 An object of the same type as \code{.data} that includes a column marking rows
 that have unacceptable screen resolutions.
+For a function that checks for these rows, use \code{\link[=check_resolution]{check_resolution()}}.
 For a function that excludes these rows, use \code{\link[=exclude_resolution]{exclude_resolution()}}.
-For a function that marks these rows, use \code{\link[=mark_resolution]{mark_resolution()}}.
 }
 \description{
 The \code{mark_resolution()} function creates a column labeling
@@ -50,7 +50,8 @@ df <- qualtrics_text \%>\%
 }
 \seealso{
 Other resolution functions: 
-\code{\link{check_resolution}()}
+\code{\link{check_resolution}()},
+\code{\link{exclude_resolution}()}
 
 Other mark functions: 
 \code{\link{mark_duplicates}()},

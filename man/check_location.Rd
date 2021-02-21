@@ -71,6 +71,10 @@ qualtrics_text \%>\%
 
 }
 \seealso{
+Other location functions: 
+\code{\link{exclude_location}()},
+\code{\link{mark_location}()}
+
 Other check functions: 
 \code{\link{check_duplicates}()},
 \code{\link{check_duration}()},

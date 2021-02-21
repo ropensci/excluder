@@ -16,8 +16,8 @@ mark_duration(.data, id_col = "ResponseId", ...)
 \value{
 An object of the same type as \code{.data} that includes a column marking rows
 with fast and slow duration.
+For a function that checks for these rows, use \code{\link[=check_duration]{check_duration()}}.
 For a function that excludes these rows, use \code{\link[=exclude_duration]{exclude_duration()}}.
-For a function that marks these rows, use \code{\link[=mark_duration]{mark_duration()}}.
 }
 \description{
 The \code{mark_duration()} function creates a column labeling

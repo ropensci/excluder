@@ -30,8 +30,8 @@ console.}
 \value{
 An object of the same type as \code{.data} that includes the rows with fast and/or
 slow duration.
-these rows, use \code{\link[=exclude_duration]{exclude_duration()}}. For a function that marks these rows,
-use \code{\link[=mark_duration]{mark_duration()}}.
+For a function that marks these rows, use \code{\link[=mark_duration]{mark_duration()}}.
+For a function that excludes these rows, use \code{\link[=exclude_duration]{exclude_duration()}}.
 }
 \description{
 The \code{check_duration()} function subsets rows of data, retaining rows

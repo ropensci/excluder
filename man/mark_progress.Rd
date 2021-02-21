@@ -16,8 +16,8 @@ mark_progress(.data, id_col = "ResponseId", ...)
 \value{
 An object of the same type as \code{.data} that includes a column marking rows
 that have incomplete progress.
+For a function that checks for these rows, use \code{\link[=check_progress]{check_progress()}}.
 For a function that excludes these rows, use \code{\link[=exclude_progress]{exclude_progress()}}.
-For a function that marks these rows, use \code{\link[=mark_progress]{mark_progress()}}.
 }
 \description{
 The \code{mark_progress()} function creates a column labeling
@@ -65,7 +65,8 @@ df <- qualtrics_text \%>\%
 }
 \seealso{
 Other progress functions: 
-\code{\link{check_progress}()}
+\code{\link{check_progress}()},
+\code{\link{exclude_progress}()}
 
 Other mark functions: 
 \code{\link{mark_duplicates}()},

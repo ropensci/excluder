@@ -2,7 +2,7 @@
 % Please edit documentation in R/mark_preview.R
 \name{mark_preview}
 \alias{mark_preview}
-\title{Mark survey preview status}
+\title{Mark survey previews}
 \usage{
 mark_preview(.data, id_col = "ResponseId", ...)
 }
@@ -16,8 +16,8 @@ mark_preview(.data, id_col = "ResponseId", ...)
 \value{
 An object of the same type as \code{.data} that includes a column marking rows
 that are survey previews.
+For a function that checks for these rows, use \code{\link[=check_preview]{check_preview()}}.
 For a function that excludes these rows, use \code{\link[=exclude_preview]{exclude_preview()}}.
-For a function that marks these rows, use \code{\link[=mark_preview]{mark_preview()}}.
 }
 \description{
 The \code{mark_preview()} function creates a column labeling
@@ -47,6 +47,7 @@ df <- qualtrics_numeric \%>\%
 # Do not print rows to console
 df <- qualtrics_text \%>\%
   mark_preview(print_tibble = FALSE)
+
 # Do not print message to console
 df <- qualtrics_text \%>\%
   mark_preview(quiet = TRUE)
@@ -54,7 +55,8 @@ df <- qualtrics_text \%>\%
 }
 \seealso{
 Other preview functions: 
-\code{\link{check_preview}()}
+\code{\link{check_preview}()},
+\code{\link{exclude_preview}()}
 
 Other mark functions: 
 \code{\link{mark_duplicates}()},

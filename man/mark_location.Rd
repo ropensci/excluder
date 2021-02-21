@@ -17,8 +17,8 @@ mark_location(.data, id_col = "ResponseId", ...)
 An object of the same type as \code{.data} that includes a column marking rows
 that are located outside of the US and (if \code{include_na == FALSE}) rows with
 no location information.
+For a function that checks for these rows, use \code{\link[=check_location]{check_location()}}.
 For a function that excludes these rows, use \code{\link[=exclude_location]{exclude_location()}}.
-For a function that marks these rows, use \code{\link[=mark_location]{mark_location()}}.
 }
 \description{
 The \code{mark_location()} function creates a column labeling
@@ -54,7 +54,8 @@ df <- qualtrics_text \%>\%
 }
 \seealso{
 Other location functions: 
-\code{\link{check_location}()}
+\code{\link{check_location}()},
+\code{\link{exclude_location}()}
 
 Other mark functions: 
 \code{\link{mark_duplicates}()},

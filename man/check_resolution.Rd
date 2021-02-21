@@ -70,6 +70,10 @@ qualtrics_text \%>\%
 
 }
 \seealso{
+Other resolution functions: 
+\code{\link{exclude_resolution}()},
+\code{\link{mark_resolution}()}
+
 Other check functions: 
 \code{\link{check_duplicates}()},
 \code{\link{check_duration}()},

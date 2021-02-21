@@ -15,8 +15,8 @@
 #' @return
 #' An object of the same type as `.data` that includes a column marking rows
 #' that have unacceptable screen resolutions.
+#' For a function that checks for these rows, use [check_resolution()].
 #' For a function that excludes these rows, use [exclude_resolution()].
-#' For a function that marks these rows, use [mark_resolution()].
 #' @export
 #'
 #' @examples

@@ -57,6 +57,7 @@ Other exclude functions:
 \code{\link{exclude_duplicates}()},
 \code{\link{exclude_duration}()},
 \code{\link{exclude_ip}()},
+\code{\link{exclude_location}()},
 \code{\link{exclude_preview}()},
 \code{\link{exclude_progress}()}
 }

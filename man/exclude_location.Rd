@@ -18,7 +18,7 @@ An object of the same type as \code{.data} that excludes rows
 that are located outside of the US and (if \code{include_na == FALSE}) rows with
 no location information.
 For a function that checks for these rows, use \code{\link[=check_location]{check_location()}}.
-For a function that marks these rows, use \code{\link[=exclude_location]{exclude_location()}}.
+For a function that marks these rows, use \code{\link[=mark_location]{mark_location()}}.
 }
 \description{
 The \code{exclude_location()} function removes
@@ -57,14 +57,13 @@ Other location functions:
 \code{\link{check_location}()},
 \code{\link{mark_location}()}
 
-Other mark functions: 
-\code{\link{mark_duplicates}()},
-\code{\link{mark_duration}()},
-\code{\link{mark_ip}()},
-\code{\link{mark_location}()},
-\code{\link{mark_preview}()},
-\code{\link{mark_progress}()},
-\code{\link{mark_resolution}()}
+Other exclude functions: 
+\code{\link{exclude_duplicates}()},
+\code{\link{exclude_duration}()},
+\code{\link{exclude_ip}()},
+\code{\link{exclude_preview}()},
+\code{\link{exclude_progress}()},
+\code{\link{exclude_resolution}()}
 }
+\concept{exclude functions}
 \concept{location functions}
-\concept{mark functions}

@@ -39,8 +39,8 @@ console.}
 \value{
 An object of the same type as \code{.data} that includes the rows with
 duplicate IP addresses and/or locations.
-For a function that excludes these rows, use \code{\link[=exclude_duplicates]{exclude_duplicates()}}.
 For a function that marks these rows, use \code{\link[=mark_duplicates]{mark_duplicates()}}.
+For a function that excludes these rows, use \code{\link[=exclude_duplicates]{exclude_duplicates()}}.
 }
 \description{
 The \code{check_duplicates()} function subsets rows of data, retaining rows

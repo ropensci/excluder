@@ -27,8 +27,8 @@ console.}
 \value{
 An object of the same type as \code{.data} that includes the rows with
 IP addresses outside of the specified country.
-For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip()}}.
 For a function that marks these rows, use \code{\link[=mark_ip]{mark_ip()}}.
+For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip()}}.
 }
 \description{
 The \code{check_ip()} function subsets rows of data, retaining rows

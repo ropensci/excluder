@@ -1,4 +1,4 @@
-#' Mark survey preview status
+#' Mark survey previews
 #'
 #' @description
 #' The `mark_preview()` function creates a column labeling
@@ -15,8 +15,8 @@
 #' @return
 #' An object of the same type as `.data` that includes a column marking rows
 #' that are survey previews.
+#' For a function that checks for these rows, use [check_preview()].
 #' For a function that excludes these rows, use [exclude_preview()].
-#' For a function that marks these rows, use [mark_preview()].
 #' @export
 #'
 #' @examples
@@ -28,7 +28,7 @@
 #' df <- qualtrics_numeric %>%
 #'   mark_preview()
 #'
-#'# Do not print rows to console
+#' # Do not print rows to console
 #' df <- qualtrics_text %>%
 #'   mark_preview(print_tibble = FALSE)
 #'

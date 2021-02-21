@@ -29,9 +29,8 @@
 #' @return
 #' An object of the same type as `.data` that includes the rows with fast and/or
 #' slow duration.
-#; For a function that excludes
-#' these rows, use [exclude_duration()]. For a function that marks these rows,
-#' use [mark_duration()].
+#' For a function that marks these rows, use [mark_duration()].
+#' For a function that excludes these rows, use [exclude_duration()]. 
 #' @export
 #'
 #' @examples

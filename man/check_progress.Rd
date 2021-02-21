@@ -30,13 +30,13 @@ console.}
 }
 \value{
 The output is a data frame of the rows
-that are incomplete.
+that have incomplete progress.
 For a function that marks these rows, use \link{mark_progress}.
 For a function that excludes these rows, use \link{exclude_progress}.
 }
 \description{
 The \code{check_progress()} function subsets rows of data, retaining rows
-that are incomplete.
+that have incomplete progress.
 The function is written to work with data from
 \href{https://qualtrics.com}{Qualtrics} surveys.
 }
@@ -50,10 +50,10 @@ depending on whether it is exported as choice text or numeric values.
 This function works for both.
 
 The function outputs to console a message about the number of rows
-that are incomplete.
+that have incomplete progress.
 }
 \examples{
-# Check for survey previews
+# Check for rows with incomplete progress
 data(qualtrics_text)
 check_progress(qualtrics_text)
 
@@ -79,6 +79,10 @@ qualtrics_text \%>\%
 
 }
 \seealso{
+Other progress functions: 
+\code{\link{exclude_progress}()},
+\code{\link{mark_progress}()}
+
 Other check functions: 
 \code{\link{check_duplicates}()},
 \code{\link{check_duration}()},

@@ -11,13 +11,13 @@
 #' @inheritParams exclude_duplicates
 #'
 #' @family location functions
-#' @family mark functions
+#' @family exclude functions
 #' @return
 #' An object of the same type as `.data` that excludes rows
 #' that are located outside of the US and (if `include_na == FALSE`) rows with
 #' no location information.
 #' For a function that checks for these rows, use [check_location()].
-#' For a function that marks these rows, use [exclude_location()].
+#' For a function that marks these rows, use [mark_location()].
 #' @export
 #'
 #' @examples

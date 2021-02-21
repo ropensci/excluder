@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_preview.R
 \name{check_preview}
 \alias{check_preview}
-\title{Check for survey preview status}
+\title{Check for survey previews}
 \usage{
 check_preview(
   .data,
@@ -63,6 +63,10 @@ qualtrics_text \%>\%
 
 }
 \seealso{
+Other preview functions: 
+\code{\link{exclude_preview}()},
+\code{\link{mark_preview}()}
+
 Other check functions: 
 \code{\link{check_duplicates}()},
 \code{\link{check_duration}()},

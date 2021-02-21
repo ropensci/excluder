@@ -2,20 +2,46 @@
 % Please edit documentation in R/collapse_exclusions.R
 \name{collapse_exclusions}
 \alias{collapse_exclusions}
-\title{Title}
+\title{Collapse multiple exclusion columns into single column}
 \usage{
 collapse_exclusions(
   .data,
-  exclusion_types = c("duplicates", "duration", "ip", "language", "location",
-    "preview", "progress", "resolution")
+  exclusion_types = c("duplicates", "duration", "ip", "location", "preview",
+    "progress", "resolution")
 )
 }
 \arguments{
-\item{exclusion_types}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{exclusion_types}{Vector of types of exclusions to collapse.}
 }
 \value{
-
+#' An object of the same type as \code{.data} that includes the all of the same
+rows but with a single \code{exclusion} column replacing all of the specified
+\verb{exclusion_*} columns.
 }
 \description{
-Title
+Each of the \verb{mark_*()} functions appends a new column to the data.
+The \code{collapse_exclusions()} function collapses all of those columns in a single
+column that can be used to filter any or all exclusions downstream. Rows
+with multiple exclusions are concatenated with commas.
+}
+\examples{
+
+# Collapse all exclusion types
+df <- qualtrics_text \%>\%
+  mark_duplicates() \%>\%
+  mark_duration(min_duration = 100) \%>\%
+  mark_ip() \%>\%
+  mark_location() \%>\%
+  mark_preview() \%>\%
+  mark_progress() \%>\%
+  mark_resolution()
+df2 <- df \%>\%
+  collapse_exclusions()
+
+# Collapse subset of exclusion types
+df2 <- df \%>\%
+  collapse_exclusions(exclusion_types = c("duplicates", "duration", "ip"))
+
 }
