@@ -34,11 +34,6 @@
 #'   exclude_preview() %>%
 #'   exclude_ip(country = "DE")
 #'
-#' # Do not print message to console
-#' df <- qualtrics_text %>%
-#'   exclude_preview() %>%
-#'   exclude_ip(quiet = TRUE)
-#'
 exclude_ip <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

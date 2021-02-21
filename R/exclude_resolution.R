@@ -29,11 +29,6 @@
 #'   exclude_preview() %>%
 #'   exclude_resolution()
 #'
-#' # Do not print message to console
-#' df <- qualtrics_text %>%
-#'   exclude_preview() %>%
-#'   exclude_resolution(quiet = TRUE)
-#'
 exclude_resolution <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

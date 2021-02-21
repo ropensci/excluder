@@ -47,12 +47,12 @@
 #' # Do not print rows to console
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
-#'   check_location(qualtrics_text, print_tibble = FALSE)
+#'   check_location(print_tibble = FALSE)
 #'
 #' # Do not print message to console
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
-#'   check_location(qualtrics_text, quiet = TRUE)
+#'   check_location(quiet = TRUE)
 #'
 check_location <- function(.data, location_col = c("LocationLatitude", "LocationLongitude"), include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
 

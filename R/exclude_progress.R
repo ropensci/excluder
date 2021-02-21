@@ -39,11 +39,6 @@
 #'   exclude_preview() %>%
 #'   exclude_progress(print_tibble = FALSE)
 #'
-#' # Do not print message to console
-#' df <- qualtrics_text %>%
-#'   exclude_preview() %>%
-#'   exclude_progress(quiet = TRUE)
-#'
 exclude_progress <- function(.data, id_col = "ResponseId", ...) {
 
   # Check for presence of required column
