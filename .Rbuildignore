@@ -8,3 +8,6 @@
 ^create_data$
 
 ^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
