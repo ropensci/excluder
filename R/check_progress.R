@@ -1,16 +1,65 @@
-#' Title
+#' Check for survey progress
 #'
-#' @param .data
-#' @param min_progress
-#' @param finished_col
-#' @param progress_col
-#' @param print_tibble
-#' @param quiet
+#' @description
+#' The `check_progress()` function subsets rows of data, retaining rows
+#' that are incomplete.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
-#' @return
+#' @details
+#' Default column names are set based on output from the
+#' [qualtRics::fetch_survey()].
+#' The default requires 100% completion, but lower levels of completion
+#' maybe acceptable and can be allowed by specifying the `min_progress` argument.
+#' The finished column in Qualtrics can be a numeric or character vector
+#' depending on whether it is exported as choice text or numeric values.
+#' This function works for both.
+#'
+#' The function outputs to console a message about the number of rows
+#' that are incomplete.
+#'
+#' @param .data Data frame (preferably directly from Qualtrics imported
+#' using {qualtRics}.)
+#' @param min_progress Amount of progress considered acceptable to include.
+#' @param finished_col Column name for whether survey was completed.
+#' @param progress_col Column name for percentage of survey completed.
+#' @param print_tibble Logical indicating whether to print returned tibble to
+#' console.
+#' @param quiet Logical indicating whether to print message to console.
+#'
+#' @family progress functions
+#' @family check functions
+#' @return The output is a data frame of the rows
+#' that are incomplete.
+#' For a function that marks these rows, use [mark_progress].
+#' For a function that excludes these rows, use [exclude_progress].
 #' @export
 #'
 #' @examples
+#' # Check for survey previews
+#' data(qualtrics_text)
+#' check_progress(qualtrics_text)
+#'
+#' # Remove preview data first
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_progress()
+#'
+#' # Include a lower acceptable completion percentage
+#' qualtrics_numeric %>%
+#'   exclude_preview() %>%
+#'   check_progress(min_progress = 98)
+#'
+#' # Do not print rows to console
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_progress(print_tibble = FALSE)
+#'
+#' # Do not print message to console
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_progress(quiet = TRUE)
+#'
 check_progress <- function(.data, min_progress = 100, finished_col = "Finished", progress_col = "Progress", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns

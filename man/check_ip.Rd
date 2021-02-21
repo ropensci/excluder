@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_ip.R
 \name{check_ip}
 \alias{check_ip}
-\title{Title}
+\title{Check for IP addresses that come from a specified country.}
 \usage{
 check_ip(
   .data,
@@ -13,11 +13,84 @@ check_ip(
 )
 }
 \arguments{
-\item{quiet}{}
+\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+
+\item{ip_col}{Column name for IP addresses.}
+
+\item{country}{Two-letter abbreviation of country to check (default is "US").}
+
+\item{print_tibble}{Logical indicating whether to print returned tibble to
+console.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-
+An object of the same type as \code{.data} that includes the rows with
+IP addresses outside of the specified country.
+For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip()}}.
+For a function that marks these rows, use \code{\link[=mark_ip]{mark_ip()}}.
 }
 \description{
-Title
+The \code{check_ip()} function subsets rows of data, retaining rows
+that have IP addresses in the specified country.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+The function uses \code{\link[iptools:country_ranges]{iptools::country_ranges()}} to assign IP addresses to
+specific countries using
+\href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2}{ISO 3166-1 alpha-2 country codes}.
+
+The function outputs to console a message about the number of rows
+with IP addresses outside of the specified country. If there are \code{NA}s for IP
+addresses (likely due to including preview data---see \code{\link[=check_preview]{check_preview()}}), it
+will print a message alerting to the number of rows with \code{NA}s.
+}
+\note{
+This function requires internet connectivity as it uses the
+\code{\link[iptools:country_ranges]{iptools::country_ranges()}} function, which pulls daily updated data
+from \url{http://www.iwik.org/ipcountry/}.
+}
+\examples{
+# Check for IP addresses outside of the US
+data(qualtrics_text)
+check_ip(qualtrics_text)
+
+# Remove preview data first
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_ip()
+
+# Check for IP addresses outside of Germany
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_ip(qualtrics_text, country = "DE")
+
+# Do not print rows to console
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_ip(qualtrics_text, print_tibble = FALSE)
+
+# Do not print message to console
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_ip(qualtrics_text, quiet = TRUE)
+
+}
+\seealso{
+Other ip functions: 
+\code{\link{exclude_ip}()},
+\code{\link{mark_ip}()}
+
+Other check functions: 
+\code{\link{check_duplicates}()},
+\code{\link{check_duration}()},
+\code{\link{check_location}()},
+\code{\link{check_preview}()},
+\code{\link{check_progress}()},
+\code{\link{check_resolution}()}
+}
+\concept{check functions}
+\concept{ip functions}

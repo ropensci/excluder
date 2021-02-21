@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_preview.R
 \name{check_preview}
 \alias{check_preview}
-\title{Title}
+\title{Check for survey preview status}
 \usage{
 check_preview(
   .data,
@@ -12,11 +12,64 @@ check_preview(
 )
 }
 \arguments{
-\item{quiet}{}
+\item{.data}{Data frame (preferably directly from Qualtrics imported
+using {qualtRics}.)}
+
+\item{preview_col}{Column name for survey preview.}
+
+\item{print_tibble}{Logical indicating whether to print returned tibble to
+console.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-
+The output is a data frame of the rows
+that are survey previews.
+For a function that marks these rows, use \link{mark_preview}.
+For a function that excludes these rows, use \link{exclude_preview}.
 }
 \description{
-Title
+The \code{check_preview()} function subsets rows of data, retaining rows
+that are survey previews.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+The preview column in Qualtrics can be a numeric or character vector
+depending on whether it is exported as choice text or numeric values.
+This function works for both.
+
+The function outputs to console a message about the number of rows
+that are survey previews.
+}
+\examples{
+# Check for survey previews
+data(qualtrics_text)
+check_preview(qualtrics_text)
+
+# Works for Qualtrics data exported as numeric values, too
+qualtrics_numeric \%>\%
+  check_preview()
+
+# Do not print rows to console
+qualtrics_text \%>\%
+  check_preview(print_tibble = FALSE)
+
+# Do not print message to console
+qualtrics_text \%>\%
+  check_preview(quiet = TRUE)
+
+}
+\seealso{
+Other check functions: 
+\code{\link{check_duplicates}()},
+\code{\link{check_duration}()},
+\code{\link{check_ip}()},
+\code{\link{check_location}()},
+\code{\link{check_progress}()},
+\code{\link{check_resolution}()}
+}
+\concept{check functions}
+\concept{preview functions}

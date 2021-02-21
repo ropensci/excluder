@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_location.R
 \name{check_location}
 \alias{check_location}
-\title{Check data rows where location information is absent and outside of the the US}
+\title{Check for locations outside of the US}
 \usage{
 check_location(
   .data,
@@ -13,24 +13,71 @@ check_location(
 )
 }
 \arguments{
-\item{.data}{Data frame (preferably directly from Qualtrics imported using {qualtRics}.)}
+\item{.data}{Data frame (preferably directly from Qualtrics imported
+using {qualtRics}.)}
 
-\item{location_col}{Two element vector specifying columns for latitude and longitude (in that order).}
+\item{location_col}{Two element vector specifying columns for latitude
+and longitude (in that order).}
 
-\item{include_na}{Logical indicating whether to include rows with NA in latitude and longitude columns in the output list of potentially excluded data.}
+\item{include_na}{Logical indicating whether to include rows with NA in
+latitude and longitude columns in the output list of potentially excluded data.}
 
-\item{print_tibble}{Logical indicating whether to print the tibble to the console.}
+\item{print_tibble}{Logical indicating whether to print returned tibble to
+console.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-The output is a data frame of the rows that are located outside of the US and (if \code{include_na == FALSE}) rows with no location information. For a function that excludes these rows, use \link{exclude_location}.
+The output is a data frame of the rows that are located outside of
+the US and (if \code{include_na == FALSE}) rows with no location information.
+For a function that marks these rows, use \link{mark_location}.
+For a function that excludes these rows, use \link{exclude_location}.
 }
 \description{
-Check data rows where location information is absent and outside of the the US
+The \code{check_location()} function subsets rows of data, retaining rows
+that have locations outside of the US.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
+}
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+The function only works for the United States.
+It uses the #' \code{\link[maps:map.where]{maps::map.where()}} to determine if latitude and longitude
+are inside the US.
+
+The function outputs to console a message about the number of rows
+with locations outside of the US.
+}
+\examples{
+# Check for locations outside of the US
+data(qualtrics_text)
+check_location(qualtrics_text)
+
+# Remove preview data first
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_location()
+
+# Do not print rows to console
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_location(qualtrics_text, print_tibble = FALSE)
+
+# Do not print message to console
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_location(qualtrics_text, quiet = TRUE)
+
 }
 \seealso{
 Other check functions: 
-\code{\link{check_duplicates}()}
+\code{\link{check_duplicates}()},
+\code{\link{check_duration}()},
+\code{\link{check_ip}()},
+\code{\link{check_preview}()},
+\code{\link{check_progress}()},
+\code{\link{check_resolution}()}
 }
 \concept{check functions}
+\concept{location functions}

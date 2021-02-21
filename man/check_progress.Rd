@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_progress.R
 \name{check_progress}
 \alias{check_progress}
-\title{Title}
+\title{Check for survey progress}
 \usage{
 check_progress(
   .data,
@@ -14,11 +14,78 @@ check_progress(
 )
 }
 \arguments{
-\item{quiet}{}
+\item{.data}{Data frame (preferably directly from Qualtrics imported
+using {qualtRics}.)}
+
+\item{min_progress}{Amount of progress considered acceptable to include.}
+
+\item{finished_col}{Column name for whether survey was completed.}
+
+\item{progress_col}{Column name for percentage of survey completed.}
+
+\item{print_tibble}{Logical indicating whether to print returned tibble to
+console.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-
+The output is a data frame of the rows
+that are incomplete.
+For a function that marks these rows, use \link{mark_progress}.
+For a function that excludes these rows, use \link{exclude_progress}.
 }
 \description{
-Title
+The \code{check_progress()} function subsets rows of data, retaining rows
+that are incomplete.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+The default requires 100\% completion, but lower levels of completion
+maybe acceptable and can be allowed by specifying the \code{min_progress} argument.
+The finished column in Qualtrics can be a numeric or character vector
+depending on whether it is exported as choice text or numeric values.
+This function works for both.
+
+The function outputs to console a message about the number of rows
+that are incomplete.
+}
+\examples{
+# Check for survey previews
+data(qualtrics_text)
+check_progress(qualtrics_text)
+
+# Remove preview data first
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_progress()
+
+# Include a lower acceptable completion percentage
+qualtrics_numeric \%>\%
+  exclude_preview() \%>\%
+  check_progress(min_progress = 98)
+
+# Do not print rows to console
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_progress(print_tibble = FALSE)
+
+# Do not print message to console
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_progress(quiet = TRUE)
+
+}
+\seealso{
+Other check functions: 
+\code{\link{check_duplicates}()},
+\code{\link{check_duration}()},
+\code{\link{check_ip}()},
+\code{\link{check_location}()},
+\code{\link{check_preview}()},
+\code{\link{check_resolution}()}
+}
+\concept{check functions}
+\concept{progress functions}

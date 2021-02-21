@@ -1,16 +1,64 @@
-#' Title
+#' Check for minimum or maximum durations
 #'
-#' @param .data
-#' @param min_duration
-#' @param max_duration
-#' @param duration_col
-#' @param print_tibble
-#' @param quiet
+#' @description
+#' The `check_duration()` function subsets rows of data, retaining rows
+#' that have durations that are too fast or too slow.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
+#' @details
+#' Default column names are set based on output from the
+#' [qualtRics::fetch_survey()].
+#' By default, minimum durations of 10 seconds are checked, but either
+#' minima or maxima can be checked with the `min_duration` and
+#' `max_duration` arguments. The function outputs to console separate
+#' messages about the number of rows that are too fast or too slow.
+#'
+#' This function returns the fast and slow rows.
+#'
+#' @param .data Data frame or tibble (preferably exported from Qualtrics).
+#' @param min_duration Minimum duration that is too fast in seconds.
+#' @param max_duration Maximum duration that is too slow in seconds.
+#' @param duration_col Column name for durations.
+#' @param print_tibble Logical indicating whether to print returned tibble to
+#' console.
+#' @param quiet Logical indicating whether to print message to console.
+#'
+#' @family duration functions
+#' @family check functions
 #' @return
+#' An object of the same type as `.data` that includes the rows with fast and/or
+#' slow duration.
+#; For a function that excludes
+#' these rows, use [exclude_duration()]. For a function that marks these rows,
+#' use [mark_duration()].
 #' @export
 #'
 #' @examples
+#' # Check for durations faster than 100 seconds
+#' data(qualtrics_text)
+#' check_duration(qualtrics_text, min_duration = 100)
+#'
+#' # Remove preview data first
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_duration(min_duration = 100)
+#'
+#' # Check only for durations slower than 800 seconds
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_duration(max_duration = 800)
+#'
+#' # Do not print rows to console
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_duration(min_duration = 100, print_tibble = FALSE)
+#'
+#' # Do not print message to console
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_duration(min_duration = 100, quiet = TRUE)
+#'
 check_duration <- function(.data, min_duration = 10, max_duration = NULL, duration_col = "Duration (in seconds)", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column

@@ -1,16 +1,56 @@
-#' Title
+#' Check screen resolution
 #'
-#' @param .data
-#' @param width_min
-#' @param height_min
-#' @param res_col
-#' @param print_tibble
-#' @param quiet
+#' @description
+#' The `check_resolution()` function subsets rows of data, retaining rows
+#' that have unacceptable screen resolution. This can be used, for example, to
+#' determine data collected via phones when desktop monitors are required.
+#' The function is written to work with data from
+#' [Qualtrics](https://qualtrics.com) surveys.
 #'
-#' @return
+#' @details
+#' Default column names are set based on output from the
+#' [qualtRics::fetch_survey()].
+#'
+#' The function outputs to console a message about the number of rows
+#' with unacceptable screen resolution.
+#'
+#' @param .data Data frame (preferably directly from Qualtrics imported
+#' using {qualtRics}.)
+#' @param width_min Minimum acceptable screen width.
+#' @param height_min Minimum acceptable screen height
+#' @param res_col Column name for screen resolution (in format widthxheight)
+#' @param print_tibble Logical indicating whether to print returned tibble to
+#' console.
+#' @param quiet Logical indicating whether to print message to console.
+#'
+#' @family resolution functions
+#' @family check functions
+#' @return The output is a data frame of the rows
+#' that have unacceptable screen resolutions.
+#' For a function that marks these rows, use [mark_resolution].
+#' For a function that excludes these rows, use [exclude_resolution].
 #' @export
 #'
 #' @examples
+#' # Check for survey previews
+#' data(qualtrics_text)
+#' check_resolution(qualtrics_text)
+#'
+#' # Remove preview data first
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_resolution()
+#'
+#' # Do not print rows to console
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_resolution(print_tibble = FALSE)
+#'
+#' # Do not print message to console
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_resolution(quiet = TRUE)
+#'
 check_resolution <- function(.data, width_min = 1000, height_min = 0, res_col = "Resolution", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column

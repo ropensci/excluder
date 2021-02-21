@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_resolution.R
 \name{check_resolution}
 \alias{check_resolution}
-\title{Title}
+\title{Check screen resolution}
 \usage{
 check_resolution(
   .data,
@@ -14,11 +14,69 @@ check_resolution(
 )
 }
 \arguments{
-\item{quiet}{}
+\item{.data}{Data frame (preferably directly from Qualtrics imported
+using {qualtRics}.)}
+
+\item{width_min}{Minimum acceptable screen width.}
+
+\item{height_min}{Minimum acceptable screen height}
+
+\item{res_col}{Column name for screen resolution (in format widthxheight)}
+
+\item{print_tibble}{Logical indicating whether to print returned tibble to
+console.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-
+The output is a data frame of the rows
+that have unacceptable screen resolutions.
+For a function that marks these rows, use \link{mark_resolution}.
+For a function that excludes these rows, use \link{exclude_resolution}.
 }
 \description{
-Title
+The \code{check_resolution()} function subsets rows of data, retaining rows
+that have unacceptable screen resolution. This can be used, for example, to
+determine data collected via phones when desktop monitors are required.
+The function is written to work with data from
+\href{https://qualtrics.com}{Qualtrics} surveys.
 }
+\details{
+Default column names are set based on output from the
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+
+The function outputs to console a message about the number of rows
+with unacceptable screen resolution.
+}
+\examples{
+# Check for survey previews
+data(qualtrics_text)
+check_resolution(qualtrics_text)
+
+# Remove preview data first
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_resolution()
+
+# Do not print rows to console
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_resolution(print_tibble = FALSE)
+
+# Do not print message to console
+qualtrics_text \%>\%
+  exclude_preview() \%>\%
+  check_resolution(quiet = TRUE)
+
+}
+\seealso{
+Other check functions: 
+\code{\link{check_duplicates}()},
+\code{\link{check_duration}()},
+\code{\link{check_ip}()},
+\code{\link{check_location}()},
+\code{\link{check_preview}()},
+\code{\link{check_progress}()}
+}
+\concept{check functions}
+\concept{resolution functions}

@@ -1,22 +1,21 @@
 #' Check for duplicate IP addresses and/or locations
 #'
+#' @description
 #' The `check_duplicates()` function subsets rows of data, retaining rows
 #' that have the same IP address and/or same latitude and longitude. The
 #' function is written to work with data from
 #' [Qualtrics](https://qualtrics.com) surveys.
 #'
+#' @details
 #' Default column names are set based on output from the
-#' [qualtRics::fetch_survey]. By default, IP address and location are both
-#' checked, but they can be checked separately with the `dupl_ip` and
-#' `dupl_location` arguments. The function outputs to console separate
-#' messages about the number of rows with duplicate IP addresses and rows
-#' with duplicate locations.
+#' [qualtRics::fetch_survey()].
+#' By default, IP address and location are both checked, but they can be
+#' checked separately with the `dupl_ip` and `dupl_location` arguments.
+#'
+#' The function outputs to console separate messages about the number of
+#' rows with duplicate IP addresses and rows with duplicate locations.
 #' These counts are computed independently, so rows may be counted for both
 #' types of duplicates.
-#'
-#' This function returns the rows of duplicates. For a function that excludes
-#' these rows, use [exclude_duplicates]. For a function that marks these rows,
-#' use [mark_duplicates].
 #'
 #' @param .data Data frame or tibble (preferably exported from Qualtrics).
 #' @param ip_col Column name for IP addresses.
@@ -31,11 +30,13 @@
 #' console.
 #' @param quiet Logical indicating whether to print message to console.
 #'
-#' @family check functions
 #' @family duplicates functions
+#' @family check functions
 #' @return
-#' An object of the same type as `.data` that includes the rows with duplicate
-#' IP addresses and/or locations.
+#' An object of the same type as `.data` that includes the rows with
+#' duplicate IP addresses and/or locations.
+#' For a function that excludes these rows, use [exclude_duplicates()].
+#' For a function that marks these rows, use [mark_duplicates()].
 #'
 #' @export
 #'
@@ -45,13 +46,17 @@
 #' check_duplicates(qualtrics_text)
 #'
 #' # Check only for duplicate locations
-#' check_duplicates(qualtrics_text, dupl_location = FALSE)
+#' qualtrics_text %>%
+#'   check_duplicates(dupl_location = FALSE)
 #'
 #' # Do not print rows to console
-#' check_duplicates(qualtrics_text, print_tibble = FALSE)
+#' qualtrics_text %>%
+#'   check_duplicates(print_tibble = FALSE)
 #'
 #' # Do not print message to console
-#' check_duplicates(qualtrics_text, quiet = TRUE)
+#' qualtrics_text %>%
+#'   check_duplicates(quiet = TRUE)
+#'
 check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), dupl_ip = TRUE, dupl_location = TRUE, include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns

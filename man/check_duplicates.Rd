@@ -37,8 +37,10 @@ console.}
 \item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-An object of the same type as \code{.data} that includes the rows with duplicate
-IP addresses and/or locations.
+An object of the same type as \code{.data} that includes the rows with
+duplicate IP addresses and/or locations.
+For a function that excludes these rows, use \code{\link[=exclude_duplicates]{exclude_duplicates()}}.
+For a function that marks these rows, use \code{\link[=mark_duplicates]{mark_duplicates()}}.
 }
 \description{
 The \code{check_duplicates()} function subsets rows of data, retaining rows
@@ -48,17 +50,14 @@ function is written to work with data from
 }
 \details{
 Default column names are set based on output from the
-\link[qualtRics:fetch_survey]{qualtRics::fetch_survey}. By default, IP address and location are both
-checked, but they can be checked separately with the \code{dupl_ip} and
-\code{dupl_location} arguments. The function outputs to console separate
-messages about the number of rows with duplicate IP addresses and rows
-with duplicate locations.
+\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+By default, IP address and location are both checked, but they can be
+checked separately with the \code{dupl_ip} and \code{dupl_location} arguments.
+
+The function outputs to console separate messages about the number of
+rows with duplicate IP addresses and rows with duplicate locations.
 These counts are computed independently, so rows may be counted for both
 types of duplicates.
-
-This function returns the rows of duplicates. For a function that excludes
-these rows, use \link{exclude_duplicates}. For a function that marks these rows,
-use \link{mark_duplicates}.
 }
 \examples{
 # Check for duplicate IP addresses and locations
@@ -66,21 +65,30 @@ data(qualtrics_text)
 check_duplicates(qualtrics_text)
 
 # Check only for duplicate locations
-check_duplicates(qualtrics_text, dupl_location = FALSE)
+qualtrics_text \%>\%
+  check_duplicates(dupl_location = FALSE)
 
 # Do not print rows to console
-check_duplicates(qualtrics_text, print_tibble = FALSE)
+qualtrics_text \%>\%
+  check_duplicates(print_tibble = FALSE)
 
 # Do not print message to console
-check_duplicates(qualtrics_text, quiet = TRUE)
+qualtrics_text \%>\%
+  check_duplicates(quiet = TRUE)
+
 }
 \seealso{
-Other check functions: 
-\code{\link{check_location}()}
-
 Other duplicates functions: 
 \code{\link{exclude_duplicates}()},
 \code{\link{mark_duplicates}()}
+
+Other check functions: 
+\code{\link{check_duration}()},
+\code{\link{check_ip}()},
+\code{\link{check_location}()},
+\code{\link{check_preview}()},
+\code{\link{check_progress}()},
+\code{\link{check_resolution}()}
 }
 \concept{check functions}
 \concept{duplicates functions}
