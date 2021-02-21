@@ -7,3 +7,4 @@
 ^.*DONOTCOMMIT*$
 ^create_data$
 
+^README\.Rmd$

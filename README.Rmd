@@ -1,0 +1,142 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# excluder
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of excluder is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from [Qualtrics](https://qualtrics.com) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
+
+## Installation
+
+You can install the released version of excluder  [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("jstevens5/excluder")
+```
+
+## Verbs
+This package provides three primary verbs:
+
+* `check` functions search for the exclusion criteria and outputs a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.
+* `mark` functions add a new column to the data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing.
+* `exclude` functions remove rows meeting the exclusion criteria. This is often the last step to complete after checking and/or marking the rows to ensure the exclusions are correct.
+
+## Exclusion types
+This package provides six types of exclusions based on Qualtrics metadata. If you have ideas for other metadata exclusions, please submit them as [issues](https://github.com/jstevens5/excluder/issues). Note, the intent of this package is not to develop functions for excluding rows based on survey-specific data but on general, frequently used metadata.
+
+* `duplicates` works with rows that have duplicate IP addresses and/or locations (latitude/longitude).
+* `duration` works with rows whose survey completion time is too short and/or too long.
+* `ip` works with rows whose IP addresses are not found in the specified country (note: this exclusion type requires an internet connection to download the country's IP ranges).
+* `location` works with rows whose latitude and longitude are noe found in the United States.
+* `preview` works with rows that are survey previews.
+* `progress` works with rows in which the survey was not complete.
+* `resolution` works with rows whose screen resolution is not acceptable.
+
+
+## Usage
+
+The verbs and exclusion types combine with `_` to create the functions, such as `check_duplicates`, `mark_duration`, and `exclude_ip`. Multiple functions can be changed together using the [`{magrittr}`]() pipe `%>%`. 
+
+### Checking
+
+The `check_*()` functions output messages about the number of rows that meet the exclusion criteria.
+
+```{r check1}
+library(excluder)
+# Check for preview rows
+qualtrics_text %>% 
+  check_preview()
+```
+
+Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meeting the first criterion.
+```{r check2}
+# Check for rows with incomplete data then rows with durations less than 100 seconds
+qualtrics_text %>% 
+  check_progress()
+```
+```{r check3}
+qualtrics_text %>% 
+  check_duration(min_duration = 100)
+```
+```{r check4}
+# Check for rows with durations less than 100 seconds within rows that did not complete the survey
+qualtrics_text %>% 
+  check_progress() %>% 
+  check_duration(min_duration = 100)
+```
+
+### Marking
+The `mark_*()` functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be chained together for multiple exclusion types.
+
+```{r mark1}
+# Mark preview and incomplete progress rows
+df <- qualtrics_text %>% 
+  mark_preview() %>% 
+  mark_progress()
+tibble::glimpse(df)
+```
+Use the [`collapse_exclusions()`](?collapse_exclusions) function to collapse all of the marked columns into a single column.
+```{r mark2}
+# Collapse labels for preview and incomplete progress rows
+df <- qualtrics_text %>% 
+  mark_preview() %>% 
+  mark_progress() %>% 
+  collapse_exclusions(exclusion_types = c("preview", "progress"))
+tibble::glimpse(df)
+```
+
+### Excluding
+The `exclude_*()` functions remove the rows that meet exclusion criteria. These, too, can be piped together. Since the output of each function is a subset of the original data with the excluded rows removed, the order of the functions will influence the reported number of rows meeting the exclusion criteria.
+
+```{r exclude1}
+# Exclude preview then incomplete progress rows
+df <- qualtrics_text %>% 
+  exclude_duration(min_duration = 100) %>% 
+  exclude_progress()
+dim(df)
+```
+```{r exclude2}
+# Exclude incomplete progress then preview rows
+df <- qualtrics_text %>% 
+  exclude_progress() %>% 
+  exclude_duration(min_duration = 100)
+dim(df)
+```
+Though the order of functions should not influence the final data set, it may speed up processing large files by removing preview and incomplete progress data first and waiting to check IP addresses and locations after other exclusions have been performed.
+
+```{r exclude3}
+# Exclude rows
+df <- qualtrics_text %>% 
+  exclude_preview() %>% 
+  exclude_progress() %>% 
+  exclude_duplicates() %>% 
+  exclude_duration(min_duration = 100) %>% 
+  exclude_resolution() %>% 
+  exclude_ip() %>% 
+  exclude_location()
+```
+
+### Combining verbs
+It often makes sense to remove the preview surveys and incomplete surveys before checking other exclusion types.
+```{r combine1}
+# Exclude preview then incomplete progress rows
+qualtrics_text %>% 
+  exclude_preview() %>% 
+  exclude_progress() %>% 
+  check_duplicates()
+```
