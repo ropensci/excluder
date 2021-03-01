@@ -1,4 +1,4 @@
-#' Metadata from simulated Qualtrics study
+#' Example numeric metadata from simulated Qualtrics study
 #'
 #' A dataset containing the metadata from a standard Qualtrics survey with
 #' browser metadata collected and exported with "Use numeric values".

@@ -3,7 +3,7 @@
 \docType{data}
 \name{qualtrics_numeric}
 \alias{qualtrics_numeric}
-\title{Metadata from simulated Qualtrics study}
+\title{Example numeric metadata from simulated Qualtrics study}
 \format{
 A data frame with 100 rows and 16 variables:
 \describe{
