@@ -6,16 +6,16 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of excluder is to facilitate checking for, marking, and
-excluding rows of data frames for common exclusion criteria. This
-package applies to data collected from
+The goal of [`{excluder}`](https://jstevens5.github.io/excluder/) is to
+facilitate checking for, marking, and excluding rows of data frames for
+common exclusion criteria. This package applies to data collected from
 [Qualtrics](https://qualtrics.com) surveys, and default column names
 come from importing data with the
 [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
 
 ## Installation
 
-You can install the released version of excluder
+You can install the released version of `{excluder}`
 [GitHub](https://github.com/) with:
 
 ``` r
