@@ -10,6 +10,7 @@
 #'
 #' @param .data Data frame or tibble (preferably exported from Qualtrics).
 #' @param id_col Column name for unique row ID (e.g., participant).
+#' @param silent Logical indicating whether to print message to console. Note this argument controls the exclude message not the check message.
 #' @param ... Inherit parameters from check function.
 #'
 #' @family duplicates functions
@@ -38,7 +39,7 @@
 #'   exclude_preview() %>%
 #'   exclude_duplicates(dupl_location = FALSE)
 #'
-exclude_duplicates <- function(.data, id_col = "ResponseId", ...) {
+exclude_duplicates <- function(.data, id_col = "ResponseId", silent = FALSE, ...) {
 
   # Check for presence of required column
   column_names <- names(.data)
@@ -53,6 +54,8 @@ exclude_duplicates <- function(.data, id_col = "ResponseId", ...) {
   # Exclude rows
   remaining_data <- dplyr::anti_join(.data, exclusions, by = id_col)
   n_remaining <- nrow(remaining_data)
-  message(n_exclusions, " out of ", nrow(.data), " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+  if (silent == FALSE) {
+    message(n_exclusions, " out of ", nrow(.data), " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+  }
   return(remaining_data)
 }

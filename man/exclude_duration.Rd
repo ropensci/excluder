@@ -4,12 +4,14 @@
 \alias{exclude_duration}
 \title{Exclude rows with minimum or maximum durations}
 \usage{
-exclude_duration(.data, id_col = "ResponseId", ...)
+exclude_duration(.data, id_col = "ResponseId", silent = FALSE, ...)
 }
 \arguments{
 \item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{silent}{Logical indicating whether to print message to console. Note this argument controls the exclude message not the check message.}
 
 \item{...}{Inherit parameters from check function.}
 }

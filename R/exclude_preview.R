@@ -32,7 +32,7 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview(print_tibble = FALSE)
 #'
-exclude_preview <- function(.data, id_col = "ResponseId", ...) {
+exclude_preview <- function(.data, id_col = "ResponseId", silent = FALSE, ...) {
 
   # Check for presence of required column
   column_names <- names(.data)
@@ -47,6 +47,8 @@ exclude_preview <- function(.data, id_col = "ResponseId", ...) {
   # Exclude rows
   remaining_data <- dplyr::anti_join(.data, exclusions, by = id_col)
   n_remaining <- nrow(remaining_data)
-  message(n_exclusions, " out of ", nrow(.data), " preview rows were excluded, leaving ", n_remaining, " rows.")
+  if (silent == FALSE) {
+    message(n_exclusions, " out of ", nrow(.data), " preview rows were excluded, leaving ", n_remaining, " rows.")
+  }
   return(remaining_data)
 }
