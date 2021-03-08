@@ -34,7 +34,8 @@
 #' @family check functions
 #' @return
 #' An object of the same type as `.data` that includes the rows with
-#' duplicate IP addresses and/or locations.
+#' duplicate IP addresses and/or locations. This includes a column
+#' called dupe_count that returns the number of duplicates.
 #' For a function that marks these rows, use [mark_duplicates()].
 #' For a function that excludes these rows, use [exclude_duplicates()].
 #'

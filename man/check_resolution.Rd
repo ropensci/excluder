@@ -29,8 +29,8 @@ console.}
 \item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-The output is a data frame of the rows
-that have unacceptable screen resolutions.
+The output is a data frame of the rows that have unacceptable screen
+resolutions. This includes new columns for resolution width and height.
 For a function that marks these rows, use \code{\link[=mark_resolution]{mark_resolution()}}.
 For a function that excludes these rows, use \code{\link[=exclude_resolution]{exclude_resolution()}}.
 }
