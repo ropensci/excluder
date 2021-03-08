@@ -73,4 +73,3 @@ test_that("No messages displayed when quiet = TRUE", {
   expect_message(exclude_progress(qualtrics_numeric, silent = TRUE), NA)
   expect_message(exclude_resolution(qualtrics_numeric, silent = TRUE), NA)
 })
-

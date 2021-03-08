@@ -42,8 +42,7 @@ test_that("Checks create tibbles of correct size", {
   suppressMessages(expect_true(ncol(check_resolution(qualtrics_numeric)) == 18))
   suppressMessages(expect_true(nrow(check_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 36))
   suppressMessages(expect_true(ncol(check_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 18))
-}
-)
+})
 
 test_that("Marks create tibbles of correct size", {
   # Mark duplicates
@@ -87,8 +86,7 @@ test_that("Marks create tibbles of correct size", {
   suppressMessages(expect_true(ncol(mark_resolution(qualtrics_numeric)) == 17))
   suppressMessages(expect_true(nrow(mark_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 100))
   suppressMessages(expect_true(ncol(mark_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 17))
-}
-)
+})
 
 test_that("Excludes create tibbles of correct size", {
   # Exclude duplicates
@@ -132,6 +130,4 @@ test_that("Excludes create tibbles of correct size", {
   suppressMessages(expect_true(ncol(exclude_resolution(qualtrics_numeric)) == 16))
   suppressMessages(expect_true(nrow(exclude_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 64))
   suppressMessages(expect_true(ncol(exclude_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 16))
-}
-)
-
+})
