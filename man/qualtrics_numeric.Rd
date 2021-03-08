@@ -21,7 +21,7 @@ A data frame with 100 rows and 16 variables:
 \item{UserLanguage}{language set in Qualtrics}
 \item{Browser}{user web browser type}
 \item{Version}{user web browser version}
-\item{Operation System}{user operating system}
+\item{Operating System}{user operating system}
 \item{Resolution}{user screen resolution}
 }
 }

@@ -67,10 +67,10 @@ check_resolution <- function(.data, width_min = 1000, height_min = 0, res_col = 
   filtered_data <- .data %>%
     tidyr::separate(res_col, c("width", "height"), sep = "x", remove = FALSE) %>%
     dplyr::mutate(
-      width = readr::parse_number(width),
-      height = readr::parse_number(height)
+      width = readr::parse_number(.data$width),
+      height = readr::parse_number(.data$height)
     ) %>%
-    dplyr::filter(width < width_min | height < height_min)
+    dplyr::filter(.data$width < width_min | .data$height < height_min)
   n_wrong_resolution <- nrow(filtered_data)
 
   # Print message and return output

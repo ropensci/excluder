@@ -91,8 +91,8 @@ check_ip <- function(.data, ip_col = "IPAddress", country = "US", print_tibble =
   attr(survey_ips, "label") <- NULL
   outside_country <- !iptools::ip_in_any(survey_ips, country_ip_ranges)
   filtered_data <- dplyr::bind_cols(filtered_data, outside = outside_country)
-  filtered_data <- dplyr::filter(filtered_data, outside == TRUE) %>%
-    dplyr::select(-outside)
+  filtered_data <- dplyr::filter(filtered_data, .data$outside == TRUE) %>%
+    dplyr::select(-.data$outside)
   n_outside_country <- nrow(filtered_data)
 
   # Print message and return output
