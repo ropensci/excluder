@@ -66,6 +66,34 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
   if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
   if (!ip_col %in% column_names) stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
 
+  # Extract IP address, latitude, and longitude vectors
+  ip_vector <- dplyr::pull(.data, ip_col)
+  latitude <- dplyr::pull(.data, location_col[1])
+  longitude <- dplyr::pull(.data, location_col[2])
+
+  # Check column types
+  ## IP address column
+  if (is.character(ip_vector)) {
+    classify_ip <- iptools::ip_classify(ip_vector)
+    if (any(classify_ip == "Invalid", na.rm = TRUE)) stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
+  } else stop("Incorrect data type for ip_col. Please ensure data type is character.")
+
+  ## Latitude and longitude columns
+  if (!is.numeric(latitude)) stop("Incorrect data type for latitude column. Please ensure data type is numeric.")
+  if (!is.numeric(longitude)) stop("Incorrect data type for longitude column. Please ensure data type is numeric.")
+
+  # Check for duplicate IP addresses
+  if (dupl_ip == TRUE) {
+    if (include_na == FALSE) {
+      .data <- tidyr::drop_na(.data, dplyr::all_of(ip_col))
+    }
+    same_ip <- janitor::get_dupes(.data, dplyr::all_of(ip_col))
+    n_same_ip <- nrow(same_ip)
+    if (quiet == FALSE) {
+      message(n_same_ip, " out of ", nrow(.data), " rows have duplicate IP addresses.")
+    }
+  }
+
   # Check for duplicate locations
   if (dupl_location == TRUE) {
     if (include_na == FALSE) {
@@ -78,18 +106,6 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
     n_same_location <- nrow(same_location)
     if (quiet == FALSE) {
       message(n_same_location, " out of ", nrow(.data), " rows have duplicate locations.")
-    }
-  }
-
-  # Check for duplicate IP addresses
-  if (dupl_ip == TRUE) {
-    if (include_na == FALSE) {
-      .data <- tidyr::drop_na(.data, dplyr::all_of(ip_col))
-    }
-    same_ip <- janitor::get_dupes(.data, dplyr::all_of(ip_col))
-    n_same_ip <- nrow(same_ip)
-    if (quiet == FALSE) {
-      message(n_same_ip, " out of ", nrow(.data), " rows have duplicate IP addresses.")
     }
   }
 
