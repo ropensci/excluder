@@ -209,7 +209,7 @@ types of duplicates.</p>
     <pre class="examples"><div class='input'><span class='co'># Check for duplicate IP addresses and locations</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='fu'>check_duplicates</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>10 out of 99 rows have duplicate locations.</span></div><div class='output co'>#&gt; <span class='message'>7 out of 97 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 17 x 17</span><span>
+</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 17 x 17</span><span>
 #&gt;    LocationLatitude LocationLongitude dupe_count StartDate          
 #&gt;               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>             
 #&gt; </span><span style='color: #BCBCBC;'> 1</span><span>             28.6             -</span><span style='color: #BB0000;'>81.5</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:42:47</span><span>
@@ -253,7 +253,7 @@ types of duplicates.</p>
 <span class='co'># Do not print rows to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duplicates</span><span class='op'>(</span>print_tibble <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>10 out of 99 rows have duplicate locations.</span></div><div class='output co'>#&gt; <span class='message'>7 out of 97 rows have duplicate IP addresses.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='input'>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duplicates</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
