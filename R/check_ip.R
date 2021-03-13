@@ -73,21 +73,31 @@ check_ip <- function(.data, ip_col = "IPAddress", country = "US", print_tibble =
   }
 
   # Quote column names
-  ip_col <- dplyr::ensym(ip_col)
+  ip_col_sym <- dplyr::ensym(ip_col)
+
+  # Extract IP address, latitude, and longitude vectors
+  ip_vector <- dplyr::pull(.data, ip_col)
+
+  # Check column types
+  ## IP address column
+  if (is.character(ip_vector)) {
+    classify_ip <- iptools::ip_classify(ip_vector)
+    if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
+  } else stop("Incorrect data type for ip_col. Please ensure data type is character.")
 
   # Remove rows with NAs for IP addresses
-  na_rows <- dplyr::filter(.data, is.na(!!ip_col))
+  na_rows <- dplyr::filter(.data, is.na(!!ip_col_sym))
   n_na_rows <- nrow(na_rows)
   if (n_na_rows > 0 & quiet == FALSE) {
     message(n_na_rows, " out of ", nrow(.data), " rows have NA values for IP addresses (likely because it includes preview data).")
   }
-  filtered_data <- dplyr::filter(.data, !is.na(!!ip_col))
+  filtered_data <- dplyr::filter(.data, !is.na(!!ip_col_sym))
 
   # Get IP ranges for specified country
   country_ip_ranges <- unlist(iptools::country_ranges(country))
 
   # Filter data based on IP ranges
-  survey_ips <- dplyr::pull(filtered_data, ip_col)
+  survey_ips <- dplyr::pull(filtered_data, ip_col_sym)
   attr(survey_ips, "label") <- NULL
   outside_country <- !iptools::ip_in_any(survey_ips, country_ip_ranges)
   filtered_data <- dplyr::bind_cols(filtered_data, outside = outside_country)

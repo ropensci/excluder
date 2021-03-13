@@ -64,6 +64,14 @@ check_location <- function(.data, location_col = c("LocationLatitude", "Location
   # Quote column names
   location_col_enquo <- dplyr::enquo(location_col)
 
+  # Extract IP address, latitude, and longitude vectors
+  latitude <- dplyr::pull(.data, location_col[1])
+  longitude <- dplyr::pull(.data, location_col[2])
+
+  # Check column types
+  if (!is.numeric(latitude)) stop("Incorrect data type for latitude column. Please ensure data type is numeric.")
+  if (!is.numeric(longitude)) stop("Incorrect data type for longitude column. Please ensure data type is numeric.")
+
   # Check for participants with no location information
   no_location <- dplyr::filter(.data, is.na(dplyr::across(!!location_col_enquo)))
   n_no_location <- nrow(no_location)

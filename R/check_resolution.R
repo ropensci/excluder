@@ -64,6 +64,16 @@ check_resolution <- function(.data, width_min = 1000, height_min = 0, res_col = 
     stop("This check requires a minimum resolution for resolution width or height. Please include 'width_min' and/or 'height_min'.")
   }
 
+  # Extract duration vector
+  res_vector <- dplyr::pull(.data, res_col)
+
+  # Check column type
+  if (!is.character(res_vector)) {
+    stop("Incorrect data type for resolution column. Please ensure data type is character.")
+  } else if (any(stringr::str_detect(res_vector, "x") == FALSE, na.rm = TRUE)) {
+    stop("Resolution column includes values not using widthxheight format.")
+  }
+
   filtered_data <- .data %>%
     tidyr::separate(res_col, c("width", "height"), sep = "x", remove = FALSE) %>%
     dplyr::mutate(

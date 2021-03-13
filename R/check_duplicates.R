@@ -75,7 +75,7 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
   ## IP address column
   if (is.character(ip_vector)) {
     classify_ip <- iptools::ip_classify(ip_vector)
-    if (any(classify_ip == "Invalid", na.rm = TRUE)) stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
+    if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
   } else stop("Incorrect data type for ip_col. Please ensure data type is character.")
 
   ## Latitude and longitude columns
