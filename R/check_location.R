@@ -72,6 +72,9 @@ check_location <- function(.data, location_col = c("LocationLatitude", "Location
   if (!is.numeric(latitude)) stop("Incorrect data type for latitude column. Please ensure data type is numeric.")
   if (!is.numeric(longitude)) stop("Incorrect data type for longitude column. Please ensure data type is numeric.")
 
+  # Find number of rows
+  n_rows <- nrow(.data)
+
   # Check for participants with no location information
   no_location <- dplyr::filter(.data, is.na(dplyr::across(!!location_col_enquo)))
   n_no_location <- nrow(no_location)
@@ -96,8 +99,8 @@ check_location <- function(.data, location_col = c("LocationLatitude", "Location
 
   # Print messages and return output
   if (quiet == FALSE) {
-    message(n_no_location, " out of ", nrow(.data), " rows had no information on location.")
-    message(n_outside_us, " out of ", nrow(.data), " rows were located outside of the US.")
+    message(n_no_location, " out of ", n_rows, " rows had no information on location.")
+    message(n_outside_us, " out of ", n_rows, " rows were located outside of the US.")
   }
   if (print_tibble == TRUE) {
     return(location_issues)
