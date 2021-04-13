@@ -107,7 +107,7 @@
 <li>
 <code>ip</code> works with rows whose IP addresses are not found in the specified country (note: this exclusion type requires an internet connection to download the country’s IP ranges).</li>
 <li>
-<code>location</code> works with rows whose latitude and longitude are noe found in the United States.</li>
+<code>location</code> works with rows whose latitude and longitude are not found in the United States.</li>
 <li>
 <code>preview</code> works with rows that are survey previews.</li>
 <li>
@@ -129,7 +129,7 @@
 <span class="co"># Check for preview rows</span>
 <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/check_preview.html">check_preview</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
+<span class="co">#&gt; 2 out of 100 rows included previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; # A tibble: 2 x 16</span>
 <span class="co">#&gt; # Rowwise: </span>
 <span class="co">#&gt;   StartDate           EndDate             Status         IPAddress Progress</span>
@@ -140,7 +140,7 @@
 <span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
 <span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
-<p>Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meeting the first criterion.</p>
+<p>Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check for rows with incomplete data then rows with durations less than 100 seconds</span>
 <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
@@ -203,7 +203,7 @@
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/mark_progress.html">mark_progress</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
+<span class="co">#&gt; 2 out of 100 rows included previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
 <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 100</span>
@@ -234,7 +234,7 @@
   <span class="fu"><a href="reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/mark_progress.html">mark_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/collapse_exclusions.html">collapse_exclusions</a></span><span class="op">(</span>exclusion_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"preview"</span>, <span class="st">"progress"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
+<span class="co">#&gt; 2 out of 100 rows included previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
 <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 100</span>
