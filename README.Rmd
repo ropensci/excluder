@@ -42,7 +42,7 @@ This package provides six types of exclusions based on Qualtrics metadata. If yo
 * `duplicates` works with rows that have duplicate IP addresses and/or locations (latitude/longitude).
 * `duration` works with rows whose survey completion time is too short and/or too long.
 * `ip` works with rows whose IP addresses are not found in the specified country (note: this exclusion type requires an internet connection to download the country's IP ranges).
-* `location` works with rows whose latitude and longitude are noe found in the United States.
+* `location` works with rows whose latitude and longitude are not found in the United States.
 * `preview` works with rows that are survey previews.
 * `progress` works with rows in which the survey was not complete.
 * `resolution` works with rows whose screen resolution is not acceptable.
@@ -63,7 +63,7 @@ qualtrics_text %>%
   check_preview()
 ```
 
-Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meeting the first criterion.
+Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.
 ```{r check2}
 # Check for rows with incomplete data then rows with durations less than 100 seconds
 qualtrics_text %>% 

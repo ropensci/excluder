@@ -54,7 +54,7 @@ metadata.
 -   `ip` works with rows whose IP addresses are not found in the
     specified country (note: this exclusion type requires an internet
     connection to download the country’s IP ranges).
--   `location` works with rows whose latitude and longitude are noe
+-   `location` works with rows whose latitude and longitude are not
     found in the United States.
 -   `preview` works with rows that are survey previews.
 -   `progress` works with rows in which the survey was not complete.
@@ -77,7 +77,7 @@ library(excluder)
 # Check for preview rows
 qualtrics_text %>% 
   check_preview()
-#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
+#> 2 out of 100 rows included previews. It is highly recommended to exclude these rows before further checking.
 #> # A tibble: 2 x 16
 #> # Rowwise: 
 #>   StartDate           EndDate             Status         IPAddress Progress
@@ -92,7 +92,7 @@ qualtrics_text %>%
 
 Because checks return only the rows meeting the criteria, they should
 not be connected via pipes unless you want to subset the second check
-criterion within the rows that meeting the first criterion.
+criterion within the rows that meet the first criterion.
 
 ``` r
 # Check for rows with incomplete data then rows with durations less than 100 seconds
@@ -163,7 +163,7 @@ together for multiple exclusion types.
 df <- qualtrics_text %>% 
   mark_preview() %>% 
   mark_progress()
-#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
+#> 2 out of 100 rows included previews. It is highly recommended to exclude these rows before further checking.
 #> 6 out of 100 rows did not complete the study.
 tibble::glimpse(df)
 #> Rows: 100
@@ -198,7 +198,7 @@ df <- qualtrics_text %>%
   mark_preview() %>% 
   mark_progress() %>% 
   collapse_exclusions(exclusion_types = c("preview", "progress"))
-#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
+#> 2 out of 100 rows included previews. It is highly recommended to exclude these rows before further checking.
 #> 6 out of 100 rows did not complete the study.
 tibble::glimpse(df)
 #> Rows: 100
