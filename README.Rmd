@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # excluder
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jstevens5/excluder?branch=main)
 <!-- badges: end -->
 
 The goal of [`{excluder}`](https://jstevens5.github.io/excluder/) is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from [Qualtrics](https://qualtrics.com) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.

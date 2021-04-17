@@ -4,6 +4,9 @@
 # excluder
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jstevens5/excluder?branch=main)
 <!-- badges: end -->
 
 The goal of [`{excluder}`](https://jstevens5.github.io/excluder/) is to
@@ -77,7 +80,7 @@ library(excluder)
 # Check for preview rows
 qualtrics_text %>% 
   check_preview()
-#> 2 out of 100 rows included previews. It is highly recommended to exclude these rows before further checking.
+#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
 #> # A tibble: 2 x 16
 #> # Rowwise: 
 #>   StartDate           EndDate             Status         IPAddress Progress
@@ -163,7 +166,7 @@ together for multiple exclusion types.
 df <- qualtrics_text %>% 
   mark_preview() %>% 
   mark_progress()
-#> 2 out of 100 rows included previews. It is highly recommended to exclude these rows before further checking.
+#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
 #> 6 out of 100 rows did not complete the study.
 tibble::glimpse(df)
 #> Rows: 100
@@ -198,7 +201,7 @@ df <- qualtrics_text %>%
   mark_preview() %>% 
   mark_progress() %>% 
   collapse_exclusions(exclusion_types = c("preview", "progress"))
-#> 2 out of 100 rows included previews. It is highly recommended to exclude these rows before further checking.
+#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
 #> 6 out of 100 rows did not complete the study.
 tibble::glimpse(df)
 #> Rows: 100
@@ -289,9 +292,9 @@ qualtrics_text %>%
   check_duplicates()
 #> 2 out of 100 preview rows were excluded, leaving 98 rows.
 #> 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.
+#> 6 out of 92 rows have duplicate IP addresses.
 #> 
 #> 9 out of 91 rows have duplicate locations.
-#> 6 out of 91 rows have duplicate IP addresses.
 #> # A tibble: 15 x 17
 #>    LocationLatitude LocationLongitude dupe_count StartDate          
 #>               <dbl>             <dbl>      <int> <dttm>             

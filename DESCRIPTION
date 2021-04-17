@@ -29,5 +29,6 @@ Depends:
 Suggests: 
     testthat (>= 3.0.0),
     readr,
-    stringr
+    stringr,
+    covr
 Config/testthat/edition: 3
