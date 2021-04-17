@@ -7,6 +7,7 @@
 
 [![Codecov test
 coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jstevens5/excluder?branch=main)
+[![R-CMD-check](https://github.com/jstevens5/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jstevens5/excluder/actions)
 <!-- badges: end -->
 
 The goal of [`{excluder}`](https://jstevens5.github.io/excluder/) is to
