@@ -209,47 +209,113 @@ types of duplicates.</p>
     <pre class="examples"><div class='input'><span class='co'># Check for duplicate IP addresses and locations</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='fu'>check_duplicates</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 17 x 17</span><span>
-#&gt;    LocationLatitude LocationLongitude dupe_count StartDate          
-#&gt;               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>             28.6             -</span><span style='color: #BB0000;'>81.5</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:42:47</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>             28.6             -</span><span style='color: #BB0000;'>81.5</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:42:18</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:40:53</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:46:51</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:48:53</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>             40.3             -</span><span style='color: #BB0000;'>75.9</span><span>          2 2020-12-11 </span><span style='color: #949494;'>12:41:23</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>             40.3             -</span><span style='color: #BB0000;'>75.9</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:41:17</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>             45.5            -</span><span style='color: #BB0000;'>123.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:40:52</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>             45.5            -</span><span style='color: #BB0000;'>123.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:40:57</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span>             45.5            -</span><span style='color: #BB0000;'>123.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:48:48</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:40:53</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:46:51</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:48:53</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span>             40.3             -</span><span style='color: #BB0000;'>75.9</span><span>          2 2020-12-11 </span><span style='color: #949494;'>12:41:23</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>15</span><span>             40.3             -</span><span style='color: #BB0000;'>75.9</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:41:17</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>16</span><span>             28.6             -</span><span style='color: #BB0000;'>81.5</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:42:47</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>17</span><span>             28.6             -</span><span style='color: #BB0000;'>81.5</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:42:18</span><span>
-#&gt; </span><span style='color: #949494;'># … with 13 more variables: EndDate &lt;dttm&gt;, Status &lt;chr&gt;, IPAddress &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Progress &lt;dbl&gt;, Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Version &lt;chr&gt;, Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='output co'>#&gt;    LocationLatitude LocationLongitude dupe_count           StartDate
+#&gt; 1          28.56411         -81.54902          2 2020-12-17 15:42:47
+#&gt; 2          28.56411         -81.54902          2 2020-12-17 15:42:18
+#&gt; 3          37.28265        -120.50248          3 2020-12-17 15:40:53
+#&gt; 4          37.28265        -120.50248          3 2020-12-17 15:46:51
+#&gt; 5          37.28265        -120.50248          3 2020-12-17 15:48:53
+#&gt; 6          40.33554         -75.92698          2 2020-12-11 12:41:23
+#&gt; 7          40.33554         -75.92698          2 2020-12-17 15:41:17
+#&gt; 8          45.50412        -122.78665          3 2020-12-17 15:40:52
+#&gt; 9          45.50412        -122.78665          3 2020-12-17 15:40:57
+#&gt; 10         45.50412        -122.78665          3 2020-12-17 15:48:48
+#&gt; 11         37.28265        -120.50248          3 2020-12-17 15:40:53
+#&gt; 12         37.28265        -120.50248          3 2020-12-17 15:46:51
+#&gt; 13         37.28265        -120.50248          3 2020-12-17 15:48:53
+#&gt; 14         40.33554         -75.92698          2 2020-12-11 12:41:23
+#&gt; 15         40.33554         -75.92698          2 2020-12-17 15:41:17
+#&gt; 16         28.56411         -81.54902          2 2020-12-17 15:42:47
+#&gt; 17         28.56411         -81.54902          2 2020-12-17 15:42:18
+#&gt;                EndDate     Status    IPAddress Progress Duration (in seconds)
+#&gt; 1  2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
+#&gt; 2  2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
+#&gt; 3  2020-12-17 15:43:25 IP Address   22.51.31.0       99                   879
+#&gt; 4  2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
+#&gt; 5  2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
+#&gt; 6  2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
+#&gt; 7  2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
+#&gt; 8  2020-12-17 15:43:39 IP Address 32.164.134.0      100                   375
+#&gt; 9  2020-12-17 15:48:56 IP Address   6.79.107.0      100                   397
+#&gt; 10 2020-12-17 15:54:12 IP Address 54.232.129.0      100                   149
+#&gt; 11 2020-12-17 15:43:25 IP Address   22.51.31.0       99                   879
+#&gt; 12 2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
+#&gt; 13 2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
+#&gt; 14 2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
+#&gt; 15 2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
+#&gt; 16 2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
+#&gt; 17 2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
+#&gt;    Finished        RecordedDate        ResponseId UserLanguage Browser
+#&gt; 1      TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
+#&gt; 2      TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
+#&gt; 3     FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome
+#&gt; 4      TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
+#&gt; 5      TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
+#&gt; 6      TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
+#&gt; 7      TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
+#&gt; 8      TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome
+#&gt; 9      TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome
+#&gt; 10     TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome
+#&gt; 11    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome
+#&gt; 12     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
+#&gt; 13     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
+#&gt; 14     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
+#&gt; 15     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
+#&gt; 16     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
+#&gt; 17     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
+#&gt;          Version Operating System Resolution
+#&gt; 1   87.0.4280.88  Windows NT 10.0  1920x1080
+#&gt; 2   87.0.4280.88  Windows NT 10.0   1536x864
+#&gt; 3   87.0.4280.88  Windows NT 10.0   1366x768
+#&gt; 4           83.0  Windows NT 10.0   1440x960
+#&gt; 5    84.0.522.52  Windows NT 10.0  1920x1080
+#&gt; 6  86.0.4240.198        Macintosh   1280x800
+#&gt; 7   87.0.4280.88   Windows NT 6.1   1366x768
+#&gt; 8   87.0.4280.88  Windows NT 10.0  1920x1080
+#&gt; 9   87.0.4280.88  Windows NT 10.0   1536x864
+#&gt; 10  87.0.4280.88  Windows NT 10.0  1920x1080
+#&gt; 11  87.0.4280.88  Windows NT 10.0   1366x768
+#&gt; 12          83.0  Windows NT 10.0   1440x960
+#&gt; 13   84.0.522.52  Windows NT 10.0  1920x1080
+#&gt; 14 86.0.4240.198        Macintosh   1280x800
+#&gt; 15  87.0.4280.88   Windows NT 6.1   1366x768
+#&gt; 16  87.0.4280.88  Windows NT 10.0  1920x1080
+#&gt; 17  87.0.4280.88  Windows NT 10.0   1536x864</div><div class='input'>
 <span class='co'># Check only for duplicate locations</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duplicates</span><span class='op'>(</span>dupl_location <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 7 x 17</span><span>
-#&gt;   IPAddress  dupe_count StartDate           EndDate             Status  Progress
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 22.51.31.0          3 2020-12-17 </span><span style='color: #949494;'>15:40:53</span><span> 2020-12-17 </span><span style='color: #949494;'>15:43:25</span><span> IP Add…       99
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 22.51.31.0          3 2020-12-17 </span><span style='color: #949494;'>15:46:51</span><span> 2020-12-17 </span><span style='color: #949494;'>15:51:38</span><span> IP Add…      100
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 22.51.31.0          3 2020-12-17 </span><span style='color: #949494;'>15:48:53</span><span> 2020-12-17 </span><span style='color: #949494;'>15:53:48</span><span> IP Add…      100
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 24.195.91…          2 2020-12-11 </span><span style='color: #949494;'>12:41:23</span><span> 2020-12-11 </span><span style='color: #949494;'>12:44:37</span><span> IP Add…      100
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 24.195.91…          2 2020-12-17 </span><span style='color: #949494;'>15:41:17</span><span> 2020-12-17 </span><span style='color: #949494;'>15:45:42</span><span> IP Add…      100
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 55.73.114…          2 2020-12-17 </span><span style='color: #949494;'>15:42:47</span><span> 2020-12-17 </span><span style='color: #949494;'>15:46:26</span><span> IP Add…      100
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> 55.73.114…          2 2020-12-17 </span><span style='color: #949494;'>15:42:18</span><span> 2020-12-17 </span><span style='color: #949494;'>15:48:00</span><span> IP Add…      100
-#&gt; </span><span style='color: #949494;'># … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt;     IPAddress dupe_count           StartDate             EndDate     Status
+#&gt; 1  22.51.31.0          3 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address
+#&gt; 2  22.51.31.0          3 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address
+#&gt; 3  22.51.31.0          3 2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address
+#&gt; 4 24.195.91.0          2 2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address
+#&gt; 5 24.195.91.0          2 2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address
+#&gt; 6 55.73.114.0          2 2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address
+#&gt; 7 55.73.114.0          2 2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address
+#&gt;   Progress Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1       99                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
+#&gt; 2      100                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
+#&gt; 3      100                   246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch
+#&gt; 4      100                   177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB
+#&gt; 5      100                   521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP
+#&gt; 6      100                   236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC
+#&gt; 7      100                   526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI
+#&gt;   LocationLatitude LocationLongitude UserLanguage Browser       Version
+#&gt; 1         37.28265        -120.50248           EN  Chrome  87.0.4280.88
+#&gt; 2         37.28265        -120.50248           EN Firefox          83.0
+#&gt; 3         37.28265        -120.50248           EN    Edge   84.0.522.52
+#&gt; 4         40.33554         -75.92698           EN  Chrome 86.0.4240.198
+#&gt; 5         40.33554         -75.92698           EN  Chrome  87.0.4280.88
+#&gt; 6         28.56411         -81.54902           EN  Chrome  87.0.4280.88
+#&gt; 7         28.56411         -81.54902           EN  Chrome  87.0.4280.88
+#&gt;   Operating System Resolution
+#&gt; 1  Windows NT 10.0   1366x768
+#&gt; 2  Windows NT 10.0   1440x960
+#&gt; 3  Windows NT 10.0  1920x1080
+#&gt; 4        Macintosh   1280x800
+#&gt; 5   Windows NT 6.1   1366x768
+#&gt; 6  Windows NT 10.0  1920x1080
+#&gt; 7  Windows NT 10.0   1536x864</div><div class='input'>
 <span class='co'># Do not print rows to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duplicates</span><span class='op'>(</span>print_tibble <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
@@ -257,31 +323,79 @@ types of duplicates.</p>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duplicates</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 17 x 17</span><span>
-#&gt;    LocationLatitude LocationLongitude dupe_count StartDate          
-#&gt;               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>             28.6             -</span><span style='color: #BB0000;'>81.5</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:42:47</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>             28.6             -</span><span style='color: #BB0000;'>81.5</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:42:18</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:40:53</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:46:51</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:48:53</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>             40.3             -</span><span style='color: #BB0000;'>75.9</span><span>          2 2020-12-11 </span><span style='color: #949494;'>12:41:23</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>             40.3             -</span><span style='color: #BB0000;'>75.9</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:41:17</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>             45.5            -</span><span style='color: #BB0000;'>123.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:40:52</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>             45.5            -</span><span style='color: #BB0000;'>123.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:40:57</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span>             45.5            -</span><span style='color: #BB0000;'>123.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:48:48</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:40:53</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:46:51</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span>             37.3            -</span><span style='color: #BB0000;'>121.</span><span>           3 2020-12-17 </span><span style='color: #949494;'>15:48:53</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span>             40.3             -</span><span style='color: #BB0000;'>75.9</span><span>          2 2020-12-11 </span><span style='color: #949494;'>12:41:23</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>15</span><span>             40.3             -</span><span style='color: #BB0000;'>75.9</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:41:17</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>16</span><span>             28.6             -</span><span style='color: #BB0000;'>81.5</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:42:47</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>17</span><span>             28.6             -</span><span style='color: #BB0000;'>81.5</span><span>          2 2020-12-17 </span><span style='color: #949494;'>15:42:18</span><span>
-#&gt; </span><span style='color: #949494;'># … with 13 more variables: EndDate &lt;dttm&gt;, Status &lt;chr&gt;, IPAddress &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Progress &lt;dbl&gt;, Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Version &lt;chr&gt;, Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span><span></div><div class='input'>
-</div></span></pre>
+</div><div class='output co'>#&gt;    LocationLatitude LocationLongitude dupe_count           StartDate
+#&gt; 1          28.56411         -81.54902          2 2020-12-17 15:42:47
+#&gt; 2          28.56411         -81.54902          2 2020-12-17 15:42:18
+#&gt; 3          37.28265        -120.50248          3 2020-12-17 15:40:53
+#&gt; 4          37.28265        -120.50248          3 2020-12-17 15:46:51
+#&gt; 5          37.28265        -120.50248          3 2020-12-17 15:48:53
+#&gt; 6          40.33554         -75.92698          2 2020-12-11 12:41:23
+#&gt; 7          40.33554         -75.92698          2 2020-12-17 15:41:17
+#&gt; 8          45.50412        -122.78665          3 2020-12-17 15:40:52
+#&gt; 9          45.50412        -122.78665          3 2020-12-17 15:40:57
+#&gt; 10         45.50412        -122.78665          3 2020-12-17 15:48:48
+#&gt; 11         37.28265        -120.50248          3 2020-12-17 15:40:53
+#&gt; 12         37.28265        -120.50248          3 2020-12-17 15:46:51
+#&gt; 13         37.28265        -120.50248          3 2020-12-17 15:48:53
+#&gt; 14         40.33554         -75.92698          2 2020-12-11 12:41:23
+#&gt; 15         40.33554         -75.92698          2 2020-12-17 15:41:17
+#&gt; 16         28.56411         -81.54902          2 2020-12-17 15:42:47
+#&gt; 17         28.56411         -81.54902          2 2020-12-17 15:42:18
+#&gt;                EndDate     Status    IPAddress Progress Duration (in seconds)
+#&gt; 1  2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
+#&gt; 2  2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
+#&gt; 3  2020-12-17 15:43:25 IP Address   22.51.31.0       99                   879
+#&gt; 4  2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
+#&gt; 5  2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
+#&gt; 6  2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
+#&gt; 7  2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
+#&gt; 8  2020-12-17 15:43:39 IP Address 32.164.134.0      100                   375
+#&gt; 9  2020-12-17 15:48:56 IP Address   6.79.107.0      100                   397
+#&gt; 10 2020-12-17 15:54:12 IP Address 54.232.129.0      100                   149
+#&gt; 11 2020-12-17 15:43:25 IP Address   22.51.31.0       99                   879
+#&gt; 12 2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
+#&gt; 13 2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
+#&gt; 14 2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
+#&gt; 15 2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
+#&gt; 16 2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
+#&gt; 17 2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
+#&gt;    Finished        RecordedDate        ResponseId UserLanguage Browser
+#&gt; 1      TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
+#&gt; 2      TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
+#&gt; 3     FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome
+#&gt; 4      TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
+#&gt; 5      TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
+#&gt; 6      TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
+#&gt; 7      TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
+#&gt; 8      TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome
+#&gt; 9      TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome
+#&gt; 10     TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome
+#&gt; 11    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome
+#&gt; 12     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
+#&gt; 13     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
+#&gt; 14     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
+#&gt; 15     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
+#&gt; 16     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
+#&gt; 17     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
+#&gt;          Version Operating System Resolution
+#&gt; 1   87.0.4280.88  Windows NT 10.0  1920x1080
+#&gt; 2   87.0.4280.88  Windows NT 10.0   1536x864
+#&gt; 3   87.0.4280.88  Windows NT 10.0   1366x768
+#&gt; 4           83.0  Windows NT 10.0   1440x960
+#&gt; 5    84.0.522.52  Windows NT 10.0  1920x1080
+#&gt; 6  86.0.4240.198        Macintosh   1280x800
+#&gt; 7   87.0.4280.88   Windows NT 6.1   1366x768
+#&gt; 8   87.0.4280.88  Windows NT 10.0  1920x1080
+#&gt; 9   87.0.4280.88  Windows NT 10.0   1536x864
+#&gt; 10  87.0.4280.88  Windows NT 10.0  1920x1080
+#&gt; 11  87.0.4280.88  Windows NT 10.0   1366x768
+#&gt; 12          83.0  Windows NT 10.0   1440x960
+#&gt; 13   84.0.522.52  Windows NT 10.0  1920x1080
+#&gt; 14 86.0.4240.198        Macintosh   1280x800
+#&gt; 15  87.0.4280.88   Windows NT 6.1   1366x768
+#&gt; 16  87.0.4280.88  Windows NT 10.0  1920x1080
+#&gt; 17  87.0.4280.88  Windows NT 10.0   1536x864</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

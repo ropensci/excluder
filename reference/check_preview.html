@@ -185,29 +185,33 @@ that are survey previews.</p>
     <pre class="examples"><div class='input'><span class='co'># Check for survey previews</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='fu'>check_preview</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 16</span><span>
-#&gt; </span><span style='color: #949494;'># Rowwise: </span><span>
-#&gt;   StartDate           EndDate             Status         IPAddress Progress
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2020-12-11 </span><span style='color: #949494;'>12:06:52</span><span> 2020-12-11 </span><span style='color: #949494;'>12:10:30</span><span> Survey Preview </span><span style='color: #BB0000;'>NA</span><span>             100
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2020-12-11 </span><span style='color: #949494;'>12:06:43</span><span> 2020-12-11 </span><span style='color: #949494;'>12:11:27</span><span> Survey Preview </span><span style='color: #BB0000;'>NA</span><span>             100
-#&gt; </span><span style='color: #949494;'># … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt;             StartDate             EndDate         Status IPAddress Progress
+#&gt; 1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview      &lt;NA&gt;      100
+#&gt; 2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview      &lt;NA&gt;      100
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                   465     TRUE 2020-12-11 12:10:30 R_xLWiuPaNuURSFXY
+#&gt; 2                   545     TRUE 2020-12-11 12:11:27 R_Q5lqYw6emJQZx2o
+#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#&gt; 1         29.73694         -94.97599           EN  Chrome 88.0.4324.41
+#&gt; 2         39.74107        -121.82490           EN  Chrome 88.0.4324.50
+#&gt;   Operating System Resolution
+#&gt; 1  Windows NT 10.0   1366x768
+#&gt; 2        Macintosh  1680x1050</div><div class='input'>
 <span class='co'># Works for Qualtrics data exported as numeric values, too</span>
 <span class='va'>qualtrics_numeric</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_preview</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 16</span><span>
-#&gt; </span><span style='color: #949494;'># Rowwise: </span><span>
-#&gt;   StartDate           EndDate             Status IPAddress Progress
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2020-12-11 </span><span style='color: #949494;'>12:06:52</span><span> 2020-12-11 </span><span style='color: #949494;'>12:10:30</span><span>      1 </span><span style='color: #BB0000;'>NA</span><span>             100
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2020-12-11 </span><span style='color: #949494;'>12:06:43</span><span> 2020-12-11 </span><span style='color: #949494;'>12:11:27</span><span>      1 </span><span style='color: #BB0000;'>NA</span><span>             100
-#&gt; </span><span style='color: #949494;'># … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt;             StartDate             EndDate Status IPAddress Progress
+#&gt; 1 2020-12-11 12:06:52 2020-12-11 12:10:30      1      &lt;NA&gt;      100
+#&gt; 2 2020-12-11 12:06:43 2020-12-11 12:11:27      1      &lt;NA&gt;      100
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                   465        1 2020-12-11 12:10:30 R_xLWiuPaNuURSFXY
+#&gt; 2                   545        1 2020-12-11 12:11:27 R_Q5lqYw6emJQZx2o
+#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#&gt; 1         29.73694         -94.97599           EN  Chrome 88.0.4324.41
+#&gt; 2         39.74107        -121.82490           EN  Chrome 88.0.4324.50
+#&gt;   Operating System Resolution
+#&gt; 1  Windows NT 10.0   1366x768
+#&gt; 2        Macintosh  1680x1050</div><div class='input'>
 <span class='co'># Do not print rows to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_preview</span><span class='op'>(</span>print_tibble <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
@@ -215,17 +219,19 @@ that are survey previews.</p>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_preview</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 16</span><span>
-#&gt; </span><span style='color: #949494;'># Rowwise: </span><span>
-#&gt;   StartDate           EndDate             Status         IPAddress Progress
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2020-12-11 </span><span style='color: #949494;'>12:06:52</span><span> 2020-12-11 </span><span style='color: #949494;'>12:10:30</span><span> Survey Preview </span><span style='color: #BB0000;'>NA</span><span>             100
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2020-12-11 </span><span style='color: #949494;'>12:06:43</span><span> 2020-12-11 </span><span style='color: #949494;'>12:11:27</span><span> Survey Preview </span><span style='color: #BB0000;'>NA</span><span>             100
-#&gt; </span><span style='color: #949494;'># … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span><span></div><div class='input'>
-</div></span></pre>
+</div><div class='output co'>#&gt;             StartDate             EndDate         Status IPAddress Progress
+#&gt; 1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview      &lt;NA&gt;      100
+#&gt; 2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview      &lt;NA&gt;      100
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                   465     TRUE 2020-12-11 12:10:30 R_xLWiuPaNuURSFXY
+#&gt; 2                   545     TRUE 2020-12-11 12:11:27 R_Q5lqYw6emJQZx2o
+#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#&gt; 1         29.73694         -94.97599           EN  Chrome 88.0.4324.41
+#&gt; 2         39.74107        -121.82490           EN  Chrome 88.0.4324.50
+#&gt;   Operating System Resolution
+#&gt; 1  Windows NT 10.0   1366x768
+#&gt; 2        Macintosh  1680x1050</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

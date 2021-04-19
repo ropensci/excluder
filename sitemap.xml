@@ -76,6 +76,12 @@
     <loc>https://jstevens5.github.io/excluder/reference/qualtrics_numeric.html</loc>
   </url>
   <url>
+    <loc>https://jstevens5.github.io/excluder/reference/qualtrics_raw.html</loc>
+  </url>
+  <url>
     <loc>https://jstevens5.github.io/excluder/reference/qualtrics_text.html</loc>
+  </url>
+  <url>
+    <loc>https://jstevens5.github.io/excluder/reference/remove_label_rows.html</loc>
   </url>
 </urlset>

@@ -192,38 +192,66 @@ with locations outside of the US.</p>
     <pre class="examples"><div class='input'><span class='co'># Check for locations outside of the US</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='fu'>check_location</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>1 out of 100 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 100 rows were located outside of the US.</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 16</span><span>
-#&gt; </span><span style='color: #949494;'># Rowwise: </span><span>
-#&gt;   StartDate           EndDate             Status     IPAddress    Progress
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2020-12-17 </span><span style='color: #949494;'>15:41:54</span><span> 2020-12-17 </span><span style='color: #949494;'>15:47:24</span><span> IP Address 97.10.196.0       100
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2020-12-11 </span><span style='color: #949494;'>12:55:35</span><span> 2020-12-11 </span><span style='color: #949494;'>12:59:24</span><span> IP Address 51.113.171.0      100
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 2020-12-17 </span><span style='color: #949494;'>15:40:46</span><span> 2020-12-17 </span><span style='color: #949494;'>15:45:20</span><span> IP Address 26.195.73.0       100
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 2020-12-17 </span><span style='color: #949494;'>15:44:30</span><span> 2020-12-17 </span><span style='color: #949494;'>15:47:57</span><span> IP Address 48.17.71.0        100
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 2020-12-17 </span><span style='color: #949494;'>15:40:52</span><span> 2020-12-17 </span><span style='color: #949494;'>15:49:08</span><span> IP Address 99.29.49.0        100
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 2020-12-17 </span><span style='color: #949494;'>15:49:42</span><span> 2020-12-17 </span><span style='color: #949494;'>15:51:50</span><span> IP Address 40.146.247.0        5
-#&gt; </span><span style='color: #949494;'># … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>1 out of 100 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 100 rows were located outside of the US.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+#&gt; 1 2020-12-17 15:41:54 2020-12-17 15:47:24 IP Address  97.10.196.0      100
+#&gt; 2 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100
+#&gt; 3 2020-12-17 15:40:46 2020-12-17 15:45:20 IP Address  26.195.73.0      100
+#&gt; 4 2020-12-17 15:44:30 2020-12-17 15:47:57 IP Address   48.17.71.0      100
+#&gt; 5 2020-12-17 15:40:52 2020-12-17 15:49:08 IP Address   99.29.49.0      100
+#&gt; 6 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                   380     TRUE 2020-12-17 15:47:24 R_9bLdiaLyyfUlM7q
+#&gt; 2                   296     TRUE 2020-12-11 12:59:24 R_Y27gVhACEH3aUUE
+#&gt; 3                   341     TRUE 2020-12-17 15:45:21 R_RCLqTKWdIen8A1Z
+#&gt; 4                   339     TRUE 2020-12-17 15:47:58 R_hEJfTQuUySzm9Ef
+#&gt; 5                   234     TRUE 2020-12-17 15:49:09 R_M8PpmDiJ7vXS9vO
+#&gt; 6                   307    FALSE 2020-12-17 15:51:50 R_HFKclPO5wWGNsFs
+#&gt;   LocationLatitude LocationLongitude UserLanguage       Browser       Version
+#&gt; 1               NA                NA           EN        Chrome  87.0.4280.88
+#&gt; 2         40.69746         -74.02277           EN        Chrome  87.0.4280.88
+#&gt; 3         42.25303         -71.00212           EN        Chrome  87.0.4280.88
+#&gt; 4         40.71187         -74.00837           EN Chrome iPhone  87.0.4280.77
+#&gt; 5         40.70961         -74.01063           EN        Chrome 87.0.4280.109
+#&gt; 6         29.29882         -81.04289           EN       Firefox          81.0
+#&gt;         Operating System Resolution
+#&gt; 1        Windows NT 10.0   1536x864
+#&gt; 2        Windows NT 10.0   1440x900
+#&gt; 3        Windows NT 10.0  1920x1080
+#&gt; 4                 iPhone    375x667
+#&gt; 5 CrOS x86_64 13505.73.0   1366x768
+#&gt; 6        Windows NT 10.0   1366x768</div><div class='input'>
 <span class='co'># Remove preview data first</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_location</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 rows were located outside of the US.</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 16</span><span>
-#&gt; </span><span style='color: #949494;'># Rowwise: </span><span>
-#&gt;   StartDate           EndDate             Status     IPAddress    Progress
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2020-12-17 </span><span style='color: #949494;'>15:41:54</span><span> 2020-12-17 </span><span style='color: #949494;'>15:47:24</span><span> IP Address 97.10.196.0       100
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2020-12-11 </span><span style='color: #949494;'>12:55:35</span><span> 2020-12-11 </span><span style='color: #949494;'>12:59:24</span><span> IP Address 51.113.171.0      100
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 2020-12-17 </span><span style='color: #949494;'>15:40:46</span><span> 2020-12-17 </span><span style='color: #949494;'>15:45:20</span><span> IP Address 26.195.73.0       100
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 2020-12-17 </span><span style='color: #949494;'>15:44:30</span><span> 2020-12-17 </span><span style='color: #949494;'>15:47:57</span><span> IP Address 48.17.71.0        100
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 2020-12-17 </span><span style='color: #949494;'>15:40:52</span><span> 2020-12-17 </span><span style='color: #949494;'>15:49:08</span><span> IP Address 99.29.49.0        100
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 2020-12-17 </span><span style='color: #949494;'>15:49:42</span><span> 2020-12-17 </span><span style='color: #949494;'>15:51:50</span><span> IP Address 40.146.247.0        5
-#&gt; </span><span style='color: #949494;'># … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 rows were located outside of the US.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+#&gt; 1 2020-12-17 15:41:54 2020-12-17 15:47:24 IP Address  97.10.196.0      100
+#&gt; 2 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100
+#&gt; 3 2020-12-17 15:40:46 2020-12-17 15:45:20 IP Address  26.195.73.0      100
+#&gt; 4 2020-12-17 15:44:30 2020-12-17 15:47:57 IP Address   48.17.71.0      100
+#&gt; 5 2020-12-17 15:40:52 2020-12-17 15:49:08 IP Address   99.29.49.0      100
+#&gt; 6 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                   380     TRUE 2020-12-17 15:47:24 R_9bLdiaLyyfUlM7q
+#&gt; 2                   296     TRUE 2020-12-11 12:59:24 R_Y27gVhACEH3aUUE
+#&gt; 3                   341     TRUE 2020-12-17 15:45:21 R_RCLqTKWdIen8A1Z
+#&gt; 4                   339     TRUE 2020-12-17 15:47:58 R_hEJfTQuUySzm9Ef
+#&gt; 5                   234     TRUE 2020-12-17 15:49:09 R_M8PpmDiJ7vXS9vO
+#&gt; 6                   307    FALSE 2020-12-17 15:51:50 R_HFKclPO5wWGNsFs
+#&gt;   LocationLatitude LocationLongitude UserLanguage       Browser       Version
+#&gt; 1               NA                NA           EN        Chrome  87.0.4280.88
+#&gt; 2         40.69746         -74.02277           EN        Chrome  87.0.4280.88
+#&gt; 3         42.25303         -71.00212           EN        Chrome  87.0.4280.88
+#&gt; 4         40.71187         -74.00837           EN Chrome iPhone  87.0.4280.77
+#&gt; 5         40.70961         -74.01063           EN        Chrome 87.0.4280.109
+#&gt; 6         29.29882         -81.04289           EN       Firefox          81.0
+#&gt;         Operating System Resolution
+#&gt; 1        Windows NT 10.0   1536x864
+#&gt; 2        Windows NT 10.0   1440x900
+#&gt; 3        Windows NT 10.0  1920x1080
+#&gt; 4                 iPhone    375x667
+#&gt; 5 CrOS x86_64 13505.73.0   1366x768
+#&gt; 6        Windows NT 10.0   1366x768</div><div class='input'>
 <span class='co'># Do not print rows to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -233,21 +261,35 @@ with locations outside of the US.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_location</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 16</span><span>
-#&gt; </span><span style='color: #949494;'># Rowwise: </span><span>
-#&gt;   StartDate           EndDate             Status     IPAddress    Progress
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2020-12-17 </span><span style='color: #949494;'>15:41:54</span><span> 2020-12-17 </span><span style='color: #949494;'>15:47:24</span><span> IP Address 97.10.196.0       100
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2020-12-11 </span><span style='color: #949494;'>12:55:35</span><span> 2020-12-11 </span><span style='color: #949494;'>12:59:24</span><span> IP Address 51.113.171.0      100
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 2020-12-17 </span><span style='color: #949494;'>15:40:46</span><span> 2020-12-17 </span><span style='color: #949494;'>15:45:20</span><span> IP Address 26.195.73.0       100
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 2020-12-17 </span><span style='color: #949494;'>15:44:30</span><span> 2020-12-17 </span><span style='color: #949494;'>15:47:57</span><span> IP Address 48.17.71.0        100
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 2020-12-17 </span><span style='color: #949494;'>15:40:52</span><span> 2020-12-17 </span><span style='color: #949494;'>15:49:08</span><span> IP Address 99.29.49.0        100
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 2020-12-17 </span><span style='color: #949494;'>15:49:42</span><span> 2020-12-17 </span><span style='color: #949494;'>15:51:50</span><span> IP Address 40.146.247.0        5
-#&gt; </span><span style='color: #949494;'># … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span><span></div><div class='input'>
-</div></span></pre>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+#&gt; 1 2020-12-17 15:41:54 2020-12-17 15:47:24 IP Address  97.10.196.0      100
+#&gt; 2 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100
+#&gt; 3 2020-12-17 15:40:46 2020-12-17 15:45:20 IP Address  26.195.73.0      100
+#&gt; 4 2020-12-17 15:44:30 2020-12-17 15:47:57 IP Address   48.17.71.0      100
+#&gt; 5 2020-12-17 15:40:52 2020-12-17 15:49:08 IP Address   99.29.49.0      100
+#&gt; 6 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                   380     TRUE 2020-12-17 15:47:24 R_9bLdiaLyyfUlM7q
+#&gt; 2                   296     TRUE 2020-12-11 12:59:24 R_Y27gVhACEH3aUUE
+#&gt; 3                   341     TRUE 2020-12-17 15:45:21 R_RCLqTKWdIen8A1Z
+#&gt; 4                   339     TRUE 2020-12-17 15:47:58 R_hEJfTQuUySzm9Ef
+#&gt; 5                   234     TRUE 2020-12-17 15:49:09 R_M8PpmDiJ7vXS9vO
+#&gt; 6                   307    FALSE 2020-12-17 15:51:50 R_HFKclPO5wWGNsFs
+#&gt;   LocationLatitude LocationLongitude UserLanguage       Browser       Version
+#&gt; 1               NA                NA           EN        Chrome  87.0.4280.88
+#&gt; 2         40.69746         -74.02277           EN        Chrome  87.0.4280.88
+#&gt; 3         42.25303         -71.00212           EN        Chrome  87.0.4280.88
+#&gt; 4         40.71187         -74.00837           EN Chrome iPhone  87.0.4280.77
+#&gt; 5         40.70961         -74.01063           EN        Chrome 87.0.4280.109
+#&gt; 6         29.29882         -81.04289           EN       Firefox          81.0
+#&gt;         Operating System Resolution
+#&gt; 1        Windows NT 10.0   1536x864
+#&gt; 2        Windows NT 10.0   1440x900
+#&gt; 3        Windows NT 10.0  1920x1080
+#&gt; 4                 iPhone    375x667
+#&gt; 5 CrOS x86_64 13505.73.0   1366x768
+#&gt; 6        Windows NT 10.0   1366x768</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
