@@ -35,7 +35,7 @@ The \code{convert} argument only converts the \emph{StartDate}, \emph{EndDate},
 \emph{LocationLongitude} columns. To convert data columns, see \link[dplyr:mutate]{dplyr::mutate}.
 }
 \examples{
-# Check for survey previews
+# Remove label rows
 data(qualtrics_raw)
 df <- remove_label_rows(qualtrics_raw)
 

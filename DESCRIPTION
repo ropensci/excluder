@@ -1,6 +1,6 @@
 Package: excluder
 Title: Checks for Exclusion Criteria in Online Data
-Version: 0.0.0.9000
+Version: 0.0.0.1
 Authors@R: 
     person(given = "Jeffrey R.",
            family = "Stevens",
@@ -24,7 +24,8 @@ Imports:
     lubridate,
     maps,
     tidyr,
-    magrittr
+    magrittr,
+    lifecycle
 Depends: 
     R (>= 3.5.0)
 Suggests: 
