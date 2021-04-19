@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.1</span>
       </span>
     </div>
 
@@ -47,6 +47,9 @@
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -119,7 +122,7 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>The verbs and exclusion types combine with <code>_</code> to create the functions, such as <code>check_duplicates</code>, <code>mark_duration</code>, and <code>exclude_ip</code>. Multiple functions can be changed together using the <a href=""><code>{magrittr}</code></a> pipe <code><a href="reference/%&gt;%.html">%&gt;%</a></code>.</p>
+<p>The verbs and exclusion types combine with <code>_</code> to create the functions, such as <code>check_duplicates</code>, <code>mark_duration</code>, and <code>exclude_ip</code>. Multiple functions can be changed together using the <a href=""><code>{magrittr}</code></a> pipe <code><a href="reference/%&gt;%.html">%&gt;%</a></code>. For datasets downloaded directly from Qualtrics, use <code><a href="reference/remove_label_rows.html">remove_label_rows()</a></code> to remove the first two rows of labels and convert date and numeric columns in the metadata.</p>
 <div id="checking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#checking" class="anchor"></a>Checking</h3>
@@ -130,52 +133,76 @@
 <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/check_preview.html">check_preview</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
-<span class="co">#&gt; # A tibble: 2 x 16</span>
-<span class="co">#&gt; # Rowwise: </span>
-<span class="co">#&gt;   StartDate           EndDate             Status         IPAddress Progress</span>
-<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;          &lt;chr&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview &lt;NA&gt;           100</span>
-<span class="co">#&gt; 2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview &lt;NA&gt;           100</span>
-<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<span class="co">#&gt;             StartDate             EndDate         Status IPAddress Progress</span>
+<span class="co">#&gt; 1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview      &lt;NA&gt;      100</span>
+<span class="co">#&gt; 2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview      &lt;NA&gt;      100</span>
+<span class="co">#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class="co">#&gt; 1                   465     TRUE 2020-12-11 12:10:30 R_xLWiuPaNuURSFXY</span>
+<span class="co">#&gt; 2                   545     TRUE 2020-12-11 12:11:27 R_Q5lqYw6emJQZx2o</span>
+<span class="co">#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
+<span class="co">#&gt; 1         29.73694         -94.97599           EN  Chrome 88.0.4324.41</span>
+<span class="co">#&gt; 2         39.74107        -121.82490           EN  Chrome 88.0.4324.50</span>
+<span class="co">#&gt;   Operating System Resolution</span>
+<span class="co">#&gt; 1  Windows NT 10.0   1366x768</span>
+<span class="co">#&gt; 2        Macintosh  1680x1050</span></code></pre></div>
 <p>Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check for rows with incomplete data then rows with durations less than 100 seconds</span>
 <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
-<span class="co">#&gt; # A tibble: 6 x 16</span>
-<span class="co">#&gt; # Rowwise: </span>
-<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
-<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0         99</span>
+<span class="co">#&gt;             StartDate             EndDate     Status    IPAddress Progress</span>
+<span class="co">#&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99</span>
 <span class="co">#&gt; 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1</span>
-<span class="co">#&gt; 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0         13</span>
-<span class="co">#&gt; 4 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0        48</span>
+<span class="co">#&gt; 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13</span>
+<span class="co">#&gt; 4 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48</span>
 <span class="co">#&gt; 5 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5</span>
-<span class="co">#&gt; 6 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address 2.246.67.0         44</span>
-<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<span class="co">#&gt; 6 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address   2.246.67.0       44</span>
+<span class="co">#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class="co">#&gt; 1                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz</span>
+<span class="co">#&gt; 2                   627    FALSE 2020-12-17 15:46:23 R_1cvaTAoXO7XW1vi</span>
+<span class="co">#&gt; 3                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj</span>
+<span class="co">#&gt; 4                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ</span>
+<span class="co">#&gt; 5                   307    FALSE 2020-12-17 15:51:50 R_HFKclPO5wWGNsFs</span>
+<span class="co">#&gt; 6                   355    FALSE 2020-12-17 15:55:06 R_UfSQq1VXYkVcxdJ</span>
+<span class="co">#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
+<span class="co">#&gt; 1         37.28265        -120.50248           EN  Chrome 87.0.4280.88</span>
+<span class="co">#&gt; 2         34.03605        -117.04066           EN    &lt;NA&gt;         &lt;NA&gt;</span>
+<span class="co">#&gt; 3         34.77804         -84.96198           DE  Chrome 83.0.4103.61</span>
+<span class="co">#&gt; 4         33.66715        -117.82543           EN  Chrome 87.0.4280.88</span>
+<span class="co">#&gt; 5         29.29882         -81.04289           EN Firefox         81.0</span>
+<span class="co">#&gt; 6         37.79058        -121.96737           EN  Chrome 87.0.4280.67</span>
+<span class="co">#&gt;   Operating System Resolution</span>
+<span class="co">#&gt; 1  Windows NT 10.0   1366x768</span>
+<span class="co">#&gt; 2             &lt;NA&gt;       &lt;NA&gt;</span>
+<span class="co">#&gt; 3  Windows NT 10.0   1366x768</span>
+<span class="co">#&gt; 4  Windows NT 10.0   1188x668</span>
+<span class="co">#&gt; 5  Windows NT 10.0   1366x768</span>
+<span class="co">#&gt; 6        Macintosh   1280x800</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="co">#&gt; 4 out of 100 rows took less time than the minimum duration of 100 seconds.</span>
-<span class="co">#&gt; # A tibble: 4 x 16</span>
-<span class="co">#&gt; # Rowwise: </span>
-<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
-<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address 84.56.189.0       100</span>
-<span class="co">#&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0         13</span>
-<span class="co">#&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0        48</span>
+<span class="co">#&gt;             StartDate             EndDate     Status    IPAddress Progress</span>
+<span class="co">#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100</span>
+<span class="co">#&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13</span>
+<span class="co">#&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48</span>
 <span class="co">#&gt; 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100</span>
-<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<span class="co">#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class="co">#&gt; 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3</span>
+<span class="co">#&gt; 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj</span>
+<span class="co">#&gt; 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ</span>
+<span class="co">#&gt; 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire</span>
+<span class="co">#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
+<span class="co">#&gt; 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88</span>
+<span class="co">#&gt; 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61</span>
+<span class="co">#&gt; 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88</span>
+<span class="co">#&gt; 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88</span>
+<span class="co">#&gt;   Operating System Resolution</span>
+<span class="co">#&gt; 1  Windows NT 10.0   1600x900</span>
+<span class="co">#&gt; 2  Windows NT 10.0   1366x768</span>
+<span class="co">#&gt; 3  Windows NT 10.0   1188x668</span>
+<span class="co">#&gt; 4  Windows NT 10.0   1368x912</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check for rows with durations less than 100 seconds within rows that did not complete the survey</span>
 <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
@@ -183,16 +210,18 @@
   <span class="fu"><a href="reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
 <span class="co">#&gt; 2 out of 6 rows took less time than the minimum duration of 100 seconds.</span>
-<span class="co">#&gt; # A tibble: 2 x 16</span>
-<span class="co">#&gt; # Rowwise: </span>
-<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress   Progress</span>
-<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0        13</span>
+<span class="co">#&gt;             StartDate             EndDate     Status   IPAddress Progress</span>
+<span class="co">#&gt; 1 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address  15.223.0.0       13</span>
 <span class="co">#&gt; 2 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0       48</span>
-<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<span class="co">#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class="co">#&gt; 1                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj</span>
+<span class="co">#&gt; 2                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ</span>
+<span class="co">#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
+<span class="co">#&gt; 1         34.77804         -84.96198           DE  Chrome 83.0.4103.61</span>
+<span class="co">#&gt; 2         33.66715        -117.82543           EN  Chrome 87.0.4280.88</span>
+<span class="co">#&gt;   Operating System Resolution</span>
+<span class="co">#&gt; 1  Windows NT 10.0   1366x768</span>
+<span class="co">#&gt; 2  Windows NT 10.0   1188x668</span></code></pre></div>
 </div>
 <div id="marking" class="section level3">
 <h3 class="hasAnchor">
@@ -208,7 +237,6 @@
 <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 100</span>
 <span class="co">#&gt; Columns: 18</span>
-<span class="co">#&gt; Rowwise: </span>
 <span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202…</span>
 <span class="co">#&gt; $ EndDate                 &lt;dttm&gt; 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…</span>
 <span class="co">#&gt; $ Status                  &lt;chr&gt; "Survey Preview", "Survey Preview", "IP Addres…</span>
@@ -313,28 +341,70 @@
 <span class="co">#&gt; 6 out of 92 rows have duplicate IP addresses.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; 9 out of 91 rows have duplicate locations.</span>
-<span class="co">#&gt; # A tibble: 15 x 17</span>
-<span class="co">#&gt;    LocationLatitude LocationLongitude dupe_count StartDate          </span>
-<span class="co">#&gt;               &lt;dbl&gt;             &lt;dbl&gt;      &lt;int&gt; &lt;dttm&gt;             </span>
-<span class="co">#&gt;  1             28.6             -81.5          2 2020-12-17 15:42:47</span>
-<span class="co">#&gt;  2             28.6             -81.5          2 2020-12-17 15:42:18</span>
-<span class="co">#&gt;  3             37.3            -121.           2 2020-12-17 15:46:51</span>
-<span class="co">#&gt;  4             37.3            -121.           2 2020-12-17 15:48:53</span>
-<span class="co">#&gt;  5             40.3             -75.9          2 2020-12-11 12:41:23</span>
-<span class="co">#&gt;  6             40.3             -75.9          2 2020-12-17 15:41:17</span>
-<span class="co">#&gt;  7             45.5            -123.           3 2020-12-17 15:40:52</span>
-<span class="co">#&gt;  8             45.5            -123.           3 2020-12-17 15:40:57</span>
-<span class="co">#&gt;  9             45.5            -123.           3 2020-12-17 15:48:48</span>
-<span class="co">#&gt; 10             37.3            -121.           2 2020-12-17 15:46:51</span>
-<span class="co">#&gt; 11             37.3            -121.           2 2020-12-17 15:48:53</span>
-<span class="co">#&gt; 12             40.3             -75.9          2 2020-12-11 12:41:23</span>
-<span class="co">#&gt; 13             40.3             -75.9          2 2020-12-17 15:41:17</span>
-<span class="co">#&gt; 14             28.6             -81.5          2 2020-12-17 15:42:47</span>
-<span class="co">#&gt; 15             28.6             -81.5          2 2020-12-17 15:42:18</span>
-<span class="co">#&gt; # … with 13 more variables: EndDate &lt;dttm&gt;, Status &lt;chr&gt;, IPAddress &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Progress &lt;dbl&gt;, Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Version &lt;chr&gt;, Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<span class="co">#&gt;    LocationLatitude LocationLongitude dupe_count           StartDate</span>
+<span class="co">#&gt; 1          28.56411         -81.54902          2 2020-12-17 15:42:47</span>
+<span class="co">#&gt; 2          28.56411         -81.54902          2 2020-12-17 15:42:18</span>
+<span class="co">#&gt; 3          37.28265        -120.50248          2 2020-12-17 15:46:51</span>
+<span class="co">#&gt; 4          37.28265        -120.50248          2 2020-12-17 15:48:53</span>
+<span class="co">#&gt; 5          40.33554         -75.92698          2 2020-12-11 12:41:23</span>
+<span class="co">#&gt; 6          40.33554         -75.92698          2 2020-12-17 15:41:17</span>
+<span class="co">#&gt; 7          45.50412        -122.78665          3 2020-12-17 15:40:52</span>
+<span class="co">#&gt; 8          45.50412        -122.78665          3 2020-12-17 15:40:57</span>
+<span class="co">#&gt; 9          45.50412        -122.78665          3 2020-12-17 15:48:48</span>
+<span class="co">#&gt; 10         37.28265        -120.50248          2 2020-12-17 15:46:51</span>
+<span class="co">#&gt; 11         37.28265        -120.50248          2 2020-12-17 15:48:53</span>
+<span class="co">#&gt; 12         40.33554         -75.92698          2 2020-12-11 12:41:23</span>
+<span class="co">#&gt; 13         40.33554         -75.92698          2 2020-12-17 15:41:17</span>
+<span class="co">#&gt; 14         28.56411         -81.54902          2 2020-12-17 15:42:47</span>
+<span class="co">#&gt; 15         28.56411         -81.54902          2 2020-12-17 15:42:18</span>
+<span class="co">#&gt;                EndDate     Status    IPAddress Progress Duration (in seconds)</span>
+<span class="co">#&gt; 1  2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236</span>
+<span class="co">#&gt; 2  2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526</span>
+<span class="co">#&gt; 3  2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872</span>
+<span class="co">#&gt; 4  2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246</span>
+<span class="co">#&gt; 5  2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177</span>
+<span class="co">#&gt; 6  2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521</span>
+<span class="co">#&gt; 7  2020-12-17 15:43:39 IP Address 32.164.134.0      100                   375</span>
+<span class="co">#&gt; 8  2020-12-17 15:48:56 IP Address   6.79.107.0      100                   397</span>
+<span class="co">#&gt; 9  2020-12-17 15:54:12 IP Address 54.232.129.0      100                   149</span>
+<span class="co">#&gt; 10 2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872</span>
+<span class="co">#&gt; 11 2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246</span>
+<span class="co">#&gt; 12 2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177</span>
+<span class="co">#&gt; 13 2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521</span>
+<span class="co">#&gt; 14 2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236</span>
+<span class="co">#&gt; 15 2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526</span>
+<span class="co">#&gt;    Finished        RecordedDate        ResponseId UserLanguage Browser</span>
+<span class="co">#&gt; 1      TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome</span>
+<span class="co">#&gt; 2      TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome</span>
+<span class="co">#&gt; 3      TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox</span>
+<span class="co">#&gt; 4      TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge</span>
+<span class="co">#&gt; 5      TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome</span>
+<span class="co">#&gt; 6      TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome</span>
+<span class="co">#&gt; 7      TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome</span>
+<span class="co">#&gt; 8      TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome</span>
+<span class="co">#&gt; 9      TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome</span>
+<span class="co">#&gt; 10     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox</span>
+<span class="co">#&gt; 11     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge</span>
+<span class="co">#&gt; 12     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome</span>
+<span class="co">#&gt; 13     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome</span>
+<span class="co">#&gt; 14     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome</span>
+<span class="co">#&gt; 15     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome</span>
+<span class="co">#&gt;          Version Operating System Resolution</span>
+<span class="co">#&gt; 1   87.0.4280.88  Windows NT 10.0  1920x1080</span>
+<span class="co">#&gt; 2   87.0.4280.88  Windows NT 10.0   1536x864</span>
+<span class="co">#&gt; 3           83.0  Windows NT 10.0   1440x960</span>
+<span class="co">#&gt; 4    84.0.522.52  Windows NT 10.0  1920x1080</span>
+<span class="co">#&gt; 5  86.0.4240.198        Macintosh   1280x800</span>
+<span class="co">#&gt; 6   87.0.4280.88   Windows NT 6.1   1366x768</span>
+<span class="co">#&gt; 7   87.0.4280.88  Windows NT 10.0  1920x1080</span>
+<span class="co">#&gt; 8   87.0.4280.88  Windows NT 10.0   1536x864</span>
+<span class="co">#&gt; 9   87.0.4280.88  Windows NT 10.0  1920x1080</span>
+<span class="co">#&gt; 10          83.0  Windows NT 10.0   1440x960</span>
+<span class="co">#&gt; 11   84.0.522.52  Windows NT 10.0  1920x1080</span>
+<span class="co">#&gt; 12 86.0.4240.198        Macintosh   1280x800</span>
+<span class="co">#&gt; 13  87.0.4280.88   Windows NT 6.1   1366x768</span>
+<span class="co">#&gt; 14  87.0.4280.88  Windows NT 10.0  1920x1080</span>
+<span class="co">#&gt; 15  87.0.4280.88  Windows NT 10.0   1536x864</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -357,6 +427,12 @@
 <li><small>GPL (&gt;= 3)</small></li>
 </ul>
 </div>
+<div class="citation">
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing excluder</a></li>
+</ul>
+</div>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
@@ -367,8 +443,9 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://codecov.io/gh/jstevens5/excluder?branch=main"><img src="https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/jstevens5/excluder/actions"><img src="https://github.com/jstevens5/excluder/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://codecov.io/gh/jstevens5/excluder?branch=main"><img src="https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="reference/figures/lifecycle-experimental.svg" alt="lifecycle"></a></li>
 </ul>
 </div>
 </div>
