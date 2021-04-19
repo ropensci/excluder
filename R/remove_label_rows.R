@@ -27,7 +27,7 @@
 #' @export
 #'
 #' @examples
-#' # Check for survey previews
+#' # Remove label rows
 #' data(qualtrics_raw)
 #' df <- remove_label_rows(qualtrics_raw)
 #'
