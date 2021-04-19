@@ -1,0 +1,14 @@
+citHeader("To cite excluder in publications, use:")
+
+citEntry(entry = "manual",
+         title        = "{excluder}: Exclude rows to clean your data",
+         author       = personList(as.person("Jeffrey R. Stevens")),
+         year         = "2021",
+         notes        = "R package version 0.0.0.9000",
+         url          = "https://jstevens5.github.io/excluder/",
+         textVersion  =
+           paste("Stevens, J.R. (2021).",
+                 "excluder: Exclude rows to clean your data.",
+                 "R package version 0.0.0.9000,",
+                 "retrieved from https://jstevens5.github.io/excluder/.")
+)
