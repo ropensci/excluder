@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jstevens5/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jstevens5/excluder/actions)
 [![Codecov test coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jstevens5/excluder?branch=main)
+[![lifecycle](man/figures/lifecycle-experimental.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 The goal of [`{excluder}`](https://jstevens5.github.io/excluder/) is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from [Qualtrics](https://qualtrics.com) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
@@ -52,7 +53,7 @@ This package provides six types of exclusions based on Qualtrics metadata. If yo
 
 ## Usage
 
-The verbs and exclusion types combine with `_` to create the functions, such as `check_duplicates`, `mark_duration`, and `exclude_ip`. Multiple functions can be changed together using the [`{magrittr}`]() pipe `%>%`. 
+The verbs and exclusion types combine with `_` to create the functions, such as `check_duplicates`, `mark_duration`, and `exclude_ip`. Multiple functions can be changed together using the [`{magrittr}`]() pipe `%>%`. For datasets downloaded directly from Qualtrics, use `remove_label_rows()` to remove the first two rows of labels and convert date and numeric columns in the metadata.
 
 ### Checking
 

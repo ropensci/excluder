@@ -5,9 +5,10 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/jstevens5/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jstevens5/excluder/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jstevens5/excluder?branch=main)
-[![R-CMD-check](https://github.com/jstevens5/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jstevens5/excluder/actions)
+[![lifecycle](man/figures/lifecycle-experimental.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 The goal of [`{excluder}`](https://jstevens5.github.io/excluder/) is to
@@ -70,6 +71,9 @@ metadata.
 The verbs and exclusion types combine with `_` to create the functions,
 such as `check_duplicates`, `mark_duration`, and `exclude_ip`. Multiple
 functions can be changed together using the [`{magrittr}`]() pipe `%>%`.
+For datasets downloaded directly from Qualtrics, use
+`remove_label_rows()` to remove the first two rows of labels and convert
+date and numeric columns in the metadata.
 
 ### Checking
 
@@ -82,16 +86,18 @@ library(excluder)
 qualtrics_text %>% 
   check_preview()
 #> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
-#> # A tibble: 2 x 16
-#> # Rowwise: 
-#>   StartDate           EndDate             Status         IPAddress Progress
-#>   <dttm>              <dttm>              <chr>          <chr>        <dbl>
-#> 1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview <NA>           100
-#> 2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview <NA>           100
-#> # … with 11 more variables: Duration (in seconds) <dbl>, Finished <lgl>,
-#> #   RecordedDate <dttm>, ResponseId <chr>, LocationLatitude <dbl>,
-#> #   LocationLongitude <dbl>, UserLanguage <chr>, Browser <chr>, Version <chr>,
-#> #   Operating System <chr>, Resolution <chr>
+#>             StartDate             EndDate         Status IPAddress Progress
+#> 1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview      <NA>      100
+#> 2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview      <NA>      100
+#>   Duration (in seconds) Finished        RecordedDate        ResponseId
+#> 1                   465     TRUE 2020-12-11 12:10:30 R_xLWiuPaNuURSFXY
+#> 2                   545     TRUE 2020-12-11 12:11:27 R_Q5lqYw6emJQZx2o
+#>   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#> 1         29.73694         -94.97599           EN  Chrome 88.0.4324.41
+#> 2         39.74107        -121.82490           EN  Chrome 88.0.4324.50
+#>   Operating System Resolution
+#> 1  Windows NT 10.0   1366x768
+#> 2        Macintosh  1680x1050
 ```
 
 Because checks return only the rows meeting the criteria, they should
@@ -103,38 +109,60 @@ criterion within the rows that meet the first criterion.
 qualtrics_text %>% 
   check_progress()
 #> 6 out of 100 rows did not complete the study.
-#> # A tibble: 6 x 16
-#> # Rowwise: 
-#>   StartDate           EndDate             Status     IPAddress    Progress
-#>   <dttm>              <dttm>              <chr>      <chr>           <dbl>
-#> 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0         99
+#>             StartDate             EndDate     Status    IPAddress Progress
+#> 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99
 #> 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1
-#> 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0         13
-#> 4 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0        48
+#> 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
+#> 4 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48
 #> 5 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5
-#> 6 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address 2.246.67.0         44
-#> # … with 11 more variables: Duration (in seconds) <dbl>, Finished <lgl>,
-#> #   RecordedDate <dttm>, ResponseId <chr>, LocationLatitude <dbl>,
-#> #   LocationLongitude <dbl>, UserLanguage <chr>, Browser <chr>, Version <chr>,
-#> #   Operating System <chr>, Resolution <chr>
+#> 6 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address   2.246.67.0       44
+#>   Duration (in seconds) Finished        RecordedDate        ResponseId
+#> 1                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
+#> 2                   627    FALSE 2020-12-17 15:46:23 R_1cvaTAoXO7XW1vi
+#> 3                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
+#> 4                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
+#> 5                   307    FALSE 2020-12-17 15:51:50 R_HFKclPO5wWGNsFs
+#> 6                   355    FALSE 2020-12-17 15:55:06 R_UfSQq1VXYkVcxdJ
+#>   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#> 1         37.28265        -120.50248           EN  Chrome 87.0.4280.88
+#> 2         34.03605        -117.04066           EN    <NA>         <NA>
+#> 3         34.77804         -84.96198           DE  Chrome 83.0.4103.61
+#> 4         33.66715        -117.82543           EN  Chrome 87.0.4280.88
+#> 5         29.29882         -81.04289           EN Firefox         81.0
+#> 6         37.79058        -121.96737           EN  Chrome 87.0.4280.67
+#>   Operating System Resolution
+#> 1  Windows NT 10.0   1366x768
+#> 2             <NA>       <NA>
+#> 3  Windows NT 10.0   1366x768
+#> 4  Windows NT 10.0   1188x668
+#> 5  Windows NT 10.0   1366x768
+#> 6        Macintosh   1280x800
 ```
 
 ``` r
 qualtrics_text %>% 
   check_duration(min_duration = 100)
 #> 4 out of 100 rows took less time than the minimum duration of 100 seconds.
-#> # A tibble: 4 x 16
-#> # Rowwise: 
-#>   StartDate           EndDate             Status     IPAddress    Progress
-#>   <dttm>              <dttm>              <chr>      <chr>           <dbl>
-#> 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address 84.56.189.0       100
-#> 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0         13
-#> 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0        48
+#>             StartDate             EndDate     Status    IPAddress Progress
+#> 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100
+#> 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
+#> 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48
 #> 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100
-#> # … with 11 more variables: Duration (in seconds) <dbl>, Finished <lgl>,
-#> #   RecordedDate <dttm>, ResponseId <chr>, LocationLatitude <dbl>,
-#> #   LocationLongitude <dbl>, UserLanguage <chr>, Browser <chr>, Version <chr>,
-#> #   Operating System <chr>, Resolution <chr>
+#>   Duration (in seconds) Finished        RecordedDate        ResponseId
+#> 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3
+#> 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
+#> 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
+#> 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire
+#>   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#> 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88
+#> 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61
+#> 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88
+#> 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88
+#>   Operating System Resolution
+#> 1  Windows NT 10.0   1600x900
+#> 2  Windows NT 10.0   1366x768
+#> 3  Windows NT 10.0   1188x668
+#> 4  Windows NT 10.0   1368x912
 ```
 
 ``` r
@@ -144,16 +172,18 @@ qualtrics_text %>%
   check_duration(min_duration = 100)
 #> 6 out of 100 rows did not complete the study.
 #> 2 out of 6 rows took less time than the minimum duration of 100 seconds.
-#> # A tibble: 2 x 16
-#> # Rowwise: 
-#>   StartDate           EndDate             Status     IPAddress   Progress
-#>   <dttm>              <dttm>              <chr>      <chr>          <dbl>
-#> 1 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0        13
+#>             StartDate             EndDate     Status   IPAddress Progress
+#> 1 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address  15.223.0.0       13
 #> 2 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0       48
-#> # … with 11 more variables: Duration (in seconds) <dbl>, Finished <lgl>,
-#> #   RecordedDate <dttm>, ResponseId <chr>, LocationLatitude <dbl>,
-#> #   LocationLongitude <dbl>, UserLanguage <chr>, Browser <chr>, Version <chr>,
-#> #   Operating System <chr>, Resolution <chr>
+#>   Duration (in seconds) Finished        RecordedDate        ResponseId
+#> 1                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
+#> 2                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
+#>   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#> 1         34.77804         -84.96198           DE  Chrome 83.0.4103.61
+#> 2         33.66715        -117.82543           EN  Chrome 87.0.4280.88
+#>   Operating System Resolution
+#> 1  Windows NT 10.0   1366x768
+#> 2  Windows NT 10.0   1188x668
 ```
 
 ### Marking
@@ -172,7 +202,6 @@ df <- qualtrics_text %>%
 tibble::glimpse(df)
 #> Rows: 100
 #> Columns: 18
-#> Rowwise: 
 #> $ StartDate               <dttm> 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202…
 #> $ EndDate                 <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…
 #> $ Status                  <chr> "Survey Preview", "Survey Preview", "IP Addres…
@@ -296,26 +325,68 @@ qualtrics_text %>%
 #> 6 out of 92 rows have duplicate IP addresses.
 #> 
 #> 9 out of 91 rows have duplicate locations.
-#> # A tibble: 15 x 17
-#>    LocationLatitude LocationLongitude dupe_count StartDate          
-#>               <dbl>             <dbl>      <int> <dttm>             
-#>  1             28.6             -81.5          2 2020-12-17 15:42:47
-#>  2             28.6             -81.5          2 2020-12-17 15:42:18
-#>  3             37.3            -121.           2 2020-12-17 15:46:51
-#>  4             37.3            -121.           2 2020-12-17 15:48:53
-#>  5             40.3             -75.9          2 2020-12-11 12:41:23
-#>  6             40.3             -75.9          2 2020-12-17 15:41:17
-#>  7             45.5            -123.           3 2020-12-17 15:40:52
-#>  8             45.5            -123.           3 2020-12-17 15:40:57
-#>  9             45.5            -123.           3 2020-12-17 15:48:48
-#> 10             37.3            -121.           2 2020-12-17 15:46:51
-#> 11             37.3            -121.           2 2020-12-17 15:48:53
-#> 12             40.3             -75.9          2 2020-12-11 12:41:23
-#> 13             40.3             -75.9          2 2020-12-17 15:41:17
-#> 14             28.6             -81.5          2 2020-12-17 15:42:47
-#> 15             28.6             -81.5          2 2020-12-17 15:42:18
-#> # … with 13 more variables: EndDate <dttm>, Status <chr>, IPAddress <chr>,
-#> #   Progress <dbl>, Duration (in seconds) <dbl>, Finished <lgl>,
-#> #   RecordedDate <dttm>, ResponseId <chr>, UserLanguage <chr>, Browser <chr>,
-#> #   Version <chr>, Operating System <chr>, Resolution <chr>
+#>    LocationLatitude LocationLongitude dupe_count           StartDate
+#> 1          28.56411         -81.54902          2 2020-12-17 15:42:47
+#> 2          28.56411         -81.54902          2 2020-12-17 15:42:18
+#> 3          37.28265        -120.50248          2 2020-12-17 15:46:51
+#> 4          37.28265        -120.50248          2 2020-12-17 15:48:53
+#> 5          40.33554         -75.92698          2 2020-12-11 12:41:23
+#> 6          40.33554         -75.92698          2 2020-12-17 15:41:17
+#> 7          45.50412        -122.78665          3 2020-12-17 15:40:52
+#> 8          45.50412        -122.78665          3 2020-12-17 15:40:57
+#> 9          45.50412        -122.78665          3 2020-12-17 15:48:48
+#> 10         37.28265        -120.50248          2 2020-12-17 15:46:51
+#> 11         37.28265        -120.50248          2 2020-12-17 15:48:53
+#> 12         40.33554         -75.92698          2 2020-12-11 12:41:23
+#> 13         40.33554         -75.92698          2 2020-12-17 15:41:17
+#> 14         28.56411         -81.54902          2 2020-12-17 15:42:47
+#> 15         28.56411         -81.54902          2 2020-12-17 15:42:18
+#>                EndDate     Status    IPAddress Progress Duration (in seconds)
+#> 1  2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
+#> 2  2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
+#> 3  2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
+#> 4  2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
+#> 5  2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
+#> 6  2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
+#> 7  2020-12-17 15:43:39 IP Address 32.164.134.0      100                   375
+#> 8  2020-12-17 15:48:56 IP Address   6.79.107.0      100                   397
+#> 9  2020-12-17 15:54:12 IP Address 54.232.129.0      100                   149
+#> 10 2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
+#> 11 2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
+#> 12 2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
+#> 13 2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
+#> 14 2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
+#> 15 2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
+#>    Finished        RecordedDate        ResponseId UserLanguage Browser
+#> 1      TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
+#> 2      TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
+#> 3      TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
+#> 4      TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
+#> 5      TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
+#> 6      TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
+#> 7      TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome
+#> 8      TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome
+#> 9      TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome
+#> 10     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
+#> 11     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
+#> 12     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
+#> 13     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
+#> 14     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
+#> 15     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
+#>          Version Operating System Resolution
+#> 1   87.0.4280.88  Windows NT 10.0  1920x1080
+#> 2   87.0.4280.88  Windows NT 10.0   1536x864
+#> 3           83.0  Windows NT 10.0   1440x960
+#> 4    84.0.522.52  Windows NT 10.0  1920x1080
+#> 5  86.0.4240.198        Macintosh   1280x800
+#> 6   87.0.4280.88   Windows NT 6.1   1366x768
+#> 7   87.0.4280.88  Windows NT 10.0  1920x1080
+#> 8   87.0.4280.88  Windows NT 10.0   1536x864
+#> 9   87.0.4280.88  Windows NT 10.0  1920x1080
+#> 10          83.0  Windows NT 10.0   1440x960
+#> 11   84.0.522.52  Windows NT 10.0  1920x1080
+#> 12 86.0.4240.198        Macintosh   1280x800
+#> 13  87.0.4280.88   Windows NT 6.1   1366x768
+#> 14  87.0.4280.88  Windows NT 10.0  1920x1080
+#> 15  87.0.4280.88  Windows NT 10.0   1536x864
 ```
