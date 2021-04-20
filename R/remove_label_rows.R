@@ -49,14 +49,14 @@ remove_label_rows <- function(.data, convert = TRUE, qualtrics_check = TRUE) {
   .data <- .data %>%
     dplyr::filter(.data$StartDate != "Start Date" & .data$StartDate != "{\"ImportId\":\"startDate\",\"timeZone\":\"America/Chicago\"}")
 
-  # Convert columns to numeric
+  # Convert columns to date or numeric
   if(convert == TRUE) {
     column_names <- names(.data)
     if("StartDate" %in% column_names) {
-      .data <- dplyr::mutate(.data, StartDate = lubridate::ymd_hms(.data$StartDate))
+      .data <- dplyr::mutate(.data, StartDate = lubridate::parse_date_time(.data$StartDate, orders = c("ymd HMS", "ymd HM", "ymd", "mdy HMS", "mdy HM", "mdy")))
     }
     if("EndDate" %in% column_names) {
-      .data <- dplyr::mutate(.data, EndDate = lubridate::ymd_hms(.data$EndDate))
+      .data <- dplyr::mutate(.data, EndDate = lubridate::parse_date_time(.data$EndDate, orders = c("ymd HMS", "ymd HM", "ymd", "mdy HMS", "mdy HM", "mdy")))
     }
     if("Progress" %in% column_names) {
       .data <- dplyr::mutate(.data, Progress = as.numeric(.data$Progress))
@@ -65,7 +65,7 @@ remove_label_rows <- function(.data, convert = TRUE, qualtrics_check = TRUE) {
       .data <- dplyr::mutate(.data, `Duration (in seconds)` = as.numeric(.data$`Duration (in seconds)`))
     }
     if("RecordedDate" %in% column_names) {
-      .data <- dplyr::mutate(.data, RecordedDate = lubridate::ymd_hms(.data$RecordedDate))
+      .data <- dplyr::mutate(.data, RecordedDate = lubridate::parse_date_time(.data$RecordedDate, orders = c("ymd HMS", "ymd HM", "ymd", "mdy HMS", "mdy HM", "mdy")))
     }
     if("LocationLatitude" %in% column_names) {
       .data <- dplyr::mutate(.data, LocationLatitude = as.numeric(.data$LocationLatitude))
