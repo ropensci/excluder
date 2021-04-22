@@ -13,3 +13,4 @@
 ^pkgdown$
 ^\.github$
 ^codecov\.yml$
+^CODE_OF_CONDUCT\.md$
