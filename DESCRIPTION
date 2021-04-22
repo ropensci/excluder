@@ -1,6 +1,6 @@
 Package: excluder
 Title: Checks for Exclusion Criteria in Online Data
-Version: 0.0.0.1
+Version: 0.0.1
 Authors@R: 
     person(given = "Jeffrey R.",
            family = "Stevens",
@@ -32,5 +32,8 @@ Suggests:
     testthat (>= 3.0.0),
     readr,
     stringr,
-    covr
+    covr,
+    knitr,
+    rmarkdown
 Config/testthat/edition: 3
+VignetteBuilder: knitr

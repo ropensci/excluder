@@ -57,3 +57,4 @@ R/create_data/
 data/data-raw/
 *DONOTCOMMIT*
 docs
+inst/doc
