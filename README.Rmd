@@ -21,7 +21,11 @@ knitr::opts_chunk$set(
 [![lifecycle](man/figures/lifecycle-experimental.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of [`{excluder}`](https://jstevens5.github.io/excluder/) is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from [Qualtrics](https://qualtrics.com) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
+The goal of [`{excluder}`](https://jstevens5.github.io/excluder/) is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from [Qualtrics](https://qualtrics.com) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package. 
+
+This may be most useful for [Mechanical Turk](https://www.mturk.com/) data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States. But it can be used more generally to exclude based on response durations, preview status, progress, or screen resolution.
+
+More details are available on the package [website](https://jstevens5.github.io/excluder/).
 
 ## Installation
 
@@ -35,9 +39,9 @@ devtools::install_github("jstevens5/excluder")
 ## Verbs
 This package provides three primary verbs:
 
-* `check` functions search for the exclusion criteria and outputs a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.
-* `mark` functions add a new column to the data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing.
-* `exclude` functions remove rows meeting the exclusion criteria. This is often the last step to complete after checking and/or marking the rows to ensure the exclusions are correct.
+* `check` functions search for the exclusion criteria and output a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.
+* `exclude` functions remove rows meeting the exclusion criteria. This is safest to do after checking the rows to ensure the exclusions are correct.
+* `mark` functions add a new column to the original data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing without changing the original data frame.
 
 ## Exclusion types
 This package provides six types of exclusions based on Qualtrics metadata. If you have ideas for other metadata exclusions, please submit them as [issues](https://github.com/jstevens5/excluder/issues). Note, the intent of this package is not to develop functions for excluding rows based on survey-specific data but on general, frequently used metadata.
@@ -53,7 +57,7 @@ This package provides six types of exclusions based on Qualtrics metadata. If yo
 
 ## Usage
 
-The verbs and exclusion types combine with `_` to create the functions, such as `check_duplicates`, `mark_duration`, and `exclude_ip`. Multiple functions can be changed together using the [`{magrittr}`]() pipe `%>%`. For datasets downloaded directly from Qualtrics, use `remove_label_rows()` to remove the first two rows of labels and convert date and numeric columns in the metadata.
+The verbs and exclusion types combine with `_` to create the functions, such as `check_duplicates()`, `exclude_ip()`, and `mark_duration()`. Multiple functions can be linked together using the [`{magrittr}`]() pipe `%>%`. For datasets downloaded directly from Qualtrics, use `remove_label_rows()` to remove the first two rows of labels and convert date and numeric columns in the metadata.
 
 ### Checking
 
@@ -62,45 +66,8 @@ The `check_*()` functions output messages about the number of rows that meet the
 ```{r check1}
 library(excluder)
 # Check for preview rows
-qualtrics_text %>% 
+qualtrics_text %>%
   check_preview()
-```
-
-Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.
-```{r check2}
-# Check for rows with incomplete data then rows with durations less than 100 seconds
-qualtrics_text %>% 
-  check_progress()
-```
-```{r check3}
-qualtrics_text %>% 
-  check_duration(min_duration = 100)
-```
-```{r check4}
-# Check for rows with durations less than 100 seconds within rows that did not complete the survey
-qualtrics_text %>% 
-  check_progress() %>% 
-  check_duration(min_duration = 100)
-```
-
-### Marking
-The `mark_*()` functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be chained together for multiple exclusion types.
-
-```{r mark1}
-# Mark preview and incomplete progress rows
-df <- qualtrics_text %>% 
-  mark_preview() %>% 
-  mark_progress()
-tibble::glimpse(df)
-```
-Use the [`collapse_exclusions()`](?collapse_exclusions) function to collapse all of the marked columns into a single column.
-```{r mark2}
-# Collapse labels for preview and incomplete progress rows
-df <- qualtrics_text %>% 
-  mark_preview() %>% 
-  mark_progress() %>% 
-  collapse_exclusions(exclusion_types = c("preview", "progress"))
-tibble::glimpse(df)
 ```
 
 ### Excluding
@@ -108,15 +75,15 @@ The `exclude_*()` functions remove the rows that meet exclusion criteria. These,
 
 ```{r exclude1}
 # Exclude preview then incomplete progress rows
-df <- qualtrics_text %>% 
-  exclude_duration(min_duration = 100) %>% 
+df <- qualtrics_text %>%
+  exclude_duration(min_duration = 100) %>%
   exclude_progress()
 dim(df)
 ```
 ```{r exclude2}
 # Exclude incomplete progress then preview rows
-df <- qualtrics_text %>% 
-  exclude_progress() %>% 
+df <- qualtrics_text %>%
+  exclude_progress() %>%
   exclude_duration(min_duration = 100)
 dim(df)
 ```
@@ -124,22 +91,54 @@ Though the order of functions should not influence the final data set, it may sp
 
 ```{r exclude3}
 # Exclude rows
-df <- qualtrics_text %>% 
-  exclude_preview() %>% 
-  exclude_progress() %>% 
-  exclude_duplicates() %>% 
-  exclude_duration(min_duration = 100) %>% 
-  exclude_resolution() %>% 
-  exclude_ip() %>% 
+df <- qualtrics_text %>%
+  exclude_preview() %>%
+  exclude_progress() %>%
+  exclude_duplicates() %>%
+  exclude_duration(min_duration = 100) %>%
+  exclude_resolution() %>%
+  exclude_ip() %>%
   exclude_location()
+```
+
+### Marking
+The `mark_*()` functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be chained together with `%>%` for multiple exclusion types.
+
+```{r mark1}
+# Mark preview and short duration rows
+df <- qualtrics_text %>%
+  mark_preview() %>%
+  mark_duration(min_duration = 200)
+tibble::glimpse(df)
+```
+Use the [`collapse_exclusions()`](?collapse_exclusions) function to collapse all of the marked columns into a single column.
+```{r mark2}
+# Collapse labels for preview and short duration rows
+df <- qualtrics_text %>%
+  mark_preview() %>%
+  mark_duration(min_duration = 200) %>%
+  collapse_exclusions(exclusion_types = c("preview", "duration"))
+tibble::glimpse(df)
 ```
 
 ### Combining verbs
 It often makes sense to remove the preview surveys and incomplete surveys before checking other exclusion types.
 ```{r combine1}
 # Exclude preview then incomplete progress rows
-qualtrics_text %>% 
-  exclude_preview() %>% 
-  exclude_progress() %>% 
+qualtrics_text %>%
+  exclude_preview() %>%
+  exclude_progress() %>%
   check_duplicates()
 ```
+
+## Citing this package
+
+To cite `{excluder}`, use:
+
+> Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R package version 0.0.0.1, https://jstevens5.github.io/excluder/.
+
+## Contributing to this package
+
+[Contributions](https://jstevens5.github.io/.github/CONTRIBUTING.md) to `{excluder}` are most welcome! Feel free to check out [open issues](https://github.com/jstevens5/excluder/issues) for ideas. And [pull requests](https://github.com/jstevens5/excluder/pulls) are encouraged, but you may want to [raise an issue](https://github.com/jstevens5/excluder/issues/new/choose) or [contact the maintainer](mailto:jeffrey.r.stevens@gmail.com) first.
+
+Please note that the excluder project is released with a [Contributor Code of Conduct](https://jstevens5.github.io/excluder/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

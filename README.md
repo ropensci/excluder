@@ -18,6 +18,15 @@ common exclusion criteria. This package applies to data collected from
 come from importing data with the
 [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
 
+This may be most useful for [Mechanical Turk](https://www.mturk.com/)
+data to screen for duplicate entries from the same location/IP address
+or entries from locations outside of the United States. But it can be
+used more generally to exclude based on response durations, preview
+status, progress, or screen resolution.
+
+More details are available on the package
+[website](https://jstevens5.github.io/excluder/).
+
 ## Installation
 
 You can install the released version of `{excluder}`
@@ -32,16 +41,17 @@ devtools::install_github("jstevens5/excluder")
 
 This package provides three primary verbs:
 
--   `check` functions search for the exclusion criteria and outputs a
+-   `check` functions search for the exclusion criteria and output a
     message with the number of rows meeting the criteria and a data
     frame of the rows meeting the criteria. This is useful for viewing
     the potential exclusions.
--   `mark` functions add a new column to the data frame that labels the
-    rows meeting the exclusion criteria. This is useful to label the
-    potential exclusions for future processing.
 -   `exclude` functions remove rows meeting the exclusion criteria. This
-    is often the last step to complete after checking and/or marking the
-    rows to ensure the exclusions are correct.
+    is safest to do after checking the rows to ensure the exclusions are
+    correct.
+-   `mark` functions add a new column to the original data frame that
+    labels the rows meeting the exclusion criteria. This is useful to
+    label the potential exclusions for future processing without
+    changing the original data frame.
 
 ## Exclusion types
 
@@ -69,9 +79,9 @@ metadata.
 ## Usage
 
 The verbs and exclusion types combine with `_` to create the functions,
-such as `check_duplicates`, `mark_duration`, and `exclude_ip`. Multiple
-functions can be changed together using the [`{magrittr}`]() pipe `%>%`.
-For datasets downloaded directly from Qualtrics, use
+such as `check_duplicates()`, `exclude_ip()`, and `mark_duration()`.
+Multiple functions can be linked together using the [`{magrittr}`]()
+pipe `%>%`. For datasets downloaded directly from Qualtrics, use
 `remove_label_rows()` to remove the first two rows of labels and convert
 date and numeric columns in the metadata.
 
@@ -83,7 +93,7 @@ meet the exclusion criteria.
 ``` r
 library(excluder)
 # Check for preview rows
-qualtrics_text %>% 
+qualtrics_text %>%
   check_preview()
 #> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
 #>             StartDate             EndDate         Status IPAddress Progress
@@ -100,105 +110,73 @@ qualtrics_text %>%
 #> 2        Macintosh  1680x1050
 ```
 
-Because checks return only the rows meeting the criteria, they should
-not be connected via pipes unless you want to subset the second check
-criterion within the rows that meet the first criterion.
+### Excluding
+
+The `exclude_*()` functions remove the rows that meet exclusion
+criteria. These, too, can be piped together. Since the output of each
+function is a subset of the original data with the excluded rows
+removed, the order of the functions will influence the reported number
+of rows meeting the exclusion criteria.
 
 ``` r
-# Check for rows with incomplete data then rows with durations less than 100 seconds
-qualtrics_text %>% 
-  check_progress()
-#> 6 out of 100 rows did not complete the study.
-#>             StartDate             EndDate     Status    IPAddress Progress
-#> 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99
-#> 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1
-#> 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
-#> 4 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48
-#> 5 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5
-#> 6 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address   2.246.67.0       44
-#>   Duration (in seconds) Finished        RecordedDate        ResponseId
-#> 1                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
-#> 2                   627    FALSE 2020-12-17 15:46:23 R_1cvaTAoXO7XW1vi
-#> 3                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
-#> 4                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
-#> 5                   307    FALSE 2020-12-17 15:51:50 R_HFKclPO5wWGNsFs
-#> 6                   355    FALSE 2020-12-17 15:55:06 R_UfSQq1VXYkVcxdJ
-#>   LocationLatitude LocationLongitude UserLanguage Browser      Version
-#> 1         37.28265        -120.50248           EN  Chrome 87.0.4280.88
-#> 2         34.03605        -117.04066           EN    <NA>         <NA>
-#> 3         34.77804         -84.96198           DE  Chrome 83.0.4103.61
-#> 4         33.66715        -117.82543           EN  Chrome 87.0.4280.88
-#> 5         29.29882         -81.04289           EN Firefox         81.0
-#> 6         37.79058        -121.96737           EN  Chrome 87.0.4280.67
-#>   Operating System Resolution
-#> 1  Windows NT 10.0   1366x768
-#> 2             <NA>       <NA>
-#> 3  Windows NT 10.0   1366x768
-#> 4  Windows NT 10.0   1188x668
-#> 5  Windows NT 10.0   1366x768
-#> 6        Macintosh   1280x800
+# Exclude preview then incomplete progress rows
+df <- qualtrics_text %>%
+  exclude_duration(min_duration = 100) %>%
+  exclude_progress()
+#> 4 out of 100 rows of short and/or long duration were excluded, leaving 96 rows.
+#> 4 out of 96 rows with incomplete progress were excluded, leaving 92 rows.
+dim(df)
+#> [1] 92 16
 ```
 
 ``` r
-qualtrics_text %>% 
-  check_duration(min_duration = 100)
-#> 4 out of 100 rows took less time than the minimum duration of 100 seconds.
-#>             StartDate             EndDate     Status    IPAddress Progress
-#> 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100
-#> 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
-#> 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48
-#> 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100
-#>   Duration (in seconds) Finished        RecordedDate        ResponseId
-#> 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3
-#> 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
-#> 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
-#> 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire
-#>   LocationLatitude LocationLongitude UserLanguage Browser      Version
-#> 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88
-#> 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61
-#> 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88
-#> 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88
-#>   Operating System Resolution
-#> 1  Windows NT 10.0   1600x900
-#> 2  Windows NT 10.0   1366x768
-#> 3  Windows NT 10.0   1188x668
-#> 4  Windows NT 10.0   1368x912
+# Exclude incomplete progress then preview rows
+df <- qualtrics_text %>%
+  exclude_progress() %>%
+  exclude_duration(min_duration = 100)
+#> 6 out of 100 rows with incomplete progress were excluded, leaving 94 rows.
+#> 2 out of 94 rows of short and/or long duration were excluded, leaving 92 rows.
+dim(df)
+#> [1] 92 16
 ```
 
+Though the order of functions should not influence the final data set,
+it may speed up processing large files by removing preview and
+incomplete progress data first and waiting to check IP addresses and
+locations after other exclusions have been performed.
+
 ``` r
-# Check for rows with durations less than 100 seconds within rows that did not complete the survey
-qualtrics_text %>% 
-  check_progress() %>% 
-  check_duration(min_duration = 100)
-#> 6 out of 100 rows did not complete the study.
-#> 2 out of 6 rows took less time than the minimum duration of 100 seconds.
-#>             StartDate             EndDate     Status   IPAddress Progress
-#> 1 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address  15.223.0.0       13
-#> 2 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0       48
-#>   Duration (in seconds) Finished        RecordedDate        ResponseId
-#> 1                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
-#> 2                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
-#>   LocationLatitude LocationLongitude UserLanguage Browser      Version
-#> 1         34.77804         -84.96198           DE  Chrome 83.0.4103.61
-#> 2         33.66715        -117.82543           EN  Chrome 87.0.4280.88
-#>   Operating System Resolution
-#> 1  Windows NT 10.0   1366x768
-#> 2  Windows NT 10.0   1188x668
+# Exclude rows
+df <- qualtrics_text %>%
+  exclude_preview() %>%
+  exclude_progress() %>%
+  exclude_duplicates() %>%
+  exclude_duration(min_duration = 100) %>%
+  exclude_resolution() %>%
+  exclude_ip() %>%
+  exclude_location()
+#> 2 out of 100 preview rows were excluded, leaving 98 rows.
+#> 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.
+#> 15 out of 92 duplicate rows were excluded, leaving 83 rows.
+#> 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.
+#> 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.
+#> 2 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 75 rows.
+#> 4 out of 75 rows outside of the US were excluded, leaving 71 rows.
 ```
 
 ### Marking
 
 The `mark_*()` functions output the original data set with a new column
 specifying rows that meet the exclusion criteria. These can be chained
-together for multiple exclusion types.
+together with `%>%` for multiple exclusion types.
 
 ``` r
-# Mark preview and incomplete progress rows
-df <- qualtrics_text %>% 
-  mark_preview() %>% 
-  mark_progress()
+# Mark preview and short duration rows
+df <- qualtrics_text %>%
+  mark_preview() %>%
+  mark_duration(min_duration = 200)
 #> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
-#> 6 out of 100 rows did not complete the study.
+#> 23 out of 100 rows took less time than the minimum duration of 200 seconds.
 tibble::glimpse(df)
 #> Rows: 100
 #> Columns: 18
@@ -219,20 +197,20 @@ tibble::glimpse(df)
 #> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10…
 #> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864…
 #> $ exclusion_preview       <chr> "preview", "preview", NA, NA, NA, NA, NA, NA, …
-#> $ exclusion_progress      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+#> $ exclusion_duration      <chr> NA, NA, NA, NA, "duration", NA, "duration", NA…
 ```
 
 Use the [`collapse_exclusions()`](?collapse_exclusions) function to
 collapse all of the marked columns into a single column.
 
 ``` r
-# Collapse labels for preview and incomplete progress rows
-df <- qualtrics_text %>% 
-  mark_preview() %>% 
-  mark_progress() %>% 
-  collapse_exclusions(exclusion_types = c("preview", "progress"))
+# Collapse labels for preview and short duration rows
+df <- qualtrics_text %>%
+  mark_preview() %>%
+  mark_duration(min_duration = 200) %>%
+  collapse_exclusions(exclusion_types = c("preview", "duration"))
 #> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
-#> 6 out of 100 rows did not complete the study.
+#> 23 out of 100 rows took less time than the minimum duration of 200 seconds.
 tibble::glimpse(df)
 #> Rows: 100
 #> Columns: 17
@@ -252,61 +230,7 @@ tibble::glimpse(df)
 #> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…
 #> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10…
 #> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864…
-#> $ exclusions              <chr> "preview", "preview", NA, NA, NA, NA, NA, NA, …
-```
-
-### Excluding
-
-The `exclude_*()` functions remove the rows that meet exclusion
-criteria. These, too, can be piped together. Since the output of each
-function is a subset of the original data with the excluded rows
-removed, the order of the functions will influence the reported number
-of rows meeting the exclusion criteria.
-
-``` r
-# Exclude preview then incomplete progress rows
-df <- qualtrics_text %>% 
-  exclude_duration(min_duration = 100) %>% 
-  exclude_progress()
-#> 4 out of 100 rows of short and/or long duration were excluded, leaving 96 rows.
-#> 4 out of 96 rows with incomplete progress were excluded, leaving 92 rows.
-dim(df)
-#> [1] 92 16
-```
-
-``` r
-# Exclude incomplete progress then preview rows
-df <- qualtrics_text %>% 
-  exclude_progress() %>% 
-  exclude_duration(min_duration = 100)
-#> 6 out of 100 rows with incomplete progress were excluded, leaving 94 rows.
-#> 2 out of 94 rows of short and/or long duration were excluded, leaving 92 rows.
-dim(df)
-#> [1] 92 16
-```
-
-Though the order of functions should not influence the final data set,
-it may speed up processing large files by removing preview and
-incomplete progress data first and waiting to check IP addresses and
-locations after other exclusions have been performed.
-
-``` r
-# Exclude rows
-df <- qualtrics_text %>% 
-  exclude_preview() %>% 
-  exclude_progress() %>% 
-  exclude_duplicates() %>% 
-  exclude_duration(min_duration = 100) %>% 
-  exclude_resolution() %>% 
-  exclude_ip() %>% 
-  exclude_location()
-#> 2 out of 100 preview rows were excluded, leaving 98 rows.
-#> 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.
-#> 15 out of 92 duplicate rows were excluded, leaving 83 rows.
-#> 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.
-#> 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.
-#> 2 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 75 rows.
-#> 4 out of 75 rows outside of the US were excluded, leaving 71 rows.
+#> $ exclusions              <chr> "preview", "preview", NA, NA, "duration", NA, …
 ```
 
 ### Combining verbs
@@ -316,9 +240,9 @@ surveys before checking other exclusion types.
 
 ``` r
 # Exclude preview then incomplete progress rows
-qualtrics_text %>% 
-  exclude_preview() %>% 
-  exclude_progress() %>% 
+qualtrics_text %>%
+  exclude_preview() %>%
+  exclude_progress() %>%
   check_duplicates()
 #> 2 out of 100 preview rows were excluded, leaving 98 rows.
 #> 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.
@@ -390,3 +314,25 @@ qualtrics_text %>%
 #> 14  87.0.4280.88  Windows NT 10.0  1920x1080
 #> 15  87.0.4280.88  Windows NT 10.0   1536x864
 ```
+
+## Citing this package
+
+To cite `{excluder}`, use:
+
+> Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R
+> package version 0.0.0.1, <https://jstevens5.github.io/excluder/>.
+
+## Contributing to this package
+
+[Contributions](https://jstevens5.github.io/.github/CONTRIBUTING.md) to
+`{excluder}` are most welcome! Feel free to check out [open
+issues](https://github.com/jstevens5/excluder/issues) for ideas. And
+[pull requests](https://github.com/jstevens5/excluder/pulls) are
+encouraged, but you may want to [raise an
+issue](https://github.com/jstevens5/excluder/issues/new/choose) or
+[contact the maintainer](mailto:jeffrey.r.stevens@gmail.com) first.
+
+Please note that the excluder project is released with a [Contributor
+Code of
+Conduct](https://jstevens5.github.io/excluder/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.
