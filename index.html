@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -77,6 +77,8 @@
 <!-- badges: start -->
 
 <p>The goal of <a href="https://jstevens5.github.io/excluder/"><code>{excluder}</code></a> is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from <a href="https://qualtrics.com">Qualtrics</a> surveys, and default column names come from importing data with the <a href="https://docs.ropensci.org/qualtRics/"><code>{qualtRics}</code></a> package.</p>
+<p>This may be most useful for <a href="https://www.mturk.com/">Mechanical Turk</a> data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States. But it can be used more generally to exclude based on response durations, preview status, progress, or screen resolution.</p>
+<p>More details are available on the package <a href="https://jstevens5.github.io/excluder/">website</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -91,11 +93,11 @@
 <p>This package provides three primary verbs:</p>
 <ul>
 <li>
-<code>check</code> functions search for the exclusion criteria and outputs a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.</li>
+<code>check</code> functions search for the exclusion criteria and output a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.</li>
 <li>
-<code>mark</code> functions add a new column to the data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing.</li>
+<code>exclude</code> functions remove rows meeting the exclusion criteria. This is safest to do after checking the rows to ensure the exclusions are correct.</li>
 <li>
-<code>exclude</code> functions remove rows meeting the exclusion criteria. This is often the last step to complete after checking and/or marking the rows to ensure the exclusions are correct.</li>
+<code>mark</code> functions add a new column to the original data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing without changing the original data frame.</li>
 </ul>
 </div>
 <div id="exclusion-types" class="section level2">
@@ -122,7 +124,7 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>The verbs and exclusion types combine with <code>_</code> to create the functions, such as <code>check_duplicates</code>, <code>mark_duration</code>, and <code>exclude_ip</code>. Multiple functions can be changed together using the <a href=""><code>{magrittr}</code></a> pipe <code><a href="reference/%&gt;%.html">%&gt;%</a></code>. For datasets downloaded directly from Qualtrics, use <code><a href="reference/remove_label_rows.html">remove_label_rows()</a></code> to remove the first two rows of labels and convert date and numeric columns in the metadata.</p>
+<p>The verbs and exclusion types combine with <code>_</code> to create the functions, such as <code><a href="reference/check_duplicates.html">check_duplicates()</a></code>, <code><a href="reference/exclude_ip.html">exclude_ip()</a></code>, and <code><a href="reference/mark_duration.html">mark_duration()</a></code>. Multiple functions can be linked together using the <a href=""><code>{magrittr}</code></a> pipe <code><a href="reference/%&gt;%.html">%&gt;%</a></code>. For datasets downloaded directly from Qualtrics, use <code><a href="reference/remove_label_rows.html">remove_label_rows()</a></code> to remove the first two rows of labels and convert date and numeric columns in the metadata.</p>
 <div id="checking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#checking" class="anchor"></a>Checking</h3>
@@ -130,7 +132,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jstevens5.github.io/excluder">excluder</a></span><span class="op">)</span>
 <span class="co"># Check for preview rows</span>
-<span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
+<span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/check_preview.html">check_preview</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt;             StartDate             EndDate         Status IPAddress Progress</span>
@@ -145,95 +147,59 @@
 <span class="co">#&gt;   Operating System Resolution</span>
 <span class="co">#&gt; 1  Windows NT 10.0   1366x768</span>
 <span class="co">#&gt; 2        Macintosh  1680x1050</span></code></pre></div>
-<p>Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.</p>
+</div>
+<div id="excluding" class="section level3">
+<h3 class="hasAnchor">
+<a href="#excluding" class="anchor"></a>Excluding</h3>
+<p>The <code>exclude_*()</code> functions remove the rows that meet exclusion criteria. These, too, can be piped together. Since the output of each function is a subset of the original data with the excluded rows removed, the order of the functions will influence the reported number of rows meeting the exclusion criteria.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Check for rows with incomplete data then rows with durations less than 100 seconds</span>
-<span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
-<span class="co">#&gt;             StartDate             EndDate     Status    IPAddress Progress</span>
-<span class="co">#&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99</span>
-<span class="co">#&gt; 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1</span>
-<span class="co">#&gt; 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13</span>
-<span class="co">#&gt; 4 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48</span>
-<span class="co">#&gt; 5 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5</span>
-<span class="co">#&gt; 6 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address   2.246.67.0       44</span>
-<span class="co">#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
-<span class="co">#&gt; 1                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz</span>
-<span class="co">#&gt; 2                   627    FALSE 2020-12-17 15:46:23 R_1cvaTAoXO7XW1vi</span>
-<span class="co">#&gt; 3                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj</span>
-<span class="co">#&gt; 4                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ</span>
-<span class="co">#&gt; 5                   307    FALSE 2020-12-17 15:51:50 R_HFKclPO5wWGNsFs</span>
-<span class="co">#&gt; 6                   355    FALSE 2020-12-17 15:55:06 R_UfSQq1VXYkVcxdJ</span>
-<span class="co">#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
-<span class="co">#&gt; 1         37.28265        -120.50248           EN  Chrome 87.0.4280.88</span>
-<span class="co">#&gt; 2         34.03605        -117.04066           EN    &lt;NA&gt;         &lt;NA&gt;</span>
-<span class="co">#&gt; 3         34.77804         -84.96198           DE  Chrome 83.0.4103.61</span>
-<span class="co">#&gt; 4         33.66715        -117.82543           EN  Chrome 87.0.4280.88</span>
-<span class="co">#&gt; 5         29.29882         -81.04289           EN Firefox         81.0</span>
-<span class="co">#&gt; 6         37.79058        -121.96737           EN  Chrome 87.0.4280.67</span>
-<span class="co">#&gt;   Operating System Resolution</span>
-<span class="co">#&gt; 1  Windows NT 10.0   1366x768</span>
-<span class="co">#&gt; 2             &lt;NA&gt;       &lt;NA&gt;</span>
-<span class="co">#&gt; 3  Windows NT 10.0   1366x768</span>
-<span class="co">#&gt; 4  Windows NT 10.0   1188x668</span>
-<span class="co">#&gt; 5  Windows NT 10.0   1366x768</span>
-<span class="co">#&gt; 6        Macintosh   1280x800</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_duration.html">exclude_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 4 out of 100 rows of short and/or long duration were excluded, leaving 96 rows.</span>
+<span class="co">#&gt; 4 out of 96 rows with incomplete progress were excluded, leaving 92 rows.</span>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+<span class="co">#&gt; [1] 92 16</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="co">#&gt; 4 out of 100 rows took less time than the minimum duration of 100 seconds.</span>
-<span class="co">#&gt;             StartDate             EndDate     Status    IPAddress Progress</span>
-<span class="co">#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100</span>
-<span class="co">#&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13</span>
-<span class="co">#&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48</span>
-<span class="co">#&gt; 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100</span>
-<span class="co">#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
-<span class="co">#&gt; 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3</span>
-<span class="co">#&gt; 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj</span>
-<span class="co">#&gt; 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ</span>
-<span class="co">#&gt; 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire</span>
-<span class="co">#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
-<span class="co">#&gt; 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88</span>
-<span class="co">#&gt; 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61</span>
-<span class="co">#&gt; 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88</span>
-<span class="co">#&gt; 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88</span>
-<span class="co">#&gt;   Operating System Resolution</span>
-<span class="co">#&gt; 1  Windows NT 10.0   1600x900</span>
-<span class="co">#&gt; 2  Windows NT 10.0   1366x768</span>
-<span class="co">#&gt; 3  Windows NT 10.0   1188x668</span>
-<span class="co">#&gt; 4  Windows NT 10.0   1368x912</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># Exclude incomplete progress then preview rows</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_duration.html">exclude_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; 6 out of 100 rows with incomplete progress were excluded, leaving 94 rows.</span>
+<span class="co">#&gt; 2 out of 94 rows of short and/or long duration were excluded, leaving 92 rows.</span>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+<span class="co">#&gt; [1] 92 16</span></code></pre></div>
+<p>Though the order of functions should not influence the final data set, it may speed up processing large files by removing preview and incomplete progress data first and waiting to check IP addresses and locations after other exclusions have been performed.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Check for rows with durations less than 100 seconds within rows that did not complete the survey</span>
-<span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
-<span class="co">#&gt; 2 out of 6 rows took less time than the minimum duration of 100 seconds.</span>
-<span class="co">#&gt;             StartDate             EndDate     Status   IPAddress Progress</span>
-<span class="co">#&gt; 1 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address  15.223.0.0       13</span>
-<span class="co">#&gt; 2 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0       48</span>
-<span class="co">#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
-<span class="co">#&gt; 1                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj</span>
-<span class="co">#&gt; 2                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ</span>
-<span class="co">#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
-<span class="co">#&gt; 1         34.77804         -84.96198           DE  Chrome 83.0.4103.61</span>
-<span class="co">#&gt; 2         33.66715        -117.82543           EN  Chrome 87.0.4280.88</span>
-<span class="co">#&gt;   Operating System Resolution</span>
-<span class="co">#&gt; 1  Windows NT 10.0   1366x768</span>
-<span class="co">#&gt; 2  Windows NT 10.0   1188x668</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># Exclude rows</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_duration.html">exclude_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_resolution.html">exclude_resolution</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_ip.html">exclude_ip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_location.html">exclude_location</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
+<span class="co">#&gt; 15 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
+<span class="co">#&gt; 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.</span>
+<span class="co">#&gt; 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.</span>
+<span class="co">#&gt; 2 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 75 rows.</span>
+<span class="co">#&gt; 4 out of 75 rows outside of the US were excluded, leaving 71 rows.</span></code></pre></div>
 </div>
 <div id="marking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#marking" class="anchor"></a>Marking</h3>
-<p>The <code>mark_*()</code> functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be chained together for multiple exclusion types.</p>
+<p>The <code>mark_*()</code> functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be chained together with <code><a href="reference/%&gt;%.html">%&gt;%</a></code> for multiple exclusion types.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Mark preview and incomplete progress rows</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/mark_progress.html">mark_progress</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># Mark preview and short duration rows</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
 <span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
+<span class="co">#&gt; 23 out of 100 rows took less time than the minimum duration of 200 seconds.</span>
 <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 100</span>
 <span class="co">#&gt; Columns: 18</span>
@@ -254,16 +220,16 @@
 <span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Macintosh", "Windows NT 10…</span>
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
 <span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", NA, NA, NA, NA, NA, NA, …</span>
-<span class="co">#&gt; $ exclusion_progress      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></code></pre></div>
+<span class="co">#&gt; $ exclusion_duration      &lt;chr&gt; NA, NA, NA, NA, "duration", NA, "duration", NA…</span></code></pre></div>
 <p>Use the <a href="?collapse_exclusions"><code>collapse_exclusions()</code></a> function to collapse all of the marked columns into a single column.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Collapse labels for preview and incomplete progress rows</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/mark_progress.html">mark_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/collapse_exclusions.html">collapse_exclusions</a></span><span class="op">(</span>exclusion_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"preview"</span>, <span class="st">"progress"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># Collapse labels for preview and short duration rows</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">200</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/collapse_exclusions.html">collapse_exclusions</a></span><span class="op">(</span>exclusion_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"preview"</span>, <span class="st">"duration"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
+<span class="co">#&gt; 23 out of 100 rows took less time than the minimum duration of 200 seconds.</span>
 <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 100</span>
 <span class="co">#&gt; Columns: 17</span>
@@ -283,58 +249,17 @@
 <span class="co">#&gt; $ Version                 &lt;chr&gt; "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…</span>
 <span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Macintosh", "Windows NT 10…</span>
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
-<span class="co">#&gt; $ exclusions              &lt;chr&gt; "preview", "preview", NA, NA, NA, NA, NA, NA, …</span></code></pre></div>
-</div>
-<div id="excluding" class="section level3">
-<h3 class="hasAnchor">
-<a href="#excluding" class="anchor"></a>Excluding</h3>
-<p>The <code>exclude_*()</code> functions remove the rows that meet exclusion criteria. These, too, can be piped together. Since the output of each function is a subset of the original data with the excluded rows removed, the order of the functions will influence the reported number of rows meeting the exclusion criteria.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_duration.html">exclude_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 4 out of 100 rows of short and/or long duration were excluded, leaving 96 rows.</span>
-<span class="co">#&gt; 4 out of 96 rows with incomplete progress were excluded, leaving 92 rows.</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; [1] 92 16</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Exclude incomplete progress then preview rows</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_duration.html">exclude_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="co">#&gt; 6 out of 100 rows with incomplete progress were excluded, leaving 94 rows.</span>
-<span class="co">#&gt; 2 out of 94 rows of short and/or long duration were excluded, leaving 92 rows.</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; [1] 92 16</span></code></pre></div>
-<p>Though the order of functions should not influence the final data set, it may speed up processing large files by removing preview and incomplete progress data first and waiting to check IP addresses and locations after other exclusions have been performed.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Exclude rows</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_duration.html">exclude_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_resolution.html">exclude_resolution</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_ip.html">exclude_ip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_location.html">exclude_location</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 15 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
-<span class="co">#&gt; 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.</span>
-<span class="co">#&gt; 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.</span>
-<span class="co">#&gt; 2 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 75 rows.</span>
-<span class="co">#&gt; 4 out of 75 rows outside of the US were excluded, leaving 71 rows.</span></code></pre></div>
+<span class="co">#&gt; $ exclusions              &lt;chr&gt; "preview", "preview", NA, NA, "duration", NA, …</span></code></pre></div>
 </div>
 <div id="combining-verbs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#combining-verbs" class="anchor"></a>Combining verbs</h3>
 <p>It often makes sense to remove the preview surveys and incomplete surveys before checking other exclusion types.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows</span>
-<span class="va">qualtrics_text</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/check_duplicates.html">check_duplicates</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
 <span class="co">#&gt; 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
@@ -407,6 +332,20 @@
 <span class="co">#&gt; 15  87.0.4280.88  Windows NT 10.0   1536x864</span></code></pre></div>
 </div>
 </div>
+<div id="citing-this-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#citing-this-package" class="anchor"></a>Citing this package</h2>
+<p>To cite <a href="https://jstevens5.github.io/excluder">excluder</a>, use:</p>
+<blockquote>
+<p>Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R package version 0.0.0.1, <a href="https://jstevens5.github.io/excluder/" class="uri">https://jstevens5.github.io/excluder/</a>.</p>
+</blockquote>
+</div>
+<div id="contributing-to-this-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#contributing-to-this-package" class="anchor"></a>Contributing to this package</h2>
+<p><a href="https://jstevens5.github.io/.github/CONTRIBUTING.md">Contributions</a> to <a href="https://jstevens5.github.io/excluder">excluder</a> are most welcome! Feel free to check out <a href="https://github.com/jstevens5/excluder/issues">open issues</a> for ideas. And <a href="https://github.com/jstevens5/excluder/pulls">pull requests</a> are encouraged, but you may want to <a href="https://github.com/jstevens5/excluder/issues/new/choose">raise an issue</a> or <a href="mailto:jeffrey.r.stevens@gmail.com">contact the maintainer</a> first.</p>
+<p>Please note that the excluder project is released with a <a href="https://jstevens5.github.io/excluder/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+</div>
 </div>
   </div>
 
@@ -425,6 +364,13 @@
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small>GPL (&gt;= 3)</small></li>
+</ul>
+</div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
 <div class="citation">
