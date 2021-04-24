@@ -7,9 +7,10 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jeffrey.r.stevens@gmail.com",
            comment = c(ORCID = "0000-0003-2375-1360"))
-Description: Data that are collected through online sources may require
-            excluding data because of IP address duplication, geolocation, 
-            or completion duration.
+Description: Data that are collected through online sources such as Mechanical 
+            Turk may require excluding data because of IP address duplication, 
+            geolocation, or completion duration. This package facilitates
+            exclusion of these data for Qualtrics datasets.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
