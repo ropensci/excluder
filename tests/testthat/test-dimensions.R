@@ -1,6 +1,6 @@
-# Test the check_*() functions
+# Test the dimensions of function output
 
-test_that("Checks create tibbles of correct size", {
+test_that("Checks create data frames of correct size", {
   # Check duplicates
   suppressMessages(expect_true(nrow(check_duplicates(qualtrics_numeric)) == 17))
   suppressMessages(expect_true(ncol(check_duplicates(qualtrics_numeric)) == 17))
@@ -44,7 +44,7 @@ test_that("Checks create tibbles of correct size", {
   suppressMessages(expect_true(ncol(check_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 18))
 })
 
-test_that("Marks create tibbles of correct size", {
+test_that("Marks create data frames of correct size", {
   # Mark duplicates
   suppressMessages(expect_true(nrow(mark_duplicates(qualtrics_numeric)) == 100))
   suppressMessages(expect_true(ncol(mark_duplicates(qualtrics_numeric)) == 17))
@@ -88,7 +88,7 @@ test_that("Marks create tibbles of correct size", {
   suppressMessages(expect_true(ncol(mark_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 17))
 })
 
-test_that("Excludes create tibbles of correct size", {
+test_that("Excludes create data frames of correct size", {
   # Exclude duplicates
   suppressMessages(expect_true(nrow(exclude_duplicates(qualtrics_numeric)) == 90))
   suppressMessages(expect_true(ncol(exclude_duplicates(qualtrics_numeric)) == 16))
@@ -130,4 +130,14 @@ test_that("Excludes create tibbles of correct size", {
   suppressMessages(expect_true(ncol(exclude_resolution(qualtrics_numeric)) == 16))
   suppressMessages(expect_true(nrow(exclude_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 64))
   suppressMessages(expect_true(ncol(exclude_resolution(qualtrics_numeric, height_min = 800, width_min = 0)) == 16))
+})
+
+test_that("remove_label_rows() creates data frames of correct size", {
+  # Test dimension of all data sets before and after applying remove_label_rows()
+  expect_true(nrow(qualtrics_numeric) == 100)
+  expect_true(nrow(remove_label_rows(qualtrics_numeric)) == 100)
+  expect_true(nrow(qualtrics_text) == 100)
+  expect_true(nrow(remove_label_rows(qualtrics_text)) == 100)
+  expect_true(nrow(qualtrics_raw) == 102)
+  expect_true(nrow(remove_label_rows(qualtrics_raw)) == 100)
 })
