@@ -4,16 +4,13 @@
 \alias{remove_label_rows}
 \title{Remove two initial rows created in Qualtrics data}
 \usage{
-remove_label_rows(.data, convert = TRUE, qualtrics_check = TRUE)
+remove_label_rows(.data, convert = TRUE)
 }
 \arguments{
 \item{.data}{Data frame (downloaded from Qualtrics).}
 
 \item{convert}{Logical indicating whether to convert date and numeric columns
 from the metadata.}
-
-\item{qualtrics_check}{Logical indicating whether to check if the data are
-from Qualtrics.}
 }
 \value{
 An object of the same type as \code{.data} that excludes Qualtrics label rows and
@@ -38,5 +35,4 @@ The \code{convert} argument only converts the \emph{StartDate}, \emph{EndDate},
 # Remove label rows
 data(qualtrics_raw)
 df <- remove_label_rows(qualtrics_raw)
-
 }

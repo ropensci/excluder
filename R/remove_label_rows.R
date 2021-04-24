@@ -18,8 +18,6 @@
 #' @param .data Data frame (downloaded from Qualtrics).
 #' @param convert Logical indicating whether to convert date and numeric columns
 #' from the metadata.
-#'@param qualtrics_check Logical indicating whether to check if the data are
-#' from Qualtrics.
 #'
 #' @return
 #' An object of the same type as `.data` that excludes Qualtrics label rows and
@@ -30,50 +28,43 @@
 #' # Remove label rows
 #' data(qualtrics_raw)
 #' df <- remove_label_rows(qualtrics_raw)
-#'
-
-remove_label_rows <- function(.data, convert = TRUE, qualtrics_check = TRUE) {
+remove_label_rows <- function(.data, convert = TRUE) {
 
   # Check if Qualtrics data set
-  if(qualtrics_check == TRUE) {
-    if(names(.data)[1] !=  "StartDate") {
-      if(names(.data)[1] == "Start Date") {
-        message("This data frame has used the label row for the column names.")
-      } else {
-        message("This data frame does not appear to be a Qualtrics data set.")
-      }
-    }
+  if (names(.data)[1] == "StartDate") {
+    # Remove label rows
+    .data <- .data %>%
+      dplyr::filter(.data$Status != "Response Type" & .data$Status != '{"ImportId":"status"}')
+  } else {
+    message("This data frame does not appear to be a Qualtrics data set.")
   }
 
-  # Remove label rows
-  .data <- .data %>%
-    dplyr::filter(.data$StartDate != "Start Date" & .data$StartDate != "{\"ImportId\":\"startDate\",\"timeZone\":\"America/Chicago\"}")
 
   # Convert columns to date or numeric
-  if(convert == TRUE) {
+  if (convert == TRUE) {
     column_names <- names(.data)
-    if("StartDate" %in% column_names) {
+    if ("StartDate" %in% column_names) {
       .data <- dplyr::mutate(.data, StartDate = lubridate::parse_date_time(.data$StartDate, orders = c("ymd HMS", "ymd HM", "ymd", "mdy HMS", "mdy HM", "mdy")))
     }
-    if("EndDate" %in% column_names) {
+    if ("EndDate" %in% column_names) {
       .data <- dplyr::mutate(.data, EndDate = lubridate::parse_date_time(.data$EndDate, orders = c("ymd HMS", "ymd HM", "ymd", "mdy HMS", "mdy HM", "mdy")))
     }
-    if("Progress" %in% column_names) {
+    if ("Progress" %in% column_names) {
       .data <- dplyr::mutate(.data, Progress = as.numeric(.data$Progress))
     }
-    if("Duration (in seconds)" %in% column_names) {
+    if ("Duration (in seconds)" %in% column_names) {
       .data <- dplyr::mutate(.data, `Duration (in seconds)` = as.numeric(.data$`Duration (in seconds)`))
     }
-    if("RecordedDate" %in% column_names) {
+    if ("RecordedDate" %in% column_names) {
       .data <- dplyr::mutate(.data, RecordedDate = lubridate::parse_date_time(.data$RecordedDate, orders = c("ymd HMS", "ymd HM", "ymd", "mdy HMS", "mdy HM", "mdy")))
     }
-    if("LocationLatitude" %in% column_names) {
+    if ("LocationLatitude" %in% column_names) {
       .data <- dplyr::mutate(.data, LocationLatitude = as.numeric(.data$LocationLatitude))
     }
-    if("LocationLongitude" %in% column_names) {
+    if ("LocationLongitude" %in% column_names) {
       .data <- dplyr::mutate(.data, LocationLongitude = as.numeric(.data$LocationLongitude))
     }
   }
 
-  return(.data)
+  invisible(.data)
 }
