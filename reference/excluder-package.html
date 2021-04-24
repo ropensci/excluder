@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove two initial rows created in Qualtrics data — remove_label_rows • excluder</title>
+<title>excluder: Checks for Exclusion Criteria in Online Data — excluder-package • excluder</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Remove two initial rows created in Qualtrics data — remove_label_rows" />
-<meta property="og:description" content="The remove_label_rows() function filters out the initial label rows from
-datasets downloaded from Qualtrics surveys." />
+<meta property="og:title" content="excluder: Checks for Exclusion Criteria in Online Data — excluder-package" />
+<meta property="og:description" content="Data that are collected through online sources such as Mechanical 
+            Turk may require excluding data because of IP address duplication, 
+            geolocation, or completion duration. This package facilitates
+            exclusion of these data for Qualtrics datasets." />
 
 
 
@@ -112,52 +114,33 @@ datasets downloaded from Qualtrics surveys." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove two initial rows created in Qualtrics data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jstevens5/excluder/blob/master/R/remove_label_rows.R'><code>R/remove_label_rows.R</code></a></small>
-    <div class="hidden name"><code>remove_label_rows.Rd</code></div>
+    <h1>excluder: Checks for Exclusion Criteria in Online Data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jstevens5/excluder/blob/master/R/excluder-package.R'><code>R/excluder-package.R</code></a></small>
+    <div class="hidden name"><code>excluder-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>remove_label_rows()</code> function filters out the initial label rows from
-datasets downloaded from <a href='https://qualtrics.com'>Qualtrics</a> surveys.</p>
+    <p>Data that are collected through online sources such as Mechanical 
+            Turk may require excluding data because of IP address duplication, 
+            geolocation, or completion duration. This package facilitates
+            exclusion of these data for Qualtrics datasets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>remove_label_rows</span><span class='op'>(</span><span class='va'>.data</span>, convert <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>.data</th>
-      <td><p>Data frame (downloaded from Qualtrics).</p></td>
-    </tr>
-    <tr>
-      <th>convert</th>
-      <td><p>Logical indicating whether to convert date and numeric columns
-from the metadata.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>An object of the same type as <code>.data</code> that excludes Qualtrics label rows and
-with date and numeric metadata columns converted to the correct data class.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://jstevens5.github.io/excluder'>https://jstevens5.github.io/excluder</a></p></li>
+<li><p><a href='https://github.com/jstevens5/excluder'>https://github.com/jstevens5/excluder</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/jstevens5/excluder/issues'>https://github.com/jstevens5/excluder/issues</a></p></li>
+</ul>
 
-    <p>The function (1) checks if the data set uses Qualtrics column names,
-(2) checks if label rows are already used as column names,
-(3) removes label rows if present, and (4) converts date and numeric metadata
-columns to proper data class. Datasets imported using
-<code>qualtRics::fetch_survey()</code> should not need this function.</p>
-<p>The <code>convert</code> argument only converts the <em>StartDate</em>, <em>EndDate</em>,
-<em>RecordedDate</em>, <em>Progress</em>, <em>Duration (in seconds)</em>, <em>LocationLatitude</em>, and
-<em>LocationLongitude</em> columns. To convert data columns, see <a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate</a>.</p>
+</div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Remove label rows</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_raw</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>remove_label_rows</span><span class='op'>(</span><span class='va'>qualtrics_raw</span><span class='op'>)</span>
-</div></pre>
+    <p><strong>Maintainer</strong>: Jeffrey R. Stevens <a href='mailto:jeffrey.r.stevens@gmail.com'>jeffrey.r.stevens@gmail.com</a> (<a href='https://orcid.org/0000-0003-2375-1360'>ORCID</a>)</p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
