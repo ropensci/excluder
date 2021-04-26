@@ -10,5 +10,5 @@ citEntry(entry = "manual",
            paste("Stevens, J.R. (2021).",
                  "excluder: Exclude rows to clean your data.",
                  "R package version 0.1.0,",
-                 "https://jstevens5.github.io/excluder/.")
+                 "https://jeffreyrstevens.github.io/excluder/.")
 )

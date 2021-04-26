@@ -5,17 +5,17 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/jstevens5/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jstevens5/excluder/actions)
+[![R-CMD-check](https://github.com/jeffreyrstevens/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyrstevens/excluder/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jstevens5/excluder?branch=main)
 [![lifecycle](man/figures/lifecycle-experimental.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of [`{excluder}`](https://jstevens5.github.io/excluder/) is to
-facilitate checking for, marking, and excluding rows of data frames for
-common exclusion criteria. This package applies to data collected from
-[Qualtrics](https://qualtrics.com) surveys, and default column names
-come from importing data with the
+The goal of [`{excluder}`](https://jeffreyrstevens.github.io/excluder/)
+is to facilitate checking for, marking, and excluding rows of data
+frames for common exclusion criteria. This package applies to data
+collected from [Qualtrics](https://qualtrics.com) surveys, and default
+column names come from importing data with the
 [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
 
 This may be most useful for [Mechanical Turk](https://www.mturk.com/)
@@ -25,7 +25,7 @@ used more generally to exclude based on response durations, preview
 status, progress, or screen resolution.
 
 More details are available on the package
-[website](https://jstevens5.github.io/excluder/).
+[website](https://jeffreyrstevens.github.io/excluder/).
 
 ## Installation
 
@@ -34,7 +34,7 @@ You can install the released version of `{excluder}`
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("jstevens5/excluder")
+devtools::install_github("jeffreyrstevens/excluder")
 ```
 
 ## Verbs
@@ -57,10 +57,10 @@ This package provides three primary verbs:
 
 This package provides six types of exclusions based on Qualtrics
 metadata. If you have ideas for other metadata exclusions, please submit
-them as [issues](https://github.com/jstevens5/excluder/issues). Note,
-the intent of this package is not to develop functions for excluding
-rows based on survey-specific data but on general, frequently used
-metadata.
+them as [issues](https://github.com/jeffreyrstevens/excluder/issues).
+Note, the intent of this package is not to develop functions for
+excluding rows based on survey-specific data but on general, frequently
+used metadata.
 
 -   `duplicates` works with rows that have duplicate IP addresses and/or
     locations (latitude/longitude).
@@ -320,19 +320,19 @@ qualtrics_text %>%
 To cite `{excluder}`, use:
 
 > Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R
-> package version 0.1.0, <https://jstevens5.github.io/excluder/>.
+> package version 0.1.0, <https://jeffreyrstevens.github.io/excluder/>.
 
 ## Contributing to this package
 
-[Contributions](https://jstevens5.github.io/.github/CONTRIBUTING.md) to
-`{excluder}` are most welcome! Feel free to check out [open
-issues](https://github.com/jstevens5/excluder/issues) for ideas. And
-[pull requests](https://github.com/jstevens5/excluder/pulls) are
-encouraged, but you may want to [raise an
-issue](https://github.com/jstevens5/excluder/issues/new/choose) or
+[Contributions](https://jeffreyrstevens.github.io/.github/CONTRIBUTING.md)
+to `{excluder}` are most welcome! Feel free to check out [open
+issues](https://github.com/jeffreyrstevens/excluder/issues) for ideas.
+And [pull requests](https://github.com/jeffreyrstevens/excluder/pulls)
+are encouraged, but you may want to [raise an
+issue](https://github.com/jeffreyrstevens/excluder/issues/new/choose) or
 [contact the maintainer](mailto:jeffrey.r.stevens@gmail.com) first.
 
 Please note that the excluder project is released with a [Contributor
 Code of
-Conduct](https://jstevens5.github.io/excluder/CODE_OF_CONDUCT.html). By
-contributing to this project, you agree to abide by its terms.
+Conduct](https://jeffreyrstevens.github.io/excluder/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
