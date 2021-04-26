@@ -2,8 +2,8 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2021-04-24T15:52Z
+last_built: 2021-04-26T14:27Z
 urls:
-  reference: https://jstevens5.github.io/excluder/reference
-  article: https://jstevens5.github.io/excluder/articles
+  reference: https://jeffreyrstevens.github.io/excluder/reference
+  article: https://jeffreyrstevens.github.io/excluder/articles
 
