@@ -320,7 +320,7 @@ qualtrics_text %>%
 To cite `{excluder}`, use:
 
 > Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R
-> package version 0.1.0, <https://jeffreyrstevens.github.io/excluder/>.
+> package version 0.2.0, <https://jeffreyrstevens.github.io/excluder/>.
 
 ## Contributing to this package
 

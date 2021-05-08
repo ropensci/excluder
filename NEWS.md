@@ -1,3 +1,7 @@
+# excluder 0.2.0
+
+* The `deidentify()` function was added, which removes IP address, location, and computer information columns.
+
 # excluder 0.1.0
 
 * The `check_qualtrics` argument was removed from `remove_label_rows()` because the functionality did not make sense. This breaks backwards compatability.
