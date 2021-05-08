@@ -55,7 +55,7 @@ This package provides three primary verbs:
 
 ## Exclusion types
 
-This package provides six types of exclusions based on Qualtrics
+This package provides seven types of exclusions based on Qualtrics
 metadata. If you have ideas for other metadata exclusions, please submit
 them as [issues](https://github.com/jeffreyrstevens/excluder/issues).
 Note, the intent of this package is not to develop functions for
@@ -79,11 +79,19 @@ used metadata.
 ## Usage
 
 The verbs and exclusion types combine with `_` to create the functions,
-such as `check_duplicates()`, `exclude_ip()`, and `mark_duration()`.
-Multiple functions can be linked together using the [`{magrittr}`]()
-pipe `%>%`. For datasets downloaded directly from Qualtrics, use
-`remove_label_rows()` to remove the first two rows of labels and convert
-date and numeric columns in the metadata.
+such as
+[`check_duplicates()`](https://jeffreyrstevens.github.io/excluder/reference/check_duplicates.html),
+[`exclude_ip()`](https://jeffreyrstevens.github.io/excluder/reference/exclude_ip.html),
+and
+[`mark_duration()`](https://jeffreyrstevens.github.io/excluder/reference/mark_duration.html).
+Multiple functions can be linked together using the
+[`{magrittr}`](https://magrittr.tidyverse.org/) pipe `%>%`. For datasets
+downloaded directly from Qualtrics, use
+[`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html)
+to remove the first two rows of labels and convert date and numeric
+columns in the metadata and use
+[`deidentify()`](https://jeffreyrstevens.github.io/excluder/reference/deidentify.html)
+to remove standard Qualtrics columns with identifiable information.
 
 ### Checking
 
@@ -200,8 +208,9 @@ tibble::glimpse(df)
 #> $ exclusion_duration      <chr> NA, NA, NA, NA, "duration", NA, "duration", NA…
 ```
 
-Use the [`collapse_exclusions()`](?collapse_exclusions) function to
-collapse all of the marked columns into a single column.
+Use the
+[`collapse_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/collapse_exclusions.html)
+function to collapse all of the marked columns into a single column.
 
 ``` r
 # Collapse labels for preview and short duration rows
@@ -231,88 +240,6 @@ tibble::glimpse(df)
 #> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10…
 #> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864…
 #> $ exclusions              <chr> "preview", "preview", NA, NA, "duration", NA, …
-```
-
-### Combining verbs
-
-It often makes sense to remove the preview surveys and incomplete
-surveys before checking other exclusion types.
-
-``` r
-# Exclude preview then incomplete progress rows
-qualtrics_text %>%
-  exclude_preview() %>%
-  exclude_progress() %>%
-  check_duplicates()
-#> 2 out of 100 preview rows were excluded, leaving 98 rows.
-#> 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.
-#> 6 out of 92 rows have duplicate IP addresses.
-#> 
-#> 9 out of 91 rows have duplicate locations.
-#>    LocationLatitude LocationLongitude dupe_count           StartDate
-#> 1          28.56411         -81.54902          2 2020-12-17 15:42:47
-#> 2          28.56411         -81.54902          2 2020-12-17 15:42:18
-#> 3          37.28265        -120.50248          2 2020-12-17 15:46:51
-#> 4          37.28265        -120.50248          2 2020-12-17 15:48:53
-#> 5          40.33554         -75.92698          2 2020-12-11 12:41:23
-#> 6          40.33554         -75.92698          2 2020-12-17 15:41:17
-#> 7          45.50412        -122.78665          3 2020-12-17 15:40:52
-#> 8          45.50412        -122.78665          3 2020-12-17 15:40:57
-#> 9          45.50412        -122.78665          3 2020-12-17 15:48:48
-#> 10         37.28265        -120.50248          2 2020-12-17 15:46:51
-#> 11         37.28265        -120.50248          2 2020-12-17 15:48:53
-#> 12         40.33554         -75.92698          2 2020-12-11 12:41:23
-#> 13         40.33554         -75.92698          2 2020-12-17 15:41:17
-#> 14         28.56411         -81.54902          2 2020-12-17 15:42:47
-#> 15         28.56411         -81.54902          2 2020-12-17 15:42:18
-#>                EndDate     Status    IPAddress Progress Duration (in seconds)
-#> 1  2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
-#> 2  2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
-#> 3  2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
-#> 4  2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
-#> 5  2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
-#> 6  2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
-#> 7  2020-12-17 15:43:39 IP Address 32.164.134.0      100                   375
-#> 8  2020-12-17 15:48:56 IP Address   6.79.107.0      100                   397
-#> 9  2020-12-17 15:54:12 IP Address 54.232.129.0      100                   149
-#> 10 2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
-#> 11 2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
-#> 12 2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
-#> 13 2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
-#> 14 2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
-#> 15 2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
-#>    Finished        RecordedDate        ResponseId UserLanguage Browser
-#> 1      TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
-#> 2      TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
-#> 3      TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
-#> 4      TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
-#> 5      TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
-#> 6      TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
-#> 7      TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome
-#> 8      TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome
-#> 9      TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome
-#> 10     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
-#> 11     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
-#> 12     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
-#> 13     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
-#> 14     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
-#> 15     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
-#>          Version Operating System Resolution
-#> 1   87.0.4280.88  Windows NT 10.0  1920x1080
-#> 2   87.0.4280.88  Windows NT 10.0   1536x864
-#> 3           83.0  Windows NT 10.0   1440x960
-#> 4    84.0.522.52  Windows NT 10.0  1920x1080
-#> 5  86.0.4240.198        Macintosh   1280x800
-#> 6   87.0.4280.88   Windows NT 6.1   1366x768
-#> 7   87.0.4280.88  Windows NT 10.0  1920x1080
-#> 8   87.0.4280.88  Windows NT 10.0   1536x864
-#> 9   87.0.4280.88  Windows NT 10.0  1920x1080
-#> 10          83.0  Windows NT 10.0   1440x960
-#> 11   84.0.522.52  Windows NT 10.0  1920x1080
-#> 12 86.0.4240.198        Macintosh   1280x800
-#> 13  87.0.4280.88   Windows NT 6.1   1366x768
-#> 14  87.0.4280.88  Windows NT 10.0  1920x1080
-#> 15  87.0.4280.88  Windows NT 10.0   1536x864
 ```
 
 ## Citing this package
