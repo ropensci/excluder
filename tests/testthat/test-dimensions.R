@@ -141,3 +141,16 @@ test_that("remove_label_rows() creates data frames of correct size", {
   expect_true(nrow(qualtrics_raw) == 102)
   expect_true(nrow(remove_label_rows(qualtrics_raw)) == 100)
 })
+
+test_that("deidentify() creates data frames of correct size", {
+  # Test dimension of all data sets before and after applying deidentify()
+  expect_true(ncol(qualtrics_numeric) == 16)
+  expect_true(ncol(deidentify(qualtrics_numeric)) == 8)
+  expect_true(ncol(deidentify(qualtrics_numeric, strict = FALSE)) == 12)
+  expect_true(ncol(qualtrics_text) == 16)
+  expect_true(ncol(deidentify(qualtrics_text)) == 8)
+  expect_true(ncol(deidentify(qualtrics_text, strict = FALSE)) == 12)
+  expect_true(ncol(qualtrics_raw) == 16)
+  expect_true(ncol(deidentify(qualtrics_raw)) == 8)
+  expect_true(ncol(deidentify(qualtrics_raw, strict = FALSE)) == 12)
+})
