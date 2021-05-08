@@ -3,11 +3,11 @@
 test_that("Checks create data frames of correct size", {
   # Check duplicates
   suppressMessages(expect_true(nrow(check_duplicates(qualtrics_numeric)) == 17))
-  suppressMessages(expect_true(ncol(check_duplicates(qualtrics_numeric)) == 17))
+  suppressMessages(expect_true(ncol(check_duplicates(qualtrics_numeric)) == 16))
   suppressMessages(expect_true(nrow(check_duplicates(qualtrics_numeric, dupl_ip = FALSE)) == 10))
-  suppressMessages(expect_true(ncol(check_duplicates(qualtrics_numeric, dupl_ip = FALSE)) == 17))
+  suppressMessages(expect_true(ncol(check_duplicates(qualtrics_numeric, dupl_ip = FALSE)) == 16))
   suppressMessages(expect_true(nrow(check_duplicates(qualtrics_numeric, dupl_location = FALSE)) == 7))
-  suppressMessages(expect_true(ncol(check_duplicates(qualtrics_numeric, dupl_location = FALSE)) == 17))
+  suppressMessages(expect_true(ncol(check_duplicates(qualtrics_numeric, dupl_location = FALSE)) == 16))
 
   # Check duration
   suppressMessages(expect_true(nrow(check_duration(qualtrics_numeric)) == 0))
