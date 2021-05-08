@@ -104,7 +104,7 @@
 <div id="exclusion-types" class="section level2">
 <h2 class="hasAnchor">
 <a href="#exclusion-types" class="anchor"></a>Exclusion types</h2>
-<p>This package provides six types of exclusions based on Qualtrics metadata. If you have ideas for other metadata exclusions, please submit them as <a href="https://github.com/jeffreyrstevens/excluder/issues">issues</a>. Note, the intent of this package is not to develop functions for excluding rows based on survey-specific data but on general, frequently used metadata.</p>
+<p>This package provides seven types of exclusions based on Qualtrics metadata. If you have ideas for other metadata exclusions, please submit them as <a href="https://github.com/jeffreyrstevens/excluder/issues">issues</a>. Note, the intent of this package is not to develop functions for excluding rows based on survey-specific data but on general, frequently used metadata.</p>
 <ul>
 <li>
 <code>duplicates</code> works with rows that have duplicate IP addresses and/or locations (latitude/longitude).</li>
@@ -125,7 +125,7 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>The verbs and exclusion types combine with <code>_</code> to create the functions, such as <code><a href="reference/check_duplicates.html">check_duplicates()</a></code>, <code><a href="reference/exclude_ip.html">exclude_ip()</a></code>, and <code><a href="reference/mark_duration.html">mark_duration()</a></code>. Multiple functions can be linked together using the <a href=""><code>{magrittr}</code></a> pipe <code><a href="reference/%&gt;%.html">%&gt;%</a></code>. For datasets downloaded directly from Qualtrics, use <code><a href="reference/remove_label_rows.html">remove_label_rows()</a></code> to remove the first two rows of labels and convert date and numeric columns in the metadata.</p>
+<p>The verbs and exclusion types combine with <code>_</code> to create the functions, such as <a href="https://jeffreyrstevens.github.io/excluder/reference/check_duplicates.html"><code>check_duplicates()</code></a>, <a href="https://jeffreyrstevens.github.io/excluder/reference/exclude_ip.html"><code>exclude_ip()</code></a>, and <a href="https://jeffreyrstevens.github.io/excluder/reference/mark_duration.html"><code>mark_duration()</code></a>. Multiple functions can be linked together using the <a href="https://magrittr.tidyverse.org/"><code>{magrittr}</code></a> pipe <code><a href="reference/%&gt;%.html">%&gt;%</a></code>. For datasets downloaded directly from Qualtrics, use <a href="https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html"><code>remove_label_rows()</code></a> to remove the first two rows of labels and convert date and numeric columns in the metadata and use <a href="https://jeffreyrstevens.github.io/excluder/reference/deidentify.html"><code>deidentify()</code></a> to remove standard Qualtrics columns with identifiable information.</p>
 <div id="checking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#checking" class="anchor"></a>Checking</h3>
@@ -222,7 +222,7 @@
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
 <span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", NA, NA, NA, NA, NA, NA, …</span>
 <span class="co">#&gt; $ exclusion_duration      &lt;chr&gt; NA, NA, NA, NA, "duration", NA, "duration", NA…</span></code></pre></div>
-<p>Use the <a href="?collapse_exclusions"><code>collapse_exclusions()</code></a> function to collapse all of the marked columns into a single column.</p>
+<p>Use the <a href="https://jeffreyrstevens.github.io/excluder/reference/collapse_exclusions.html"><code>collapse_exclusions()</code></a> function to collapse all of the marked columns into a single column.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Collapse labels for preview and short duration rows</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
@@ -251,86 +251,6 @@
 <span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Macintosh", "Windows NT 10…</span>
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
 <span class="co">#&gt; $ exclusions              &lt;chr&gt; "preview", "preview", NA, NA, "duration", NA, …</span></code></pre></div>
-</div>
-<div id="combining-verbs" class="section level3">
-<h3 class="hasAnchor">
-<a href="#combining-verbs" class="anchor"></a>Combining verbs</h3>
-<p>It often makes sense to remove the preview surveys and incomplete surveys before checking other exclusion types.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows</span>
-<span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/check_duplicates.html">check_duplicates</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 6 out of 92 rows have duplicate IP addresses.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; 9 out of 91 rows have duplicate locations.</span>
-<span class="co">#&gt;    LocationLatitude LocationLongitude dupe_count           StartDate</span>
-<span class="co">#&gt; 1          28.56411         -81.54902          2 2020-12-17 15:42:47</span>
-<span class="co">#&gt; 2          28.56411         -81.54902          2 2020-12-17 15:42:18</span>
-<span class="co">#&gt; 3          37.28265        -120.50248          2 2020-12-17 15:46:51</span>
-<span class="co">#&gt; 4          37.28265        -120.50248          2 2020-12-17 15:48:53</span>
-<span class="co">#&gt; 5          40.33554         -75.92698          2 2020-12-11 12:41:23</span>
-<span class="co">#&gt; 6          40.33554         -75.92698          2 2020-12-17 15:41:17</span>
-<span class="co">#&gt; 7          45.50412        -122.78665          3 2020-12-17 15:40:52</span>
-<span class="co">#&gt; 8          45.50412        -122.78665          3 2020-12-17 15:40:57</span>
-<span class="co">#&gt; 9          45.50412        -122.78665          3 2020-12-17 15:48:48</span>
-<span class="co">#&gt; 10         37.28265        -120.50248          2 2020-12-17 15:46:51</span>
-<span class="co">#&gt; 11         37.28265        -120.50248          2 2020-12-17 15:48:53</span>
-<span class="co">#&gt; 12         40.33554         -75.92698          2 2020-12-11 12:41:23</span>
-<span class="co">#&gt; 13         40.33554         -75.92698          2 2020-12-17 15:41:17</span>
-<span class="co">#&gt; 14         28.56411         -81.54902          2 2020-12-17 15:42:47</span>
-<span class="co">#&gt; 15         28.56411         -81.54902          2 2020-12-17 15:42:18</span>
-<span class="co">#&gt;                EndDate     Status    IPAddress Progress Duration (in seconds)</span>
-<span class="co">#&gt; 1  2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236</span>
-<span class="co">#&gt; 2  2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526</span>
-<span class="co">#&gt; 3  2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872</span>
-<span class="co">#&gt; 4  2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246</span>
-<span class="co">#&gt; 5  2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177</span>
-<span class="co">#&gt; 6  2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521</span>
-<span class="co">#&gt; 7  2020-12-17 15:43:39 IP Address 32.164.134.0      100                   375</span>
-<span class="co">#&gt; 8  2020-12-17 15:48:56 IP Address   6.79.107.0      100                   397</span>
-<span class="co">#&gt; 9  2020-12-17 15:54:12 IP Address 54.232.129.0      100                   149</span>
-<span class="co">#&gt; 10 2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872</span>
-<span class="co">#&gt; 11 2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246</span>
-<span class="co">#&gt; 12 2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177</span>
-<span class="co">#&gt; 13 2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521</span>
-<span class="co">#&gt; 14 2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236</span>
-<span class="co">#&gt; 15 2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526</span>
-<span class="co">#&gt;    Finished        RecordedDate        ResponseId UserLanguage Browser</span>
-<span class="co">#&gt; 1      TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome</span>
-<span class="co">#&gt; 2      TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome</span>
-<span class="co">#&gt; 3      TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox</span>
-<span class="co">#&gt; 4      TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge</span>
-<span class="co">#&gt; 5      TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome</span>
-<span class="co">#&gt; 6      TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome</span>
-<span class="co">#&gt; 7      TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome</span>
-<span class="co">#&gt; 8      TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome</span>
-<span class="co">#&gt; 9      TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome</span>
-<span class="co">#&gt; 10     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox</span>
-<span class="co">#&gt; 11     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge</span>
-<span class="co">#&gt; 12     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome</span>
-<span class="co">#&gt; 13     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome</span>
-<span class="co">#&gt; 14     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome</span>
-<span class="co">#&gt; 15     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome</span>
-<span class="co">#&gt;          Version Operating System Resolution</span>
-<span class="co">#&gt; 1   87.0.4280.88  Windows NT 10.0  1920x1080</span>
-<span class="co">#&gt; 2   87.0.4280.88  Windows NT 10.0   1536x864</span>
-<span class="co">#&gt; 3           83.0  Windows NT 10.0   1440x960</span>
-<span class="co">#&gt; 4    84.0.522.52  Windows NT 10.0  1920x1080</span>
-<span class="co">#&gt; 5  86.0.4240.198        Macintosh   1280x800</span>
-<span class="co">#&gt; 6   87.0.4280.88   Windows NT 6.1   1366x768</span>
-<span class="co">#&gt; 7   87.0.4280.88  Windows NT 10.0  1920x1080</span>
-<span class="co">#&gt; 8   87.0.4280.88  Windows NT 10.0   1536x864</span>
-<span class="co">#&gt; 9   87.0.4280.88  Windows NT 10.0  1920x1080</span>
-<span class="co">#&gt; 10          83.0  Windows NT 10.0   1440x960</span>
-<span class="co">#&gt; 11   84.0.522.52  Windows NT 10.0  1920x1080</span>
-<span class="co">#&gt; 12 86.0.4240.198        Macintosh   1280x800</span>
-<span class="co">#&gt; 13  87.0.4280.88   Windows NT 6.1   1366x768</span>
-<span class="co">#&gt; 14  87.0.4280.88  Windows NT 10.0  1920x1080</span>
-<span class="co">#&gt; 15  87.0.4280.88  Windows NT 10.0   1536x864</span></code></pre></div>
 </div>
 </div>
 <div id="citing-this-package" class="section level2">

@@ -212,97 +212,97 @@ types of duplicates.</p>
     <pre class="examples"><div class='input'><span class='co'># Check for duplicate IP addresses and locations</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='fu'>check_duplicates</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='output co'>#&gt;    LocationLatitude LocationLongitude dupe_count           StartDate
-#&gt; 1          28.56411         -81.54902          2 2020-12-17 15:42:47
-#&gt; 2          28.56411         -81.54902          2 2020-12-17 15:42:18
-#&gt; 3          37.28265        -120.50248          3 2020-12-17 15:40:53
-#&gt; 4          37.28265        -120.50248          3 2020-12-17 15:46:51
-#&gt; 5          37.28265        -120.50248          3 2020-12-17 15:48:53
-#&gt; 6          40.33554         -75.92698          2 2020-12-11 12:41:23
-#&gt; 7          40.33554         -75.92698          2 2020-12-17 15:41:17
-#&gt; 8          45.50412        -122.78665          3 2020-12-17 15:40:52
-#&gt; 9          45.50412        -122.78665          3 2020-12-17 15:40:57
-#&gt; 10         45.50412        -122.78665          3 2020-12-17 15:48:48
-#&gt; 11         37.28265        -120.50248          3 2020-12-17 15:40:53
-#&gt; 12         37.28265        -120.50248          3 2020-12-17 15:46:51
-#&gt; 13         37.28265        -120.50248          3 2020-12-17 15:48:53
-#&gt; 14         40.33554         -75.92698          2 2020-12-11 12:41:23
-#&gt; 15         40.33554         -75.92698          2 2020-12-17 15:41:17
-#&gt; 16         28.56411         -81.54902          2 2020-12-17 15:42:47
-#&gt; 17         28.56411         -81.54902          2 2020-12-17 15:42:18
-#&gt;                EndDate     Status    IPAddress Progress Duration (in seconds)
-#&gt; 1  2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
-#&gt; 2  2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
-#&gt; 3  2020-12-17 15:43:25 IP Address   22.51.31.0       99                   879
-#&gt; 4  2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
-#&gt; 5  2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
-#&gt; 6  2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
-#&gt; 7  2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
-#&gt; 8  2020-12-17 15:43:39 IP Address 32.164.134.0      100                   375
-#&gt; 9  2020-12-17 15:48:56 IP Address   6.79.107.0      100                   397
-#&gt; 10 2020-12-17 15:54:12 IP Address 54.232.129.0      100                   149
-#&gt; 11 2020-12-17 15:43:25 IP Address   22.51.31.0       99                   879
-#&gt; 12 2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
-#&gt; 13 2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
-#&gt; 14 2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
-#&gt; 15 2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
-#&gt; 16 2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
-#&gt; 17 2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
-#&gt;    Finished        RecordedDate        ResponseId UserLanguage Browser
-#&gt; 1      TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
-#&gt; 2      TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
-#&gt; 3     FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome
-#&gt; 4      TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
-#&gt; 5      TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
-#&gt; 6      TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
-#&gt; 7      TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
-#&gt; 8      TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome
-#&gt; 9      TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome
-#&gt; 10     TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome
-#&gt; 11    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome
-#&gt; 12     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
-#&gt; 13     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
-#&gt; 14     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
-#&gt; 15     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
-#&gt; 16     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
-#&gt; 17     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
-#&gt;          Version Operating System Resolution
-#&gt; 1   87.0.4280.88  Windows NT 10.0  1920x1080
-#&gt; 2   87.0.4280.88  Windows NT 10.0   1536x864
-#&gt; 3   87.0.4280.88  Windows NT 10.0   1366x768
-#&gt; 4           83.0  Windows NT 10.0   1440x960
-#&gt; 5    84.0.522.52  Windows NT 10.0  1920x1080
-#&gt; 6  86.0.4240.198        Macintosh   1280x800
-#&gt; 7   87.0.4280.88   Windows NT 6.1   1366x768
-#&gt; 8   87.0.4280.88  Windows NT 10.0  1920x1080
-#&gt; 9   87.0.4280.88  Windows NT 10.0   1536x864
-#&gt; 10  87.0.4280.88  Windows NT 10.0  1920x1080
-#&gt; 11  87.0.4280.88  Windows NT 10.0   1366x768
-#&gt; 12          83.0  Windows NT 10.0   1440x960
-#&gt; 13   84.0.522.52  Windows NT 10.0  1920x1080
-#&gt; 14 86.0.4240.198        Macintosh   1280x800
-#&gt; 15  87.0.4280.88   Windows NT 6.1   1366x768
-#&gt; 16  87.0.4280.88  Windows NT 10.0  1920x1080
-#&gt; 17  87.0.4280.88  Windows NT 10.0   1536x864</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; <span class='message'>0 NAs were found in location.</span></div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='output co'>#&gt;    LocationLatitude LocationLongitude           StartDate             EndDate
+#&gt; 1          28.56411         -81.54902 2020-12-17 15:42:47 2020-12-17 15:46:26
+#&gt; 2          28.56411         -81.54902 2020-12-17 15:42:18 2020-12-17 15:48:00
+#&gt; 3          37.28265        -120.50248 2020-12-17 15:40:53 2020-12-17 15:43:25
+#&gt; 4          37.28265        -120.50248 2020-12-17 15:46:51 2020-12-17 15:51:38
+#&gt; 5          37.28265        -120.50248 2020-12-17 15:48:53 2020-12-17 15:53:48
+#&gt; 6          40.33554         -75.92698 2020-12-11 12:41:23 2020-12-11 12:44:37
+#&gt; 7          40.33554         -75.92698 2020-12-17 15:41:17 2020-12-17 15:45:42
+#&gt; 8          45.50412        -122.78665 2020-12-17 15:40:52 2020-12-17 15:43:39
+#&gt; 9          45.50412        -122.78665 2020-12-17 15:40:57 2020-12-17 15:48:56
+#&gt; 10         45.50412        -122.78665 2020-12-17 15:48:48 2020-12-17 15:54:12
+#&gt; 11         37.28265        -120.50248 2020-12-17 15:40:53 2020-12-17 15:43:25
+#&gt; 12         37.28265        -120.50248 2020-12-17 15:46:51 2020-12-17 15:51:38
+#&gt; 13         37.28265        -120.50248 2020-12-17 15:48:53 2020-12-17 15:53:48
+#&gt; 14         40.33554         -75.92698 2020-12-11 12:41:23 2020-12-11 12:44:37
+#&gt; 15         40.33554         -75.92698 2020-12-17 15:41:17 2020-12-17 15:45:42
+#&gt; 16         28.56411         -81.54902 2020-12-17 15:42:47 2020-12-17 15:46:26
+#&gt; 17         28.56411         -81.54902 2020-12-17 15:42:18 2020-12-17 15:48:00
+#&gt;        Status    IPAddress Progress Duration (in seconds) Finished
+#&gt; 1  IP Address  55.73.114.0      100                   236     TRUE
+#&gt; 2  IP Address  55.73.114.0      100                   526     TRUE
+#&gt; 3  IP Address   22.51.31.0       99                   879    FALSE
+#&gt; 4  IP Address   22.51.31.0      100                   872     TRUE
+#&gt; 5  IP Address   22.51.31.0      100                   246     TRUE
+#&gt; 6  IP Address  24.195.91.0      100                   177     TRUE
+#&gt; 7  IP Address  24.195.91.0      100                   521     TRUE
+#&gt; 8  IP Address 32.164.134.0      100                   375     TRUE
+#&gt; 9  IP Address   6.79.107.0      100                   397     TRUE
+#&gt; 10 IP Address 54.232.129.0      100                   149     TRUE
+#&gt; 11 IP Address   22.51.31.0       99                   879    FALSE
+#&gt; 12 IP Address   22.51.31.0      100                   872     TRUE
+#&gt; 13 IP Address   22.51.31.0      100                   246     TRUE
+#&gt; 14 IP Address  24.195.91.0      100                   177     TRUE
+#&gt; 15 IP Address  24.195.91.0      100                   521     TRUE
+#&gt; 16 IP Address  55.73.114.0      100                   236     TRUE
+#&gt; 17 IP Address  55.73.114.0      100                   526     TRUE
+#&gt;           RecordedDate        ResponseId UserLanguage Browser       Version
+#&gt; 1  2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome  87.0.4280.88
+#&gt; 2  2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome  87.0.4280.88
+#&gt; 3  2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome  87.0.4280.88
+#&gt; 4  2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox          83.0
+#&gt; 5  2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge   84.0.522.52
+#&gt; 6  2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome 86.0.4240.198
+#&gt; 7  2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome  87.0.4280.88
+#&gt; 8  2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome  87.0.4280.88
+#&gt; 9  2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome  87.0.4280.88
+#&gt; 10 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome  87.0.4280.88
+#&gt; 11 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome  87.0.4280.88
+#&gt; 12 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox          83.0
+#&gt; 13 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge   84.0.522.52
+#&gt; 14 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome 86.0.4240.198
+#&gt; 15 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome  87.0.4280.88
+#&gt; 16 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome  87.0.4280.88
+#&gt; 17 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome  87.0.4280.88
+#&gt;    Operating System Resolution
+#&gt; 1   Windows NT 10.0  1920x1080
+#&gt; 2   Windows NT 10.0   1536x864
+#&gt; 3   Windows NT 10.0   1366x768
+#&gt; 4   Windows NT 10.0   1440x960
+#&gt; 5   Windows NT 10.0  1920x1080
+#&gt; 6         Macintosh   1280x800
+#&gt; 7    Windows NT 6.1   1366x768
+#&gt; 8   Windows NT 10.0  1920x1080
+#&gt; 9   Windows NT 10.0   1536x864
+#&gt; 10  Windows NT 10.0  1920x1080
+#&gt; 11  Windows NT 10.0   1366x768
+#&gt; 12  Windows NT 10.0   1440x960
+#&gt; 13  Windows NT 10.0  1920x1080
+#&gt; 14        Macintosh   1280x800
+#&gt; 15   Windows NT 6.1   1366x768
+#&gt; 16  Windows NT 10.0  1920x1080
+#&gt; 17  Windows NT 10.0   1536x864</div><div class='input'>
 <span class='co'># Check only for duplicate locations</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duplicates</span><span class='op'>(</span>dupl_location <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt;     IPAddress dupe_count           StartDate             EndDate     Status
-#&gt; 1  22.51.31.0          3 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address
-#&gt; 2  22.51.31.0          3 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address
-#&gt; 3  22.51.31.0          3 2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address
-#&gt; 4 24.195.91.0          2 2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address
-#&gt; 5 24.195.91.0          2 2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address
-#&gt; 6 55.73.114.0          2 2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address
-#&gt; 7 55.73.114.0          2 2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address
-#&gt;   Progress Duration (in seconds) Finished        RecordedDate        ResponseId
-#&gt; 1       99                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
-#&gt; 2      100                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
-#&gt; 3      100                   246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch
-#&gt; 4      100                   177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB
-#&gt; 5      100                   521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP
-#&gt; 6      100                   236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC
-#&gt; 7      100                   526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI
+</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt;     IPAddress           StartDate             EndDate     Status Progress
+#&gt; 1  22.51.31.0 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address       99
+#&gt; 2  22.51.31.0 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address      100
+#&gt; 3  22.51.31.0 2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address      100
+#&gt; 4 24.195.91.0 2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address      100
+#&gt; 5 24.195.91.0 2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address      100
+#&gt; 6 55.73.114.0 2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address      100
+#&gt; 7 55.73.114.0 2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address      100
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
+#&gt; 2                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
+#&gt; 3                   246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch
+#&gt; 4                   177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB
+#&gt; 5                   521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP
+#&gt; 6                   236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC
+#&gt; 7                   526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI
 #&gt;   LocationLatitude LocationLongitude UserLanguage Browser       Version
 #&gt; 1         37.28265        -120.50248           EN  Chrome  87.0.4280.88
 #&gt; 2         37.28265        -120.50248           EN Firefox          83.0
@@ -322,82 +322,82 @@ types of duplicates.</p>
 <span class='co'># Do not print rows to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duplicates</span><span class='op'>(</span>print_tibble <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; <span class='message'>0 NAs were found in location.</span></div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='input'>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duplicates</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    LocationLatitude LocationLongitude dupe_count           StartDate
-#&gt; 1          28.56411         -81.54902          2 2020-12-17 15:42:47
-#&gt; 2          28.56411         -81.54902          2 2020-12-17 15:42:18
-#&gt; 3          37.28265        -120.50248          3 2020-12-17 15:40:53
-#&gt; 4          37.28265        -120.50248          3 2020-12-17 15:46:51
-#&gt; 5          37.28265        -120.50248          3 2020-12-17 15:48:53
-#&gt; 6          40.33554         -75.92698          2 2020-12-11 12:41:23
-#&gt; 7          40.33554         -75.92698          2 2020-12-17 15:41:17
-#&gt; 8          45.50412        -122.78665          3 2020-12-17 15:40:52
-#&gt; 9          45.50412        -122.78665          3 2020-12-17 15:40:57
-#&gt; 10         45.50412        -122.78665          3 2020-12-17 15:48:48
-#&gt; 11         37.28265        -120.50248          3 2020-12-17 15:40:53
-#&gt; 12         37.28265        -120.50248          3 2020-12-17 15:46:51
-#&gt; 13         37.28265        -120.50248          3 2020-12-17 15:48:53
-#&gt; 14         40.33554         -75.92698          2 2020-12-11 12:41:23
-#&gt; 15         40.33554         -75.92698          2 2020-12-17 15:41:17
-#&gt; 16         28.56411         -81.54902          2 2020-12-17 15:42:47
-#&gt; 17         28.56411         -81.54902          2 2020-12-17 15:42:18
-#&gt;                EndDate     Status    IPAddress Progress Duration (in seconds)
-#&gt; 1  2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
-#&gt; 2  2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
-#&gt; 3  2020-12-17 15:43:25 IP Address   22.51.31.0       99                   879
-#&gt; 4  2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
-#&gt; 5  2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
-#&gt; 6  2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
-#&gt; 7  2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
-#&gt; 8  2020-12-17 15:43:39 IP Address 32.164.134.0      100                   375
-#&gt; 9  2020-12-17 15:48:56 IP Address   6.79.107.0      100                   397
-#&gt; 10 2020-12-17 15:54:12 IP Address 54.232.129.0      100                   149
-#&gt; 11 2020-12-17 15:43:25 IP Address   22.51.31.0       99                   879
-#&gt; 12 2020-12-17 15:51:38 IP Address   22.51.31.0      100                   872
-#&gt; 13 2020-12-17 15:53:48 IP Address   22.51.31.0      100                   246
-#&gt; 14 2020-12-11 12:44:37 IP Address  24.195.91.0      100                   177
-#&gt; 15 2020-12-17 15:45:42 IP Address  24.195.91.0      100                   521
-#&gt; 16 2020-12-17 15:46:26 IP Address  55.73.114.0      100                   236
-#&gt; 17 2020-12-17 15:48:00 IP Address  55.73.114.0      100                   526
-#&gt;    Finished        RecordedDate        ResponseId UserLanguage Browser
-#&gt; 1      TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
-#&gt; 2      TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
-#&gt; 3     FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome
-#&gt; 4      TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
-#&gt; 5      TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
-#&gt; 6      TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
-#&gt; 7      TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
-#&gt; 8      TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome
-#&gt; 9      TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome
-#&gt; 10     TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome
-#&gt; 11    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome
-#&gt; 12     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox
-#&gt; 13     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge
-#&gt; 14     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome
-#&gt; 15     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome
-#&gt; 16     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome
-#&gt; 17     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome
-#&gt;          Version Operating System Resolution
-#&gt; 1   87.0.4280.88  Windows NT 10.0  1920x1080
-#&gt; 2   87.0.4280.88  Windows NT 10.0   1536x864
-#&gt; 3   87.0.4280.88  Windows NT 10.0   1366x768
-#&gt; 4           83.0  Windows NT 10.0   1440x960
-#&gt; 5    84.0.522.52  Windows NT 10.0  1920x1080
-#&gt; 6  86.0.4240.198        Macintosh   1280x800
-#&gt; 7   87.0.4280.88   Windows NT 6.1   1366x768
-#&gt; 8   87.0.4280.88  Windows NT 10.0  1920x1080
-#&gt; 9   87.0.4280.88  Windows NT 10.0   1536x864
-#&gt; 10  87.0.4280.88  Windows NT 10.0  1920x1080
-#&gt; 11  87.0.4280.88  Windows NT 10.0   1366x768
-#&gt; 12          83.0  Windows NT 10.0   1440x960
-#&gt; 13   84.0.522.52  Windows NT 10.0  1920x1080
-#&gt; 14 86.0.4240.198        Macintosh   1280x800
-#&gt; 15  87.0.4280.88   Windows NT 6.1   1366x768
-#&gt; 16  87.0.4280.88  Windows NT 10.0  1920x1080
-#&gt; 17  87.0.4280.88  Windows NT 10.0   1536x864</div><div class='input'>
+</div><div class='output co'>#&gt;    LocationLatitude LocationLongitude           StartDate             EndDate
+#&gt; 1          28.56411         -81.54902 2020-12-17 15:42:47 2020-12-17 15:46:26
+#&gt; 2          28.56411         -81.54902 2020-12-17 15:42:18 2020-12-17 15:48:00
+#&gt; 3          37.28265        -120.50248 2020-12-17 15:40:53 2020-12-17 15:43:25
+#&gt; 4          37.28265        -120.50248 2020-12-17 15:46:51 2020-12-17 15:51:38
+#&gt; 5          37.28265        -120.50248 2020-12-17 15:48:53 2020-12-17 15:53:48
+#&gt; 6          40.33554         -75.92698 2020-12-11 12:41:23 2020-12-11 12:44:37
+#&gt; 7          40.33554         -75.92698 2020-12-17 15:41:17 2020-12-17 15:45:42
+#&gt; 8          45.50412        -122.78665 2020-12-17 15:40:52 2020-12-17 15:43:39
+#&gt; 9          45.50412        -122.78665 2020-12-17 15:40:57 2020-12-17 15:48:56
+#&gt; 10         45.50412        -122.78665 2020-12-17 15:48:48 2020-12-17 15:54:12
+#&gt; 11         37.28265        -120.50248 2020-12-17 15:40:53 2020-12-17 15:43:25
+#&gt; 12         37.28265        -120.50248 2020-12-17 15:46:51 2020-12-17 15:51:38
+#&gt; 13         37.28265        -120.50248 2020-12-17 15:48:53 2020-12-17 15:53:48
+#&gt; 14         40.33554         -75.92698 2020-12-11 12:41:23 2020-12-11 12:44:37
+#&gt; 15         40.33554         -75.92698 2020-12-17 15:41:17 2020-12-17 15:45:42
+#&gt; 16         28.56411         -81.54902 2020-12-17 15:42:47 2020-12-17 15:46:26
+#&gt; 17         28.56411         -81.54902 2020-12-17 15:42:18 2020-12-17 15:48:00
+#&gt;        Status    IPAddress Progress Duration (in seconds) Finished
+#&gt; 1  IP Address  55.73.114.0      100                   236     TRUE
+#&gt; 2  IP Address  55.73.114.0      100                   526     TRUE
+#&gt; 3  IP Address   22.51.31.0       99                   879    FALSE
+#&gt; 4  IP Address   22.51.31.0      100                   872     TRUE
+#&gt; 5  IP Address   22.51.31.0      100                   246     TRUE
+#&gt; 6  IP Address  24.195.91.0      100                   177     TRUE
+#&gt; 7  IP Address  24.195.91.0      100                   521     TRUE
+#&gt; 8  IP Address 32.164.134.0      100                   375     TRUE
+#&gt; 9  IP Address   6.79.107.0      100                   397     TRUE
+#&gt; 10 IP Address 54.232.129.0      100                   149     TRUE
+#&gt; 11 IP Address   22.51.31.0       99                   879    FALSE
+#&gt; 12 IP Address   22.51.31.0      100                   872     TRUE
+#&gt; 13 IP Address   22.51.31.0      100                   246     TRUE
+#&gt; 14 IP Address  24.195.91.0      100                   177     TRUE
+#&gt; 15 IP Address  24.195.91.0      100                   521     TRUE
+#&gt; 16 IP Address  55.73.114.0      100                   236     TRUE
+#&gt; 17 IP Address  55.73.114.0      100                   526     TRUE
+#&gt;           RecordedDate        ResponseId UserLanguage Browser       Version
+#&gt; 1  2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome  87.0.4280.88
+#&gt; 2  2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome  87.0.4280.88
+#&gt; 3  2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome  87.0.4280.88
+#&gt; 4  2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox          83.0
+#&gt; 5  2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge   84.0.522.52
+#&gt; 6  2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome 86.0.4240.198
+#&gt; 7  2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome  87.0.4280.88
+#&gt; 8  2020-12-17 15:43:39 R_H5MqcQoWznreNBt           EN  Chrome  87.0.4280.88
+#&gt; 9  2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ           EN  Chrome  87.0.4280.88
+#&gt; 10 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM           EN  Chrome  87.0.4280.88
+#&gt; 11 2020-12-17 15:43:25 R_AkQyJypPyjgribz           EN  Chrome  87.0.4280.88
+#&gt; 12 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7           EN Firefox          83.0
+#&gt; 13 2020-12-17 15:53:48 R_AJfrQqClQNvWIch           EN    Edge   84.0.522.52
+#&gt; 14 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB           EN  Chrome 86.0.4240.198
+#&gt; 15 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP           EN  Chrome  87.0.4280.88
+#&gt; 16 2020-12-17 15:46:26 R_7UzegytocfkyrWC           EN  Chrome  87.0.4280.88
+#&gt; 17 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI           EN  Chrome  87.0.4280.88
+#&gt;    Operating System Resolution
+#&gt; 1   Windows NT 10.0  1920x1080
+#&gt; 2   Windows NT 10.0   1536x864
+#&gt; 3   Windows NT 10.0   1366x768
+#&gt; 4   Windows NT 10.0   1440x960
+#&gt; 5   Windows NT 10.0  1920x1080
+#&gt; 6         Macintosh   1280x800
+#&gt; 7    Windows NT 6.1   1366x768
+#&gt; 8   Windows NT 10.0  1920x1080
+#&gt; 9   Windows NT 10.0   1536x864
+#&gt; 10  Windows NT 10.0  1920x1080
+#&gt; 11  Windows NT 10.0   1366x768
+#&gt; 12  Windows NT 10.0   1440x960
+#&gt; 13  Windows NT 10.0  1920x1080
+#&gt; 14        Macintosh   1280x800
+#&gt; 15   Windows NT 6.1   1366x768
+#&gt; 16  Windows NT 10.0  1920x1080
+#&gt; 17  Windows NT 10.0   1536x864</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

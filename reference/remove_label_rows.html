@@ -133,25 +133,25 @@ datasets downloaded from <a href='https://qualtrics.com'>Qualtrics</a> surveys.<
     </tr>
     <tr>
       <th>convert</th>
-      <td><p>Logical indicating whether to convert date and numeric columns
-from the metadata.</p></td>
+      <td><p>Logical indicating whether to convert/coerce date and numeric
+columns from the metadata.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of the same type as <code>.data</code> that excludes Qualtrics label rows and
-with date and numeric metadata columns converted to the correct data class.</p>
+with date and numeric metadata columns coerced to the correct data class.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function (1) checks if the data set uses Qualtrics column names,
 (2) checks if label rows are already used as column names,
-(3) removes label rows if present, and (4) converts date and numeric metadata
-columns to proper data class. Datasets imported using
+(3) removes label rows if present, and (4) coerces date and numeric metadata
+columns to proper data type. Datasets imported using
 <code>qualtRics::fetch_survey()</code> should not need this function.</p>
 <p>The <code>convert</code> argument only converts the <em>StartDate</em>, <em>EndDate</em>,
 <em>RecordedDate</em>, <em>Progress</em>, <em>Duration (in seconds)</em>, <em>LocationLatitude</em>, and
-<em>LocationLongitude</em> columns. To convert data columns, see <a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate</a>.</p>
+<em>LocationLongitude</em> columns. To convert data columns, see <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Remove label rows</span>
