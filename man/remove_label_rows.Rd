@@ -9,12 +9,12 @@ remove_label_rows(.data, convert = TRUE)
 \arguments{
 \item{.data}{Data frame (downloaded from Qualtrics).}
 
-\item{convert}{Logical indicating whether to convert date and numeric columns
-from the metadata.}
+\item{convert}{Logical indicating whether to convert/coerce date and numeric
+columns from the metadata.}
 }
 \value{
 An object of the same type as \code{.data} that excludes Qualtrics label rows and
-with date and numeric metadata columns converted to the correct data class.
+with date and numeric metadata columns coerced to the correct data class.
 }
 \description{
 The \code{remove_label_rows()} function filters out the initial label rows from
@@ -23,13 +23,13 @@ datasets downloaded from \href{https://qualtrics.com}{Qualtrics} surveys.
 \details{
 The function (1) checks if the data set uses Qualtrics column names,
 (2) checks if label rows are already used as column names,
-(3) removes label rows if present, and (4) converts date and numeric metadata
-columns to proper data class. Datasets imported using
+(3) removes label rows if present, and (4) coerces date and numeric metadata
+columns to proper data type. Datasets imported using
 \code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}} should not need this function.
 
 The \code{convert} argument only converts the \emph{StartDate}, \emph{EndDate},
 \emph{RecordedDate}, \emph{Progress}, \emph{Duration (in seconds)}, \emph{LocationLatitude}, and
-\emph{LocationLongitude} columns. To convert data columns, see \link[dplyr:mutate]{dplyr::mutate}.
+\emph{LocationLongitude} columns. To convert data columns, see \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 }
 \examples{
 # Remove label rows

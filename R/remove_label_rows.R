@@ -8,16 +8,16 @@
 #' The function (1) checks if the data set uses Qualtrics column names,
 #' (2) checks if label rows are already used as column names,
 #' (3) removes label rows if present, and (4) converts date and numeric metadata
-#' columns to proper data class. Datasets imported using
-#' [qualtRics::fetch_survey()] should not need this function.
+#' columns to proper data type. Datasets imported using
+#' [`qualtRics::fetch_survey()`] should not need this function.
 #'
 #' The `convert` argument only converts the _StartDate_, _EndDate_,
 #' _RecordedDate_, _Progress_, _Duration (in seconds)_, _LocationLatitude_, and
-#' _LocationLongitude_ columns. To convert data columns, see [dplyr::mutate].
+#' _LocationLongitude_ columns. To convert data columns, see [`dplyr::mutate()`].
 #'
 #' @param .data Data frame (downloaded from Qualtrics).
-#' @param convert Logical indicating whether to convert date and numeric columns
-#' from the metadata.
+#' @param convert Logical indicating whether to convert/coerce date and numeric
+#' columns from the metadata.
 #'
 #' @return
 #' An object of the same type as `.data` that excludes Qualtrics label rows and
