@@ -4,7 +4,7 @@
 #' The `mark_duration()` function creates a column labeling
 #' rows with fast and/or slow duration.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com) surveys.
+#' [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @inherit check_duration details
 #'

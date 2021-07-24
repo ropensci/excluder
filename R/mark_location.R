@@ -4,7 +4,7 @@
 #' The `mark_location()` function creates a column labeling
 #' rows that have locations outside of the US.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com) surveys.
+#' [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @inherit check_location details
 #'

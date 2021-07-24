@@ -4,7 +4,7 @@
 #' The `check_location()` function subsets rows of data, retaining rows
 #' that have locations outside of the US.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com) surveys.
+#' [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @details
 #' Default column names are set based on output from the

@@ -8,13 +8,13 @@
 [![R-CMD-check](https://github.com/jeffreyrstevens/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyrstevens/excluder/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jstevens5/excluder?branch=main)
-[![lifecycle](man/figures/lifecycle-experimental.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![lifecycle](man/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
 
 The goal of [`{excluder}`](https://jeffreyrstevens.github.io/excluder/)
 is to facilitate checking for, marking, and excluding rows of data
 frames for common exclusion criteria. This package applies to data
-collected from [Qualtrics](https://qualtrics.com) surveys, and default
+collected from [Qualtrics](https://qualtrics.com/) surveys, and default
 column names come from importing data with the
 [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
 
@@ -251,7 +251,7 @@ To cite `{excluder}`, use:
 
 ## Contributing to this package
 
-[Contributions](https://jeffreyrstevens.github.io/.github/CONTRIBUTING.md)
+[Contributions](https://jeffreyrstevens.github.io/excluder/CONTRIBUTING.html)
 to `{excluder}` are most welcome! Feel free to check out [open
 issues](https://github.com/jeffreyrstevens/excluder/issues) for ideas.
 And [pull requests](https://github.com/jeffreyrstevens/excluder/pulls)

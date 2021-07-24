@@ -4,7 +4,7 @@
 #' The `mark_ip()` function creates a column labeling
 #' rows of data that have IP addresses in the specified country.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com) surveys.
+#' [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @inherit check_ip details
 #'

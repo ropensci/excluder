@@ -2,7 +2,7 @@
 #'
 #' @description
 #' The `remove_label_rows()` function filters out the initial label rows from
-#' datasets downloaded from [Qualtrics](https://qualtrics.com) surveys.
+#' datasets downloaded from [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @details
 #' The function (1) checks if the data set uses Qualtrics column names,

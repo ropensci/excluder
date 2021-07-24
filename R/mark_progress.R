@@ -4,7 +4,7 @@
 #' The `mark_progress()` function creates a column labeling
 #' rows that have incomplete progress.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com) surveys.
+#' [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @inherit check_progress details
 #'

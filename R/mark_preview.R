@@ -4,7 +4,7 @@
 #' The `mark_preview()` function creates a column labeling
 #' rows that are survey previews.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com) surveys.
+#' [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @inherit check_preview details
 #'

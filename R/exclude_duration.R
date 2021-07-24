@@ -4,7 +4,7 @@
 #' The `exclude_duration()` function removes
 #' rows of data that have durations that are too fast or too slow.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com) surveys.
+#' [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @inherit check_duration details
 #'

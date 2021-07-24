@@ -5,7 +5,7 @@
 #' that have unacceptable screen resolution. This can be used, for example, to
 #' determine data collected via phones when desktop monitors are required.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com) surveys.
+#' [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @details
 #' Default column names are set based on output from the

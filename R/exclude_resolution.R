@@ -4,7 +4,7 @@
 #' The `exclude_resolution()` function removes
 #' rows that have unacceptable screen resolution.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com) surveys.
+#' [Qualtrics](https://qualtrics.com/) surveys.
 #'
 #' @inherit check_resolution details
 #'
