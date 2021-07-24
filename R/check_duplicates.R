@@ -88,7 +88,7 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
       .data <- tidyr::drop_na(.data, dplyr::all_of(ip_col))
     }
     same_ip <- janitor::get_dupes(.data, dplyr::all_of(ip_col)) %>%
-      dplyr::select(-dupe_count)
+      dplyr::select(-.data$dupe_count)
     n_same_ip <- nrow(same_ip)
     if (quiet == FALSE) {
       message(n_same_ip, " out of ", nrow(.data), " rows have duplicate IP addresses.")
@@ -105,7 +105,7 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
       }
     }
     same_location <- janitor::get_dupes(.data, dplyr::all_of(location_col)) %>%
-      dplyr::select(-dupe_count)
+      dplyr::select(-.data$dupe_count)
     n_same_location <- nrow(same_location)
     if (quiet == FALSE) {
       message(n_same_location, " out of ", nrow(.data), " rows have duplicate locations.")
