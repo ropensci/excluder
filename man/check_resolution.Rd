@@ -5,7 +5,7 @@
 \title{Check screen resolution}
 \usage{
 check_resolution(
-  .data,
+  x,
   width_min = 1000,
   height_min = 0,
   res_col = "Resolution",
@@ -14,7 +14,7 @@ check_resolution(
 )
 }
 \arguments{
-\item{.data}{Data frame (preferably directly from Qualtrics imported
+\item{x}{Data frame (preferably directly from Qualtrics imported
 using {qualtRics}.)}
 
 \item{width_min}{Minimum acceptable screen width.}
@@ -39,7 +39,7 @@ The \code{check_resolution()} function subsets rows of data, retaining rows
 that have unacceptable screen resolution. This can be used, for example, to
 determine data collected via phones when desktop monitors are required.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

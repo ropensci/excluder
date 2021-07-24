@@ -5,7 +5,7 @@
 \title{Check for minimum or maximum durations}
 \usage{
 check_duration(
-  .data,
+  x,
   min_duration = 10,
   max_duration = NULL,
   duration_col = "Duration (in seconds)",
@@ -14,7 +14,7 @@ check_duration(
 )
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{min_duration}{Minimum duration that is too fast in seconds.}
 
@@ -28,7 +28,7 @@ console.}
 \item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-An object of the same type as \code{.data} that includes the rows with fast and/or
+An object of the same type as \code{x} that includes the rows with fast and/or
 slow duration.
 For a function that marks these rows, use \code{\link[=mark_duration]{mark_duration()}}.
 For a function that excludes these rows, use \code{\link[=exclude_duration]{exclude_duration()}}.
@@ -37,7 +37,7 @@ For a function that excludes these rows, use \code{\link[=exclude_duration]{excl
 The \code{check_duration()} function subsets rows of data, retaining rows
 that have durations that are too fast or too slow.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

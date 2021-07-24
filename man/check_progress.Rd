@@ -5,7 +5,7 @@
 \title{Check for survey progress}
 \usage{
 check_progress(
-  .data,
+  x,
   min_progress = 100,
   finished_col = "Finished",
   progress_col = "Progress",
@@ -14,7 +14,7 @@ check_progress(
 )
 }
 \arguments{
-\item{.data}{Data frame (preferably directly from Qualtrics imported
+\item{x}{Data frame (preferably directly from Qualtrics imported
 using {qualtRics}.)}
 
 \item{min_progress}{Amount of progress considered acceptable to include.}
@@ -38,7 +38,7 @@ For a function that excludes these rows, use \code{\link[=exclude_progress]{excl
 The \code{check_progress()} function subsets rows of data, retaining rows
 that have incomplete progress.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

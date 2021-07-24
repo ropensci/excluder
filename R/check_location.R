@@ -16,7 +16,7 @@
 #' The function outputs to console a message about the number of rows
 #' with locations outside of the US.
 #'
-#' @param .data Data frame (preferably directly from Qualtrics imported
+#' @param x Data frame (preferably directly from Qualtrics imported
 #' using {qualtRics}.)
 #' @param location_col Two element vector specifying columns for latitude
 #' and longitude (in that order).
@@ -54,10 +54,10 @@
 #'   exclude_preview() %>%
 #'   check_location(quiet = TRUE)
 #'
-check_location <- function(.data, location_col = c("LocationLatitude", "LocationLongitude"), include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
+check_location <- function(x, location_col = c("LocationLatitude", "LocationLongitude"), include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns
-  column_names <- names(.data)
+  column_names <- names(x)
   if (length(location_col) != 2) stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
   if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
 
@@ -65,36 +65,36 @@ check_location <- function(.data, location_col = c("LocationLatitude", "Location
   location_col_enquo <- dplyr::enquo(location_col)
 
   # Extract IP address, latitude, and longitude vectors
-  latitude <- dplyr::pull(.data, location_col[1])
-  longitude <- dplyr::pull(.data, location_col[2])
+  latitude <- dplyr::pull(x, location_col[1])
+  longitude <- dplyr::pull(x, location_col[2])
 
   # Check column types
   if (!is.numeric(latitude)) stop("Incorrect data type for latitude column. Please ensure data type is numeric.")
   if (!is.numeric(longitude)) stop("Incorrect data type for longitude column. Please ensure data type is numeric.")
 
   # Find number of rows
-  n_rows <- nrow(.data)
+  n_rows <- nrow(x)
 
   # Check for participants with no location information
-  no_location <- dplyr::filter(.data, is.na(dplyr::across(!!location_col_enquo)))
+  no_location <- dplyr::filter(x, is.na(dplyr::across(!!location_col_enquo)))
   n_no_location <- nrow(no_location)
-  .data <- tidyr::drop_na(.data, dplyr::all_of(location_col))
+  x <- tidyr::drop_na(x, dplyr::all_of(location_col))
 
   # Extract latitude and longitude
-  latitude <- dplyr::pull(.data, location_col[1])
-  longitude <- dplyr::pull(.data, location_col[2])
+  latitude <- dplyr::pull(x, location_col[1])
+  longitude <- dplyr::pull(x, location_col[2])
 
   # Determine if geolocation is within US
-  .data$country <- maps::map.where(database = "usa", longitude, latitude)
-  .data <- dplyr::filter(.data, is.na(.data$country)) %>%
+  x$country <- maps::map.where(database = "usa", longitude, latitude)
+  x <- dplyr::filter(x, is.na(.data$country)) %>%
     dplyr::select(-.data$country)
-  n_outside_us <- nrow(.data)
+  n_outside_us <- nrow(x)
 
   # Combine no location with outside US
   if (include_na == FALSE) {
-    location_issues <- rbind(no_location, .data)
+    location_issues <- rbind(no_location, x)
   } else {
-    location_issues <- .data
+    location_issues <- x
   }
 
   # Print messages and return output

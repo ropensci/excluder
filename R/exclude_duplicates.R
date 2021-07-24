@@ -8,7 +8,7 @@
 #'
 #' @inherit check_duplicates details
 #'
-#' @param .data Data frame or tibble (preferably exported from Qualtrics).
+#' @param x Data frame or tibble (preferably exported from Qualtrics).
 #' @param id_col Column name for unique row ID (e.g., participant).
 #' @param silent Logical indicating whether to print message to console. Note this argument controls the exclude message not the check message.
 #' @param ... Inherit parameters from check function.
@@ -16,7 +16,7 @@
 #' @family duplicates functions
 #' @family exclude functions
 #' @return
-#' An object of the same type as `.data` that excludes rows
+#' An object of the same type as `x` that excludes rows
 #' with duplicate IP addresses and/or locations.
 #' For a function that just checks for and returns duplicate rows,
 #' use [check_duplicates()]. For a function that marks these rows,
@@ -39,23 +39,23 @@
 #'   exclude_preview() %>%
 #'   exclude_duplicates(dupl_location = FALSE)
 #'
-exclude_duplicates <- function(.data, id_col = "ResponseId", silent = FALSE, ...) {
+exclude_duplicates <- function(x, id_col = "ResponseId", silent = FALSE, ...) {
 
   # Check for presence of required column
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID (id_col) is incorrect. Please check your data and specify 'id_col'.")
   }
 
   # Find rows to exclude
-  exclusions <- check_duplicates(.data, quiet = TRUE, ...)
+  exclusions <- check_duplicates(x, quiet = TRUE, ...)
   n_exclusions <- nrow(exclusions)
 
   # Exclude rows
-  remaining_data <- dplyr::anti_join(.data, exclusions, by = id_col)
+  remaining_data <- dplyr::anti_join(x, exclusions, by = id_col)
   n_remaining <- nrow(remaining_data)
   if (silent == FALSE) {
-    message(n_exclusions, " out of ", nrow(.data), " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+    message(n_exclusions, " out of ", nrow(x), " duplicate rows were excluded, leaving ", n_remaining, " rows.")
   }
   return(remaining_data)
 }

@@ -6,11 +6,11 @@
 #' column that can be used to filter any or all exclusions downstream. Rows
 #' with multiple exclusions are concatenated with commas.
 #'
-#' @param .data  Data frame or tibble (preferably exported from Qualtrics).
+#' @param x  Data frame or tibble (preferably exported from Qualtrics).
 #' @param exclusion_types Vector of types of exclusions to collapse.
 #'
 #' @return
-#' #' An object of the same type as `.data` that includes the all of the same
+#' #' An object of the same type as `x` that includes the all of the same
 #' rows but with a single `exclusion` column replacing all of the specified
 #' `exclusion_*` columns.
 
@@ -34,7 +34,7 @@
 #' df2 <- df %>%
 #'   collapse_exclusions(exclusion_types = c("duplicates", "duration", "ip"))
 #'
-collapse_exclusions <- function(.data, exclusion_types = c("duplicates", "duration", "ip", "location", "preview", "progress", "resolution")) {
+collapse_exclusions <- function(x, exclusion_types = c("duplicates", "duration", "ip", "location", "preview", "progress", "resolution")) {
 
   # Define exclusions to avoid R CMD check failure
   exclusions <- NULL
@@ -43,7 +43,7 @@ collapse_exclusions <- function(.data, exclusion_types = c("duplicates", "durati
   exclusion_columns <- paste0("exclusion_", exclusion_types)
 
   # Collapse and delete columns
-  .data %>%
+  x %>%
     tidyr::unite(exclusions, exclusion_columns, sep = ",", na.rm = TRUE) %>%
     dplyr::mutate(exclusions = ifelse(.data$exclusions == "", NA, .data$exclusions))
 }

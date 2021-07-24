@@ -17,7 +17,7 @@
 #' These counts are computed independently, so rows may be counted for both
 #' types of duplicates.
 #'
-#' @param .data Data frame or tibble (preferably exported from Qualtrics).
+#' @param x Data frame or tibble (preferably exported from Qualtrics).
 #' @param ip_col Column name for IP addresses.
 #' @param location_col Two element vector specifying columns for latitude and
 #' longitude (in that order).
@@ -28,17 +28,18 @@
 #' IP address and location as potentially excluded rows.
 #' @param print_tibble Logical indicating whether to print returned tibble to
 #' console.
-#' @param quiet Logical indicating whether to print message to console.
+#' @param quiet Logical indicating whether to print message to console.x
 #'
 #' @family duplicates functions
 #' @family check functions
 #' @return
-#' An object of the same type as `.data` that includes the rows with
+#' An object of the same type as `x` that includes the rows with
 #' duplicate IP addresses and/or locations. This includes a column
 #' called dupe_count that returns the number of duplicates.
 #' For a function that marks these rows, use [mark_duplicates()].
 #' For a function that excludes these rows, use [exclude_duplicates()].
 #'
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
@@ -58,18 +59,18 @@
 #' qualtrics_text %>%
 #'   check_duplicates(quiet = TRUE)
 #'
-check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), dupl_ip = TRUE, dupl_location = TRUE, include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
+check_duplicates <- function(x, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), dupl_ip = TRUE, dupl_location = TRUE, include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns
-  column_names <- names(.data)
+  column_names <- names(x)
   if (length(location_col) != 2) stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
   if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
   if (!ip_col %in% column_names) stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
 
   # Extract IP address, latitude, and longitude vectors
-  ip_vector <- dplyr::pull(.data, ip_col)
-  latitude <- dplyr::pull(.data, location_col[1])
-  longitude <- dplyr::pull(.data, location_col[2])
+  ip_vector <- dplyr::pull(x, ip_col)
+  latitude <- dplyr::pull(x, location_col[1])
+  longitude <- dplyr::pull(x, location_col[2])
 
   # Check column types
   ## IP address column
@@ -85,30 +86,30 @@ check_duplicates <- function(.data, ip_col = "IPAddress", location_col = c("Loca
   # Check for duplicate IP addresses
   if (dupl_ip == TRUE) {
     if (include_na == FALSE) {
-      .data <- tidyr::drop_na(.data, dplyr::all_of(ip_col))
+      x <- tidyr::drop_na(x, dplyr::all_of(ip_col))
     }
-    same_ip <- janitor::get_dupes(.data, dplyr::all_of(ip_col)) %>%
+    same_ip <- janitor::get_dupes(x, dplyr::all_of(ip_col)) %>%
       dplyr::select(-.data$dupe_count)
     n_same_ip <- nrow(same_ip)
     if (quiet == FALSE) {
-      message(n_same_ip, " out of ", nrow(.data), " rows have duplicate IP addresses.")
+      message(n_same_ip, " out of ", nrow(x), " rows have duplicate IP addresses.")
     }
   }
 
   # Check for duplicate locations
   if (dupl_location == TRUE) {
     if (include_na == FALSE) {
-      n_nas <- ncol(.data) - ncol(tidyr::drop_na(.data, dplyr::any_of(location_col)))
-      .data <- tidyr::drop_na(.data, dplyr::any_of(location_col))
+      n_nas <- ncol(x) - ncol(tidyr::drop_na(x, dplyr::any_of(location_col)))
+      x <- tidyr::drop_na(x, dplyr::any_of(location_col))
       if (quiet == FALSE) {
         message(n_nas, " NAs were found in location.")
       }
     }
-    same_location <- janitor::get_dupes(.data, dplyr::all_of(location_col)) %>%
+    same_location <- janitor::get_dupes(x, dplyr::all_of(location_col)) %>%
       dplyr::select(-.data$dupe_count)
     n_same_location <- nrow(same_location)
     if (quiet == FALSE) {
-      message(n_same_location, " out of ", nrow(.data), " rows have duplicate locations.")
+      message(n_same_location, " out of ", nrow(x), " rows have duplicate locations.")
     }
   }
 

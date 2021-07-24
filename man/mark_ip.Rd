@@ -4,17 +4,17 @@
 \alias{mark_ip}
 \title{Mark IP addresses that come from a specified country.}
 \usage{
-mark_ip(.data, id_col = "ResponseId", ...)
+mark_ip(x, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{...}{Inherit parameters from check function.}
 }
 \value{
-An object of the same type as \code{.data} that includes a column marking rows
+An object of the same type as \code{x} that includes a column marking rows
 with IP addresses outside of the specified country.
 For a function that checks these rows, use \code{\link[=check_ip]{check_ip()}}.
 For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip()}}.
@@ -23,7 +23,7 @@ For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip
 The \code{mark_ip()} function creates a column labeling
 rows of data that have IP addresses in the specified country.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

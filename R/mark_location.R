@@ -13,7 +13,7 @@
 #' @family location functions
 #' @family mark functions
 #' @return
-#' An object of the same type as `.data` that includes a column marking rows
+#' An object of the same type as `x` that includes a column marking rows
 #' that are located outside of the US and (if `include_na == FALSE`) rows with
 #' no location information.
 #' For a function that checks for these rows, use [check_location()].
@@ -30,19 +30,19 @@
 #'   exclude_preview() %>%
 #'   mark_location()
 #'
-mark_location <- function(.data, id_col = "ResponseId", ...) {
+mark_location <- function(x, id_col = "ResponseId", ...) {
 
   # Check for presence of required column
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID (id_col) is incorrect. Please check your data and specify 'id_col'.")
   }
 
   # Find rows to mark
-  exclusions <- excluder::check_location(.data, ...) # %>%
+  exclusions <- excluder::check_location(x, ...) # %>%
   exclusions$exclusion_location <- "location_outside_us"
   exclusions <- dplyr::select(exclusions, dplyr::all_of(id_col), .data$exclusion_location)
 
   # Mark rows
-  dplyr::left_join(.data, exclusions, by = id_col)
+  dplyr::left_join(x, exclusions, by = id_col)
 }

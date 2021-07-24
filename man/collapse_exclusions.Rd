@@ -5,18 +5,18 @@
 \title{Collapse multiple exclusion columns into single column}
 \usage{
 collapse_exclusions(
-  .data,
+  x,
   exclusion_types = c("duplicates", "duration", "ip", "location", "preview",
     "progress", "resolution")
 )
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{exclusion_types}{Vector of types of exclusions to collapse.}
 }
 \value{
-#' An object of the same type as \code{.data} that includes the all of the same
+#' An object of the same type as \code{x} that includes the all of the same
 rows but with a single \code{exclusion} column replacing all of the specified
 \verb{exclusion_*} columns.
 }

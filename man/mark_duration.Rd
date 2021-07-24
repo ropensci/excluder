@@ -4,17 +4,17 @@
 \alias{mark_duration}
 \title{Mark minimum or maximum durations}
 \usage{
-mark_duration(.data, id_col = "ResponseId", ...)
+mark_duration(x, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{...}{Inherit parameters from check function.}
 }
 \value{
-An object of the same type as \code{.data} that includes a column marking rows
+An object of the same type as \code{x} that includes a column marking rows
 with fast and slow duration.
 For a function that checks for these rows, use \code{\link[=check_duration]{check_duration()}}.
 For a function that excludes these rows, use \code{\link[=exclude_duration]{exclude_duration()}}.
@@ -23,7 +23,7 @@ For a function that excludes these rows, use \code{\link[=exclude_duration]{excl
 The \code{mark_duration()} function creates a column labeling
 rows with fast and/or slow duration.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

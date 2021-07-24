@@ -5,7 +5,7 @@
 \title{Check for locations outside of the US}
 \usage{
 check_location(
-  .data,
+  x,
   location_col = c("LocationLatitude", "LocationLongitude"),
   include_na = FALSE,
   print_tibble = TRUE,
@@ -13,7 +13,7 @@ check_location(
 )
 }
 \arguments{
-\item{.data}{Data frame (preferably directly from Qualtrics imported
+\item{x}{Data frame (preferably directly from Qualtrics imported
 using {qualtRics}.)}
 
 \item{location_col}{Two element vector specifying columns for latitude
@@ -37,7 +37,7 @@ For a function that excludes these rows, use \code{\link[=exclude_location]{excl
 The \code{check_location()} function subsets rows of data, retaining rows
 that have locations outside of the US.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

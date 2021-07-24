@@ -4,17 +4,17 @@
 \alias{mark_preview}
 \title{Mark survey previews}
 \usage{
-mark_preview(.data, id_col = "ResponseId", ...)
+mark_preview(x, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{...}{Inherit parameters from check function.}
 }
 \value{
-An object of the same type as \code{.data} that includes a column marking rows
+An object of the same type as \code{x} that includes a column marking rows
 that are survey previews.
 For a function that checks for these rows, use \code{\link[=check_preview]{check_preview()}}.
 For a function that excludes these rows, use \code{\link[=exclude_preview]{exclude_preview()}}.
@@ -23,7 +23,7 @@ For a function that excludes these rows, use \code{\link[=exclude_preview]{exclu
 The \code{mark_preview()} function creates a column labeling
 rows that are survey previews.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

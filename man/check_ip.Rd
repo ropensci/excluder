@@ -5,7 +5,7 @@
 \title{Check for IP addresses that come from a specified country.}
 \usage{
 check_ip(
-  .data,
+  x,
   ip_col = "IPAddress",
   country = "US",
   print_tibble = TRUE,
@@ -13,7 +13,7 @@ check_ip(
 )
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{ip_col}{Column name for IP addresses.}
 
@@ -25,7 +25,7 @@ console.}
 \item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
-An object of the same type as \code{.data} that includes the rows with
+An object of the same type as \code{x} that includes the rows with
 IP addresses outside of the specified country.
 For a function that marks these rows, use \code{\link[=mark_ip]{mark_ip()}}.
 For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip()}}.
@@ -34,7 +34,7 @@ For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip
 The \code{check_ip()} function subsets rows of data, retaining rows
 that have IP addresses in the specified country.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

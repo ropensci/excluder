@@ -4,10 +4,10 @@
 \alias{exclude_ip}
 \title{Exclude IP addresses that come from a specified country.}
 \usage{
-exclude_ip(.data, id_col = "ResponseId", silent = FALSE, ...)
+exclude_ip(x, id_col = "ResponseId", silent = FALSE, ...)
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
@@ -16,7 +16,7 @@ exclude_ip(.data, id_col = "ResponseId", silent = FALSE, ...)
 \item{...}{Inherit parameters from check function.}
 }
 \value{
-An object of the same type as \code{.data} that excludes rows
+An object of the same type as \code{x} that excludes rows
 with IP addresses outside of the specified country.
 For a function that checks these rows, use \code{\link[=check_ip]{check_ip()}}.
 For a function that marks these rows, use \code{\link[=mark_ip]{mark_ip()}}.
@@ -25,7 +25,7 @@ For a function that marks these rows, use \code{\link[=mark_ip]{mark_ip()}}.
 The \code{exclude_ip()} function removes
 rows of data that have IP addresses in the specified country.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

@@ -16,7 +16,7 @@
 #'
 #' This function returns the fast and slow rows.
 #'
-#' @param .data Data frame or tibble (preferably exported from Qualtrics).
+#' @param x Data frame or tibble (preferably exported from Qualtrics).
 #' @param min_duration Minimum duration that is too fast in seconds.
 #' @param max_duration Maximum duration that is too slow in seconds.
 #' @param duration_col Column name for durations.
@@ -27,7 +27,7 @@
 #' @family duration functions
 #' @family check functions
 #' @return
-#' An object of the same type as `.data` that includes the rows with fast and/or
+#' An object of the same type as `x` that includes the rows with fast and/or
 #' slow duration.
 #' For a function that marks these rows, use [mark_duration()].
 #' For a function that excludes these rows, use [exclude_duration()].
@@ -58,14 +58,14 @@
 #'   exclude_preview() %>%
 #'   check_duration(min_duration = 100, quiet = TRUE)
 #'
-check_duration <- function(.data, min_duration = 10, max_duration = NULL, duration_col = "Duration (in seconds)", print_tibble = TRUE, quiet = FALSE) {
+check_duration <- function(x, min_duration = 10, max_duration = NULL, duration_col = "Duration (in seconds)", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!duration_col %in% column_names) stop("The column specifying duration (duration_col) is incorrect. Please check your data and specify 'duration_col'.")
 
   # Extract duration vector
-  duration_vector <- dplyr::pull(.data, duration_col)
+  duration_vector <- dplyr::pull(x, duration_col)
 
   # Check column type
   if (!is.numeric(duration_vector)) {
@@ -74,18 +74,18 @@ check_duration <- function(.data, min_duration = 10, max_duration = NULL, durati
 
   # Find participants quicker than minimum
   if (!is.null(min_duration)) {
-    too_quick <- too_quick_slow <- .data[which(duration_vector < min_duration), ]
+    too_quick <- too_quick_slow <- x[which(duration_vector < min_duration), ]
     n_too_quick <- nrow(too_quick)
     if (quiet == FALSE) {
-      message(n_too_quick, " out of ", nrow(.data), " rows took less time than the minimum duration of ", min_duration, " seconds.")
+      message(n_too_quick, " out of ", nrow(x), " rows took less time than the minimum duration of ", min_duration, " seconds.")
     }
   }
   # Find participants slower than maximum
   if (!is.null(max_duration)) {
-    too_slow <- too_quick_slow <- .data[which(duration_vector > max_duration), ]
+    too_slow <- too_quick_slow <- x[which(duration_vector > max_duration), ]
     n_too_slow <- nrow(too_slow)
     if (quiet == FALSE) {
-      message(n_too_slow, " out of ", nrow(.data), " rows took more time than the maximum duration of ", max_duration, " seconds.")
+      message(n_too_slow, " out of ", nrow(x), " rows took more time than the maximum duration of ", max_duration, " seconds.")
     }
   }
   # Combine quick and slow participants

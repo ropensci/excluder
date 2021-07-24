@@ -4,15 +4,10 @@
 \alias{check_preview}
 \title{Check for survey previews}
 \usage{
-check_preview(
-  .data,
-  preview_col = "Status",
-  print_tibble = TRUE,
-  quiet = FALSE
-)
+check_preview(x, preview_col = "Status", print_tibble = TRUE, quiet = FALSE)
 }
 \arguments{
-\item{.data}{Data frame (preferably directly from Qualtrics imported
+\item{x}{Data frame (preferably directly from Qualtrics imported
 using {qualtRics}.)}
 
 \item{preview_col}{Column name for survey preview.}
@@ -32,7 +27,7 @@ For a function that excludes these rows, use \code{\link[=exclude_preview]{exclu
 The \code{check_preview()} function subsets rows of data, retaining rows
 that are survey previews.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

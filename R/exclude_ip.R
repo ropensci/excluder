@@ -13,7 +13,7 @@
 #' @family ip functions
 #' @family exclude functions
 #' @return
-#' An object of the same type as `.data` that excludes rows
+#' An object of the same type as `x` that excludes rows
 #' with IP addresses outside of the specified country.
 #' For a function that checks these rows, use [check_ip()].
 #' For a function that marks these rows, use [mark_ip()].
@@ -34,23 +34,23 @@
 #'   exclude_preview() %>%
 #'   exclude_ip(country = "DE")
 #'
-exclude_ip <- function(.data, id_col = "ResponseId", silent = FALSE, ...) {
+exclude_ip <- function(x, id_col = "ResponseId", silent = FALSE, ...) {
 
   # Check for presence of required column
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID (id_col) is incorrect. Please check your data and specify 'id_col'.")
   }
 
   # Find rows to exclude
-  exclusions <- check_ip(.data, quiet = TRUE, ...)
+  exclusions <- check_ip(x, quiet = TRUE, ...)
   n_exclusions <- nrow(exclusions)
 
   # Exclude rows
-  remaining_data <- dplyr::anti_join(.data, exclusions, by = id_col)
+  remaining_data <- dplyr::anti_join(x, exclusions, by = id_col)
   n_remaining <- nrow(remaining_data)
   if (silent == FALSE) {
-    message(n_exclusions, " out of ", nrow(.data), " rows with IP addresses outside of the specified country were excluded, leaving ", n_remaining, " rows.")
+    message(n_exclusions, " out of ", nrow(x), " rows with IP addresses outside of the specified country were excluded, leaving ", n_remaining, " rows.")
   }
   return(remaining_data)
 }

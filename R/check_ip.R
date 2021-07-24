@@ -18,7 +18,7 @@
 #' addresses (likely due to including preview data---see [check_preview()]), it
 #' will print a message alerting to the number of rows with `NA`s.
 #'
-#' @param .data Data frame or tibble (preferably exported from Qualtrics).
+#' @param x Data frame or tibble (preferably exported from Qualtrics).
 #' @param ip_col Column name for IP addresses.
 #' @param country Two-letter abbreviation of country to check (default is "US").
 #' @param print_tibble Logical indicating whether to print returned tibble to
@@ -28,7 +28,7 @@
 #' @family ip functions
 #' @family check functions
 #' @return
-#' An object of the same type as `.data` that includes the rows with
+#' An object of the same type as `x` that includes the rows with
 #' IP addresses outside of the specified country.
 #' For a function that marks these rows, use [mark_ip()].
 #' For a function that excludes these rows, use [exclude_ip()].
@@ -64,10 +64,10 @@
 #'   exclude_preview() %>%
 #'   check_ip(quiet = TRUE)
 #'
-check_ip <- function(.data, ip_col = "IPAddress", country = "US", print_tibble = TRUE, quiet = FALSE) {
+check_ip <- function(x, ip_col = "IPAddress", country = "US", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!ip_col %in% column_names) {
     stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
   }
@@ -76,7 +76,7 @@ check_ip <- function(.data, ip_col = "IPAddress", country = "US", print_tibble =
   ip_col_sym <- dplyr::ensym(ip_col)
 
   # Extract IP address, latitude, and longitude vectors
-  ip_vector <- dplyr::pull(.data, ip_col)
+  ip_vector <- dplyr::pull(x, ip_col)
 
   # Check column types
   ## IP address column
@@ -86,12 +86,12 @@ check_ip <- function(.data, ip_col = "IPAddress", country = "US", print_tibble =
   } else stop("Incorrect data type for ip_col. Please ensure data type is character.")
 
   # Remove rows with NAs for IP addresses
-  na_rows <- dplyr::filter(.data, is.na(!!ip_col_sym))
+  na_rows <- dplyr::filter(x, is.na(!!ip_col_sym))
   n_na_rows <- nrow(na_rows)
   if (n_na_rows > 0 & quiet == FALSE) {
-    message(n_na_rows, " out of ", nrow(.data), " rows have NA values for IP addresses (likely because it includes preview data).")
+    message(n_na_rows, " out of ", nrow(x), " rows have NA values for IP addresses (likely because it includes preview data).")
   }
-  filtered_data <- dplyr::filter(.data, !is.na(!!ip_col_sym))
+  filtered_data <- dplyr::filter(x, !is.na(!!ip_col_sym))
 
   # Get IP ranges for specified country
   country_ip_ranges <- unlist(iptools::country_ranges(country))
@@ -107,7 +107,7 @@ check_ip <- function(.data, ip_col = "IPAddress", country = "US", print_tibble =
 
   # Print message and return output
   if (quiet == FALSE) {
-    message(n_outside_country, " out of ", nrow(.data), " rows have IP addresses outside of ", country, ".")
+    message(n_outside_country, " out of ", nrow(x), " rows have IP addresses outside of ", country, ".")
   }
   if (print_tibble == TRUE) {
     return(filtered_data)

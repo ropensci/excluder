@@ -13,7 +13,7 @@
 #' @family duration functions
 #' @family mark functions
 #' @return
-#' An object of the same type as `.data` that includes a column marking rows
+#' An object of the same type as `x` that includes a column marking rows
 #' with fast and slow duration.
 #' For a function that checks for these rows, use [check_duration()].
 #' For a function that excludes these rows, use [exclude_duration()].
@@ -34,19 +34,19 @@
 #'   exclude_preview() %>%
 #'   mark_duration(max_duration = 800)
 #'
-mark_duration <- function(.data, id_col = "ResponseId", ...) {
+mark_duration <- function(x, id_col = "ResponseId", ...) {
 
   # Check for presence of required column
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID (id_col) is incorrect. Please check your data and specify 'id_col'.")
   }
 
   # Find rows to mark
-  exclusions <- check_duration(.data, ...) %>%
+  exclusions <- check_duration(x, ...) %>%
     dplyr::mutate(exclusion_duration = "duration") %>%
     dplyr::select(dplyr::all_of(id_col), .data$exclusion_duration)
 
   # Mark rows
-  dplyr::left_join(.data, exclusions, by = id_col)
+  dplyr::left_join(x, exclusions, by = id_col)
 }

@@ -4,17 +4,17 @@
 \alias{mark_resolution}
 \title{Mark unacceptable screen resolution}
 \usage{
-mark_resolution(.data, id_col = "ResponseId", ...)
+mark_resolution(x, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{...}{Inherit parameters from check function.}
 }
 \value{
-An object of the same type as \code{.data} that includes a column marking rows
+An object of the same type as \code{x} that includes a column marking rows
 that have unacceptable screen resolutions.
 For a function that checks for these rows, use \code{\link[=check_resolution]{check_resolution()}}.
 For a function that excludes these rows, use \code{\link[=exclude_resolution]{exclude_resolution()}}.
@@ -23,7 +23,7 @@ For a function that excludes these rows, use \code{\link[=exclude_resolution]{ex
 The \code{mark_resolution()} function creates a column labeling
 rows that have unacceptable screen resolution.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

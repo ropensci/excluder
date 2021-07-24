@@ -14,7 +14,7 @@
 #' The function outputs to console a message about the number of rows
 #' with unacceptable screen resolution.
 #'
-#' @param .data Data frame (preferably directly from Qualtrics imported
+#' @param x Data frame (preferably directly from Qualtrics imported
 #' using {qualtRics}.)
 #' @param width_min Minimum acceptable screen width.
 #' @param height_min Minimum acceptable screen height
@@ -51,10 +51,10 @@
 #'   exclude_preview() %>%
 #'   check_resolution(quiet = TRUE)
 #'
-check_resolution <- function(.data, width_min = 1000, height_min = 0, res_col = "Resolution", print_tibble = TRUE, quiet = FALSE) {
+check_resolution <- function(x, width_min = 1000, height_min = 0, res_col = "Resolution", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!res_col %in% column_names) {
     stop("The column specifying resolution (res_col) is incorrect. Please check your data and specify 'res_col'.")
   }
@@ -65,7 +65,7 @@ check_resolution <- function(.data, width_min = 1000, height_min = 0, res_col = 
   }
 
   # Extract duration vector
-  res_vector <- dplyr::pull(.data, res_col)
+  res_vector <- dplyr::pull(x, res_col)
 
   # Check column type
   if (!is.character(res_vector)) {
@@ -74,7 +74,7 @@ check_resolution <- function(.data, width_min = 1000, height_min = 0, res_col = 
     stop("Resolution column includes values not using widthxheight format.")
   }
 
-  filtered_data <- .data %>%
+  filtered_data <- x %>%
     tidyr::separate(res_col, c("width", "height"), sep = "x", remove = FALSE) %>%
     dplyr::mutate(
       width = readr::parse_number(.data$width),
@@ -85,7 +85,7 @@ check_resolution <- function(.data, width_min = 1000, height_min = 0, res_col = 
 
   # Print message and return output
   if (quiet == FALSE) {
-    message(n_wrong_resolution, " out of ", nrow(.data), " rows have screen resolution width less than ", width_min, " or height less than ", height_min, ".")
+    message(n_wrong_resolution, " out of ", nrow(x), " rows have screen resolution width less than ", width_min, " or height less than ", height_min, ".")
   }
   if (print_tibble == TRUE) {
     return(filtered_data)

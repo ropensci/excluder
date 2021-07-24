@@ -14,9 +14,9 @@ Data that are collected through online sources such as Mechanical
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://jeffreyrstevens.github.io/excluder}
-  \item \url{https://github.com/jeffreyrstevens/excluder}
-  \item Report bugs at \url{https://github.com/jeffreyrstevens/excluder/issues}
+  \item \url{https://jeffreyrstevens.github.io/excluder/}
+  \item \url{https://github.com/jeffreyrstevens/excluder/}
+  \item Report bugs at \url{https://github.com/jeffreyrstevens/excluder/issues/}
 }
 
 }

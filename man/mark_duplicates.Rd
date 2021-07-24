@@ -4,17 +4,17 @@
 \alias{mark_duplicates}
 \title{Mark duplicate IP addresses and/or locations}
 \usage{
-mark_duplicates(.data, id_col = "ResponseId", ...)
+mark_duplicates(x, id_col = "ResponseId", ...)
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{...}{Inherit parameters from check function.}
 }
 \value{
-An object of the same type as \code{.data} that includes a column marking rows
+An object of the same type as \code{x} that includes a column marking rows
 with duplicate IP addresses and/or locations.
 For a function that just checks for and returns duplicate rows,
 use \code{\link[=check_duplicates]{check_duplicates()}}. For a function that excludes these rows,
@@ -24,7 +24,7 @@ use \code{\link[=exclude_duplicates]{exclude_duplicates()}}.
 The \code{mark_duplicates()} function creates a column labeling
 rows of data that have the same IP address and/or same latitude and
 longitude. The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

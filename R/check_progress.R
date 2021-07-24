@@ -18,7 +18,7 @@
 #' The function outputs to console a message about the number of rows
 #' that have incomplete progress.
 #'
-#' @param .data Data frame (preferably directly from Qualtrics imported
+#' @param x Data frame (preferably directly from Qualtrics imported
 #' using {qualtRics}.)
 #' @param min_progress Amount of progress considered acceptable to include.
 #' @param finished_col Column name for whether survey was completed.
@@ -60,10 +60,10 @@
 #'   exclude_preview() %>%
 #'   check_progress(quiet = TRUE)
 #'
-check_progress <- function(.data, min_progress = 100, finished_col = "Finished", progress_col = "Progress", print_tibble = TRUE, quiet = FALSE) {
+check_progress <- function(x, min_progress = 100, finished_col = "Finished", progress_col = "Progress", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!finished_col %in% column_names) stop("The column specifying whether a participant finshed (finished_col) is incorrect. Please check your data and specify finished_col.")
   if (!progress_col %in% column_names) stop("The column specifying participant progress (progress_col) is absent. Please check your data and specify progress_col.")
 
@@ -72,10 +72,10 @@ check_progress <- function(.data, min_progress = 100, finished_col = "Finished",
   progress_col_sym <- dplyr::ensym(progress_col)
 
   # Find incomplete cases
-  if (is.logical(dplyr::pull(.data, !!finished_col_sym))) {
-    incomplete <- dplyr::filter(.data, !!finished_col_sym == FALSE)
-  } else if (is.numeric(dplyr::pull(.data, !!finished_col_sym))) {
-    incomplete <- dplyr::filter(.data, !!finished_col_sym == 0)
+  if (is.logical(dplyr::pull(x, !!finished_col_sym))) {
+    incomplete <- dplyr::filter(x, !!finished_col_sym == FALSE)
+  } else if (is.numeric(dplyr::pull(x, !!finished_col_sym))) {
+    incomplete <- dplyr::filter(x, !!finished_col_sym == 0)
   } else {
     stop("The column ", finished_col, " is not of type logical or numeric, so it cannot be checked.")
   }
@@ -83,14 +83,14 @@ check_progress <- function(.data, min_progress = 100, finished_col = "Finished",
 
   # If minimum percent specified, find cases below minimum
   if (min_progress < 100) {
-    incomplete <- dplyr::filter(.data, !!progress_col_sym < min_progress)
+    incomplete <- dplyr::filter(x, !!progress_col_sym < min_progress)
     n_below_min <- nrow(incomplete)
     if (quiet == FALSE) {
       message(n_incomplete, " rows did not complete the study, and ", n_below_min, " of those completed less than ", min_progress, "% of the study.")
     }
   } else {
     if (quiet == FALSE) {
-      message(n_incomplete, " out of ", nrow(.data), " rows did not complete the study.")
+      message(n_incomplete, " out of ", nrow(x), " rows did not complete the study.")
     }
   }
   if (print_tibble == TRUE) {

@@ -16,7 +16,7 @@
 #' The function outputs to console a message about the number of rows
 #' that are survey previews.
 #'
-#' @param .data Data frame (preferably directly from Qualtrics imported
+#' @param x Data frame (preferably directly from Qualtrics imported
 #' using {qualtRics}.)
 #' @param preview_col Column name for survey preview.
 #' @param print_tibble Logical indicating whether to print returned tibble to
@@ -48,10 +48,10 @@
 #' qualtrics_text %>%
 #'   check_preview(quiet = TRUE)
 #'
-check_preview <- function(.data, preview_col = "Status", print_tibble = TRUE, quiet = FALSE) {
+check_preview <- function(x, preview_col = "Status", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!preview_col %in% column_names) {
     stop("The column specifying resolution (preview_col) is incorrect. Please check your data and specify 'preview_col'.")
   }
@@ -60,10 +60,10 @@ check_preview <- function(.data, preview_col = "Status", print_tibble = TRUE, qu
   preview_col_sym <- dplyr::ensym(preview_col)
 
   # Check for preview rows
-  if (is.character(dplyr::pull(.data, !!preview_col_sym))) {
-    filtered_data <- dplyr::filter(.data, !!preview_col_sym == "Survey Preview")
-  } else if (is.numeric(dplyr::pull(.data, !!preview_col_sym))) {
-    filtered_data <- dplyr::filter(.data, !!preview_col_sym == 1)
+  if (is.character(dplyr::pull(x, !!preview_col_sym))) {
+    filtered_data <- dplyr::filter(x, !!preview_col_sym == "Survey Preview")
+  } else if (is.numeric(dplyr::pull(x, !!preview_col_sym))) {
+    filtered_data <- dplyr::filter(x, !!preview_col_sym == 1)
   } else {
     stop("The column ", preview_col, " is not of type character or numeric, so it cannot be checked.")
   }
@@ -72,9 +72,9 @@ check_preview <- function(.data, preview_col = "Status", print_tibble = TRUE, qu
   # Print message and return output
   if (quiet == FALSE) {
     if (n_previews > 0) {
-    message(n_previews, " out of ", nrow(.data), " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
+    message(n_previews, " out of ", nrow(x), " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
     } else {
-      message(n_previews, " out of ", nrow(.data), " rows were collected as previews.")
+      message(n_previews, " out of ", nrow(x), " rows were collected as previews.")
     }
   }
   if (print_tibble == TRUE) {

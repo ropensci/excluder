@@ -4,22 +4,22 @@
 \alias{deidentify}
 \title{Remove columns that could include identifiable information}
 \usage{
-deidentify(.data, strict = TRUE)
+deidentify(x, strict = TRUE)
 }
 \arguments{
-\item{.data}{Data frame (downloaded from Qualtrics).}
+\item{x}{Data frame (downloaded from Qualtrics).}
 
 \item{strict}{Logical indicating whether to use strict or non-strict level
 of deidentification. Strict removes computer information columns in addition
 to IP address and location.}
 }
 \value{
-An object of the same type as \code{.data} that excludes Qualtrics columns with
+An object of the same type as \code{x} that excludes Qualtrics columns with
 identifiable information.
 }
 \description{
 The \code{deidentify()} function selects out columns from
-\href{https://qualtrics.com}{Qualtrics} surveys that may include identifiable
+\href{https://qualtrics.com/}{Qualtrics} surveys that may include identifiable
 information such as IP address, location, or computer characteristics.
 }
 \details{

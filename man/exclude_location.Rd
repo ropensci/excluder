@@ -4,10 +4,10 @@
 \alias{exclude_location}
 \title{Exclude locations outside of US}
 \usage{
-exclude_location(.data, id_col = "ResponseId", silent = FALSE, ...)
+exclude_location(x, id_col = "ResponseId", silent = FALSE, ...)
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
@@ -16,7 +16,7 @@ exclude_location(.data, id_col = "ResponseId", silent = FALSE, ...)
 \item{...}{Inherit parameters from check function.}
 }
 \value{
-An object of the same type as \code{.data} that excludes rows
+An object of the same type as \code{x} that excludes rows
 that are located outside of the US and (if \code{include_na == FALSE}) rows with
 no location information.
 For a function that checks for these rows, use \code{\link[=check_location]{check_location()}}.
@@ -26,7 +26,7 @@ For a function that marks these rows, use \code{\link[=mark_location]{mark_locat
 The \code{exclude_location()} function removes
 rows that have locations outside of the US.
 The function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

@@ -15,13 +15,13 @@
 #' Typically, deidenification should be used at the end of a processing pipeline
 #' so that these columns can be used to exclude rows.
 #'
-#' @param .data Data frame (downloaded from Qualtrics).
+#' @param x Data frame (downloaded from Qualtrics).
 #' @param strict Logical indicating whether to use strict or non-strict level
 #' of deidentification. Strict removes computer information columns in addition
 #' to IP address and location.
 #'
 #' @return
-#' An object of the same type as `.data` that excludes Qualtrics columns with
+#' An object of the same type as `x` that excludes Qualtrics columns with
 #' identifiable information.
 #' @export
 #'
@@ -35,19 +35,19 @@
 #' # Remove only IP address and location columns
 #' deid2 <- deidentify(qualtrics_numeric, strict = FALSE)
 #' names(deid2)
-deidentify <- function(.data, strict = TRUE) {
+deidentify <- function(x, strict = TRUE) {
 
   # Define columns to remove
   location_cols <- c("IPAddress", "LocationLatitude", "LocationLongitude", "UserLanguage", "IP Address", "Location Latitude", "Location Longitude", "User Language")
   computer_cols <- c("Browser", "Version", "Operating System", "Resolution")
 
   # Remove columns
-  .data <- .data %>%
+  x <- x %>%
     dplyr::select(!dplyr::any_of(location_cols))
 
   if (strict == TRUE) {
-    .data <- .data %>%
+    x <- x %>%
       dplyr::select(!dplyr::contains(computer_cols))
   }
-  invisible(.data)
+  invisible(x)
 }

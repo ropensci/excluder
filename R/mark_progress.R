@@ -13,7 +13,7 @@
 #' @family progress functions
 #' @family mark functions
 #' @return
-#' An object of the same type as `.data` that includes a column marking rows
+#' An object of the same type as `x` that includes a column marking rows
 #' that have incomplete progress.
 #' For a function that checks for these rows, use [check_progress()].
 #' For a function that excludes these rows, use [exclude_progress()].
@@ -39,19 +39,19 @@
 #'   exclude_preview() %>%
 #'   mark_progress(print_tibble = FALSE)
 #'
-mark_progress <- function(.data, id_col = "ResponseId", ...) {
+mark_progress <- function(x, id_col = "ResponseId", ...) {
 
   # Check for presence of required column
-  column_names <- names(.data)
+  column_names <- names(x)
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID (id_col) is incorrect. Please check your data and specify 'id_col'.")
   }
 
   # Find rows to mark
-  exclusions <- excluder::check_progress(.data, ...) %>%
+  exclusions <- excluder::check_progress(x, ...) %>%
     dplyr::mutate(exclusion_progress = "incomplete_progress") %>%
     dplyr::select(dplyr::all_of(id_col), .data$exclusion_progress)
 
   # Mark rows
-  dplyr::left_join(.data, exclusions, by = id_col)
+  dplyr::left_join(x, exclusions, by = id_col)
 }

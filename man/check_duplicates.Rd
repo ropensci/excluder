@@ -5,7 +5,7 @@
 \title{Check for duplicate IP addresses and/or locations}
 \usage{
 check_duplicates(
-  .data,
+  x,
   ip_col = "IPAddress",
   location_col = c("LocationLatitude", "LocationLongitude"),
   dupl_ip = TRUE,
@@ -16,7 +16,7 @@ check_duplicates(
 )
 }
 \arguments{
-\item{.data}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{ip_col}{Column name for IP addresses.}
 
@@ -34,10 +34,10 @@ IP address and location as potentially excluded rows.}
 \item{print_tibble}{Logical indicating whether to print returned tibble to
 console.}
 
-\item{quiet}{Logical indicating whether to print message to console.}
+\item{quiet}{Logical indicating whether to print message to console.x}
 }
 \value{
-An object of the same type as \code{.data} that includes the rows with
+An object of the same type as \code{x} that includes the rows with
 duplicate IP addresses and/or locations. This includes a column
 called dupe_count that returns the number of duplicates.
 For a function that marks these rows, use \code{\link[=mark_duplicates]{mark_duplicates()}}.
@@ -47,7 +47,7 @@ For a function that excludes these rows, use \code{\link[=exclude_duplicates]{ex
 The \code{check_duplicates()} function subsets rows of data, retaining rows
 that have the same IP address and/or same latitude and longitude. The
 function is written to work with data from
-\href{https://qualtrics.com}{Qualtrics} surveys.
+\href{https://qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the
