@@ -56,14 +56,11 @@ check_preview <- function(x, preview_col = "Status", print_tibble = TRUE, quiet 
     stop("The column specifying resolution (preview_col) is incorrect. Please check your data and specify 'preview_col'.")
   }
 
-  # Quote column names
-  preview_col_sym <- dplyr::ensym(preview_col)
-
   # Check for preview rows
-  if (is.character(dplyr::pull(x, !!preview_col_sym))) {
-    filtered_data <- dplyr::filter(x, !!preview_col_sym == "Survey Preview")
-  } else if (is.numeric(dplyr::pull(x, !!preview_col_sym))) {
-    filtered_data <- dplyr::filter(x, !!preview_col_sym == 1)
+  if (is.character(dplyr::pull(x, preview_col))) {
+    filtered_data <- dplyr::filter(x, .data[[preview_col]] == "Survey Preview")
+  } else if (is.numeric(dplyr::pull(x, preview_col))) {
+    filtered_data <- dplyr::filter(x, .data[[preview_col]] == 1)
   } else {
     stop("The column ", preview_col, " is not of type character or numeric, so it cannot be checked.")
   }

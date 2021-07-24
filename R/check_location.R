@@ -61,9 +61,6 @@ check_location <- function(x, location_col = c("LocationLatitude", "LocationLong
   if (length(location_col) != 2) stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
   if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
 
-  # Quote column names
-  location_col_enquo <- dplyr::enquo(location_col)
-
   # Extract IP address, latitude, and longitude vectors
   latitude <- dplyr::pull(x, location_col[1])
   longitude <- dplyr::pull(x, location_col[2])
@@ -76,7 +73,7 @@ check_location <- function(x, location_col = c("LocationLatitude", "LocationLong
   n_rows <- nrow(x)
 
   # Check for participants with no location information
-  no_location <- dplyr::filter(x, is.na(dplyr::across(!!location_col_enquo)))
+  no_location <- dplyr::filter(x, is.na(dplyr::across(location_col)))
   n_no_location <- nrow(no_location)
   x <- tidyr::drop_na(x, dplyr::all_of(location_col))
 
