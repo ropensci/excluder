@@ -64,9 +64,6 @@ check_duration <- function(.data, min_duration = 10, max_duration = NULL, durati
   column_names <- names(.data)
   if (!duration_col %in% column_names) stop("The column specifying duration (duration_col) is incorrect. Please check your data and specify 'duration_col'.")
 
-  # Quote column names
-  duration_col <- dplyr::ensym(duration_col)
-
   # Extract duration vector
   duration_vector <- dplyr::pull(.data, duration_col)
 
@@ -77,7 +74,7 @@ check_duration <- function(.data, min_duration = 10, max_duration = NULL, durati
 
   # Find participants quicker than minimum
   if (!is.null(min_duration)) {
-    too_quick <- too_quick_slow <- dplyr::filter(.data, !!duration_col < min_duration)
+    too_quick <- too_quick_slow <- .data[which(duration_vector < min_duration), ]
     n_too_quick <- nrow(too_quick)
     if (quiet == FALSE) {
       message(n_too_quick, " out of ", nrow(.data), " rows took less time than the minimum duration of ", min_duration, " seconds.")
@@ -85,7 +82,7 @@ check_duration <- function(.data, min_duration = 10, max_duration = NULL, durati
   }
   # Find participants slower than maximum
   if (!is.null(max_duration)) {
-    too_slow <- too_quick_slow <- dplyr::filter(.data, !!duration_col > max_duration)
+    too_slow <- too_quick_slow <- .data[which(duration_vector > max_duration), ]
     n_too_slow <- nrow(too_slow)
     if (quiet == FALSE) {
       message(n_too_slow, " out of ", nrow(.data), " rows took more time than the maximum duration of ", max_duration, " seconds.")
