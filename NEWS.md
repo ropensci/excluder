@@ -1,3 +1,17 @@
+# excluder 0.2.1
+
+* The argument name for the data frame switched from `.data` to `x` to avoid confusion with the `{rlang}` use of `.data`.
+
+* Instead of using `quo()` and `sym()` to create new names for columns used as arguments, `.data[[var]]` is now used.
+
+* The `dupe_count` column was removed from `check_duplicates()` output. Tests were adjusted to account for the new number of columns.
+
+* `check_duplicates()` now specifies the number of NA columns.
+
+* URLs have been replaced or tweaked to address CRAN package check warnings.
+
+* Links function reference pages have been added to the README.
+
 # excluder 0.2.0
 
 * The `deidentify()` function was added, which removes IP address, location, and computer information columns.
