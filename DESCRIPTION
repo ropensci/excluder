@@ -26,7 +26,8 @@ Imports:
     maps,
     tidyr,
     magrittr,
-    lifecycle
+    lifecycle,
+    rlang
 Depends: 
     R (>= 3.5.0)
 Suggests: 
