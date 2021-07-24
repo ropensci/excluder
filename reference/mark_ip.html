@@ -123,16 +123,16 @@ Qualtrics surveys." />
     <p>The <code>mark_ip()</code> function creates a column labeling
 rows of data that have IP addresses in the specified country.
 The function is written to work with data from
-<a href='https://qualtrics.com'>Qualtrics</a> surveys.</p>
+<a href='https://qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mark_ip</span><span class='op'>(</span><span class='va'>.data</span>, id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mark_ip</span><span class='op'>(</span><span class='va'>x</span>, id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
+      <th>x</th>
       <td><p>Data frame or tibble (preferably exported from Qualtrics).</p></td>
     </tr>
     <tr>
@@ -147,7 +147,7 @@ The function is written to work with data from
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the same type as <code>.data</code> that includes a column marking rows
+    <p>An object of the same type as <code>x</code> that includes a column marking rows
 with IP addresses outside of the specified country.
 For a function that checks these rows, use <code><a href='check_ip.html'>check_ip()</a></code>.
 For a function that excludes these rows, use <code><a href='exclude_ip.html'>exclude_ip()</a></code>.</p>
@@ -184,12 +184,12 @@ will print a message alerting to the number of rows with <code>NA</code>s.</p>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mark_ip</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows have IP addresses outside of US.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows have IP addresses outside of US.</span></div><div class='input'>
 <span class='co'># Mark IP addresses outside of Germany</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mark_ip</span><span class='op'>(</span>country <span class='op'>=</span> <span class='st'>"DE"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>94 out of 98 rows have IP addresses outside of DE.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows have IP addresses outside of DE.</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

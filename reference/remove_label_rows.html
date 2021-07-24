@@ -119,16 +119,16 @@ datasets downloaded from Qualtrics surveys." />
 
     <div class="ref-description">
     <p>The <code>remove_label_rows()</code> function filters out the initial label rows from
-datasets downloaded from <a href='https://qualtrics.com'>Qualtrics</a> surveys.</p>
+datasets downloaded from <a href='https://qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>remove_label_rows</span><span class='op'>(</span><span class='va'>.data</span>, convert <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>remove_label_rows</span><span class='op'>(</span><span class='va'>x</span>, convert <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
+      <th>x</th>
       <td><p>Data frame (downloaded from Qualtrics).</p></td>
     </tr>
     <tr>
@@ -140,13 +140,13 @@ columns from the metadata.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the same type as <code>.data</code> that excludes Qualtrics label rows and
-with date and numeric metadata columns coerced to the correct data class.</p>
+    <p>An object of the same type as <code>x</code> that excludes Qualtrics label rows and
+with date and numeric metadata columns converted to the correct data class.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function (1) checks if the data set uses Qualtrics column names,
 (2) checks if label rows are already used as column names,
-(3) removes label rows if present, and (4) coerces date and numeric metadata
+(3) removes label rows if present, and (4) converts date and numeric metadata
 columns to proper data type. Datasets imported using
 <code>qualtRics::fetch_survey()</code> should not need this function.</p>
 <p>The <code>convert</code> argument only converts the <em>StartDate</em>, <em>EndDate</em>,

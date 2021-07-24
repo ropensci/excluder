@@ -77,13 +77,13 @@
 <a href="#excluder" class="anchor"></a>excluder</h1></div>
 <!-- badges: start -->
 
-<p>The goal of <a href="https://jeffreyrstevens.github.io/excluder/"><code>{excluder}</code></a> is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from <a href="https://qualtrics.com">Qualtrics</a> surveys, and default column names come from importing data with the <a href="https://docs.ropensci.org/qualtRics/"><code>{qualtRics}</code></a> package.</p>
+<p>The goal of <a href="https://jeffreyrstevens.github.io/excluder/"><code>{excluder}</code></a> is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from <a href="https://qualtrics.com/">Qualtrics</a> surveys, and default column names come from importing data with the <a href="https://docs.ropensci.org/qualtRics/"><code>{qualtRics}</code></a> package.</p>
 <p>This may be most useful for <a href="https://www.mturk.com/">Mechanical Turk</a> data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States. But it can be used more generally to exclude based on response durations, preview status, progress, or screen resolution.</p>
 <p>More details are available on the package <a href="https://jeffreyrstevens.github.io/excluder/">website</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version of <a href="https://jeffreyrstevens.github.io/excluder">excluder</a> <a href="https://github.com/">GitHub</a> with:</p>
+<p>You can install the released version of <a href="https://jeffreyrstevens.github.io/excluder/">excluder</a> <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jeffreyrstevens/excluder"</span><span class="op">)</span></code></pre></div>
@@ -131,7 +131,7 @@
 <a href="#checking" class="anchor"></a>Checking</h3>
 <p>The <code>check_*()</code> functions output messages about the number of rows that meet the exclusion criteria.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jeffreyrstevens.github.io/excluder">excluder</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jeffreyrstevens.github.io/excluder/">excluder</a></span><span class="op">)</span>
 <span class="co"># Check for preview rows</span>
 <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/check_preview.html">check_preview</a></span><span class="op">(</span><span class="op">)</span>
@@ -256,7 +256,7 @@
 <div id="citing-this-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#citing-this-package" class="anchor"></a>Citing this package</h2>
-<p>To cite <a href="https://jeffreyrstevens.github.io/excluder">excluder</a>, use:</p>
+<p>To cite <a href="https://jeffreyrstevens.github.io/excluder/">excluder</a>, use:</p>
 <blockquote>
 <p>Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R package version 0.2.0, <a href="https://jeffreyrstevens.github.io/excluder/" class="uri">https://jeffreyrstevens.github.io/excluder/</a>.</p>
 </blockquote>
@@ -264,7 +264,7 @@
 <div id="contributing-to-this-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contributing-to-this-package" class="anchor"></a>Contributing to this package</h2>
-<p><a href="https://jeffreyrstevens.github.io/.github/CONTRIBUTING.md">Contributions</a> to <a href="https://jeffreyrstevens.github.io/excluder">excluder</a> are most welcome! Feel free to check out <a href="https://github.com/jeffreyrstevens/excluder/issues">open issues</a> for ideas. And <a href="https://github.com/jeffreyrstevens/excluder/pulls">pull requests</a> are encouraged, but you may want to <a href="https://github.com/jeffreyrstevens/excluder/issues/new/choose">raise an issue</a> or <a href="mailto:jeffrey.r.stevens@gmail.com">contact the maintainer</a> first.</p>
+<p><a href="https://jeffreyrstevens.github.io/excluder/CONTRIBUTING.html">Contributions</a> to <a href="https://jeffreyrstevens.github.io/excluder/">excluder</a> are most welcome! Feel free to check out <a href="https://github.com/jeffreyrstevens/excluder/issues">open issues</a> for ideas. And <a href="https://github.com/jeffreyrstevens/excluder/pulls">pull requests</a> are encouraged, but you may want to <a href="https://github.com/jeffreyrstevens/excluder/issues/new/choose">raise an issue</a> or <a href="mailto:jeffrey.r.stevens@gmail.com">contact the maintainer</a> first.</p>
 <p>Please note that the excluder project is released with a <a href="https://jeffreyrstevens.github.io/excluder/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
@@ -276,7 +276,7 @@
 <ul class="list-unstyled">
 <li>Browse source code at <br><a href="https://github.com/jeffreyrstevens/excluder/">https://​github.com/​jeffreyrstevens/​excluder/​</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/jeffreyrstevens/excluder/issues">https://​github.com/​jeffreyrstevens/​excluder/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/jeffreyrstevens/excluder/issues/">https://​github.com/​jeffreyrstevens/​excluder/​issues/​</a>
 </li>
 </ul>
 </div>
@@ -312,7 +312,7 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/jeffreyrstevens/excluder/actions"><img src="https://github.com/jeffreyrstevens/excluder/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://codecov.io/gh/jstevens5/excluder?branch=main"><img src="https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="reference/figures/lifecycle-experimental.svg" alt="lifecycle"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html"><img src="reference/figures/lifecycle-experimental.svg" alt="lifecycle"></a></li>
 </ul>
 </div>
 </div>

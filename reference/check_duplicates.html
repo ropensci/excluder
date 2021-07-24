@@ -123,11 +123,11 @@ Qualtrics surveys." />
     <p>The <code>check_duplicates()</code> function subsets rows of data, retaining rows
 that have the same IP address and/or same latitude and longitude. The
 function is written to work with data from
-<a href='https://qualtrics.com'>Qualtrics</a> surveys.</p>
+<a href='https://qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_duplicates</span><span class='op'>(</span>
-  <span class='va'>.data</span>,
+  <span class='va'>x</span>,
   ip_col <span class='op'>=</span> <span class='st'>"IPAddress"</span>,
   location_col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"LocationLatitude"</span>, <span class='st'>"LocationLongitude"</span><span class='op'>)</span>,
   dupl_ip <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -141,7 +141,7 @@ function is written to work with data from
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
+      <th>x</th>
       <td><p>Data frame or tibble (preferably exported from Qualtrics).</p></td>
     </tr>
     <tr>
@@ -174,13 +174,13 @@ console.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Logical indicating whether to print message to console.</p></td>
+      <td><p>Logical indicating whether to print message to console.x</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the same type as <code>.data</code> that includes the rows with
+    <p>An object of the same type as <code>x</code> that includes the rows with
 duplicate IP addresses and/or locations. This includes a column
 called dupe_count that returns the number of duplicates.
 For a function that marks these rows, use <code><a href='mark_duplicates.html'>mark_duplicates()</a></code>.

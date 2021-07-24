@@ -125,11 +125,11 @@ Qualtrics surveys." />
 that have unacceptable screen resolution. This can be used, for example, to
 determine data collected via phones when desktop monitors are required.
 The function is written to work with data from
-<a href='https://qualtrics.com'>Qualtrics</a> surveys.</p>
+<a href='https://qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_resolution</span><span class='op'>(</span>
-  <span class='va'>.data</span>,
+  <span class='va'>x</span>,
   width_min <span class='op'>=</span> <span class='fl'>1000</span>,
   height_min <span class='op'>=</span> <span class='fl'>0</span>,
   res_col <span class='op'>=</span> <span class='st'>"Resolution"</span>,
@@ -141,7 +141,7 @@ The function is written to work with data from
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
+      <th>x</th>
       <td><p>Data frame (preferably directly from Qualtrics imported
 using qualtRics.)</p></td>
     </tr>

@@ -123,11 +123,11 @@ Qualtrics surveys." />
     <p>The <code>check_progress()</code> function subsets rows of data, retaining rows
 that have incomplete progress.
 The function is written to work with data from
-<a href='https://qualtrics.com'>Qualtrics</a> surveys.</p>
+<a href='https://qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_progress</span><span class='op'>(</span>
-  <span class='va'>.data</span>,
+  <span class='va'>x</span>,
   min_progress <span class='op'>=</span> <span class='fl'>100</span>,
   finished_col <span class='op'>=</span> <span class='st'>"Finished"</span>,
   progress_col <span class='op'>=</span> <span class='st'>"Progress"</span>,
@@ -139,7 +139,7 @@ The function is written to work with data from
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
+      <th>x</th>
       <td><p>Data frame (preferably directly from Qualtrics imported
 using qualtRics.)</p></td>
     </tr>

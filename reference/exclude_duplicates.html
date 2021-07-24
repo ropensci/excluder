@@ -123,16 +123,16 @@ Qualtrics surveys." />
     <p>The <code>exclude_duplicates()</code> function removes
 rows of data that have the same IP address and/or same latitude and
 longitude. The function is written to work with data from
-<a href='https://qualtrics.com'>Qualtrics</a> surveys.</p>
+<a href='https://qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>exclude_duplicates</span><span class='op'>(</span><span class='va'>.data</span>, id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>, silent <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>exclude_duplicates</span><span class='op'>(</span><span class='va'>x</span>, id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>, silent <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
+      <th>x</th>
       <td><p>Data frame or tibble (preferably exported from Qualtrics).</p></td>
     </tr>
     <tr>
@@ -151,7 +151,7 @@ longitude. The function is written to work with data from
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the same type as <code>.data</code> that excludes rows
+    <p>An object of the same type as <code>x</code> that excludes rows
 with duplicate IP addresses and/or locations.
 For a function that just checks for and returns duplicate rows,
 use <code><a href='check_duplicates.html'>check_duplicates()</a></code>. For a function that marks these rows,

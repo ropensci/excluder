@@ -120,17 +120,17 @@ information such as IP address, location, or computer characteristics." />
 
     <div class="ref-description">
     <p>The <code>deidentify()</code> function selects out columns from
-<a href='https://qualtrics.com'>Qualtrics</a> surveys that may include identifiable
+<a href='https://qualtrics.com/'>Qualtrics</a> surveys that may include identifiable
 information such as IP address, location, or computer characteristics.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>deidentify</span><span class='op'>(</span><span class='va'>.data</span>, strict <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>deidentify</span><span class='op'>(</span><span class='va'>x</span>, strict <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
+      <th>x</th>
       <td><p>Data frame (downloaded from Qualtrics).</p></td>
     </tr>
     <tr>
@@ -143,7 +143,7 @@ to IP address and location.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the same type as <code>.data</code> that excludes Qualtrics columns with
+    <p>An object of the same type as <code>x</code> that excludes Qualtrics columns with
 identifiable information.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
