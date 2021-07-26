@@ -7,13 +7,21 @@
 collapse_exclusions(
   x,
   exclusion_types = c("duplicates", "duration", "ip", "location", "preview",
-    "progress", "resolution")
+    "progress", "resolution"),
+  separator = ",",
+  remove = TRUE
 )
 }
 \arguments{
 \item{x}{Data frame or tibble (preferably exported from Qualtrics).}
 
 \item{exclusion_types}{Vector of types of exclusions to collapse.}
+
+\item{separator}{Character string specifying what character to use to
+separate multiple exclusion types}
+
+\item{remove}{Logical specifying whether to remove collapsed columns
+(default = TRUE) or leave them in the data frame (FALSE)}
 }
 \value{
 #' An object of the same type as \code{x} that includes the all of the same

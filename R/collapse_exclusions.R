@@ -8,6 +8,10 @@
 #'
 #' @param x  Data frame or tibble (preferably exported from Qualtrics).
 #' @param exclusion_types Vector of types of exclusions to collapse.
+#' @param separator Character string specifying what character to use to
+#' separate multiple exclusion types
+#' @param remove Logical specifying whether to remove collapsed columns
+#' (default = TRUE) or leave them in the data frame (FALSE)
 #'
 #' @return
 #' #' An object of the same type as `x` that includes the all of the same
@@ -34,7 +38,7 @@
 #' df2 <- df %>%
 #'   collapse_exclusions(exclusion_types = c("duplicates", "duration", "ip"))
 #'
-collapse_exclusions <- function(x, exclusion_types = c("duplicates", "duration", "ip", "location", "preview", "progress", "resolution")) {
+collapse_exclusions <- function(x, exclusion_types = c("duplicates", "duration", "ip", "location", "preview", "progress", "resolution"), separator = ",", remove = TRUE) {
 
   # Define exclusions to avoid R CMD check failure
   exclusions <- NULL
@@ -47,6 +51,6 @@ collapse_exclusions <- function(x, exclusion_types = c("duplicates", "duration",
 
   # Collapse and delete columns
   x %>%
-    tidyr::unite(exclusions, exclusion_columns_to_collapse, sep = ",", na.rm = TRUE) %>%
+    tidyr::unite(exclusions, exclusion_columns_to_collapse, sep = separator, na.rm = TRUE, remove = remove) %>%
     dplyr::mutate(exclusions = ifelse(.data$exclusions == "", NA, .data$exclusions))
 }
