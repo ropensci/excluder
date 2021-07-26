@@ -20,6 +20,8 @@
 #' of deidentification. Strict removes computer information columns in addition
 #' to IP address and location.
 #'
+#' @concept helper
+#'
 #' @return
 #' An object of the same type as `x` that excludes Qualtrics columns with
 #' identifiable information.

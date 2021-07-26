@@ -68,7 +68,6 @@ qualtrics_text \%>\%
 qualtrics_text \%>\%
   exclude_preview() \%>\%
   check_location(quiet = TRUE)
-
 }
 \seealso{
 Other location functions: 

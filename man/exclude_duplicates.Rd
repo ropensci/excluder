@@ -53,7 +53,6 @@ df <- qualtrics_text \%>\%
 df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   exclude_duplicates(dupl_location = FALSE)
-
 }
 \seealso{
 Other duplicates functions: 

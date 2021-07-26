@@ -53,7 +53,6 @@ df <- qualtrics_text \%>\%
 df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   exclude_ip(country = "DE")
-
 }
 \seealso{
 Other ip functions: 

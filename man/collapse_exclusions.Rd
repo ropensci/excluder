@@ -51,5 +51,5 @@ df2 <- df \%>\%
 # Collapse subset of exclusion types
 df2 <- df \%>\%
   collapse_exclusions(exclusion_types = c("duplicates", "duration", "ip"))
-
 }
+\concept{helper}

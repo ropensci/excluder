@@ -13,6 +13,8 @@
 #' @param remove Logical specifying whether to remove collapsed columns
 #' (default = TRUE) or leave them in the data frame (FALSE)
 #'
+#' @concept helper
+#'
 #' @return
 #' #' An object of the same type as `x` that includes the all of the same
 #' rows but with a single `exclusion` column replacing all of the specified

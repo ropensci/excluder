@@ -77,7 +77,6 @@ qualtrics_text \%>\%
 qualtrics_text \%>\%
   exclude_preview() \%>\%
   check_ip(quiet = TRUE)
-
 }
 \seealso{
 Other ip functions: 

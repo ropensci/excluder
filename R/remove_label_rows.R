@@ -20,6 +20,8 @@
 #' @param convert Logical indicating whether to convert/coerce date, logical and
 #' numeric columns from the metadata.
 #'
+#' @concept helper
+#'
 #' @return
 #' An object of the same type as `x` that excludes Qualtrics label rows and
 #' with date, logical, and numeric metadata columns converted to the correct

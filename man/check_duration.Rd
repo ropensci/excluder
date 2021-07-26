@@ -73,7 +73,6 @@ qualtrics_text \%>\%
 qualtrics_text \%>\%
   exclude_preview() \%>\%
   check_duration(min_duration = 100, quiet = TRUE)
-
 }
 \seealso{
 Other duration functions: 

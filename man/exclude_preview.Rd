@@ -49,7 +49,6 @@ df <- qualtrics_numeric \%>\%
 # Do not print rows to console
 df <- qualtrics_text \%>\%
   exclude_preview(print_tibble = FALSE)
-
 }
 \seealso{
 Other preview functions: 

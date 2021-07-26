@@ -67,7 +67,6 @@ qualtrics_text \%>\%
 qualtrics_text \%>\%
   exclude_preview() \%>\%
   check_resolution(quiet = TRUE)
-
 }
 \seealso{
 Other resolution functions: 

@@ -76,7 +76,6 @@ qualtrics_text \%>\%
 # Do not print message to console
 qualtrics_text \%>\%
   check_duplicates(quiet = TRUE)
-
 }
 \seealso{
 Other duplicates functions: 

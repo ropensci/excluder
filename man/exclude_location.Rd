@@ -47,7 +47,6 @@ df <- exclude_location(qualtrics_text)
 df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   exclude_location()
-
 }
 \seealso{
 Other location functions: 

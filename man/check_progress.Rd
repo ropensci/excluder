@@ -76,7 +76,6 @@ qualtrics_text \%>\%
 qualtrics_text \%>\%
   exclude_preview() \%>\%
   check_progress(quiet = TRUE)
-
 }
 \seealso{
 Other progress functions: 

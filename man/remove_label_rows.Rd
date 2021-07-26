@@ -38,3 +38,4 @@ columns, see \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 data(qualtrics_raw)
 df <- remove_label_rows(qualtrics_raw)
 }
+\concept{helper}

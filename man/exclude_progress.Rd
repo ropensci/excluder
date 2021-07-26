@@ -58,7 +58,6 @@ df <- qualtrics_numeric \%>\%
 df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   exclude_progress(print_tibble = FALSE)
-
 }
 \seealso{
 Other progress functions: 

@@ -43,7 +43,6 @@ df <- exclude_resolution(qualtrics_text)
 df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   exclude_resolution()
-
 }
 \seealso{
 Other resolution functions: 

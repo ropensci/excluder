@@ -55,7 +55,6 @@ qualtrics_text \%>\%
 # Do not print message to console
 qualtrics_text \%>\%
   check_preview(quiet = TRUE)
-
 }
 \seealso{
 Other preview functions: 

@@ -49,7 +49,6 @@ df <- qualtrics_text \%>\%
 df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   mark_duration(max_duration = 800)
-
 }
 \seealso{
 Other duration functions: 
