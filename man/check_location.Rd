@@ -37,7 +37,7 @@ For a function that excludes these rows, use \code{\link[=exclude_location]{excl
 The \code{check_location()} function subsets rows of data, retaining rows
 that have locations outside of the US.
 The function is written to work with data from
-\href{https://qualtrics.com/}{Qualtrics} surveys.
+\href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

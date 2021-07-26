@@ -39,7 +39,7 @@ The \code{check_resolution()} function subsets rows of data, retaining rows
 that have unacceptable screen resolution. This can be used, for example, to
 determine data collected via phones when desktop monitors are required.
 The function is written to work with data from
-\href{https://qualtrics.com/}{Qualtrics} surveys.
+\href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

@@ -4,7 +4,7 @@
 #' The `exclude_progress()` function removes
 #' rows that have incomplete progress.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com/) surveys.
+#' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
 #' @inherit check_progress details
 #'

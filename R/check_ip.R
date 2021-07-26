@@ -4,7 +4,7 @@
 #' The `check_ip()` function subsets rows of data, retaining rows
 #' that have IP addresses in the specified country.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com/) surveys.
+#' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
 #' @details
 #' Default column names are set based on output from the

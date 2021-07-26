@@ -24,7 +24,7 @@ use \code{\link[=exclude_duplicates]{exclude_duplicates()}}.
 The \code{mark_duplicates()} function creates a column labeling
 rows of data that have the same IP address and/or same latitude and
 longitude. The function is written to work with data from
-\href{https://qualtrics.com/}{Qualtrics} surveys.
+\href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

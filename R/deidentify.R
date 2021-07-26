@@ -2,7 +2,7 @@
 #'
 #' @description
 #' The `deidentify()` function selects out columns from
-#' [Qualtrics](https://qualtrics.com/) surveys that may include identifiable
+#' [Qualtrics](https://www.qualtrics.com/) surveys that may include identifiable
 #' information such as IP address, location, or computer characteristics.
 #'
 #' @details

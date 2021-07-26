@@ -23,7 +23,7 @@ For a function that excludes these rows, use \code{\link[=exclude_duration]{excl
 The \code{mark_duration()} function creates a column labeling
 rows with fast and/or slow duration.
 The function is written to work with data from
-\href{https://qualtrics.com/}{Qualtrics} surveys.
+\href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

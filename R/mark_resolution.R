@@ -4,7 +4,7 @@
 #' The `mark_resolution()` function creates a column labeling
 #' rows that have unacceptable screen resolution.
 #' The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com/) surveys.
+#' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
 #' @inherit check_resolution details
 #'

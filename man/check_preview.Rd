@@ -27,7 +27,7 @@ For a function that excludes these rows, use \code{\link[=exclude_preview]{exclu
 The \code{check_preview()} function subsets rows of data, retaining rows
 that are survey previews.
 The function is written to work with data from
-\href{https://qualtrics.com/}{Qualtrics} surveys.
+\href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

@@ -19,7 +19,7 @@ data class.
 }
 \description{
 The \code{remove_label_rows()} function filters out the initial label rows from
-datasets downloaded from \href{https://qualtrics.com/}{Qualtrics} surveys.
+datasets downloaded from \href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 The function (1) checks if the data set uses Qualtrics column names,

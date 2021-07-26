@@ -23,7 +23,7 @@ For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip
 The \code{mark_ip()} function creates a column labeling
 rows of data that have IP addresses in the specified country.
 The function is written to work with data from
-\href{https://qualtrics.com/}{Qualtrics} surveys.
+\href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

@@ -25,7 +25,7 @@ For a function that marks these rows, use \code{\link[=mark_resolution]{mark_res
 The \code{exclude_resolution()} function removes
 rows that have unacceptable screen resolution.
 The function is written to work with data from
-\href{https://qualtrics.com/}{Qualtrics} surveys.
+\href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

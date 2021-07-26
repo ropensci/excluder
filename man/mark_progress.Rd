@@ -23,7 +23,7 @@ For a function that excludes these rows, use \code{\link[=exclude_progress]{excl
 The \code{mark_progress()} function creates a column labeling
 rows that have incomplete progress.
 The function is written to work with data from
-\href{https://qualtrics.com/}{Qualtrics} surveys.
+\href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

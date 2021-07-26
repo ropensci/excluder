@@ -25,7 +25,7 @@ For a function that marks these rows, use \code{\link[=mark_duration]{mark_durat
 The \code{exclude_duration()} function removes
 rows of data that have durations that are too fast or too slow.
 The function is written to work with data from
-\href{https://qualtrics.com/}{Qualtrics} surveys.
+\href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
 Default column names are set based on output from the

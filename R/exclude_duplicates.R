@@ -4,7 +4,7 @@
 #' The `exclude_duplicates()` function removes
 #' rows of data that have the same IP address and/or same latitude and
 #' longitude. The function is written to work with data from
-#' [Qualtrics](https://qualtrics.com/) surveys.
+#' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
 #' @inherit check_duplicates details
 #'

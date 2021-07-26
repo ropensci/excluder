@@ -19,7 +19,7 @@ identifiable information.
 }
 \description{
 The \code{deidentify()} function selects out columns from
-\href{https://qualtrics.com/}{Qualtrics} surveys that may include identifiable
+\href{https://www.qualtrics.com/}{Qualtrics} surveys that may include identifiable
 information such as IP address, location, or computer characteristics.
 }
 \details{
