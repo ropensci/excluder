@@ -7,21 +7,23 @@
 #' @details
 #' The function (1) checks if the data set uses Qualtrics column names,
 #' (2) checks if label rows are already used as column names,
-#' (3) removes label rows if present, and (4) converts date and numeric metadata
-#' columns to proper data type. Datasets imported using
+#' (3) removes label rows if present, and (4) converts date, logical, and
+#' numeric metadata columns to proper data type. Datasets imported using
 #' [`qualtRics::fetch_survey()`] should not need this function.
 #'
 #' The `convert` argument only converts the _StartDate_, _EndDate_,
-#' _RecordedDate_, _Progress_, _Duration (in seconds)_, _LocationLatitude_, and
-#' _LocationLongitude_ columns. To convert data columns, see [`dplyr::mutate()`].
+#' _RecordedDate_, _Progress_, _Finished_, _Duration (in seconds)_,
+#' _LocationLatitude_, and _LocationLongitude_ columns. To convert other data
+#' columns, see [`dplyr::mutate()`].
 #'
 #' @param x Data frame (downloaded from Qualtrics).
-#' @param convert Logical indicating whether to convert/coerce date and numeric
-#' columns from the metadata.
+#' @param convert Logical indicating whether to convert/coerce date, logical and
+#' numeric columns from the metadata.
 #'
 #' @return
 #' An object of the same type as `x` that excludes Qualtrics label rows and
-#' with date and numeric metadata columns converted to the correct data class.
+#' with date, logical, and numeric metadata columns converted to the correct
+#' data class.
 #' @export
 #'
 #' @examples
@@ -40,7 +42,7 @@ remove_label_rows <- function(x, convert = TRUE) {
   }
 
 
-  # Convert columns to date or numeric
+  # Convert columns to date, logical, or numeric
   if (convert == TRUE) {
     column_names <- names(x)
     if ("StartDate" %in% column_names) {
@@ -54,6 +56,9 @@ remove_label_rows <- function(x, convert = TRUE) {
     }
     if ("Duration (in seconds)" %in% column_names) {
       x <- dplyr::mutate(x, `Duration (in seconds)` = as.numeric(.data$`Duration (in seconds)`))
+    }
+    if ("Finished" %in% column_names) {
+      x <- dplyr::mutate(x, Finished = as.logical(.data$Finished))
     }
     if ("RecordedDate" %in% column_names) {
       x <- dplyr::mutate(x, RecordedDate = lubridate::parse_date_time(.data$RecordedDate, orders = c("ymd HMS", "ymd HM", "ymd", "mdy HMS", "mdy HM", "mdy")))
