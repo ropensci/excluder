@@ -7,7 +7,7 @@
 
 [![R-CMD-check](https://github.com/jeffreyrstevens/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyrstevens/excluder/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jstevens5/excluder?branch=main)
+coverage](https://codecov.io/gh/jeffreyrstevens/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jeffreyrstevens/excluder?branch=main)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -257,7 +257,7 @@ tibble::glimpse(df)
 To cite `{excluder}`, use:
 
 > Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R
-> package version 0.2.1, <https://jeffreyrstevens.github.io/excluder/>.
+> package version 0.2.2, <https://jeffreyrstevens.github.io/excluder/>.
 
 ## Contributing to this package
 
