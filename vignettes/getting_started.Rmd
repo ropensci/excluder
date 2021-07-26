@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 library(excluder)
 ```
 
-The `{excluder}` package facilitates checking for, marking, and excluding rows of data frames for common online participant exclusion criteria. This package applies to online data with a focus on data collected from [Qualtrics](https://qualtrics.com) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package. This may be most useful for [Mechanical Turk](https://www.mturk.com/) data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States.  However, the package can be used for data from other sources that need to be screened for IP address, location, duplicated locations, participant progress, survey completion time, and/or screen resolution.
+The `{excluder}` package facilitates checking for, marking, and excluding rows of data frames for common online participant exclusion criteria. This package applies to online data with a focus on data collected from [Qualtrics](https://www.qualtrics.com) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package. This may be most useful for [Mechanical Turk](https://www.mturk.com/) data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States.  However, the package can be used for data from other sources that need to be screened for IP address, location, duplicated locations, participant progress, survey completion time, and/or screen resolution.
 
 
 ## Usage
