@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "excluder",
   "description": "Data that are collected through online sources such as Mechanical \n            Turk may require excluding data because of IP address duplication, \n            geolocation, or completion duration. This package facilitates\n            exclusion of these data for Qualtrics datasets.",
@@ -8,7 +11,7 @@
   "relatedLink": "https://jeffreyrstevens.github.io/excluder/",
   "issueTracker": "https://github.com/jeffreyrstevens/excluder/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -229,10 +232,18 @@
   ],
   "releaseNotes": "https://github.com/jeffreyrstevens/excluder/blob/master/NEWS.md",
   "readme": "https://github.com/JeffreyRStevens/excluder/blob/main/README.md",
-  "fileSize": "211.632KB",
+  "fileSize": "215.716KB",
   "contIntegration": "https://codecov.io/gh/jstevens5/excluder?branch=main",
   "developmentStatus": ["https://www.repostatus.org/#active", "https://lifecycle.r-lib.org/articles/stages.html#stable"],
-  "keywords": ["qualtrics", "mturk", "datacleaning", "exclusion", "r", "rstats", "r-package"],
+  "keywords": [
+    "qualtrics",
+    "mturk",
+    "datacleaning",
+    "exclusion",
+    "r",
+    "rstats",
+    "r-package"
+  ],
   "citation": [
     {
       "@type": "SoftwareSourceCode",
