@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -126,16 +126,31 @@
       <small>Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="excluder-022" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.2">
+<a href="#excluder-022" class="anchor"></a>excluder 0.2.2</h1>
+<ul>
+<li>Lifecycle has been updated to Stable, and the repo status of Active has been added.</li>
+<li>There is now a Getting Started Excluding Data vignette that gives an overview of package usage.</li>
+<li>Users can now specify the separator used between exclusion types in the <code><a href="../reference/collapse_exclusions.html">collapse_exclusions()</a></code> function. They can also opt to not remove the excluded columns.</li>
+<li>A bug in the <code><a href="../reference/collapse_exclusions.html">collapse_exclusions()</a></code> function was fixed, so now a subset of exclusion columns can be collapsed into a single column.</li>
+<li>A bug in the <code><a href="../reference/remove_label_rows.html">remove_label_rows()</a></code> function was fixed, so now the Finished column is converted to a logical vector.</li>
+<li>A codemeta.json file was created.</li>
+<li>URLs have been replaced or tweaked to address CRAN package check warnings.</li>
+<li>Functions are now organized by topic in the Reference page of the website.</li>
+</ul>
+</div>
     <div id="excluder-021" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
 <a href="#excluder-021" class="anchor"></a>excluder 0.2.1</h1>
 <ul>
-<li><p>The argument name for the data frame switched from <code>.data</code> to <code>x</code> to avoid confusion with the <a href="https://rlang.r-lib.org">rlang</a> use of <code>.data</code>.</p></li>
-<li><p>Instead of using <code>quo()</code> and <code>sym()</code> to create new names for columns used as arguments, <code>.data[[var]]</code> is now used.</p></li>
-<li><p>The <code>dupe_count</code> column was removed from <code><a href="../reference/check_duplicates.html">check_duplicates()</a></code> output. Tests were adjusted to account for the new number of columns.</p></li>
-<li><p><code><a href="../reference/check_duplicates.html">check_duplicates()</a></code> now specifies the number of NA columns.</p></li>
-<li><p>URLs have been replaced or tweaked to address CRAN package check warnings.</p></li>
-<li><p>Links function reference pages have been added to the README.</p></li>
+<li>The argument name for the data frame switched from <code>.data</code> to <code>x</code> to avoid confusion with the <a href="https://rlang.r-lib.org">rlang</a> use of <code>.data</code>.</li>
+<li>Instead of using <code>quo()</code> and <code>sym()</code> to create new names for columns used as arguments, <code>.data[[var]]</code> is now used.</li>
+<li>The <code>dupe_count</code> column was removed from <code><a href="../reference/check_duplicates.html">check_duplicates()</a></code> output. Tests were adjusted to account for the new number of columns.</li>
+<li>
+<code><a href="../reference/check_duplicates.html">check_duplicates()</a></code> now specifies the number of NA columns.</li>
+<li>URLs have been replaced or tweaked to address CRAN package check warnings.</li>
+<li>Links function reference pages have been added to the README.</li>
 </ul>
 </div>
     <div id="excluder-020" class="section level1">
@@ -149,19 +164,21 @@
 <h1 class="page-header" data-toc-text="0.1.0">
 <a href="#excluder-010" class="anchor"></a>excluder 0.1.0</h1>
 <ul>
-<li><p>The <code>check_qualtrics</code> argument was removed from <code><a href="../reference/remove_label_rows.html">remove_label_rows()</a></code> because the functionality did not make sense. This breaks backwards compatability.</p></li>
-<li><p><code><a href="../reference/remove_label_rows.html">remove_label_rows()</a></code> now only filters out label rows if label rows are present and outputs invisibly.</p></li>
-<li><p>Tests were added for the <code>qualtrics_raw</code> dataset and the <code><a href="../reference/remove_label_rows.html">remove_label_rows()</a></code> function.</p></li>
-<li><p>Package-level documentation was created.</p></li>
+<li>The <code>check_qualtrics</code> argument was removed from <code><a href="../reference/remove_label_rows.html">remove_label_rows()</a></code> because the functionality did not make sense. This breaks backwards compatability.</li>
+<li>
+<code><a href="../reference/remove_label_rows.html">remove_label_rows()</a></code> now only filters out label rows if label rows are present and outputs invisibly.</li>
+<li>Tests were added for the <code>qualtrics_raw</code> dataset and the <code><a href="../reference/remove_label_rows.html">remove_label_rows()</a></code> function.</li>
+<li>Package-level documentation was created.</li>
 </ul>
 </div>
     <div id="excluder-001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1">
 <a href="#excluder-001" class="anchor"></a>excluder 0.0.1</h1>
 <ul>
-<li><p><code><a href="../reference/remove_label_rows.html">remove_label_rows()</a></code> now converts character columns to dates for multiple date formats, including YYYY-MM-DD HH:MM:SS, YYYY-MM-DD HH:MM, MM:DD:YYYY HH:MM:SS, and MM:DD:YYYY HH:MM (<a href='https://github.com/jeffreyrstevens/excluder/issues/1'>#1</a>).</p></li>
-<li><p>Code of Conduction and Contributor Guide are added.</p></li>
-<li><p>Citation and Contributor sections are added to README.</p></li>
+<li>
+<code><a href="../reference/remove_label_rows.html">remove_label_rows()</a></code> now converts character columns to dates for multiple date formats, including YYYY-MM-DD HH:MM:SS, YYYY-MM-DD HH:MM, MM:DD:YYYY HH:MM:SS, and MM:DD:YYYY HH:MM (<a href='https://github.com/jeffreyrstevens/excluder/issues/1'>#1</a>).</li>
+<li>Code of Conduction and Contributor Guide are added.</li>
+<li>Citation and Contributor sections are added to README.</li>
 </ul>
 </div>
     <div id="excluder-0001" class="section level1">
