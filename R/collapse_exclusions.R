@@ -39,11 +39,14 @@ collapse_exclusions <- function(x, exclusion_types = c("duplicates", "duration",
   # Define exclusions to avoid R CMD check failure
   exclusions <- NULL
 
-  # Create vector of exclusion columns to collapse
-  exclusion_columns <- paste0("exclusion_", exclusion_types)
+  # Create vectors of exclusion columns to collapse
+  exclusion_columns_selected <- paste0("exclusion_", exclusion_types)
+  print(exclusion_columns_selected)
+  exclusion_columns_to_collapse <- names(x)[which(names(x) %in% exclusion_columns_selected)]
+  print(exclusion_columns_to_collapse)
 
   # Collapse and delete columns
   x %>%
-    tidyr::unite(exclusions, exclusion_columns, sep = ",", na.rm = TRUE) %>%
+    tidyr::unite(exclusions, exclusion_columns_to_collapse, sep = ",", na.rm = TRUE) %>%
     dplyr::mutate(exclusions = ifelse(.data$exclusions == "", NA, .data$exclusions))
 }
