@@ -44,7 +44,6 @@
 #'
 #' # Do not print message to console
 #' check_language(qualtrics_text, quiet = TRUE)
-#'
 check_language <- function(.data, language = "EN", lang_col = "UserLanguage", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column

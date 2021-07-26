@@ -31,7 +31,6 @@
 #' # Do not print rows to console
 #' df <- qualtrics_text %>%
 #'   mark_preview(print_tibble = FALSE)
-#'
 mark_preview <- function(x, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

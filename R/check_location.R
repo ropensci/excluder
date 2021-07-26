@@ -53,7 +53,6 @@
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   check_location(quiet = TRUE)
-#'
 check_location <- function(x, location_col = c("LocationLatitude", "LocationLongitude"), include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns

@@ -58,7 +58,6 @@
 #' # Do not print message to console
 #' qualtrics_text %>%
 #'   check_duplicates(quiet = TRUE)
-#'
 check_duplicates <- function(x, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), dupl_ip = TRUE, dupl_location = TRUE, include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns
@@ -77,7 +76,9 @@ check_duplicates <- function(x, ip_col = "IPAddress", location_col = c("Location
   if (is.character(ip_vector)) {
     classify_ip <- iptools::ip_classify(ip_vector)
     if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
-  } else stop("Incorrect data type for ip_col. Please ensure data type is character.")
+  } else {
+    stop("Incorrect data type for ip_col. Please ensure data type is character.")
+  }
 
   ## Latitude and longitude columns
   if (!is.numeric(latitude)) stop("Incorrect data type for latitude column. Please ensure data type is numeric.")

@@ -38,7 +38,6 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   exclude_duplicates(dupl_location = FALSE)
-#'
 exclude_duplicates <- function(x, id_col = "ResponseId", silent = FALSE, ...) {
 
   # Check for presence of required column

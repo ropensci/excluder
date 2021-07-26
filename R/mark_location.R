@@ -29,7 +29,6 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   mark_location()
-#'
 mark_location <- function(x, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

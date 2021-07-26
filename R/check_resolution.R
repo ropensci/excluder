@@ -50,7 +50,6 @@
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   check_resolution(quiet = TRUE)
-#'
 check_resolution <- function(x, width_min = 1000, height_min = 0, res_col = "Resolution", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column

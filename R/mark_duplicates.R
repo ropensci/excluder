@@ -37,7 +37,6 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   mark_duplicates(dupl_location = FALSE)
-#'
 mark_duplicates <- function(x, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

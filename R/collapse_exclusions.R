@@ -37,7 +37,6 @@
 #' # Collapse subset of exclusion types
 #' df2 <- df %>%
 #'   collapse_exclusions(exclusion_types = c("duplicates", "duration", "ip"))
-#'
 collapse_exclusions <- function(x, exclusion_types = c("duplicates", "duration", "ip", "location", "preview", "progress", "resolution"), separator = ",", remove = TRUE) {
 
   # Define exclusions to avoid R CMD check failure

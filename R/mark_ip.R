@@ -33,7 +33,6 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   mark_ip(country = "DE")
-#'
 mark_ip <- function(x, id_col = "ResponseId", ...) {
 
   # Check for presence of required column

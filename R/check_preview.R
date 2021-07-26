@@ -47,7 +47,6 @@
 #' # Do not print message to console
 #' qualtrics_text %>%
 #'   check_preview(quiet = TRUE)
-#'
 check_preview <- function(x, preview_col = "Status", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required column
@@ -69,7 +68,7 @@ check_preview <- function(x, preview_col = "Status", print_tibble = TRUE, quiet 
   # Print message and return output
   if (quiet == FALSE) {
     if (n_previews > 0) {
-    message(n_previews, " out of ", nrow(x), " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
+      message(n_previews, " out of ", nrow(x), " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
     } else {
       message(n_previews, " out of ", nrow(x), " rows were collected as previews.")
     }

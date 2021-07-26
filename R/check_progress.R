@@ -59,7 +59,6 @@
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   check_progress(quiet = TRUE)
-#'
 check_progress <- function(x, min_progress = 100, finished_col = "Finished", progress_col = "Progress", print_tibble = TRUE, quiet = FALSE) {
 
   # Check for presence of required columns
