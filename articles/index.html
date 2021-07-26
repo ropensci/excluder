@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Example text-based metadata from simulated Qualtrics study — qualtrics_text • excluder</title>
+<title>Articles • excluder</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,7 @@
 
 
 
-<meta property="og:title" content="Example text-based metadata from simulated Qualtrics study — qualtrics_text" />
-<meta property="og:description" content="A dataset containing the metadata from a standard Qualtrics survey with
-browser metadata collected and exported with &quot;Use choice text&quot;.
-These data were randomly generated using #' iptools::ip_random and
-rgeolocate::ip2location functions." />
+<meta property="og:title" content="Articles" />
 
 
 
@@ -62,7 +58,7 @@ rgeolocate::ip2location functions." />
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-article-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -126,49 +122,18 @@ rgeolocate::ip2location functions." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Example text-based metadata from simulated Qualtrics study</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/R/qualtrics_text.R'><code>R/qualtrics_text.R</code></a></small>
-    <div class="hidden name"><code>qualtrics_text.Rd</code></div>
+      <h1>Articles</h1>
     </div>
 
-    <div class="ref-description">
-    <p>A dataset containing the metadata from a standard Qualtrics survey with
-browser metadata collected and exported with "Use choice text".
-These data were randomly generated using #' <a href='https://rdrr.io/pkg/iptools/man/ip_random.html'>iptools::ip_random</a> and
-rgeolocate::ip2location functions.</p>
+    <div class="section ">
+      <h3>All vignettes</h3>
+      <p class="section-desc"></p>
+
+      <dl>
+        <dt><a href="getting_started.html">Get started excluding data</a></dt>
+        <dd></dt>
+      </dl>
     </div>
-
-    <pre class="usage"><span class='va'>qualtrics_text</span></pre>
-
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 100 rows and 16 variables:</p><dl>
-<dt>StartDate</dt><dd><p>date and time data collection started, in ISO 8601 format</p></dd>
-<dt>EndDate</dt><dd><p>date and time data collection ended, in ISO 8601 format</p></dd>
-<dt>Status</dt><dd><p>flag for preview (Survey Preview) vs. implemented survey (IP Address) entries</p></dd>
-<dt>IPAddress</dt><dd><p>participant IP address (truncated for anonymity)</p></dd>
-<dt>Progress</dt><dd><p>percentage of survey completed</p></dd>
-<dt>Duration (in seconds)</dt><dd><p>duration of time required to complete survey, in seconds</p></dd>
-<dt>Finished</dt><dd><p>logical for whether survey was completed (TRUE) or progress was &lt; 100 (FALSE)</p></dd>
-<dt>RecordedDate</dt><dd><p>date and time survey was recorded, in ISO 8601 format</p></dd>
-<dt>ResponseId</dt><dd><p>random ID for participants</p></dd>
-<dt>LocationLatitude</dt><dd><p>latitude geolocated from IP address</p></dd>
-<dt>LocationLongitude</dt><dd><p>longitude geolocated from IP address</p></dd>
-<dt>UserLanguage</dt><dd><p>language set in Qualtrics</p></dd>
-<dt>Browser</dt><dd><p>user web browser type</p></dd>
-<dt>Version</dt><dd><p>user web browser version</p></dd>
-<dt>Operating System</dt><dd><p>user operating system</p></dd>
-<dt>Resolution</dt><dd><p>user screen resolution</p></dd>
-
-</dl>
-
-
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <nav id="toc" data-toggle="toc" class="sticky-top">
-      <h2 data-toc-skip>Contents</h2>
-    </nav>
   </div>
 </div>
 

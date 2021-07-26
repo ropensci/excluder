@@ -49,6 +49,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/getting_started.html">Get started excluding data</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
@@ -77,7 +89,7 @@
 <a href="#excluder" class="anchor"></a>excluder</h1></div>
 <!-- badges: start -->
 
-<p>The goal of <a href="https://jeffreyrstevens.github.io/excluder/"><code>{excluder}</code></a> is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from <a href="https://qualtrics.com/">Qualtrics</a> surveys, and default column names come from importing data with the <a href="https://docs.ropensci.org/qualtRics/"><code>{qualtRics}</code></a> package.</p>
+<p>The goal of <a href="https://jeffreyrstevens.github.io/excluder/"><code>{excluder}</code></a> is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from <a href="https://www.qualtrics.com/">Qualtrics</a> surveys, and default column names come from importing data with the <a href="https://docs.ropensci.org/qualtRics/"><code>{qualtRics}</code></a> package.</p>
 <p>This may be most useful for <a href="https://www.mturk.com/">Mechanical Turk</a> data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States. But it can be used more generally to exclude based on response durations, preview status, progress, or screen resolution.</p>
 <p>More details are available on the package <a href="https://jeffreyrstevens.github.io/excluder/">website</a>.</p>
 <div id="installation" class="section level2">
@@ -129,7 +141,7 @@
 <div id="checking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#checking" class="anchor"></a>Checking</h3>
-<p>The <code>check_*()</code> functions output messages about the number of rows that meet the exclusion criteria.</p>
+<p>The <code>check_*()</code> functions output messages about the number of rows that meet the exclusion criteria. Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jeffreyrstevens.github.io/excluder/">excluder</a></span><span class="op">)</span>
 <span class="co"># Check for preview rows</span>
@@ -187,13 +199,13 @@
 <span class="co">#&gt; 15 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
 <span class="co">#&gt; 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.</span>
 <span class="co">#&gt; 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.</span>
-<span class="co">#&gt; 2 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 75 rows.</span>
-<span class="co">#&gt; 4 out of 75 rows outside of the US were excluded, leaving 71 rows.</span></code></pre></div>
+<span class="co">#&gt; 0 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 77 rows.</span>
+<span class="co">#&gt; 4 out of 77 rows outside of the US were excluded, leaving 73 rows.</span></code></pre></div>
 </div>
 <div id="marking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#marking" class="anchor"></a>Marking</h3>
-<p>The <code>mark_*()</code> functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be chained together with <code><a href="reference/%&gt;%.html">%&gt;%</a></code> for multiple exclusion types.</p>
+<p>The <code>mark_*()</code> functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be piped together with <code><a href="reference/%&gt;%.html">%&gt;%</a></code> for multiple exclusion types.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Mark preview and short duration rows</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
@@ -229,8 +241,10 @@
   <span class="fu"><a href="reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">200</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/collapse_exclusions.html">collapse_exclusions</a></span><span class="op">(</span>exclusion_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"preview"</span>, <span class="st">"duration"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "exclusion_preview"  "exclusion_duration"</span>
 <span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; 23 out of 100 rows took less time than the minimum duration of 200 seconds.</span>
+<span class="co">#&gt; [1] "exclusion_preview"  "exclusion_duration"</span>
 <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 100</span>
 <span class="co">#&gt; Columns: 17</span>

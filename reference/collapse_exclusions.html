@@ -90,6 +90,18 @@ with multiple exclusions are concatenated with commas." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/getting_started.html">Get started excluding data</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -129,7 +141,9 @@ with multiple exclusions are concatenated with commas.</p>
     <pre class="usage"><span class='fu'>collapse_exclusions</span><span class='op'>(</span>
   <span class='va'>x</span>,
   exclusion_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"duplicates"</span>, <span class='st'>"duration"</span>, <span class='st'>"ip"</span>, <span class='st'>"location"</span>, <span class='st'>"preview"</span>,
-    <span class='st'>"progress"</span>, <span class='st'>"resolution"</span><span class='op'>)</span>
+    <span class='st'>"progress"</span>, <span class='st'>"resolution"</span><span class='op'>)</span>,
+  separator <span class='op'>=</span> <span class='st'>","</span>,
+  remove <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -142,6 +156,16 @@ with multiple exclusions are concatenated with commas.</p>
     <tr>
       <th>exclusion_types</th>
       <td><p>Vector of types of exclusions to collapse.</p></td>
+    </tr>
+    <tr>
+      <th>separator</th>
+      <td><p>Character string specifying what character to use to
+separate multiple exclusion types</p></td>
+    </tr>
+    <tr>
+      <th>remove</th>
+      <td><p>Logical specifying whether to remove collapsed columns
+(default = TRUE) or leave them in the data frame (FALSE)</p></td>
     </tr>
     </table>
 
@@ -164,11 +188,17 @@ rows but with a single <code>exclusion</code> column replacing all of the specif
   <span class='fu'><a href='mark_resolution.html'>mark_resolution</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; <span class='message'>0 NAs were found in location.</span></div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 100 rows took less time than the minimum duration of 100 seconds.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows have NA values for IP addresses (likely because it includes preview data).</span></div><div class='output co'>#&gt; <span class='message'>4 out of 100 rows have IP addresses outside of US.</span></div><div class='output co'>#&gt; <span class='message'>1 out of 100 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 100 rows were located outside of the US.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 100 rows did not complete the study.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 100 rows have screen resolution width less than 1000 or height less than 0.</span></div><div class='input'><span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='va'>df</span> <span class='op'>%&gt;%</span>
   <span class='fu'>collapse_exclusions</span><span class='op'>(</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; [1] "exclusion_duplicates" "exclusion_duration"   "exclusion_ip"        
+#&gt; [4] "exclusion_location"   "exclusion_preview"    "exclusion_progress"  
+#&gt; [7] "exclusion_resolution"
+#&gt; [1] "exclusion_duplicates" "exclusion_duration"   "exclusion_ip"        
+#&gt; [4] "exclusion_location"   "exclusion_preview"    "exclusion_progress"  
+#&gt; [7] "exclusion_resolution"</div><div class='input'>
 <span class='co'># Collapse subset of exclusion types</span>
 <span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='va'>df</span> <span class='op'>%&gt;%</span>
   <span class='fu'>collapse_exclusions</span><span class='op'>(</span>exclusion_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"duplicates"</span>, <span class='st'>"duration"</span>, <span class='st'>"ip"</span><span class='op'>)</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; [1] "exclusion_duplicates" "exclusion_duration"   "exclusion_ip"        
+#&gt; [1] "exclusion_duplicates" "exclusion_duration"   "exclusion_ip"        </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
