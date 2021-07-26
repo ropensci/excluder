@@ -8,14 +8,17 @@
 [![R-CMD-check](https://github.com/jeffreyrstevens/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyrstevens/excluder/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jstevens5/excluder?branch=main)
-[![lifecycle](man/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![lifecycle](man/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 The goal of [`{excluder}`](https://jeffreyrstevens.github.io/excluder/)
 is to facilitate checking for, marking, and excluding rows of data
 frames for common exclusion criteria. This package applies to data
-collected from [Qualtrics](https://www.qualtrics.com/) surveys, and default
-column names come from importing data with the
+collected from [Qualtrics](https://www.qualtrics.com/) surveys, and
+default column names come from importing data with the
 [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
 
 This may be most useful for [Mechanical Turk](https://www.mturk.com/)
@@ -25,7 +28,9 @@ used more generally to exclude based on response durations, preview
 status, progress, or screen resolution.
 
 More details are available on the package
-[website](https://jeffreyrstevens.github.io/excluder/).
+[website](https://jeffreyrstevens.github.io/excluder/) and the [getting
+started
+vignette](https://jeffreyrstevens.github.io/excluder/articles/getting_started.html).
 
 ## Installation
 
