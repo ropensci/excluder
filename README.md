@@ -14,7 +14,7 @@ coverage](https://codecov.io/gh/jstevens5/excluder/branch/main/graph/badge.svg)]
 The goal of [`{excluder}`](https://jeffreyrstevens.github.io/excluder/)
 is to facilitate checking for, marking, and excluding rows of data
 frames for common exclusion criteria. This package applies to data
-collected from [Qualtrics](https://qualtrics.com/) surveys, and default
+collected from [Qualtrics](https://www.qualtrics.com/) surveys, and default
 column names come from importing data with the
 [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
 
@@ -96,7 +96,10 @@ to remove standard Qualtrics columns with identifiable information.
 ### Checking
 
 The `check_*()` functions output messages about the number of rows that
-meet the exclusion criteria.
+meet the exclusion criteria. Because checks return only the rows meeting
+the criteria, they should not be connected via pipes unless you want to
+subset the second check criterion within the rows that meet the first
+criterion.
 
 ``` r
 library(excluder)
@@ -168,14 +171,14 @@ df <- qualtrics_text %>%
 #> 15 out of 92 duplicate rows were excluded, leaving 83 rows.
 #> 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.
 #> 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.
-#> 2 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 75 rows.
-#> 4 out of 75 rows outside of the US were excluded, leaving 71 rows.
+#> 0 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 77 rows.
+#> 4 out of 77 rows outside of the US were excluded, leaving 73 rows.
 ```
 
 ### Marking
 
 The `mark_*()` functions output the original data set with a new column
-specifying rows that meet the exclusion criteria. These can be chained
+specifying rows that meet the exclusion criteria. These can be piped
 together with `%>%` for multiple exclusion types.
 
 ``` r
@@ -218,8 +221,10 @@ df <- qualtrics_text %>%
   mark_preview() %>%
   mark_duration(min_duration = 200) %>%
   collapse_exclusions(exclusion_types = c("preview", "duration"))
+#> [1] "exclusion_preview"  "exclusion_duration"
 #> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
 #> 23 out of 100 rows took less time than the minimum duration of 200 seconds.
+#> [1] "exclusion_preview"  "exclusion_duration"
 tibble::glimpse(df)
 #> Rows: 100
 #> Columns: 17
