@@ -44,9 +44,6 @@ collapse_exclusions <- function(x,
                                 separator = ",",
                                 remove = TRUE) {
 
-  # Define exclusions to avoid R CMD check failure
-  exclusions <- NULL
-
   # Create vectors of exclusion columns to collapse
   exclusion_columns_selected <- paste0("exclusion_", exclusion_types)
   print(exclusion_columns_selected)
