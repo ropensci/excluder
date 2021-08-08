@@ -85,7 +85,9 @@ check_location <- function(x,
   n_rows <- nrow(x)
 
   # Check for participants with no location information
-  no_location <- dplyr::filter(x, is.na(dplyr::across(all_of(location_col))))
+  no_location <- dplyr::filter(x,
+                               is.na(dplyr::across(dplyr::all_of(location_col)))
+                               )
   n_no_location <- nrow(no_location)
   x <- tidyr::drop_na(x, dplyr::all_of(location_col))
 
