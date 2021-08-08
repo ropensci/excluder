@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Status at rOpenSci Software Peer
+Review](https://badges.ropensci.org/455_status.svg)](https://github.com/ropensci/software-review/issues/455)
 [![R-CMD-check](https://github.com/jeffreyrstevens/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyrstevens/excluder/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/jeffreyrstevens/excluder/branch/main/graph/badge.svg)](https://codecov.io/gh/jeffreyrstevens/excluder?branch=main)
