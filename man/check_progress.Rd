@@ -44,7 +44,8 @@ The function is written to work with data from
 Default column names are set based on output from the
 \code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
 The default requires 100\% completion, but lower levels of completion
-maybe acceptable and can be allowed by specifying the \code{min_progress} argument.
+maybe acceptable and can be allowed by specifying the \code{min_progress}
+argument.
 The finished column in Qualtrics can be a numeric or character vector
 depending on whether it is exported as choice text or numeric values.
 This function works for both.

@@ -10,7 +10,8 @@
 #' Default column names are set based on output from the
 #' [qualtRics::fetch_survey()].
 #' The default requires 100% completion, but lower levels of completion
-#' maybe acceptable and can be allowed by specifying the `min_progress` argument.
+#' maybe acceptable and can be allowed by specifying the `min_progress`
+#' argument.
 #' The finished column in Qualtrics can be a numeric or character vector
 #' depending on whether it is exported as choice text or numeric values.
 #' This function works for both.
@@ -59,12 +60,21 @@
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   check_progress(quiet = TRUE)
-check_progress <- function(x, min_progress = 100, finished_col = "Finished", progress_col = "Progress", print_tibble = TRUE, quiet = FALSE) {
+check_progress <- function(x,
+                           min_progress = 100,
+                           finished_col = "Finished",
+                           progress_col = "Progress",
+                           print_tibble = TRUE,
+                           quiet = FALSE) {
 
   # Check for presence of required columns
   column_names <- names(x)
-  if (!finished_col %in% column_names) stop("The column specifying whether a participant finshed (finished_col) is incorrect. Please check your data and specify finished_col.")
-  if (!progress_col %in% column_names) stop("The column specifying participant progress (progress_col) is absent. Please check your data and specify progress_col.")
+  if (!finished_col %in% column_names) {
+    stop("The column specifying whether a participant finshed (finished_col) is incorrect. Please check your data and specify finished_col.")
+    }
+  if (!progress_col %in% column_names) {
+    stop("The column specifying participant progress (progress_col) is absent. Please check your data and specify progress_col.")
+    }
 
   # Find incomplete cases
   if (is.logical(dplyr::pull(x, finished_col))) {

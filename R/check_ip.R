@@ -63,7 +63,11 @@
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   check_ip(quiet = TRUE)
-check_ip <- function(x, ip_col = "IPAddress", country = "US", print_tibble = TRUE, quiet = FALSE) {
+check_ip <- function(x,
+                     ip_col = "IPAddress",
+                     country = "US",
+                     print_tibble = TRUE,
+                     quiet = FALSE) {
 
   # Check for presence of required column
   column_names <- names(x)
@@ -78,7 +82,9 @@ check_ip <- function(x, ip_col = "IPAddress", country = "US", print_tibble = TRU
   ## IP address column
   if (is.character(ip_vector)) {
     classify_ip <- iptools::ip_classify(ip_vector)
-    if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
+    if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) {
+      stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
+      }
   } else {
     stop("Incorrect data type for ip_col. Please ensure data type is character.")
   }

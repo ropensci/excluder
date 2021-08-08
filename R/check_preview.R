@@ -47,7 +47,10 @@
 #' # Do not print message to console
 #' qualtrics_text %>%
 #'   check_preview(quiet = TRUE)
-check_preview <- function(x, preview_col = "Status", print_tibble = TRUE, quiet = FALSE) {
+check_preview <- function(x,
+                          preview_col = "Status",
+                          print_tibble = TRUE,
+                          quiet = FALSE) {
 
   # Check for presence of required column
   column_names <- names(x)

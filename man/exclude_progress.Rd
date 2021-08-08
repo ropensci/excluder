@@ -11,7 +11,8 @@ exclude_progress(x, id_col = "ResponseId", silent = FALSE, ...)
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{silent}{Logical indicating whether to print message to console. Note this argument controls the exclude message not the check message.}
+\item{silent}{Logical indicating whether to print message to console. Note
+this argument controls the exclude message not the check message.}
 
 \item{...}{Inherit parameters from check function.}
 }
@@ -31,7 +32,8 @@ The function is written to work with data from
 Default column names are set based on output from the
 \code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
 The default requires 100\% completion, but lower levels of completion
-maybe acceptable and can be allowed by specifying the \code{min_progress} argument.
+maybe acceptable and can be allowed by specifying the \code{min_progress}
+argument.
 The finished column in Qualtrics can be a numeric or character vector
 depending on whether it is exported as choice text or numeric values.
 This function works for both.

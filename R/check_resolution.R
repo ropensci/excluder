@@ -50,7 +50,12 @@
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   check_resolution(quiet = TRUE)
-check_resolution <- function(x, width_min = 1000, height_min = 0, res_col = "Resolution", print_tibble = TRUE, quiet = FALSE) {
+check_resolution <- function(x,
+                             width_min = 1000,
+                             height_min = 0,
+                             res_col = "Resolution",
+                             print_tibble = TRUE,
+                             quiet = FALSE) {
 
   # Check for presence of required column
   column_names <- names(x)
@@ -74,7 +79,10 @@ check_resolution <- function(x, width_min = 1000, height_min = 0, res_col = "Res
   }
 
   filtered_data <- x %>%
-    tidyr::separate(res_col, c("width", "height"), sep = "x", remove = FALSE) %>%
+    tidyr::separate(res_col,
+                    c("width", "height"),
+                    sep = "x",
+                    remove = FALSE) %>%
     dplyr::mutate(
       width = readr::parse_number(.data$width),
       height = readr::parse_number(.data$height)

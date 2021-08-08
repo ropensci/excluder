@@ -21,7 +21,8 @@
 #' @param location_col Two element vector specifying columns for latitude
 #' and longitude (in that order).
 #' @param include_na Logical indicating whether to include rows with NA in
-#' latitude and longitude columns in the output list of potentially excluded data.
+#' latitude and longitude columns in the output list of potentially excluded
+#' data.
 #' @param print_tibble Logical indicating whether to print returned tibble to
 #' console.
 #' @param quiet Logical indicating whether to print message to console.
@@ -53,20 +54,32 @@
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   check_location(quiet = TRUE)
-check_location <- function(x, location_col = c("LocationLatitude", "LocationLongitude"), include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
+check_location <- function(x,
+                           location_col = c("LocationLatitude", "LocationLongitude"),
+                           include_na = FALSE,
+                           print_tibble = TRUE,
+                           quiet = FALSE) {
 
   # Check for presence of required columns
   column_names <- names(x)
-  if (length(location_col) != 2) stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
-  if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
+  if (length(location_col) != 2) {
+    stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
+  }
+  if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) {
+    stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
+  }
 
   # Extract IP address, latitude, and longitude vectors
   latitude <- dplyr::pull(x, location_col[1])
   longitude <- dplyr::pull(x, location_col[2])
 
   # Check column types
-  if (!is.numeric(latitude)) stop("Incorrect data type for latitude column. Please ensure data type is numeric.")
-  if (!is.numeric(longitude)) stop("Incorrect data type for longitude column. Please ensure data type is numeric.")
+  if (!is.numeric(latitude)) {
+    stop("Incorrect data type for latitude column. Please ensure data type is numeric.")
+    }
+  if (!is.numeric(longitude)) {
+    stop("Incorrect data type for longitude column. Please ensure data type is numeric.")
+    }
 
   # Find number of rows
   n_rows <- nrow(x)

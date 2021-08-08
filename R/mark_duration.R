@@ -33,7 +33,9 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   mark_duration(max_duration = 800)
-mark_duration <- function(x, id_col = "ResponseId", ...) {
+mark_duration <- function(x,
+                          id_col = "ResponseId",
+                          ...) {
 
   # Check for presence of required column
   column_names <- names(x)

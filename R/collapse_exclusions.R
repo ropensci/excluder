@@ -2,9 +2,9 @@
 #'
 #' @description
 #' Each of the `mark_*()` functions appends a new column to the data.
-#' The `collapse_exclusions()` function collapses all of those columns in a single
-#' column that can be used to filter any or all exclusions downstream. Rows
-#' with multiple exclusions are concatenated with commas.
+#' The `collapse_exclusions()` function collapses all of those columns in a
+#' single column that can be used to filter any or all exclusions downstream.
+#' Rows with multiple exclusions are concatenated with commas.
 #'
 #' @param x  Data frame or tibble (preferably exported from Qualtrics).
 #' @param exclusion_types Vector of types of exclusions to collapse.
@@ -39,7 +39,10 @@
 #' # Collapse subset of exclusion types
 #' df2 <- df %>%
 #'   collapse_exclusions(exclusion_types = c("duplicates", "duration", "ip"))
-collapse_exclusions <- function(x, exclusion_types = c("duplicates", "duration", "ip", "location", "preview", "progress", "resolution"), separator = ",", remove = TRUE) {
+collapse_exclusions <- function(x,
+                                exclusion_types = c("duplicates", "duration", "ip", "location", "preview", "progress", "resolution"),
+                                separator = ",",
+                                remove = TRUE) {
 
   # Define exclusions to avoid R CMD check failure
   exclusions <- NULL
@@ -52,6 +55,10 @@ collapse_exclusions <- function(x, exclusion_types = c("duplicates", "duration",
 
   # Collapse and delete columns
   x %>%
-    tidyr::unite(exclusions, exclusion_columns_to_collapse, sep = separator, na.rm = TRUE, remove = remove) %>%
+    tidyr::unite(exclusions,
+                 exclusion_columns_to_collapse,
+                 sep = separator,
+                 na.rm = TRUE,
+                 remove = remove) %>%
     dplyr::mutate(exclusions = ifelse(.data$exclusions == "", NA, .data$exclusions))
 }

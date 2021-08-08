@@ -10,11 +10,14 @@
 #' \describe{
 #'   \item{StartDate}{date and time data collection started, in ISO 8601 format}
 #'   \item{EndDate}{date and time data collection ended, in ISO 8601 format}
-#'   \item{Status}{flag for preview (Survey Preview) vs. implemented survey (IP Address) entries}
+#'   \item{Status}{flag for preview (Survey Preview) vs. implemented survey
+#'   (IP Address) entries}
 #'   \item{IPAddress}{participant IP address (truncated for anonymity)}
 #'   \item{Progress}{percentage of survey completed}
-#'   \item{Duration (in seconds)}{duration of time required to complete survey, in seconds}
-#'   \item{Finished}{logical for whether survey was completed (TRUE) or progress was < 100 (FALSE)}
+#'   \item{Duration (in seconds)}{duration of time required to complete survey,
+#'   in seconds}
+#'   \item{Finished}{logical for whether survey was completed (TRUE) or progress
+#'   was < 100 (FALSE)}
 #'   \item{RecordedDate}{date and time survey was recorded, in ISO 8601 format}
 #'   \item{ResponseId}{random ID for participants}
 #'   \item{LocationLatitude}{latitude geolocated from IP address}

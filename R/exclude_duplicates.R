@@ -10,7 +10,8 @@
 #'
 #' @param x Data frame or tibble (preferably exported from Qualtrics).
 #' @param id_col Column name for unique row ID (e.g., participant).
-#' @param silent Logical indicating whether to print message to console. Note this argument controls the exclude message not the check message.
+#' @param silent Logical indicating whether to print message to console. Note
+#' this argument controls the exclude message not the check message.
 #' @param ... Inherit parameters from check function.
 #'
 #' @family duplicates functions
@@ -38,7 +39,10 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   exclude_duplicates(dupl_location = FALSE)
-exclude_duplicates <- function(x, id_col = "ResponseId", silent = FALSE, ...) {
+exclude_duplicates <- function(x,
+                               id_col = "ResponseId",
+                               silent = FALSE,
+                               ...) {
 
   # Check for presence of required column
   column_names <- names(x)

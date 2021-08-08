@@ -11,7 +11,8 @@ exclude_duration(x, id_col = "ResponseId", silent = FALSE, ...)
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{silent}{Logical indicating whether to print message to console. Note this argument controls the exclude message not the check message.}
+\item{silent}{Logical indicating whether to print message to console. Note
+this argument controls the exclude message not the check message.}
 
 \item{...}{Inherit parameters from check function.}
 }

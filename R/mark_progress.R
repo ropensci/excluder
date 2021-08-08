@@ -38,7 +38,9 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   mark_progress(print_tibble = FALSE)
-mark_progress <- function(x, id_col = "ResponseId", ...) {
+mark_progress <- function(x,
+                          id_col = "ResponseId",
+                          ...) {
 
   # Check for presence of required column
   column_names <- names(x)

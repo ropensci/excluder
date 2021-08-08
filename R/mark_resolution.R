@@ -28,7 +28,9 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   mark_resolution()
-mark_resolution <- function(x, id_col = "ResponseId", ...) {
+mark_resolution <- function(x,
+                            id_col = "ResponseId",
+                            ...) {
 
   # Check for presence of required column
   column_names <- names(x)

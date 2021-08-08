@@ -29,7 +29,9 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   mark_location()
-mark_location <- function(x, id_col = "ResponseId", ...) {
+mark_location <- function(x,
+                          id_col = "ResponseId",
+                          ...) {
 
   # Check for presence of required column
   column_names <- names(x)
@@ -40,7 +42,9 @@ mark_location <- function(x, id_col = "ResponseId", ...) {
   # Find rows to mark
   exclusions <- excluder::check_location(x, ...) # %>%
   exclusions$exclusion_location <- "location_outside_us"
-  exclusions <- dplyr::select(exclusions, dplyr::all_of(id_col), .data$exclusion_location)
+  exclusions <- dplyr::select(exclusions,
+                              dplyr::all_of(id_col),
+                              .data$exclusion_location)
 
   # Mark rows
   dplyr::left_join(x, exclusions, by = id_col)

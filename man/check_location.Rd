@@ -20,7 +20,8 @@ using {qualtRics}.)}
 and longitude (in that order).}
 
 \item{include_na}{Logical indicating whether to include rows with NA in
-latitude and longitude columns in the output list of potentially excluded data.}
+latitude and longitude columns in the output list of potentially excluded
+data.}
 
 \item{print_tibble}{Logical indicating whether to print returned tibble to
 console.}

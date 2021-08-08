@@ -58,13 +58,26 @@
 #' # Do not print message to console
 #' qualtrics_text %>%
 #'   check_duplicates(quiet = TRUE)
-check_duplicates <- function(x, ip_col = "IPAddress", location_col = c("LocationLatitude", "LocationLongitude"), dupl_ip = TRUE, dupl_location = TRUE, include_na = FALSE, print_tibble = TRUE, quiet = FALSE) {
+check_duplicates <- function(x,
+                             ip_col = "IPAddress",
+                             location_col = c("LocationLatitude", "LocationLongitude"),
+                             dupl_ip = TRUE,
+                             dupl_location = TRUE,
+                             include_na = FALSE,
+                             print_tibble = TRUE,
+                             quiet = FALSE) {
 
   # Check for presence of required columns
   column_names <- names(x)
-  if (length(location_col) != 2) stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
-  if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
-  if (!ip_col %in% column_names) stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
+  if (length(location_col) != 2) {
+    stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
+  }
+  if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) {
+    stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
+  }
+  if (!ip_col %in% column_names) {
+    stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
+  }
 
   # Extract IP address, latitude, and longitude vectors
   ip_vector <- dplyr::pull(x, ip_col)
@@ -75,14 +88,20 @@ check_duplicates <- function(x, ip_col = "IPAddress", location_col = c("Location
   ## IP address column
   if (is.character(ip_vector)) {
     classify_ip <- iptools::ip_classify(ip_vector)
-    if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
+    if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) {
+      stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
+    }
   } else {
     stop("Incorrect data type for ip_col. Please ensure data type is character.")
   }
 
   ## Latitude and longitude columns
-  if (!is.numeric(latitude)) stop("Incorrect data type for latitude column. Please ensure data type is numeric.")
-  if (!is.numeric(longitude)) stop("Incorrect data type for longitude column. Please ensure data type is numeric.")
+  if (!is.numeric(latitude)) {
+    stop("Incorrect data type for latitude column. Please ensure data type is numeric.")
+  }
+  if (!is.numeric(longitude)) {
+    stop("Incorrect data type for longitude column. Please ensure data type is numeric.")
+  }
 
   # Check for duplicate IP addresses
   if (dupl_ip == TRUE) {

@@ -37,10 +37,13 @@
 #' # Remove only IP address and location columns
 #' deid2 <- deidentify(qualtrics_numeric, strict = FALSE)
 #' names(deid2)
-deidentify <- function(x, strict = TRUE) {
+deidentify <- function(x,
+                       strict = TRUE) {
 
   # Define columns to remove
-  location_cols <- c("IPAddress", "LocationLatitude", "LocationLongitude", "UserLanguage", "IP Address", "Location Latitude", "Location Longitude", "User Language")
+  location_cols <- c("IPAddress", "LocationLatitude", "LocationLongitude",
+                     "UserLanguage", "IP Address", "Location Latitude",
+                     "Location Longitude", "User Language")
   computer_cols <- c("Browser", "Version", "Operating System", "Resolution")
 
   # Remove columns

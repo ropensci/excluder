@@ -33,7 +33,10 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   exclude_duration(max_duration = 800)
-exclude_duration <- function(x, id_col = "ResponseId", silent = FALSE, ...) {
+exclude_duration <- function(x,
+                             id_col = "ResponseId",
+                             silent = FALSE,
+                             ...) {
 
   # Check for presence of required column
   column_names <- names(x)

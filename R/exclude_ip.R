@@ -33,7 +33,10 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   exclude_ip(country = "DE")
-exclude_ip <- function(x, id_col = "ResponseId", silent = FALSE, ...) {
+exclude_ip <- function(x,
+                       id_col = "ResponseId",
+                       silent = FALSE,
+                       ...) {
 
   # Check for presence of required column
   column_names <- names(x)

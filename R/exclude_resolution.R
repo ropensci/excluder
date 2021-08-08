@@ -28,7 +28,10 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   exclude_resolution()
-exclude_resolution <- function(x, id_col = "ResponseId", silent = FALSE, ...) {
+exclude_resolution <- function(x,
+                               id_col = "ResponseId",
+                               silent = FALSE,
+                               ...) {
 
   # Check for presence of required column
   column_names <- names(x)

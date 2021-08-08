@@ -38,7 +38,10 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   exclude_progress(print_tibble = FALSE)
-exclude_progress <- function(x, id_col = "ResponseId", silent = FALSE, ...) {
+exclude_progress <- function(x,
+                             id_col = "ResponseId",
+                             silent = FALSE,
+                             ...) {
 
   # Check for presence of required column
   column_names <- names(x)

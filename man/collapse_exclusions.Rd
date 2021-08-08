@@ -30,9 +30,9 @@ rows but with a single \code{exclusion} column replacing all of the specified
 }
 \description{
 Each of the \verb{mark_*()} functions appends a new column to the data.
-The \code{collapse_exclusions()} function collapses all of those columns in a single
-column that can be used to filter any or all exclusions downstream. Rows
-with multiple exclusions are concatenated with commas.
+The \code{collapse_exclusions()} function collapses all of those columns in a
+single column that can be used to filter any or all exclusions downstream.
+Rows with multiple exclusions are concatenated with commas.
 }
 \examples{
 
