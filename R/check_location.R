@@ -72,7 +72,7 @@ check_location <- function(x, location_col = c("LocationLatitude", "LocationLong
   n_rows <- nrow(x)
 
   # Check for participants with no location information
-  no_location <- dplyr::filter(x, is.na(dplyr::across(location_col)))
+  no_location <- dplyr::filter(x, is.na(dplyr::across(all_of(location_col))))
   n_no_location <- nrow(no_location)
   x <- tidyr::drop_na(x, dplyr::all_of(location_col))
 
