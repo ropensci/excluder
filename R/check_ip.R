@@ -71,6 +71,7 @@ check_ip <- function(x,
 
   # Check for presence of required column
   column_names <- names(x)
+  stopifnot("ip_col should have a single column name"= length(ip_col) == 1L)
   if (!ip_col %in% column_names) {
     stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
   }
@@ -92,7 +93,7 @@ check_ip <- function(x,
   # Remove rows with NAs for IP addresses
   na_rows <- which(is.na(ip_vector))
   n_na_rows <- length(na_rows)
-  if (n_na_rows > 0 & quiet == FALSE) {
+  if (n_na_rows > 0 & identical(quiet, FALSE)){
     message(n_na_rows, " out of ", nrow(x), " rows have NA values for IP addresses (likely because it includes preview data).")
   }
   filtered_data <- x[-na_rows, ]
@@ -110,10 +111,10 @@ check_ip <- function(x,
   n_outside_country <- nrow(filtered_data)
 
   # Print message and return output
-  if (quiet == FALSE) {
+  if (identical(quiet, FALSE)) {
     message(n_outside_country, " out of ", nrow(x), " rows have IP addresses outside of ", country, ".")
   }
-  if (print_tibble == TRUE) {
+  if (identical(print_tibble, TRUE)) {
     return(filtered_data)
   } else {
     invisible(filtered_data)

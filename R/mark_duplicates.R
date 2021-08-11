@@ -43,6 +43,7 @@ mark_duplicates <- function(x,
 
   # Check for presence of required column
   column_names <- names(x)
+  stopifnot("id_col should only have a single column name"= length(id_col) == 1L)
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID (id_col) is incorrect. Please check your data and specify 'id_col'.")
   }

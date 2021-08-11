@@ -36,7 +36,7 @@ remove_label_rows <- function(x,
                               convert = TRUE) {
 
   # Check if Qualtrics data set
-  if (names(x)[1] == "StartDate") {
+  if (identical(names(x)[1], "StartDate")) {
     # Remove label rows
     x <- x %>%
       dplyr::filter(.data$Status != "Response Type" &
@@ -47,7 +47,7 @@ remove_label_rows <- function(x,
 
 
   # Convert columns to date, logical, or numeric
-  if (convert == TRUE) {
+  if (identical(convert, TRUE)) {
     column_names <- names(x)
     if ("StartDate" %in% column_names) {
       x <- dplyr::mutate(x,

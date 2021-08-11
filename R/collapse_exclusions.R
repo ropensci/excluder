@@ -52,7 +52,7 @@ collapse_exclusions <- function(x,
 
   # Collapse and delete columns
   x %>%
-    tidyr::unite(exclusions,
+    tidyr::unite("exclusions",
                  exclusion_columns_to_collapse,
                  sep = separator,
                  na.rm = TRUE,

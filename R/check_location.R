@@ -102,18 +102,18 @@ check_location <- function(x,
   n_outside_us <- nrow(x)
 
   # Combine no location with outside US
-  if (include_na == FALSE) {
+  if (identical(include_na, FALSE)) {
     location_issues <- rbind(no_location, x)
   } else {
     location_issues <- x
   }
 
   # Print messages and return output
-  if (quiet == FALSE) {
+  if (identical(quiet, FALSE)) {
     message(n_no_location, " out of ", n_rows, " rows had no information on location.")
     message(n_outside_us, " out of ", n_rows, " rows were located outside of the US.")
   }
-  if (print_tibble == TRUE) {
+  if (identical(print_tibble, TRUE)) {
     return(location_issues)
   } else {
     invisible(location_issues)

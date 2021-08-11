@@ -50,7 +50,7 @@ deidentify <- function(x,
   x <- x %>%
     dplyr::select(!dplyr::any_of(location_cols))
 
-  if (strict == TRUE) {
+  if (identical(strict, TRUE)) {
     x <- x %>%
       dplyr::select(!dplyr::contains(computer_cols))
   }

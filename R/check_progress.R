@@ -69,9 +69,11 @@ check_progress <- function(x,
 
   # Check for presence of required columns
   column_names <- names(x)
+  stopifnot("finished_col should have a single column name"= length(finished_col) == 1L)
   if (!finished_col %in% column_names) {
     stop("The column specifying whether a participant finshed (finished_col) is incorrect. Please check your data and specify finished_col.")
     }
+  stopifnot("progress_col should have a single column name"= length(progress_col) == 1L)
   if (!progress_col %in% column_names) {
     stop("The column specifying participant progress (progress_col) is absent. Please check your data and specify progress_col.")
     }
@@ -87,18 +89,19 @@ check_progress <- function(x,
   n_incomplete <- nrow(incomplete)
 
   # If minimum percent specified, find cases below minimum
+  stopifnot("min_progress should have a single value"= length(min_progress) == 1L)
   if (min_progress < 100) {
     incomplete <- dplyr::filter(x, .data[[progress_col]] < min_progress)
     n_below_min <- nrow(incomplete)
-    if (quiet == FALSE) {
+    if (identical(quiet, FALSE)) {
       message(n_incomplete, " rows did not complete the study, and ", n_below_min, " of those completed less than ", min_progress, "% of the study.")
     }
   } else {
-    if (quiet == FALSE) {
+    if (identical(quiet, FALSE)) {
       message(n_incomplete, " out of ", nrow(x), " rows did not complete the study.")
     }
   }
-  if (print_tibble == TRUE) {
+  if (identical(print_tibble, TRUE)) {
     return(incomplete)
   } else {
     invisible(incomplete)

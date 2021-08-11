@@ -54,6 +54,7 @@ check_preview <- function(x,
 
   # Check for presence of required column
   column_names <- names(x)
+  stopifnot("preview_col should have a single column name"= length(preview_col) == 1L)
   if (!preview_col %in% column_names) {
     stop("The column specifying resolution (preview_col) is incorrect. Please check your data and specify 'preview_col'.")
   }
@@ -69,14 +70,14 @@ check_preview <- function(x,
   n_previews <- nrow(filtered_data)
 
   # Print message and return output
-  if (quiet == FALSE) {
+  if (identical(quiet, FALSE)) {
     if (n_previews > 0) {
       message(n_previews, " out of ", nrow(x), " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
     } else {
       message(n_previews, " out of ", nrow(x), " rows were collected as previews.")
     }
   }
-  if (print_tibble == TRUE) {
+  if (identical(print_tibble, TRUE)) {
     return(filtered_data)
   } else {
     invisible(filtered_data)

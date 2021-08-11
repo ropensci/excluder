@@ -66,6 +66,7 @@ check_duration <- function(x,
 
   # Check for presence of required column
   column_names <- names(x)
+  stopifnot("duration_col should have a single column name"= length(duration_col) == 1L)
   if (!duration_col %in% column_names) {
     stop("The column specifying duration (duration_col) is incorrect. Please check your data and specify 'duration_col'.")
   }
@@ -79,18 +80,20 @@ check_duration <- function(x,
   }
 
   # Find participants quicker than minimum
+  stopifnot("min_duration should have a single value"= length(min_duration) == 1L)
   if (!is.null(min_duration)) {
     too_quick <- too_quick_slow <- x[which(duration_vector < min_duration), ]
     n_too_quick <- nrow(too_quick)
-    if (quiet == FALSE) {
+    if (identical(quiet, FALSE)) {
       message(n_too_quick, " out of ", nrow(x), " rows took less time than the minimum duration of ", min_duration, " seconds.")
     }
   }
   # Find participants slower than maximum
   if (!is.null(max_duration)) {
+    stopifnot("max_duration should have a single value"= length(max_duration) == 1L)
     too_slow <- too_quick_slow <- x[which(duration_vector > max_duration), ]
     n_too_slow <- nrow(too_slow)
-    if (quiet == FALSE) {
+    if (identical(quiet, FALSE)) {
       message(n_too_slow, " out of ", nrow(x), " rows took more time than the maximum duration of ", max_duration, " seconds.")
     }
   }
@@ -101,7 +104,7 @@ check_duration <- function(x,
     warning("You must specify either a minimum or maximum duration with 'min_duration' or 'max_duration.'")
     too_quick_slow <- NULL
   }
-  if (print_tibble == TRUE) {
+  if (identical(print_tibble, TRUE)) {
     return(too_quick_slow)
   } else {
     invisible(too_quick_slow)

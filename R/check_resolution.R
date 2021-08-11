@@ -59,12 +59,15 @@ check_resolution <- function(x,
 
   # Check for presence of required column
   column_names <- names(x)
+  stopifnot("res_col should have a single column name"= length(res_col) == 1L)
   if (!res_col %in% column_names) {
     stop("The column specifying resolution (res_col) is incorrect. Please check your data and specify 'res_col'.")
   }
 
   # Check width or height minimum
-  if (width_min == 0 & height_min == 0) {
+  stopifnot("width_min should have a single value"= length(width_min) == 1L)
+  stopifnot("height_min should have a single value"= length(height_min) == 1L)
+  if (identical(width_min, 0) & identical(height_min, 0)) {
     stop("This check requires a minimum resolution for resolution width or height. Please include 'width_min' and/or 'height_min'.")
   }
 
@@ -91,10 +94,10 @@ check_resolution <- function(x,
   n_wrong_resolution <- nrow(filtered_data)
 
   # Print message and return output
-  if (quiet == FALSE) {
+  if (identical(quiet, FALSE)) {
     message(n_wrong_resolution, " out of ", nrow(x), " rows have screen resolution width less than ", width_min, " or height less than ", height_min, ".")
   }
-  if (print_tibble == TRUE) {
+  if (identical(print_tibble, TRUE)) {
     return(filtered_data)
   } else {
     invisible(filtered_data)

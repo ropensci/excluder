@@ -75,6 +75,7 @@ check_duplicates <- function(x,
   if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) {
     stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
   }
+  stopifnot("ip_col should have a single column name"= length(ip_col) == 1L)
   if (!ip_col %in% column_names) {
     stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
   }
@@ -104,47 +105,47 @@ check_duplicates <- function(x,
   }
 
   # Check for duplicate IP addresses
-  if (dupl_ip == TRUE) {
-    if (include_na == FALSE) {
+  if (identical(dupl_ip, TRUE)) {
+    if (identical(include_na, FALSE)) {
       x <- tidyr::drop_na(x, dplyr::all_of(ip_col))
     }
     same_ip <- janitor::get_dupes(x, dplyr::all_of(ip_col)) %>%
       dplyr::select(-.data$dupe_count)
     n_same_ip <- nrow(same_ip)
-    if (quiet == FALSE) {
+    if (identical(quiet, FALSE)) {
       message(n_same_ip, " out of ", nrow(x), " rows have duplicate IP addresses.")
     }
   }
 
   # Check for duplicate locations
-  if (dupl_location == TRUE) {
-    if (include_na == FALSE) {
+  if (identical(dupl_location, TRUE)) {
+    if (identical(include_na, FALSE)) {
       n_nas <- ncol(x) - ncol(tidyr::drop_na(x, dplyr::any_of(location_col)))
       x <- tidyr::drop_na(x, dplyr::any_of(location_col))
-      if (quiet == FALSE) {
+      if (identical(quiet, FALSE)) {
         message(n_nas, " NAs were found in location.")
       }
     }
     same_location <- janitor::get_dupes(x, dplyr::all_of(location_col)) %>%
       dplyr::select(-.data$dupe_count)
     n_same_location <- nrow(same_location)
-    if (quiet == FALSE) {
+    if (identical(quiet, FALSE)) {
       message(n_same_location, " out of ", nrow(x), " rows have duplicate locations.")
     }
   }
 
   # Create data frame of duplicates if both location and IP address are used
-  if (dupl_location == TRUE & dupl_ip == TRUE) {
+  if (identical(dupl_location, TRUE) & identical(dupl_ip, TRUE)) {
     duplicates <- rbind(same_location, same_ip)
-  } else if (dupl_location == TRUE) {
+  } else if (identical(dupl_location, TRUE)) {
     duplicates <- same_location
-  } else if (dupl_ip == TRUE) {
+  } else if (identical(dupl_ip, TRUE)) {
     duplicates <- same_ip
   } else {
     duplicates <- NULL
     warning("No check run. Please allow either location or IP address checks by setting dupl_location or dupl_ip to TRUE.")
   }
-  if (print_tibble == TRUE) {
+  if (identical(print_tibble, TRUE)) {
     return(duplicates)
   } else {
     invisible(duplicates)
