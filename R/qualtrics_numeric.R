@@ -2,8 +2,8 @@
 #'
 #' A dataset containing the metadata from a standard Qualtrics survey with
 #' browser metadata collected and exported with "Use numeric values".
-#' These data were randomly generated using [iptools::ip_random] and
-#' [rgeolocate::ip2location](
+#' These data were randomly generated using [iptools::ip_random()] and
+#' [rgeolocate::ip2location()](
 #' https://cran.r-project.org/web/packages/rgeolocate/rgeolocate.pdf) functions.
 #'
 #' @format A data frame with 100 rows and 16 variables:

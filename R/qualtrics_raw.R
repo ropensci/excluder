@@ -2,8 +2,8 @@
 #'
 #' A dataset containing the metadata from a standard Qualtrics survey with
 #' browser metadata collected and exported with "Use choice text".
-#' These data were randomly generated using [iptools::ip_random] and
-#' [rgeolocate::ip2location](
+#' These data were randomly generated using [iptools::ip_random()] and
+#' [rgeolocate::ip2location()](
 #' https://cran.r-project.org/web/packages/rgeolocate/rgeolocate.pdf) functions.
 #' This dataset includes the two header rows of with column information that is
 #' exported by Qualtrics.

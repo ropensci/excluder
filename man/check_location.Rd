@@ -42,7 +42,7 @@ The function is written to work with data from
 }
 \details{
 Default column names are set based on output from the
-\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{qualtRics::fetch_survey()}.
+\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{\code{qualtRics::fetch_survey()}}.
 The function only works for the United States.
 It uses the #' \code{\link[maps:map.where]{maps::map.where()}} to determine if latitude and longitude
 are inside the US.

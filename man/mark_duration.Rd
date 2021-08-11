@@ -27,7 +27,7 @@ The function is written to work with data from
 }
 \details{
 Default column names are set based on output from the
-\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{qualtRics::fetch_survey()}.
+\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{\code{qualtRics::fetch_survey()}}.
 By default, minimum durations of 10 seconds are checked, but either
 minima or maxima can be checked with the \code{min_duration} and
 \code{max_duration} arguments. The function outputs to console separate

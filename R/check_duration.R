@@ -8,7 +8,7 @@
 #'
 #' @details
 #' Default column names are set based on output from the
-#' [qualtRics::fetch_survey()](
+#' [`qualtRics::fetch_survey()`](
 #' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
 #' By default, minimum durations of 10 seconds are checked, but either
 #' minima or maxima can be checked with the `min_duration` and

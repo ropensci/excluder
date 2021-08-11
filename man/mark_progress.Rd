@@ -27,7 +27,7 @@ The function is written to work with data from
 }
 \details{
 Default column names are set based on output from the
-\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{qualtRics::fetch_survey()}.
+\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{\code{qualtRics::fetch_survey()}}.
 The default requires 100\% completion, but lower levels of completion
 maybe acceptable and can be allowed by specifying the \code{min_progress}
 argument.

@@ -38,7 +38,7 @@ The function is written to work with data from
 }
 \details{
 Default column names are set based on output from the
-\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{qualtRics::fetch_survey()}.
+\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{\code{qualtRics::fetch_survey()}}.
 The function uses \code{\link[iptools:country_ranges]{iptools::country_ranges()}} to assign IP addresses to
 specific countries using
 \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2}{ISO 3166-1 alpha-2 country codes}.
