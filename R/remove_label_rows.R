@@ -9,7 +9,9 @@
 #' (2) checks if label rows are already used as column names,
 #' (3) removes label rows if present, and (4) converts date, logical, and
 #' numeric metadata columns to proper data type. Datasets imported using
-#' [`qualtRics::fetch_survey()`] should not need this function.
+#' [qualtRics::fetch_survey()](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html)
+#' should not need this function.
 #'
 #' The `convert` argument only converts the _StartDate_, _EndDate_,
 #' _RecordedDate_, _Progress_, _Finished_, _Duration (in seconds)_,

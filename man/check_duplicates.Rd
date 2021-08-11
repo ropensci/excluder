@@ -51,7 +51,7 @@ function is written to work with data from
 }
 \details{
 Default column names are set based on output from the
-\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{qualtRics::fetch_survey()}.
 By default, IP address and location are both checked, but they can be
 checked separately with the \code{dupl_ip} and \code{dupl_location} arguments.
 

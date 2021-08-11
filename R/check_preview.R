@@ -8,7 +8,8 @@
 #'
 #' @details
 #' Default column names are set based on output from the
-#' [qualtRics::fetch_survey()].
+#' [qualtRics::fetch_survey()](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
 #' The preview column in Qualtrics can be a numeric or character vector
 #' depending on whether it is exported as choice text or numeric values.
 #' This function works for both.

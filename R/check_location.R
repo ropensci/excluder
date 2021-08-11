@@ -8,7 +8,8 @@
 #'
 #' @details
 #' Default column names are set based on output from the
-#' [qualtRics::fetch_survey()].
+#' [qualtRics::fetch_survey()](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
 #' The function only works for the United States.
 #' It uses the #' [maps::map.where()] to determine if latitude and longitude
 #' are inside the US.

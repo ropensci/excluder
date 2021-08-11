@@ -27,7 +27,7 @@ The function is written to work with data from
 }
 \details{
 Default column names are set based on output from the
-\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}.
+\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{qualtRics::fetch_survey()}.
 
 The function outputs to console a message about the number of rows
 with unacceptable screen resolution.

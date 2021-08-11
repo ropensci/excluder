@@ -8,7 +8,8 @@
 #'
 #' @details
 #' Default column names are set based on output from the
-#' [qualtRics::fetch_survey()].
+#' [qualtRics::fetch_survey()](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
 #' By default, IP address and location are both checked, but they can be
 #' checked separately with the `dupl_ip` and `dupl_location` arguments.
 #'

@@ -26,7 +26,8 @@ The function (1) checks if the data set uses Qualtrics column names,
 (2) checks if label rows are already used as column names,
 (3) removes label rows if present, and (4) converts date, logical, and
 numeric metadata columns to proper data type. Datasets imported using
-\code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}} should not need this function.
+\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{qualtRics::fetch_survey()}
+should not need this function.
 
 The \code{convert} argument only converts the \emph{StartDate}, \emph{EndDate},
 \emph{RecordedDate}, \emph{Progress}, \emph{Finished}, \emph{Duration (in seconds)},

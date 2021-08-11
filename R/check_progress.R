@@ -8,7 +8,8 @@
 #'
 #' @details
 #' Default column names are set based on output from the
-#' [qualtRics::fetch_survey()].
+#' [qualtRics::fetch_survey()](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
 #' The default requires 100% completion, but lower levels of completion
 #' maybe acceptable and can be allowed by specifying the `min_progress`
 #' argument.
