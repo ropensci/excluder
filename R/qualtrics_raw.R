@@ -2,9 +2,11 @@
 #'
 #' A dataset containing the metadata from a standard Qualtrics survey with
 #' browser metadata collected and exported with "Use choice text".
-#' These data were randomly generated using #' [iptools::ip_random] and
-#' [rgeolocate::ip2location] functions. This dataset includes the two header
-#' rows of with column information that is exported by Qualtrics.
+#' These data were randomly generated using [iptools::ip_random] and
+#' [rgeolocate::ip2location](
+#' https://cran.r-project.org/web/packages/rgeolocate/rgeolocate.pdf) functions.
+#' This dataset includes the two header rows of with column information that is
+#' exported by Qualtrics.
 #'
 #' @format A data frame with 102 rows and 16 variables:
 #' \describe{
@@ -28,4 +30,5 @@
 #'   \item{Operating System}{user operating system}
 #'   \item{Resolution}{user screen resolution}
 #' }
+#' @family data
 "qualtrics_raw"

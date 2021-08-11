@@ -34,7 +34,13 @@ qualtrics_numeric
 \description{
 A dataset containing the metadata from a standard Qualtrics survey with
 browser metadata collected and exported with "Use numeric values".
-These data were randomly generated using #' \link[iptools:ip_random]{iptools::ip_random} and
-\link[rgeolocate:ip2location]{rgeolocate::ip2location} functions.
+These data were randomly generated using \link[iptools:ip_random]{iptools::ip_random} and
+\href{https://cran.r-project.org/web/packages/rgeolocate/rgeolocate.pdf}{rgeolocate::ip2location} functions.
 }
+\seealso{
+Other data: 
+\code{\link{qualtrics_raw}},
+\code{\link{qualtrics_text}}
+}
+\concept{data}
 \keyword{datasets}
