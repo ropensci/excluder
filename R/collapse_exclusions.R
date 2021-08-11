@@ -40,14 +40,17 @@
 #' df2 <- df %>%
 #'   collapse_exclusions(exclusion_types = c("duplicates", "duration", "ip"))
 collapse_exclusions <- function(x,
-                                exclusion_types = c("duplicates", "duration", "ip", "location", "preview", "progress", "resolution"),
+                                exclusion_types = c("duplicates", "duration",
+                                                    "ip", "location", "preview",
+                                                    "progress", "resolution"),
                                 separator = ",",
                                 remove = TRUE) {
 
   # Create vectors of exclusion columns to collapse
   exclusion_columns_selected <- paste0("exclusion_", exclusion_types)
   print(exclusion_columns_selected)
-  exclusion_columns_to_collapse <- names(x)[which(names(x) %in% exclusion_columns_selected)]
+  exclusion_columns_to_collapse <-
+    names(x)[which(names(x) %in% exclusion_columns_selected)]
   print(exclusion_columns_to_collapse)
 
   # Collapse and delete columns
@@ -57,5 +60,6 @@ collapse_exclusions <- function(x,
                  sep = separator,
                  na.rm = TRUE,
                  remove = remove) %>%
-    dplyr::mutate(exclusions = ifelse(.data$exclusions == "", NA, .data$exclusions))
+    dplyr::mutate(exclusions =
+                    ifelse(.data$exclusions == "", NA, .data$exclusions))
 }

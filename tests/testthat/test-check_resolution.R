@@ -1,7 +1,8 @@
 # Test check_resolution()
 
 test_that("Output class is same as input class", {
-  expect_s3_class(check_resolution(qualtrics_numeric, quiet = TRUE), class(qualtrics_numeric))
+  expect_s3_class(check_resolution(qualtrics_numeric, quiet = TRUE),
+                  class(qualtrics_numeric))
 })
 
 test_that("Messages displayed by default", {

@@ -55,9 +55,10 @@ check_preview <- function(x,
 
   # Check for presence of required column
   column_names <- names(x)
-  stopifnot("preview_col should have a single column name"= length(preview_col) == 1L)
+  stopifnot("preview_col should have a single column name" =
+              length(preview_col) == 1L)
   if (!preview_col %in% column_names) {
-    stop("The column specifying resolution (preview_col) is incorrect. Please check your data and specify 'preview_col'.")
+    stop("The column specifying previews ('preview_col') was not found.")
   }
 
   # Check for preview rows
@@ -66,16 +67,19 @@ check_preview <- function(x,
   } else if (is.numeric(dplyr::pull(x, preview_col))) {
     filtered_data <- dplyr::filter(x, .data[[preview_col]] == 1)
   } else {
-    stop("The column ", preview_col, " is not of type character or numeric, so it cannot be checked.")
+    stop("The column ", preview_col,
+         " is not of type character or numeric, so it cannot be checked.")
   }
   n_previews <- nrow(filtered_data)
 
   # Print message and return output
   if (identical(quiet, FALSE)) {
     if (n_previews > 0) {
-      message(n_previews, " out of ", nrow(x), " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
+      message(n_previews, " out of ", nrow(x),
+              " rows were collected as previews. It is highly recommended to exclude these rows before further checking.")
     } else {
-      message(n_previews, " out of ", nrow(x), " rows were collected as previews.")
+      message(n_previews, " out of ", nrow(x),
+              " rows were collected as previews.")
     }
   }
   if (identical(print_tibble, TRUE)) {

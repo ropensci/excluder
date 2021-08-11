@@ -16,7 +16,9 @@ test_that("Data sets include exclusion criteria", {
   expect_true(any(qualtrics_numeric$`Duration (in seconds)` < 100))
 
   # Check for small screen resolution
-  expect_true(any(as.numeric(stringr::str_split(qualtrics_numeric$Resolution, "x", simplify = TRUE)[, 1]) < 1000))
+  expect_true(any(as.numeric(stringr::str_split(qualtrics_numeric$Resolution,
+                                                "x",
+                                                simplify = TRUE)[, 1]) < 1000))
 
   # Check for duplicate IP addresses
   expect_true(nrow(janitor::get_dupes(qualtrics_numeric, IPAddress)) > 0)

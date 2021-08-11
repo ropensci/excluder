@@ -12,7 +12,8 @@
 #' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
 #' The function uses [iptools::country_ranges()] to assign IP addresses to
 #' specific countries using
-#' [ISO 3166-1 alpha-2 country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+#' [ISO 3166-1 alpha-2 country codes](
+#' https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
 #'
 #' The function outputs to console a message about the number of rows
 #' with IP addresses outside of the specified country. If there are `NA`s for IP
@@ -74,7 +75,7 @@ check_ip <- function(x,
   column_names <- names(x)
   stopifnot("ip_col should have a single column name"= length(ip_col) == 1L)
   if (!ip_col %in% column_names) {
-    stop("The column specifying IP address (ip_col) is incorrect. Please check your data and specify ip_col.")
+    stop("The column specifying IP address ('ip_col') was not found.")
   }
 
   # Extract IP address, latitude, and longitude vectors
@@ -85,17 +86,18 @@ check_ip <- function(x,
   if (is.character(ip_vector)) {
     classify_ip <- iptools::ip_classify(ip_vector)
     if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) {
-      stop("Invalid IP addresses present in ip_col. Please ensure all values are valid IPv4 or IPv6 addresses.")
+      stop("Invalid IP addresses in 'ip_col'.")
       }
   } else {
-    stop("Incorrect data type for ip_col. Please ensure data type is character.")
+    stop("Please ensure 'ip_col' data type is character.")
   }
 
   # Remove rows with NAs for IP addresses
   na_rows <- which(is.na(ip_vector))
   n_na_rows <- length(na_rows)
   if (n_na_rows > 0 & identical(quiet, FALSE)){
-    message(n_na_rows, " out of ", nrow(x), " rows have NA values for IP addresses (likely because it includes preview data).")
+    message(n_na_rows, " out of ", nrow(x),
+            " rows have NA values for IP addresses (check for preview data).")
   }
   filtered_data <- x[-na_rows, ]
 
@@ -113,7 +115,8 @@ check_ip <- function(x,
 
   # Print message and return output
   if (identical(quiet, FALSE)) {
-    message(n_outside_country, " out of ", nrow(x), " rows have IP addresses outside of ", country, ".")
+    message(n_outside_country, " out of ", nrow(x),
+            " rows have IP addresses outside of ", country, ".")
   }
   if (identical(print_tibble, TRUE)) {
     return(filtered_data)

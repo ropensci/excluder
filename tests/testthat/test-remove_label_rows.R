@@ -1,7 +1,7 @@
 # Test remove_label_rows()
 
 test_that("remove_label_rows() creates data frames of correct size", {
-  # Test dimension of all data sets before and after applying remove_label_rows()
+  # Test dimension of all data sets before and after applying remove_label_rows
   expect_true(nrow(qualtrics_numeric) == 100)
   expect_true(nrow(remove_label_rows(qualtrics_numeric)) == 100)
   expect_true(nrow(qualtrics_text) == 100)
@@ -11,11 +11,13 @@ test_that("remove_label_rows() creates data frames of correct size", {
 })
 
 test_that("non-Qualtrics data is identified", {
-  expect_message(remove_label_rows(iris), "This data frame does not appear to be a Qualtrics data set.")
+  expect_message(remove_label_rows(iris),
+                 "This data frame does not appear to be a Qualtrics data set.")
 })
 
 test_that("columns are converted when requested", {
-  expect_true(inherits(remove_label_rows(qualtrics_raw, convert = TRUE)$StartDate, "POSIXct"))
+  expect_true(inherits(remove_label_rows(qualtrics_raw,
+                                         convert = TRUE)$StartDate, "POSIXct"))
   expect_true(inherits(remove_label_rows(qualtrics_raw, convert = TRUE)$EndDate, "POSIXct"))
   expect_true(inherits(remove_label_rows(qualtrics_raw, convert = TRUE)$RecordedDate, "POSIXct"))
   expect_true(inherits(remove_label_rows(qualtrics_raw, convert = TRUE)$Progress, "numeric"))

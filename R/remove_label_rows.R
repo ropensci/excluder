@@ -52,51 +52,52 @@ remove_label_rows <- function(x,
   if (identical(convert, TRUE)) {
     column_names <- names(x)
     if ("StartDate" %in% column_names) {
-      x <- dplyr::mutate(x,
-                         StartDate = lubridate::parse_date_time(.data$StartDate,
-                                                                orders = c("ymd HMS",
-                                                                           "ymd HM",
-                                                                           "ymd",
-                                                                           "mdy HMS",
-                                                                           "mdy HM",
-                                                                           "mdy")))
+      x <- dplyr::mutate(x, StartDate =
+                           lubridate::parse_date_time(.data$StartDate,
+                                                      orders = c("ymd HMS",
+                                                                 "ymd HM",
+                                                                 "ymd",
+                                                                 "mdy HMS",
+                                                                 "mdy HM",
+                                                                 "mdy")))
     }
     if ("EndDate" %in% column_names) {
-      x <- dplyr::mutate(x,
-                         EndDate = lubridate::parse_date_time(.data$EndDate,
-                                                              orders = c("ymd HMS",
-                                                                         "ymd HM",
-                                                                         "ymd",
-                                                                         "mdy HMS",
-                                                                         "mdy HM",
-                                                                         "mdy")))
+      x <- dplyr::mutate(x, EndDate =
+                           lubridate::parse_date_time(.data$EndDate,
+                                                      orders = c("ymd HMS",
+                                                                 "ymd HM",
+                                                                 "ymd",
+                                                                 "mdy HMS",
+                                                                 "mdy HM",
+                                                                 "mdy")))
     }
     if ("Progress" %in% column_names) {
       x <- dplyr::mutate(x, Progress = as.numeric(.data$Progress))
     }
     if ("Duration (in seconds)" %in% column_names) {
-      x <- dplyr::mutate(x, `Duration (in seconds)` = as.numeric(.data$`Duration (in seconds)`))
+      x <- dplyr::mutate(x, `Duration (in seconds)` =
+                           as.numeric(.data$`Duration (in seconds)`))
     }
     if ("Finished" %in% column_names) {
       x <- dplyr::mutate(x, Finished = as.logical(.data$Finished))
     }
     if ("RecordedDate" %in% column_names) {
-      x <- dplyr::mutate(x,
-                         RecordedDate = lubridate::parse_date_time(.data$RecordedDate,
-                                                                   orders = c("ymd HMS",
-                                                                              "ymd HM",
-                                                                              "ymd",
-                                                                              "mdy HMS",
-                                                                              "mdy HM",
-                                                                              "mdy")))
+      x <- dplyr::mutate(x, RecordedDate =
+                           lubridate::parse_date_time(.data$RecordedDate,
+                                                      orders = c("ymd HMS",
+                                                                 "ymd HM",
+                                                                 "ymd",
+                                                                 "mdy HMS",
+                                                                 "mdy HM",
+                                                                 "mdy")))
     }
     if ("LocationLatitude" %in% column_names) {
       x <- dplyr::mutate(x,
                          LocationLatitude = as.numeric(.data$LocationLatitude))
     }
     if ("LocationLongitude" %in% column_names) {
-      x <- dplyr::mutate(x,
-                         LocationLongitude = as.numeric(.data$LocationLongitude))
+      x <- dplyr::mutate(x, LocationLongitude =
+                           as.numeric(.data$LocationLongitude))
     }
   }
 

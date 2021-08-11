@@ -62,14 +62,14 @@ check_resolution <- function(x,
   column_names <- names(x)
   stopifnot("res_col should have a single column name"= length(res_col) == 1L)
   if (!res_col %in% column_names) {
-    stop("The column specifying resolution (res_col) is incorrect. Please check your data and specify 'res_col'.")
+    stop("The column specifying resolution ('res_col') was not found.")
   }
 
   # Check width or height minimum
   stopifnot("width_min should have a single value"= length(width_min) == 1L)
   stopifnot("height_min should have a single value"= length(height_min) == 1L)
   if (identical(width_min, 0) & identical(height_min, 0)) {
-    stop("This check requires a minimum resolution for resolution width or height. Please include 'width_min' and/or 'height_min'.")
+    stop("You must specify a minimum resolution for width or height with 'width_min' or 'height_min'.")
   }
 
   # Extract duration vector
@@ -77,7 +77,7 @@ check_resolution <- function(x,
 
   # Check column type
   if (!is.character(res_vector)) {
-    stop("Incorrect data type for resolution column. Please ensure data type is character.")
+    stop("Please ensure that 'res_col' data type is character.")
   } else if (any(stringr::str_detect(res_vector, "x") == FALSE, na.rm = TRUE)) {
     stop("Resolution column includes values not using widthxheight format.")
   }
@@ -96,7 +96,9 @@ check_resolution <- function(x,
 
   # Print message and return output
   if (identical(quiet, FALSE)) {
-    message(n_wrong_resolution, " out of ", nrow(x), " rows have screen resolution width less than ", width_min, " or height less than ", height_min, ".")
+    message(n_wrong_resolution, " out of ", nrow(x),
+            " rows have screen resolution width less than ",
+            width_min, " or height less than ", height_min, ".")
   }
   if (identical(print_tibble, TRUE)) {
     return(filtered_data)

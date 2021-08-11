@@ -70,13 +70,15 @@ check_progress <- function(x,
 
   # Check for presence of required columns
   column_names <- names(x)
-  stopifnot("finished_col should have a single column name"= length(finished_col) == 1L)
+  stopifnot("finished_col should have a single column name" =
+              length(finished_col) == 1L)
   if (!finished_col %in% column_names) {
-    stop("The column specifying whether a participant finshed (finished_col) is incorrect. Please check your data and specify finished_col.")
+    stop("The column specifying whether a participant finished ('finished_col') was not found.")
     }
-  stopifnot("progress_col should have a single column name"= length(progress_col) == 1L)
+  stopifnot("progress_col should have a single column name" =
+              length(progress_col) == 1L)
   if (!progress_col %in% column_names) {
-    stop("The column specifying participant progress (progress_col) is absent. Please check your data and specify progress_col.")
+    stop("The column specifying progress ('progress_col') was not found.")
     }
 
   # Find incomplete cases
@@ -85,21 +87,26 @@ check_progress <- function(x,
   } else if (is.numeric(dplyr::pull(x, finished_col))) {
     incomplete <- dplyr::filter(x, .data[[finished_col]] == 0)
   } else {
-    stop("The column ", finished_col, " is not of type logical or numeric, so it cannot be checked.")
+    stop("The column ", finished_col,
+         " is not of type logical or numeric, so it cannot be checked.")
   }
   n_incomplete <- nrow(incomplete)
 
   # If minimum percent specified, find cases below minimum
-  stopifnot("min_progress should have a single value"= length(min_progress) == 1L)
+  stopifnot("min_progress should have a single value" =
+              length(min_progress) == 1L)
   if (min_progress < 100) {
     incomplete <- dplyr::filter(x, .data[[progress_col]] < min_progress)
     n_below_min <- nrow(incomplete)
     if (identical(quiet, FALSE)) {
-      message(n_incomplete, " rows did not complete the study, and ", n_below_min, " of those completed less than ", min_progress, "% of the study.")
+      message(n_incomplete, " rows did not complete the study, and ",
+              n_below_min, " of those completed less than ",
+              min_progress, "% of the study.")
     }
   } else {
     if (identical(quiet, FALSE)) {
-      message(n_incomplete, " out of ", nrow(x), " rows did not complete the study.")
+      message(n_incomplete, " out of ", nrow(x),
+              " rows did not complete the study.")
     }
   }
   if (identical(print_tibble, TRUE)) {

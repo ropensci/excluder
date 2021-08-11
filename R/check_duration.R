@@ -67,9 +67,10 @@ check_duration <- function(x,
 
   # Check for presence of required column
   column_names <- names(x)
-  stopifnot("duration_col should have a single column name"= length(duration_col) == 1L)
+  stopifnot("'duration_col' should have a single column name" =
+              length(duration_col) == 1L)
   if (!duration_col %in% column_names) {
-    stop("The column specifying duration (duration_col) is incorrect. Please check your data and specify 'duration_col'.")
+    stop("The column specifying duration ('duration_col') was not found.")
   }
 
   # Extract duration vector
@@ -77,32 +78,38 @@ check_duration <- function(x,
 
   # Check column type
   if (!is.numeric(duration_vector)) {
-    stop("Incorrect data type for duration_col. Please ensure data type is numeric.")
+    stop("Please ensure 'duration_col' data type is numeric.")
   }
 
   # Find participants quicker than minimum
-  stopifnot("min_duration should have a single value"= length(min_duration) == 1L)
+  stopifnot("'min_duration' should have a single value" =
+              length(min_duration) == 1L)
   if (!is.null(min_duration)) {
     too_quick <- too_quick_slow <- x[which(duration_vector < min_duration), ]
     n_too_quick <- nrow(too_quick)
     if (identical(quiet, FALSE)) {
-      message(n_too_quick, " out of ", nrow(x), " rows took less time than the minimum duration of ", min_duration, " seconds.")
+      message(n_too_quick, " out of ", nrow(x),
+              " rows took less time than the minimum duration of ",
+              min_duration, " seconds.")
     }
   }
   # Find participants slower than maximum
   if (!is.null(max_duration)) {
-    stopifnot("max_duration should have a single value"= length(max_duration) == 1L)
+    stopifnot("'max_duration' should have a single value" =
+                length(max_duration) == 1L)
     too_slow <- too_quick_slow <- x[which(duration_vector > max_duration), ]
     n_too_slow <- nrow(too_slow)
     if (identical(quiet, FALSE)) {
-      message(n_too_slow, " out of ", nrow(x), " rows took more time than the maximum duration of ", max_duration, " seconds.")
+      message(n_too_slow, " out of ", nrow(x),
+              " rows took more time than the maximum duration of ",
+              max_duration, " seconds.")
     }
   }
   # Combine quick and slow participants
   if (!is.null(min_duration) & !is.null(max_duration)) {
     too_quick_slow <- rbind(too_quick, too_slow)
   } else if (is.null(min_duration) & is.null(max_duration)) {
-    warning("You must specify either a minimum or maximum duration with 'min_duration' or 'max_duration.'")
+    stop("You must specify either a minimum or maximum duration.'")
     too_quick_slow <- NULL
   }
   if (identical(print_tibble, TRUE)) {

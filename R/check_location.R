@@ -56,7 +56,8 @@
 #'   exclude_preview() %>%
 #'   check_location(quiet = TRUE)
 check_location <- function(x,
-                           location_col = c("LocationLatitude", "LocationLongitude"),
+                           location_col = c("LocationLatitude",
+                                            "LocationLongitude"),
                            include_na = FALSE,
                            print_tibble = TRUE,
                            quiet = FALSE) {
@@ -64,10 +65,10 @@ check_location <- function(x,
   # Check for presence of required columns
   column_names <- names(x)
   if (length(location_col) != 2) {
-    stop("Incorrect number of columns for location_col. You must specify two columns for latitude and longitude (respectively).")
+    stop("'location_col' must have two columns: latitude and longitude.")
   }
   if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) {
-    stop("The columns specifying participant location (location_col) are incorrect. Please check your data and specify location_col.")
+    stop("The column specifying location ('location_col') was not found.")
   }
 
   # Extract IP address, latitude, and longitude vectors
@@ -76,10 +77,10 @@ check_location <- function(x,
 
   # Check column types
   if (!is.numeric(latitude)) {
-    stop("Incorrect data type for latitude column. Please ensure data type is numeric.")
+    stop("Please ensure latitude column data type is numeric.")
     }
   if (!is.numeric(longitude)) {
-    stop("Incorrect data type for longitude column. Please ensure data type is numeric.")
+    stop("Please ensure longitude column data type is numeric.")
     }
 
   # Find number of rows
@@ -111,8 +112,10 @@ check_location <- function(x,
 
   # Print messages and return output
   if (identical(quiet, FALSE)) {
-    message(n_no_location, " out of ", n_rows, " rows had no information on location.")
-    message(n_outside_us, " out of ", n_rows, " rows were located outside of the US.")
+    message(n_no_location, " out of ", n_rows,
+            " rows had no information on location.")
+    message(n_outside_us, " out of ", n_rows,
+            " rows were located outside of the US.")
   }
   if (identical(print_tibble, TRUE)) {
     return(location_issues)

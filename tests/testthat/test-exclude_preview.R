@@ -1,7 +1,8 @@
 # Test exclude_preview()
 
 test_that("Output class is same as input class", {
-  suppressMessages(expect_s3_class(exclude_preview(qualtrics_numeric), class(qualtrics_numeric)))
+  suppressMessages(expect_s3_class(exclude_preview(qualtrics_numeric),
+                                   class(qualtrics_numeric)))
 })
 
 test_that("Messages displayed by default", {

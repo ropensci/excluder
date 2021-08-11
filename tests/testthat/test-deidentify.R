@@ -30,8 +30,12 @@ test_that("strict columns are removed properly", {
   expect_false("Version" %in% colnames(deidentify(qualtrics_numeric)))
   expect_false("Operating System" %in% colnames(deidentify(qualtrics_numeric)))
   expect_false("Resolution" %in% colnames(deidentify(qualtrics_numeric)))
-  expect_true("Browser" %in% colnames(deidentify(qualtrics_numeric, strict = FALSE)))
-  expect_true("Version" %in% colnames(deidentify(qualtrics_numeric, strict = FALSE)))
-  expect_true("Operating System" %in% colnames(deidentify(qualtrics_numeric, strict = FALSE)))
-  expect_true("Resolution" %in% colnames(deidentify(qualtrics_numeric, strict = FALSE)))
+  expect_true("Browser" %in% colnames(deidentify(qualtrics_numeric,
+                                                 strict = FALSE)))
+  expect_true("Version" %in% colnames(deidentify(qualtrics_numeric,
+                                                 strict = FALSE)))
+  expect_true("Operating System" %in% colnames(deidentify(qualtrics_numeric,
+                                                          strict = FALSE)))
+  expect_true("Resolution" %in% colnames(deidentify(qualtrics_numeric,
+                                                    strict = FALSE)))
 })

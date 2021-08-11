@@ -1,7 +1,8 @@
 # Test mark_ip()
 
 test_that("Output class is same as input class", {
-  expect_s3_class(mark_ip(qualtrics_numeric, quiet = TRUE), class(qualtrics_numeric))
+  expect_s3_class(mark_ip(qualtrics_numeric, quiet = TRUE),
+                  class(qualtrics_numeric))
 })
 
 test_that("Messages displayed by default", {
