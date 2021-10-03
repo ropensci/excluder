@@ -219,15 +219,15 @@ tibble::glimpse(df)
 ```
 
 Use the
-[`collapse_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/collapse_exclusions.html)
-function to collapse all of the marked columns into a single column.
+[`unite_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html)
+function to unite all of the marked columns into a single column.
 
 ``` r
 # Collapse labels for preview and short duration rows
 df <- qualtrics_text %>%
   mark_preview() %>%
   mark_duration(min_duration = 200) %>%
-  collapse_exclusions(exclusion_types = c("preview", "duration"))
+  unite_exclusions(exclusion_types = c("preview", "duration"))
 #> [1] "exclusion_preview"  "exclusion_duration"
 #> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
 #> 23 out of 100 rows took less time than the minimum duration of 200 seconds.

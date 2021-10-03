@@ -113,13 +113,13 @@ df <- qualtrics_text %>%
   mark_duration(min_duration = 200)
 tibble::glimpse(df)
 ```
-Use the [`collapse_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/collapse_exclusions.html) function to collapse all of the marked columns into a single column.
+Use the [`unite_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html) function to unite all of the marked columns into a single column.
 ```{r mark2}
 # Collapse labels for preview and short duration rows
 df <- qualtrics_text %>%
   mark_preview() %>%
   mark_duration(min_duration = 200) %>%
-  collapse_exclusions(exclusion_types = c("preview", "duration"))
+  unite_exclusions(exclusion_types = c("preview", "duration"))
 tibble::glimpse(df)
 ```
 

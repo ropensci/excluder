@@ -42,7 +42,7 @@ The package provides seven types of exclusions based on Qualtrics metadata:
 
 There are also helper functions:
 
-1. [`collapse_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/collapse_exclusions.html)  collapses all of the columns marked by `mark` functions into a single column (each use of a `mark` function creates a new column).
+1. [`unite_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html)  unites all of the columns marked by `mark` functions into a single column (each use of a `mark` function creates a new column).
 1. [`deidentify()`](https://jeffreyrstevens.github.io/excluder/reference/deidentify.html) removes standard Qualtrics columns with identifiable information.
 1. [`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html) removes the first two rows of labels and convert date and numeric columns in the metadata.
 
@@ -126,13 +126,13 @@ df %>%
   dplyr::glimpse()
 ```
 
-To collapse all of the marked columns into a single column, use the `collapse_exclusions()` function. This will create a new `exclusions` columns that will collapse all exclusions in each observation into a single column. 
+To unite all of the marked columns into a single column, use the `unite_exclusions()` function. This will create a new `exclusions` columns that will unite all exclusions in each observation into a single column. 
 
 ```{r mark3}
 df %>% 
   mark_preview() %>% 
   mark_duration(min = 500) %>% 
-  collapse_exclusions() %>% 
+  unite_exclusions() %>% 
   dplyr::relocate(exclusions, .before = StartDate)
 ```
 
@@ -142,7 +142,7 @@ Multiple exclusions are separated by `,` but the separating character can be con
 df %>% 
   mark_preview() %>% 
   mark_duration(min = 500) %>% 
-  collapse_exclusions(separator = ";", remove = FALSE) %>% 
+  unite_exclusions(separator = ";", remove = FALSE) %>% 
   dplyr::relocate(exclusions, .before = StartDate)
 ```
 
