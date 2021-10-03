@@ -13,7 +13,8 @@ collapse_exclusions <- function(x,
                                                  "progress", "resolution"),
                              separator = ",",
                              remove = TRUE) {
-  lifecycle::deprecate_warn("0.3.0", "collapse_exclusions()", "unite_exclusions()")
+  lifecycle::deprecate_warn("0.3.0", "collapse_exclusions()",
+                            "unite_exclusions()")
   unite_exclusions(x, exclusion_types, separator, remove)
 }
 
@@ -70,10 +71,14 @@ unite_exclusions <- function(x,
   exclusion_columns_to_unite <-
     names(x)[which(names(x) %in% exclusion_columns_selected)]
 
+  # Check for presence of exclusion column(s)
+  stopifnot("No exclusion columns found. Run 'mark_*()' functions to mark columns." =
+              length(exclusion_columns_to_unite) >= 1L)
+
   # Unite and delete columns
   x %>%
     tidyr::unite("exclusions",
-                 exclusion_columns_to_unite,
+                 tidyselect::all_of(exclusion_columns_to_unite),
                  sep = separator,
                  na.rm = TRUE,
                  remove = remove) %>%

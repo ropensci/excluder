@@ -23,19 +23,20 @@ Imports:
     iptools,
     janitor,
     lubridate,
-    maps,
-    tidyr,
     magrittr,
-    rlang
+    maps,
+    rlang,
+    tidyr,
+    tidyselect
 Depends: 
     R (>= 3.5.0)
 Suggests: 
-    testthat (>= 3.0.0),
-    readr,
-    stringr,
     covr,
     knitr,
+    lifecycle,
+    readr,
     rmarkdown,
-    lifecycle
+    stringr,
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
