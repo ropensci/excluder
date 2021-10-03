@@ -127,7 +127,7 @@
 <p>There are also helper functions:</p>
 <ol style="list-style-type: decimal">
 <li>
-<a href="https://jeffreyrstevens.github.io/excluder/reference/collapse_exclusions.html"><code>collapse_exclusions()</code></a> collapses all of the columns marked by <code>mark</code> functions into a single column (each use of a <code>mark</code> function creates a new column).</li>
+<a href="https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html"><code>unite_exclusions()</code></a> unites all of the columns marked by <code>mark</code> functions into a single column (each use of a <code>mark</code> function creates a new column).</li>
 <li>
 <a href="https://jeffreyrstevens.github.io/excluder/reference/deidentify.html"><code>deidentify()</code></a> removes standard Qualtrics columns with identifiable information.</li>
 <li>
@@ -353,19 +353,15 @@
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
 <span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", NA, NA, NA, NA, NA, NA, …</span>
 <span class="co">#&gt; $ exclusion_progress      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></code></pre></div>
-<p>To collapse all of the marked columns into a single column, use the <code><a href="../reference/collapse_exclusions.html">collapse_exclusions()</a></code> function. This will create a new <code>exclusions</code> columns that will collapse all exclusions in each observation into a single column.</p>
+<p>To unite all of the marked columns into a single column, use the <code><a href="../reference/unite_exclusions.html">unite_exclusions()</a></code> function. This will create a new <code>exclusions</code> columns that will unite all exclusions in each observation into a single column.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/collapse_exclusions.html">collapse_exclusions</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">exclusions</span>, .before <span class="op">=</span> <span class="va">StartDate</span><span class="op">)</span>
-<span class="co">#&gt; [1] "exclusion_duplicates" "exclusion_duration"   "exclusion_ip"        </span>
-<span class="co">#&gt; [4] "exclusion_location"   "exclusion_preview"    "exclusion_progress"  </span>
-<span class="co">#&gt; [7] "exclusion_resolution"</span>
 <span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; 82 out of 100 rows took less time than the minimum duration of 500 seconds.</span>
-<span class="co">#&gt; [1] "exclusion_preview"  "exclusion_duration"</span>
 <span class="co">#&gt; # A tibble: 100 × 17</span>
 <span class="co">#&gt;    exclusions  StartDate           EndDate             Status IPAddress Progress</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;</span>
@@ -388,14 +384,10 @@
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/collapse_exclusions.html">collapse_exclusions</a></span><span class="op">(</span>separator <span class="op">=</span> <span class="st">";"</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span>separator <span class="op">=</span> <span class="st">";"</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">exclusions</span>, .before <span class="op">=</span> <span class="va">StartDate</span><span class="op">)</span>
-<span class="co">#&gt; [1] "exclusion_duplicates" "exclusion_duration"   "exclusion_ip"        </span>
-<span class="co">#&gt; [4] "exclusion_location"   "exclusion_preview"    "exclusion_progress"  </span>
-<span class="co">#&gt; [7] "exclusion_resolution"</span>
 <span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; 82 out of 100 rows took less time than the minimum duration of 500 seconds.</span>
-<span class="co">#&gt; [1] "exclusion_preview"  "exclusion_duration"</span>
 <span class="co">#&gt; # A tibble: 100 × 19</span>
 <span class="co">#&gt;    exclusions  StartDate           EndDate             Status IPAddress Progress</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;</span>
