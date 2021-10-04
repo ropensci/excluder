@@ -71,9 +71,9 @@ check_location <- function(x,
     stop("The column specifying location ('location_col') was not found.")
   }
 
-  # Extract IP address, latitude, and longitude vectors
-  latitude <- dplyr::pull(x, location_col[1])
-  longitude <- dplyr::pull(x, location_col[2])
+  # Extract latitude and longitude
+  latitude <- x[[location_col[1]]]
+  longitude <- x[[location_col[2]]]
 
   # Check column types
   if (!is.numeric(latitude)) {
@@ -92,10 +92,6 @@ check_location <- function(x,
                                )
   n_no_location <- nrow(no_location)
   x <- tidyr::drop_na(x, dplyr::all_of(location_col))
-
-  # Extract latitude and longitude
-  latitude <- dplyr::pull(x, location_col[1])
-  longitude <- dplyr::pull(x, location_col[2])
 
   # Determine if geolocation is within US
   x$country <- maps::map.where(database = "usa", longitude, latitude)

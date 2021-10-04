@@ -74,7 +74,7 @@ check_duration <- function(x,
   }
 
   # Extract duration vector
-  duration_vector <- dplyr::pull(x, duration_col)
+  duration_vector <- x[[duration_col]]
 
   # Check column type
   if (!is.numeric(duration_vector)) {

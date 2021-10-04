@@ -79,7 +79,7 @@ check_ip <- function(x,
   }
 
   # Extract IP address, latitude, and longitude vectors
-  ip_vector <- dplyr::pull(x, ip_col)
+  ip_vector <- x[[ip_col]]
 
   # Check column types
   ## IP address column
@@ -105,7 +105,7 @@ check_ip <- function(x,
   country_ip_ranges <- unlist(iptools::country_ranges(country))
 
   # Filter data based on IP ranges
-  survey_ips <- dplyr::pull(filtered_data, ip_col)
+  survey_ips <- filtered_data[[ip_col]]
   attr(survey_ips, "label") <- NULL
   outside_country <- !iptools::ip_in_any(survey_ips, country_ip_ranges)
   filtered_data <- dplyr::bind_cols(filtered_data, outside = outside_country)

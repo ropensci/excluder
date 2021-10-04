@@ -82,9 +82,9 @@ check_progress <- function(x,
     }
 
   # Find incomplete cases
-  if (is.logical(dplyr::pull(x, finished_col))) {
+  if (is.logical(x[[finished_col]])) {
     incomplete <- dplyr::filter(x, .data[[finished_col]] == FALSE)
-  } else if (is.numeric(dplyr::pull(x, finished_col))) {
+  } else if (is.numeric(x[[finished_col]])) {
     incomplete <- dplyr::filter(x, .data[[finished_col]] == 0)
   } else {
     stop("The column ", finished_col,

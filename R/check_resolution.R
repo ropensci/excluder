@@ -73,7 +73,7 @@ check_resolution <- function(x,
   }
 
   # Extract duration vector
-  res_vector <- dplyr::pull(x, res_col)
+  res_vector <- x[[res_col]]
 
   # Check column type
   if (!is.character(res_vector)) {

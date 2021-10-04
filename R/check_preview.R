@@ -62,9 +62,9 @@ check_preview <- function(x,
   }
 
   # Check for preview rows
-  if (is.character(dplyr::pull(x, preview_col))) {
+  if (is.character(x[[preview_col]])) {
     filtered_data <- dplyr::filter(x, .data[[preview_col]] == "Survey Preview")
-  } else if (is.numeric(dplyr::pull(x, preview_col))) {
+  } else if (is.numeric(x[[preview_col]])) {
     filtered_data <- dplyr::filter(x, .data[[preview_col]] == 1)
   } else {
     stop("The column ", preview_col,

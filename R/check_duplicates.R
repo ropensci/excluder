@@ -83,9 +83,9 @@ check_duplicates <- function(x,
   }
 
   # Extract IP address, latitude, and longitude vectors
-  ip_vector <- dplyr::pull(x, ip_col)
-  latitude <- dplyr::pull(x, location_col[1])
-  longitude <- dplyr::pull(x, location_col[2])
+  ip_vector <- x[[ip_col]]
+  latitude <- x[[location_col[1]]]
+  longitude <- x[[location_col[2]]]
 
   # Check column types
   ## IP address column
