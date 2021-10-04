@@ -140,7 +140,7 @@ check_duplicates <- function(x,
 
   # Create data frame of duplicates if both location and IP address are used
   if (identical(dupl_location, TRUE) & identical(dupl_ip, TRUE)) {
-    duplicates <- rbind(same_location, same_ip)
+    duplicates <- dplyr::bind_rows(same_location, same_ip)
   } else if (identical(dupl_location, TRUE)) {
     duplicates <- same_location
   } else if (identical(dupl_ip, TRUE)) {

@@ -105,7 +105,7 @@ check_location <- function(x,
 
   # Combine no location with outside US
   if (identical(include_na, FALSE)) {
-    location_issues <- rbind(no_location, x)
+    location_issues <- dplyr::bind_rows(no_location, x)
   } else {
     location_issues <- x
   }
