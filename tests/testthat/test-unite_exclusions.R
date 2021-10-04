@@ -4,8 +4,7 @@ test_that("Output class is same as input class", {
   df <- qualtrics_text %>%
     mark_duplicates(quiet = TRUE) %>%
     mark_duration(min_duration = 100, quiet = TRUE)
-    expect_s3_class(check_duplicates(df, quiet = TRUE),
-                  class(df))
+    expect_s3_class(unite_exclusions(df), class(df))
 })
 
 test_that("Data frames are correct size", {
