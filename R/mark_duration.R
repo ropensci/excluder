@@ -48,7 +48,7 @@ mark_duration <- function(x,
   # Find rows to mark
   exclusions <- check_duration(x, ...) %>%
     dplyr::mutate(exclusion_duration = "duration") %>%
-    dplyr::select(dplyr::all_of(id_col), .data$exclusion_duration)
+    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_duration)
 
   # Mark rows
   dplyr::left_join(x, exclusions, by = id_col)

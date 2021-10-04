@@ -48,7 +48,7 @@ mark_ip <- function(x,
   # Find rows to mark
   exclusions <- excluder::check_ip(x, ...) %>%
     dplyr::mutate(exclusion_ip = "ip_outside_country") %>%
-    dplyr::select(dplyr::all_of(id_col), .data$exclusion_ip)
+    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_ip)
 
   # Mark rows
   dplyr::left_join(x, exclusions, by = id_col)

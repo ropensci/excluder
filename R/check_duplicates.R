@@ -109,9 +109,9 @@ check_duplicates <- function(x,
   # Check for duplicate IP addresses
   if (identical(dupl_ip, TRUE)) {
     if (identical(include_na, FALSE)) {
-      x <- tidyr::drop_na(x, dplyr::all_of(ip_col))
+      x <- tidyr::drop_na(x, tidyselect::all_of(ip_col))
     }
-    same_ip <- janitor::get_dupes(x, dplyr::all_of(ip_col)) %>%
+    same_ip <- janitor::get_dupes(x, tidyselect::all_of(ip_col)) %>%
       dplyr::select(-.data$dupe_count)
     n_same_ip <- nrow(same_ip)
     if (identical(quiet, FALSE)) {
@@ -129,7 +129,7 @@ check_duplicates <- function(x,
         message(n_nas, " NAs were found in location.")
       }
     }
-    same_location <- janitor::get_dupes(x, dplyr::all_of(location_col)) %>%
+    same_location <- janitor::get_dupes(x, tidyselect::all_of(location_col)) %>%
       dplyr::select(-.data$dupe_count)
     n_same_location <- nrow(same_location)
     if (identical(quiet, FALSE)) {

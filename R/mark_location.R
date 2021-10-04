@@ -45,7 +45,7 @@ mark_location <- function(x,
   exclusions <- excluder::check_location(x, ...) # %>%
   exclusions$exclusion_location <- "location_outside_us"
   exclusions <- dplyr::select(exclusions,
-                              dplyr::all_of(id_col),
+                              tidyselect::all_of(id_col),
                               .data$exclusion_location)
 
   # Mark rows

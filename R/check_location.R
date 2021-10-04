@@ -88,10 +88,10 @@ check_location <- function(x,
 
   # Check for participants with no location information
   no_location <- dplyr::filter(x,
-                               is.na(dplyr::across(dplyr::all_of(location_col)))
+                               is.na(dplyr::across(tidyselect::all_of(location_col)))
                                )
   n_no_location <- nrow(no_location)
-  x <- tidyr::drop_na(x, dplyr::all_of(location_col))
+  x <- tidyr::drop_na(x, tidyselect::all_of(location_col))
 
   # Extract latitude and longitude
   latitude <- x[[location_col[1]]]

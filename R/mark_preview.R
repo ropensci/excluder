@@ -46,7 +46,7 @@ mark_preview <- function(x,
   # Find rows to mark
   exclusions <- excluder::check_preview(x, ...) %>%
     dplyr::mutate(exclusion_preview = "preview") %>%
-    dplyr::select(dplyr::all_of(id_col), .data$exclusion_preview)
+    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_preview)
 
   # Mark rows
   dplyr::left_join(x, exclusions, by = id_col)

@@ -53,7 +53,7 @@ mark_progress <- function(x,
   # Find rows to mark
   exclusions <- excluder::check_progress(x, ...) %>%
     dplyr::mutate(exclusion_progress = "incomplete_progress") %>%
-    dplyr::select(dplyr::all_of(id_col), .data$exclusion_progress)
+    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_progress)
 
   # Mark rows
   dplyr::left_join(x, exclusions, by = id_col)

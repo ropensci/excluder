@@ -52,7 +52,7 @@ mark_duplicates <- function(x,
   # Find rows to mark
   exclusions <- excluder::check_duplicates(x, ...) %>%
     dplyr::mutate(exclusion_duplicates = "duplicates") %>%
-    dplyr::select(dplyr::all_of(id_col), .data$exclusion_duplicates) %>%
+    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_duplicates) %>%
     dplyr::distinct()
 
   # Mark rows
