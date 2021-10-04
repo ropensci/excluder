@@ -257,18 +257,18 @@ messages about the number of rows that are too fast or too slow.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duration</span><span class='op'>(</span>max_duration <span class='op'>=</span> <span class='fl'>800</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows took less time than the minimum duration of 10 seconds.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 98 rows took more time than the maximum duration of 800 seconds.</span></div><div class='output co'>#&gt;              StartDate             EndDate     Status  IPAddress Progress
-#&gt; 21 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0       99
-#&gt; 75 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address 22.51.31.0      100
-#&gt;    Duration (in seconds) Finished        RecordedDate        ResponseId
-#&gt; 21                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
-#&gt; 75                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
-#&gt;    LocationLatitude LocationLongitude UserLanguage Browser      Version
-#&gt; 21         37.28265         -120.5025           EN  Chrome 87.0.4280.88
-#&gt; 75         37.28265         -120.5025           EN Firefox         83.0
-#&gt;    Operating System Resolution
-#&gt; 21  Windows NT 10.0   1366x768
-#&gt; 75  Windows NT 10.0   1440x960</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows took less time than the minimum duration of 10 seconds.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 98 rows took more time than the maximum duration of 800 seconds.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status  IPAddress Progress
+#&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0       99
+#&gt; 2 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address 22.51.31.0      100
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
+#&gt; 2                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
+#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#&gt; 1         37.28265         -120.5025           EN  Chrome 87.0.4280.88
+#&gt; 2         37.28265         -120.5025           EN Firefox         83.0
+#&gt;   Operating System Resolution
+#&gt; 1  Windows NT 10.0   1366x768
+#&gt; 2  Windows NT 10.0   1440x960</div><div class='input'>
 <span class='co'># Do not print rows to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
