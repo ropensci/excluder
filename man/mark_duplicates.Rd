@@ -4,14 +4,36 @@
 \alias{mark_duplicates}
 \title{Mark duplicate IP addresses and/or locations}
 \usage{
-mark_duplicates(x, id_col = "ResponseId", ...)
+mark_duplicates(
+  x,
+  id_col = "ResponseId",
+  ip_col = "IPAddress",
+  location_col = c("LocationLatitude", "LocationLongitude"),
+  dupl_ip = TRUE,
+  dupl_location = TRUE,
+  include_na = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
-\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{...}{Inherit parameters from check function.}
+\item{ip_col}{Column name for IP addresses.}
+
+\item{location_col}{Two element vector specifying columns for latitude and
+longitude (in that order).}
+
+\item{dupl_ip}{Logical indicating whether to check IP addresses.}
+
+\item{dupl_location}{Logical indicating whether to check latitude and
+longitude.}
+
+\item{include_na}{Logical indicating whether to include rows with NAs for
+IP address and location as potentially excluded rows.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

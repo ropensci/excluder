@@ -6,9 +6,26 @@
 #' The function is written to work with data from
 #' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
-#' @inherit check_location details
+#' @details
+#' Default column names are set based on output from the
+#' [`qualtRics::fetch_survey()`](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
+#' The function only works for the United States.
+#' It uses the #' [maps::map.where()] to determine if latitude and longitude
+#' are inside the US.
 #'
-#' @inheritParams mark_duplicates
+#' The function outputs to console a message about the number of rows
+#' with locations outside of the US.
+#'
+#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @param id_col Column name for unique row ID (e.g., participant).
+#' @param location_col Two element vector specifying columns for latitude
+#' and longitude (in that order).
+#' @param include_na Logical indicating whether to include rows with NA in
+#' latitude and longitude columns in the output list of potentially excluded
+#' data.
+#' @param quiet Logical indicating whether to print message to console.
+#'
 #'
 #' @family location functions
 #' @family mark functions
@@ -31,23 +48,80 @@
 #'   mark_location()
 mark_location <- function(x,
                           id_col = "ResponseId",
-                          ...) {
+                          location_col = c("LocationLatitude",
+                                           "LocationLongitude"),
+                          include_na = FALSE,
+                          quiet = FALSE) {
 
   # Check for presence of required column
   column_names <- names(x)
-  stopifnot("id_col should only have a single column name" =
+  ## id_col
+  stopifnot("'id_col' should only have a single column name" =
               length(id_col) == 1L)
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID ('id_col') was not found.")
   }
+  ## location_col
+  if (length(location_col) != 2) {
+    stop("'location_col' must have two columns: latitude and longitude.")
+  }
+  if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) {
+    stop("The column specifying location ('location_col') was not found.")
+  }
+
+  # Extract latitude and longitude
+  latitude <- x[[location_col[1]]]
+  longitude <- x[[location_col[2]]]
+
+  # Check column types
+  if (!is.numeric(latitude)) {
+    stop("Please ensure latitude column data type is numeric.")
+  }
+  if (!is.numeric(longitude)) {
+    stop("Please ensure longitude column data type is numeric.")
+  }
+
+  # Find number of rows
+  n_rows <- nrow(x)
+
+  # Check for participants with no location information
+  no_location <-
+    dplyr::filter(x, is.na(dplyr::across(tidyselect::all_of(location_col))))
+  n_no_location <- nrow(no_location)
+  no_nas <- tidyr::drop_na(x, tidyselect::all_of(location_col))
+
+  # Extract latitude and longitude
+  latitude <- no_nas[[location_col[1]]]
+  longitude <- no_nas[[location_col[2]]]
+
+  # Determine if geolocation is within US
+  no_nas$country <- maps::map.where(database = "usa", longitude, latitude)
+  outside_us <- dplyr::filter(no_nas, is.na(.data$country)) %>%
+    dplyr::select(-.data$country)
+  n_outside_us <- nrow(outside_us)
+
+  # Combine no location with outside US
+  if (identical(include_na, FALSE)) {
+    location_issues <- dplyr::bind_rows(no_location, outside_us)
+  } else {
+    location_issues <- outside_us
+  }
+
+  # Print messages and return output
+  if (identical(quiet, FALSE)) {
+    message(n_no_location, " out of ", n_rows,
+            " rows had no information on location.")
+    message(n_outside_us, " out of ", n_rows,
+            " rows were located outside of the US.")
+  }
 
   # Find rows to mark
-  exclusions <- excluder::check_location(x, ...) # %>%
-  exclusions$exclusion_location <- "location_outside_us"
-  exclusions <- dplyr::select(exclusions,
-                              tidyselect::all_of(id_col),
-                              .data$exclusion_location)
+  exclusions <- location_issues %>%
+    dplyr::mutate(exclusion_location = "location_outside_us") %>%
+    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_location)
 
   # Mark rows
-  dplyr::left_join(x, exclusions, by = id_col)
+  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
+              dplyr::mutate(exclusion_location =
+                              stringr::str_replace_na(.data$exclusion_location, "")))
 }

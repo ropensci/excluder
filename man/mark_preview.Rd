@@ -4,14 +4,16 @@
 \alias{mark_preview}
 \title{Mark survey previews}
 \usage{
-mark_preview(x, id_col = "ResponseId", ...)
+mark_preview(x, id_col = "ResponseId", preview_col = "Status", quiet = FALSE)
 }
 \arguments{
-\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{...}{Inherit parameters from check function.}
+\item{preview_col}{Column name for survey preview.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows
@@ -43,10 +45,6 @@ df <- mark_preview(qualtrics_text)
 # Works for Qualtrics data exported as numeric values, too
 df <- qualtrics_numeric \%>\%
   mark_preview()
-
-# Do not print rows to console
-df <- qualtrics_text \%>\%
-  mark_preview(print_tibble = FALSE)
 }
 \seealso{
 Other preview functions: 

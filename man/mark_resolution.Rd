@@ -4,14 +4,27 @@
 \alias{mark_resolution}
 \title{Mark unacceptable screen resolution}
 \usage{
-mark_resolution(x, id_col = "ResponseId", ...)
+mark_resolution(
+  x,
+  width_min = 1000,
+  height_min = 0,
+  id_col = "ResponseId",
+  res_col = "Resolution",
+  quiet = FALSE
+)
 }
 \arguments{
-\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
+
+\item{width_min}{Minimum acceptable screen width.}
+
+\item{height_min}{Minimum acceptable screen height.}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{...}{Inherit parameters from check function.}
+\item{res_col}{Column name for screen resolution (in format widthxheight).}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

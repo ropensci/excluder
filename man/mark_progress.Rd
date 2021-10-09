@@ -4,14 +4,27 @@
 \alias{mark_progress}
 \title{Mark survey progress}
 \usage{
-mark_progress(x, id_col = "ResponseId", ...)
+mark_progress(
+  x,
+  min_progress = 100,
+  id_col = "ResponseId",
+  finished_col = "Finished",
+  progress_col = "Progress",
+  quiet = FALSE
+)
 }
 \arguments{
-\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
+
+\item{min_progress}{Amount of progress considered acceptable to include.}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{...}{Inherit parameters from check function.}
+\item{finished_col}{Column name for whether survey was completed.}
+
+\item{progress_col}{Column name for percentage of survey completed.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows
@@ -53,10 +66,6 @@ df <- qualtrics_numeric \%>\%
   exclude_preview() \%>\%
   mark_progress(min_progress = 98)
 
-# Do not print rows to console
-df <- qualtrics_text \%>\%
-  exclude_preview() \%>\%
-  mark_progress(print_tibble = FALSE)
 }
 \seealso{
 Other progress functions: 

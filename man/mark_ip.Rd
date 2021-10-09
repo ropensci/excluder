@@ -4,14 +4,25 @@
 \alias{mark_ip}
 \title{Mark IP addresses that come from a specified country.}
 \usage{
-mark_ip(x, id_col = "ResponseId", ...)
+mark_ip(
+  x,
+  id_col = "ResponseId",
+  ip_col = "IPAddress",
+  country = "US",
+  quiet = FALSE
+)
 }
 \arguments{
-\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame or tibble (preferably imported from Qualtrics using
+\{qualtRics\}).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{...}{Inherit parameters from check function.}
+\item{ip_col}{Column name for IP addresses.}
+
+\item{country}{Two-letter abbreviation of country to check (default is "US").}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

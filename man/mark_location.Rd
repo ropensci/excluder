@@ -4,14 +4,27 @@
 \alias{mark_location}
 \title{Mark locations outside of US}
 \usage{
-mark_location(x, id_col = "ResponseId", ...)
+mark_location(
+  x,
+  id_col = "ResponseId",
+  location_col = c("LocationLatitude", "LocationLongitude"),
+  include_na = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
-\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{...}{Inherit parameters from check function.}
+\item{location_col}{Two element vector specifying columns for latitude
+and longitude (in that order).}
+
+\item{include_na}{Logical indicating whether to include rows with NA in
+latitude and longitude columns in the output list of potentially excluded
+data.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

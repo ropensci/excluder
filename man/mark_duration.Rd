@@ -4,14 +4,27 @@
 \alias{mark_duration}
 \title{Mark minimum or maximum durations}
 \usage{
-mark_duration(x, id_col = "ResponseId", ...)
+mark_duration(
+  x,
+  min_duration = 10,
+  max_duration = NULL,
+  id_col = "ResponseId",
+  duration_col = "Duration (in seconds)",
+  quiet = FALSE
+)
 }
 \arguments{
-\item{x}{Data frame or tibble (preferably exported from Qualtrics).}
+\item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
+
+\item{min_duration}{Minimum duration that is too fast in seconds.}
+
+\item{max_duration}{Maximum duration that is too slow in seconds.}
 
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
-\item{...}{Inherit parameters from check function.}
+\item{duration_col}{Column name for durations.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

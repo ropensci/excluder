@@ -6,9 +6,26 @@
 #' The function is written to work with data from
 #' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
-#' @inherit check_progress details
+#' @details
+#' Default column names are set based on output from the
+#' [`qualtRics::fetch_survey()`](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
+#' The default requires 100% completion, but lower levels of completion
+#' maybe acceptable and can be allowed by specifying the `min_progress`
+#' argument.
+#' The finished column in Qualtrics can be a numeric or character vector
+#' depending on whether it is exported as choice text or numeric values.
+#' This function works for both.
 #'
-#' @inheritParams mark_duplicates
+#' The function outputs to console a message about the number of rows
+#' that have incomplete progress.
+#'
+#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @param min_progress Amount of progress considered acceptable to include.
+#' @param id_col Column name for unique row ID (e.g., participant).
+#' @param finished_col Column name for whether survey was completed.
+#' @param progress_col Column name for percentage of survey completed.
+#' @param quiet Logical indicating whether to print message to console.
 #'
 #' @family progress functions
 #' @family mark functions
@@ -34,27 +51,69 @@
 #'   exclude_preview() %>%
 #'   mark_progress(min_progress = 98)
 #'
-#' # Do not print rows to console
-#' df <- qualtrics_text %>%
-#'   exclude_preview() %>%
-#'   mark_progress(print_tibble = FALSE)
 mark_progress <- function(x,
+                          min_progress = 100,
                           id_col = "ResponseId",
-                          ...) {
+                          finished_col = "Finished",
+                          progress_col = "Progress",
+                          quiet = FALSE) {
 
   # Check for presence of required column
   column_names <- names(x)
-  stopifnot("id_col should only have a single column name" =
+  ## id_col
+  stopifnot("'id_col' should only have a single column name" =
               length(id_col) == 1L)
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID ('id_col') was not found.")
   }
+  ## finished_col
+  if (!finished_col %in% column_names) {
+    stop(paste0("The column specifying whether a participant finished ",
+                "('finished_col') was not found."))
+  }
+  ## progress_col
+  stopifnot("'progress_col' should have a single column name" =
+              length(progress_col) == 1L)
+  if (!progress_col %in% column_names) {
+    stop("The column specifying progress ('progress_col') was not found.")
+  }
+
+  # Find incomplete cases
+  if (is.logical(x[[finished_col]])) {
+    incomplete <- dplyr::filter(x, .data[[finished_col]] == FALSE)
+  } else if (is.numeric(x[[finished_col]])) {
+    incomplete <- dplyr::filter(x, .data[[finished_col]] == 0)
+  } else {
+    stop("The column ", finished_col,
+         " is not of type logical or numeric, so it cannot be checked.")
+  }
+  n_incomplete <- nrow(incomplete)
+
+  # If minimum percent specified, find cases below minimum
+  stopifnot("min_progress should have a single value" =
+              length(min_progress) == 1L)
+  if (min_progress < 100) {
+    incomplete <- dplyr::filter(x, .data[[progress_col]] < min_progress)
+    n_below_min <- nrow(incomplete)
+    if (identical(quiet, FALSE)) {
+      message(n_incomplete, " rows did not complete the study, and ",
+              n_below_min, " of those completed less than ",
+              min_progress, "% of the study.")
+    }
+  } else {
+    if (identical(quiet, FALSE)) {
+      message(n_incomplete, " out of ", nrow(x),
+              " rows did not complete the study.")
+    }
+  }
 
   # Find rows to mark
-  exclusions <- excluder::check_progress(x, ...) %>%
+  exclusions <- incomplete %>%
     dplyr::mutate(exclusion_progress = "incomplete_progress") %>%
     dplyr::select(tidyselect::all_of(id_col), .data$exclusion_progress)
 
   # Mark rows
-  dplyr::left_join(x, exclusions, by = id_col)
+  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
+              dplyr::mutate(exclusion_progress =
+                              stringr::str_replace_na(.data$exclusion_progress, "")))
 }
