@@ -26,6 +26,7 @@ Imports:
     magrittr,
     maps,
     rlang,
+    stringr,
     tidyr,
     tidyselect
 Depends: 
@@ -36,7 +37,6 @@ Suggests:
     lifecycle,
     readr,
     rmarkdown,
-    stringr,
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3
