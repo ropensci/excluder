@@ -88,7 +88,7 @@ mark_ip <- function(x,
   # Remove rows with NAs for IP addresses
   na_rows <- which(is.na(ip_vector))
   n_na_rows <- length(na_rows)
-  if (n_na_rows > 0 & identical(quiet, FALSE)){
+  if (n_na_rows > 0 && identical(quiet, FALSE)){
     message(n_na_rows, " out of ", nrow(x),
             paste0(" rows have NA values for IP addresses (check for preview ",
                    "data with 'check_preview()')."))

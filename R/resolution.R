@@ -63,7 +63,7 @@ mark_resolution <- function(x,
   # Check width or height minimum
   stopifnot("width_min should have a single value"= length(width_min) == 1L)
   stopifnot("height_min should have a single value"= length(height_min) == 1L)
-  if (identical(width_min, 0) & identical(height_min, 0)) {
+  if (identical(width_min, 0) && identical(height_min, 0)) {
     stop(paste0("You must specify a minimum resolution for width or height ",
                 "with 'width_min' or 'height_min'."))
   }

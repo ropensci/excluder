@@ -104,9 +104,9 @@ mark_duration <- function(x,
   }
 
   # Combine quick and slow participants
-  if (!is.null(min_duration) & !is.null(max_duration)) {
+  if (!is.null(min_duration) && !is.null(max_duration)) {
     too_quick_slow <- dplyr::bind_rows(too_quick, too_slow)
-  } else if (is.null(min_duration) & is.null(max_duration)) {
+  } else if (is.null(min_duration) && is.null(max_duration)) {
     stop("You must specify either a minimum or maximum duration.'")
     too_quick_slow <- NULL
   }
