@@ -2,7 +2,7 @@
 % Please edit documentation in R/ip.R
 \name{mark_ip}
 \alias{mark_ip}
-\title{Mark IP addresses that come from a specified country.}
+\title{Mark IP addresses from outside of a specified country.}
 \usage{
 mark_ip(
   x,
@@ -32,7 +32,7 @@ For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip
 }
 \description{
 The \code{mark_ip()} function creates a column labeling
-rows of data that have IP addresses in the specified country.
+rows of data that have IP addresses from outside the specified country.
 The function is written to work with data from
 \href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }

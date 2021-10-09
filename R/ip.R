@@ -1,8 +1,8 @@
-#' Mark IP addresses that come from a specified country.
+#' Mark IP addresses from outside of a specified country.
 #'
 #' @description
 #' The `mark_ip()` function creates a column labeling
-#' rows of data that have IP addresses in the specified country.
+#' rows of data that have IP addresses from outside the specified country.
 #' The function is written to work with data from
 #' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
@@ -93,7 +93,11 @@ mark_ip <- function(x,
             paste0(" rows have NA values for IP addresses (check for preview ",
                    "data with 'check_preview()')."))
   }
-  filtered_data <- x[-na_rows, ]
+  if (n_na_rows > 0) {
+    filtered_data <- x[-na_rows, ]
+  } else {
+    filtered_data <- x
+  }
 
   # Get IP ranges for specified country
   country_ip_ranges <- unlist(iptools::country_ranges(country))
@@ -124,11 +128,11 @@ mark_ip <- function(x,
                               stringr::str_replace_na(.data$exclusion_ip, "")))
 }
 
-#' Check for IP addresses that come from a specified country.
+#' Check for IP addresses from outside of a specified country.
 #'
 #' @description
 #' The `check_ip()` function subsets rows of data, retaining rows
-#' that have IP addresses in the specified country.
+#' that have IP addresses from outside the specified country.
 #' The function is written to work with data from
 #' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
@@ -207,11 +211,11 @@ check_ip <- function(x,
   }
 }
 
-#' Exclude IP addresses that come from a specified country.
+#' Exclude IP addresses from outside of a specified country.
 #'
 #' @description
-#' The `exclude_ip()` function removes
-#' rows of data that have IP addresses in the specified country.
+#' The `exclude_ip()` function removes rows of data that have
+#' IP addresses from outside the specified country.
 #' The function is written to work with data from
 #' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'

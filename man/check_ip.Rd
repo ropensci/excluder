@@ -2,7 +2,7 @@
 % Please edit documentation in R/ip.R
 \name{check_ip}
 \alias{check_ip}
-\title{Check for IP addresses that come from a specified country.}
+\title{Check for IP addresses from outside of a specified country.}
 \usage{
 check_ip(x, print = TRUE, ...)
 }
@@ -22,7 +22,7 @@ For a function that excludes these rows, use \code{\link[=exclude_ip]{exclude_ip
 }
 \description{
 The \code{check_ip()} function subsets rows of data, retaining rows
-that have IP addresses in the specified country.
+that have IP addresses from outside the specified country.
 The function is written to work with data from
 \href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
