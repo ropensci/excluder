@@ -247,7 +247,8 @@
 <span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
+<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
 <span class="co">#&gt; Rows: 98</span>
 <span class="co">#&gt; Columns: 16</span>
 <span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:17:22, 2020-12-11 12:17:41, 202…</span>
@@ -273,26 +274,14 @@
   <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 15 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
-<span class="co">#&gt; # A tibble: 83 × 16</span>
-<span class="co">#&gt;    StartDate           EndDate             Status     IPAddress    Progress</span>
-<span class="co">#&gt;    &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 2020-12-11 12:17:22 2020-12-11 12:21:41 IP Address 73.23.43.0        100</span>
-<span class="co">#&gt;  2 2020-12-11 12:17:41 2020-12-11 12:22:07 IP Address 16.140.105.0      100</span>
-<span class="co">#&gt;  3 2020-12-11 12:19:45 2020-12-11 12:23:16 IP Address 107.57.244.0      100</span>
-<span class="co">#&gt;  4 2020-12-11 12:37:51 2020-12-11 12:43:09 IP Address 15.232.167.0      100</span>
-<span class="co">#&gt;  5 2020-12-11 12:37:04 2020-12-11 12:45:50 IP Address 98.75.201.0       100</span>
-<span class="co">#&gt;  6 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100</span>
-<span class="co">#&gt;  7 2020-12-11 13:22:34 2020-12-11 13:35:19 IP Address 17.163.199.0      100</span>
-<span class="co">#&gt;  8 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address 84.56.189.0       100</span>
-<span class="co">#&gt;  9 2020-12-11 17:02:00 2020-12-11 17:03:30 IP Address 70.203.63.0       100</span>
-<span class="co">#&gt; 10 2020-12-11 17:01:32 2020-12-11 17:09:41 IP Address 33.185.89.0       100</span>
-<span class="co">#&gt; # … with 73 more rows, and 11 more variables: Duration (in seconds) &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Finished &lt;lgl&gt;, RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;,</span>
-<span class="co">#&gt; #   LocationLatitude &lt;dbl&gt;, LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Browser &lt;chr&gt;, Version &lt;chr&gt;, Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
+<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; 6 out of 98 rows did not complete the study.</span>
+<span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
+<span class="co">#&gt; 6 out of 92 rows have duplicate IP addresses.</span>
+<span class="co">#&gt; 0 NAs were found in location.</span>
+<span class="co">#&gt; 9 out of 91 rows have duplicate locations.</span>
+<span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span></code></pre></div>
 </div>
 <div id="marking-observations" class="section level2">
 <h2 class="hasAnchor">
@@ -322,7 +311,7 @@
 <span class="co">#&gt; $ Version                 &lt;chr&gt; "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…</span>
 <span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Macintosh", "Windows NT 10…</span>
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
-<span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", NA, NA, NA, NA, NA, NA, …</span></code></pre></div>
+<span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", "", "", "", "", "", "", …</span></code></pre></div>
 <p>Notice the new <code>exclusion_preview</code> column at the end of the data frame. It has marked the first two observations as <code>preview</code>.</p>
 <p>Piping multiple mark functions will create multiple rows marking observations for exclusion.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -351,8 +340,8 @@
 <span class="co">#&gt; $ Version                 &lt;chr&gt; "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…</span>
 <span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Macintosh", "Windows NT 10…</span>
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
-<span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", NA, NA, NA, NA, NA, NA, …</span>
-<span class="co">#&gt; $ exclusion_progress      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></code></pre></div>
+<span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", "", "", "", "", "", "", …</span>
+<span class="co">#&gt; $ exclusion_progress      &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", ""…</span></code></pre></div>
 <p>To unite all of the marked columns into a single column, use the <code><a href="../reference/unite_exclusions.html">unite_exclusions()</a></code> function. This will create a new <code>exclusions</code> columns that will unite all exclusions in each observation into a single column.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
@@ -366,15 +355,15 @@
 <span class="co">#&gt;    exclusions  StartDate           EndDate             Status IPAddress Progress</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 preview,du… 2020-12-11 12:06:52 2020-12-11 12:10:30 Surve… &lt;NA&gt;           100</span>
-<span class="co">#&gt;  2 preview     2020-12-11 12:06:43 2020-12-11 12:11:27 Surve… &lt;NA&gt;           100</span>
-<span class="co">#&gt;  3 &lt;NA&gt;        2020-12-11 12:17:22 2020-12-11 12:21:41 IP Ad… 73.23.43…      100</span>
-<span class="co">#&gt;  4 duration    2020-12-11 12:17:41 2020-12-11 12:22:07 IP Ad… 16.140.1…      100</span>
-<span class="co">#&gt;  5 duration    2020-12-11 12:19:45 2020-12-11 12:23:16 IP Ad… 107.57.2…      100</span>
-<span class="co">#&gt;  6 duration    2020-12-11 12:37:51 2020-12-11 12:43:09 IP Ad… 15.232.1…      100</span>
-<span class="co">#&gt;  7 duration    2020-12-11 12:41:23 2020-12-11 12:44:37 IP Ad… 24.195.9…      100</span>
-<span class="co">#&gt;  8 &lt;NA&gt;        2020-12-11 12:37:04 2020-12-11 12:45:50 IP Ad… 98.75.20…      100</span>
-<span class="co">#&gt;  9 duration    2020-12-11 12:55:35 2020-12-11 12:59:24 IP Ad… 51.113.1…      100</span>
-<span class="co">#&gt; 10 duration    2020-12-11 13:22:34 2020-12-11 13:35:19 IP Ad… 17.163.1…      100</span>
+<span class="co">#&gt;  2 preview,    2020-12-11 12:06:43 2020-12-11 12:11:27 Surve… &lt;NA&gt;           100</span>
+<span class="co">#&gt;  3 ,           2020-12-11 12:17:22 2020-12-11 12:21:41 IP Ad… 73.23.43…      100</span>
+<span class="co">#&gt;  4 ,duration   2020-12-11 12:17:41 2020-12-11 12:22:07 IP Ad… 16.140.1…      100</span>
+<span class="co">#&gt;  5 ,duration   2020-12-11 12:19:45 2020-12-11 12:23:16 IP Ad… 107.57.2…      100</span>
+<span class="co">#&gt;  6 ,duration   2020-12-11 12:37:51 2020-12-11 12:43:09 IP Ad… 15.232.1…      100</span>
+<span class="co">#&gt;  7 ,duration   2020-12-11 12:41:23 2020-12-11 12:44:37 IP Ad… 24.195.9…      100</span>
+<span class="co">#&gt;  8 ,           2020-12-11 12:37:04 2020-12-11 12:45:50 IP Ad… 98.75.20…      100</span>
+<span class="co">#&gt;  9 ,duration   2020-12-11 12:55:35 2020-12-11 12:59:24 IP Ad… 51.113.1…      100</span>
+<span class="co">#&gt; 10 ,duration   2020-12-11 13:22:34 2020-12-11 13:35:19 IP Ad… 17.163.1…      100</span>
 <span class="co">#&gt; # … with 90 more rows, and 11 more variables: Duration (in seconds) &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   Finished &lt;lgl&gt;, RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;,</span>
 <span class="co">#&gt; #   LocationLatitude &lt;dbl&gt;, LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;,</span>
@@ -392,15 +381,15 @@
 <span class="co">#&gt;    exclusions  StartDate           EndDate             Status IPAddress Progress</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 preview;du… 2020-12-11 12:06:52 2020-12-11 12:10:30 Surve… &lt;NA&gt;           100</span>
-<span class="co">#&gt;  2 preview     2020-12-11 12:06:43 2020-12-11 12:11:27 Surve… &lt;NA&gt;           100</span>
-<span class="co">#&gt;  3 &lt;NA&gt;        2020-12-11 12:17:22 2020-12-11 12:21:41 IP Ad… 73.23.43…      100</span>
-<span class="co">#&gt;  4 duration    2020-12-11 12:17:41 2020-12-11 12:22:07 IP Ad… 16.140.1…      100</span>
-<span class="co">#&gt;  5 duration    2020-12-11 12:19:45 2020-12-11 12:23:16 IP Ad… 107.57.2…      100</span>
-<span class="co">#&gt;  6 duration    2020-12-11 12:37:51 2020-12-11 12:43:09 IP Ad… 15.232.1…      100</span>
-<span class="co">#&gt;  7 duration    2020-12-11 12:41:23 2020-12-11 12:44:37 IP Ad… 24.195.9…      100</span>
-<span class="co">#&gt;  8 &lt;NA&gt;        2020-12-11 12:37:04 2020-12-11 12:45:50 IP Ad… 98.75.20…      100</span>
-<span class="co">#&gt;  9 duration    2020-12-11 12:55:35 2020-12-11 12:59:24 IP Ad… 51.113.1…      100</span>
-<span class="co">#&gt; 10 duration    2020-12-11 13:22:34 2020-12-11 13:35:19 IP Ad… 17.163.1…      100</span>
+<span class="co">#&gt;  2 preview;    2020-12-11 12:06:43 2020-12-11 12:11:27 Surve… &lt;NA&gt;           100</span>
+<span class="co">#&gt;  3 ;           2020-12-11 12:17:22 2020-12-11 12:21:41 IP Ad… 73.23.43…      100</span>
+<span class="co">#&gt;  4 ;duration   2020-12-11 12:17:41 2020-12-11 12:22:07 IP Ad… 16.140.1…      100</span>
+<span class="co">#&gt;  5 ;duration   2020-12-11 12:19:45 2020-12-11 12:23:16 IP Ad… 107.57.2…      100</span>
+<span class="co">#&gt;  6 ;duration   2020-12-11 12:37:51 2020-12-11 12:43:09 IP Ad… 15.232.1…      100</span>
+<span class="co">#&gt;  7 ;duration   2020-12-11 12:41:23 2020-12-11 12:44:37 IP Ad… 24.195.9…      100</span>
+<span class="co">#&gt;  8 ;           2020-12-11 12:37:04 2020-12-11 12:45:50 IP Ad… 98.75.20…      100</span>
+<span class="co">#&gt;  9 ;duration   2020-12-11 12:55:35 2020-12-11 12:59:24 IP Ad… 51.113.1…      100</span>
+<span class="co">#&gt; 10 ;duration   2020-12-11 13:22:34 2020-12-11 13:35:19 IP Ad… 17.163.1…      100</span>
 <span class="co">#&gt; # … with 90 more rows, and 13 more variables: Duration (in seconds) &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   Finished &lt;lgl&gt;, RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;,</span>
 <span class="co">#&gt; #   LocationLatitude &lt;dbl&gt;, LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;,</span>
@@ -419,9 +408,14 @@
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 15 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
+<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
+<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; 6 out of 98 rows did not complete the study.</span>
+<span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
+<span class="co">#&gt; 6 out of 92 rows have duplicate IP addresses.</span>
+<span class="co">#&gt; 0 NAs were found in location.</span>
+<span class="co">#&gt; 9 out of 91 rows have duplicate locations.</span>
+<span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
 <span class="co">#&gt; Rows: 83</span>
 <span class="co">#&gt; Columns: 8</span>
 <span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:17:22, 2020-12-11 12:17:41, 202…</span>
@@ -441,9 +435,14 @@
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span>strict <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 15 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
+<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
+<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; 6 out of 98 rows did not complete the study.</span>
+<span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
+<span class="co">#&gt; 6 out of 92 rows have duplicate IP addresses.</span>
+<span class="co">#&gt; 0 NAs were found in location.</span>
+<span class="co">#&gt; 9 out of 91 rows have duplicate locations.</span>
+<span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
 <span class="co">#&gt; Rows: 83</span>
 <span class="co">#&gt; Columns: 12</span>
 <span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:17:22, 2020-12-11 12:17:41, 202…</span>

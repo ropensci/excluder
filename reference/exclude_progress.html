@@ -127,7 +127,7 @@ Qualtrics surveys." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Exclude survey progress</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/R/exclude_progress.R'><code>R/exclude_progress.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/R/progress.R'><code>R/progress.R</code></a></small>
     <div class="hidden name"><code>exclude_progress.Rd</code></div>
     </div>
 
@@ -138,18 +138,19 @@ The function is written to work with data from
 <a href='https://www.qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>exclude_progress</span><span class='op'>(</span><span class='va'>x</span>, id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>, silent <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>exclude_progress</span><span class='op'>(</span><span class='va'>x</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, silent <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Data frame or tibble (preferably exported from Qualtrics).</p></td>
+      <td><p>Data frame (preferably imported from Qualtrics using {qualtRics}).</p></td>
     </tr>
     <tr>
-      <th>id_col</th>
-      <td><p>Column name for unique row ID (e.g., participant).</p></td>
+      <th>print</th>
+      <td><p>Logical indicating whether to print returned tibble to
+console.</p></td>
     </tr>
     <tr>
       <th>silent</th>
@@ -158,7 +159,7 @@ this argument controls the exclude message not the check message.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Inherit parameters from check function.</p></td>
+      <td><p>Inherit parameters from <code><a href='mark_progress.html'>mark_progress()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -197,22 +198,22 @@ that have incomplete progress.</p>
     <pre class="examples"><div class='input'><span class='co'># Exclude rows with incomplete progress</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>exclude_progress</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>6 out of 100 rows with incomplete progress were excluded, leaving 94 rows.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>6 out of 100 rows did not complete the study.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 100 duplicate rows were excluded, leaving 94 rows.</span></div><div class='input'>
 <span class='co'># Remove preview data first</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>exclude_progress</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 98 rows did not complete the study.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 98 duplicate rows were excluded, leaving 92 rows.</span></div><div class='input'>
 <span class='co'># Include a lower acceptable completion percentage</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_numeric</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>exclude_progress</span><span class='op'>(</span>min_progress <span class='op'>=</span> <span class='fl'>98</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 rows with incomplete progress were excluded, leaving 93 rows.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>6 rows did not complete the study, and 5 of those completed less than 98% of the study.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 duplicate rows were excluded, leaving 93 rows.</span></div><div class='input'>
 <span class='co'># Do not print rows to console</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>exclude_progress</span><span class='op'>(</span>print_tibble <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span></div></pre>
+  <span class='fu'>exclude_progress</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 98 rows did not complete the study.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 98 duplicate rows were excluded, leaving 92 rows.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

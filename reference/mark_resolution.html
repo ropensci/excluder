@@ -127,7 +127,7 @@ Qualtrics surveys." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Mark unacceptable screen resolution</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/R/mark_resolution.R'><code>R/mark_resolution.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/R/resolution.R'><code>R/resolution.R</code></a></small>
     <div class="hidden name"><code>mark_resolution.Rd</code></div>
     </div>
 
@@ -138,22 +138,41 @@ The function is written to work with data from
 <a href='https://www.qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mark_resolution</span><span class='op'>(</span><span class='va'>x</span>, id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mark_resolution</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  width_min <span class='op'>=</span> <span class='fl'>1000</span>,
+  height_min <span class='op'>=</span> <span class='fl'>0</span>,
+  id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>,
+  res_col <span class='op'>=</span> <span class='st'>"Resolution"</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Data frame or tibble (preferably exported from Qualtrics).</p></td>
+      <td><p>Data frame (preferably imported from Qualtrics using {qualtRics}).</p></td>
+    </tr>
+    <tr>
+      <th>width_min</th>
+      <td><p>Minimum acceptable screen width.</p></td>
+    </tr>
+    <tr>
+      <th>height_min</th>
+      <td><p>Minimum acceptable screen height.</p></td>
     </tr>
     <tr>
       <th>id_col</th>
       <td><p>Column name for unique row ID (e.g., participant).</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Inherit parameters from check function.</p></td>
+      <th>res_col</th>
+      <td><p>Column name for screen resolution (in format widthxheight).</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical indicating whether to print message to console.</p></td>
     </tr>
     </table>
 
@@ -191,7 +210,7 @@ with unacceptable screen resolution.</p>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mark_resolution</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows have screen resolution width less than 1000 or height less than 0.</span></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows have screen resolution width less than 1000 or height less than 0.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

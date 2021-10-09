@@ -127,7 +127,7 @@ Qualtrics surveys." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Mark duplicate IP addresses and/or locations</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/R/mark_duplicates.R'><code>R/mark_duplicates.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/R/duplicates.R'><code>R/duplicates.R</code></a></small>
     <div class="hidden name"><code>mark_duplicates.Rd</code></div>
     </div>
 
@@ -138,22 +138,54 @@ longitude. The function is written to work with data from
 <a href='https://www.qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mark_duplicates</span><span class='op'>(</span><span class='va'>x</span>, id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mark_duplicates</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>,
+  ip_col <span class='op'>=</span> <span class='st'>"IPAddress"</span>,
+  location_col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"LocationLatitude"</span>, <span class='st'>"LocationLongitude"</span><span class='op'>)</span>,
+  dupl_ip <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  dupl_location <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  include_na <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Data frame or tibble (preferably exported from Qualtrics).</p></td>
+      <td><p>Data frame (preferably imported from Qualtrics using {qualtRics}).</p></td>
     </tr>
     <tr>
       <th>id_col</th>
       <td><p>Column name for unique row ID (e.g., participant).</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Inherit parameters from check function.</p></td>
+      <th>ip_col</th>
+      <td><p>Column name for IP addresses.</p></td>
+    </tr>
+    <tr>
+      <th>location_col</th>
+      <td><p>Two element vector specifying columns for latitude and
+longitude (in that order).</p></td>
+    </tr>
+    <tr>
+      <th>dupl_ip</th>
+      <td><p>Logical indicating whether to check IP addresses.</p></td>
+    </tr>
+    <tr>
+      <th>dupl_location</th>
+      <td><p>Logical indicating whether to check latitude and
+longitude.</p></td>
+    </tr>
+    <tr>
+      <th>include_na</th>
+      <td><p>Logical indicating whether to include rows with NAs for
+IP address and location as potentially excluded rows.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical indicating whether to print message to console.</p></td>
     </tr>
     </table>
 
@@ -191,17 +223,17 @@ types of duplicates.</p>
     <pre class="examples"><div class='input'><span class='co'># Mark duplicate IP addresses and locations</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>mark_duplicates</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; <span class='message'>0 NAs were found in location.</span></div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; <span class='message'>0 NAs were found in location.</span></div><div class='output co'>#&gt; <span class='message'>10 out of 99 rows have duplicate locations.</span></div><div class='input'>
 <span class='co'># Remove preview data first</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mark_duplicates</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; <span class='message'>0 NAs were found in location.</span></div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div><div class='output co'>#&gt; <span class='message'>0 NAs were found in location.</span></div><div class='output co'>#&gt; <span class='message'>10 out of 97 rows have duplicate locations.</span></div><div class='input'>
 <span class='co'># Mark only for duplicate locations</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mark_duplicates</span><span class='op'>(</span>dupl_location <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>7 out of 98 rows have duplicate IP addresses.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
