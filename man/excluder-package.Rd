@@ -6,10 +6,7 @@
 \alias{excluder-package}
 \title{excluder: Checks for Exclusion Criteria in Online Data}
 \description{
-Data that are collected through online sources such as Mechanical 
-            Turk may require excluding data because of IP address duplication, 
-            geolocation, or completion duration. This package facilitates
-            exclusion of these data for Qualtrics datasets.
+Data that are collected through online sources such as Mechanical Turk may require excluding data because of IP address duplication, geolocation, or completion duration. This package facilitates exclusion of these data for Qualtrics datasets.
 }
 \seealso{
 Useful links:

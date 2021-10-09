@@ -164,5 +164,145 @@ mark_duplicates <- function(x,
   invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
               dplyr::mutate(exclusion_duplicates =
                               stringr::str_replace_na(.data$exclusion_duplicates, ""))
-            )
+  )
+}
+
+#' Check for duplicate IP addresses and/or locations
+#'
+#' @description
+#' The `check_duplicates()` function subsets rows of data, retaining rows
+#' that have the same IP address and/or same latitude and longitude. The
+#' function is written to work with data from
+#' [Qualtrics](https://www.qualtrics.com/) surveys.
+#'
+#' @details
+#' Default column names are set based on output from the
+#' [`qualtRics::fetch_survey()`](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
+#' By default, IP address and location are both checked, but they can be
+#' checked separately with the `dupl_ip` and `dupl_location` arguments.
+#'
+#' The function outputs to console separate messages about the number of
+#' rows with duplicate IP addresses and rows with duplicate locations.
+#' These counts are computed independently, so rows may be counted for both
+#' types of duplicates.
+#'
+#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
+#' @param ... Inherit parameters from [mark_duplicates()].
+#'
+#' @family duplicates functions
+#' @family check functions
+#' @return
+#' An object of the same type as `x` that includes the rows with
+#' duplicate IP addresses and/or locations. This includes a column
+#' called dupe_count that returns the number of duplicates.
+#' For a function that marks these rows, use [mark_duplicates()].
+#' For a function that excludes these rows, use [exclude_duplicates()].
+#'
+#' @importFrom rlang .data
+#' @export
+#'
+#' @examples
+#' # Check for duplicate IP addresses and locations
+#' data(qualtrics_text)
+#' check_duplicates(qualtrics_text)
+#'
+#' # Check only for duplicate locations
+#' qualtrics_text %>%
+#'   check_duplicates(dupl_location = FALSE)
+#'
+#' # Do not print rows to console
+#' qualtrics_text %>%
+#'   check_duplicates(print = FALSE)
+#'
+#' # Do not print message to console
+#' qualtrics_text %>%
+#'   check_duplicates(quiet = TRUE)
+check_duplicates <- function(x,
+                             print = TRUE,
+                             ...) {
+
+  # Mark and filter duplicates
+  exclusions <- mark_duplicates(x,
+                                ...) %>%
+    dplyr::filter(.data$exclusion_duplicates == "duplicates") %>%
+    dplyr::select(-.data$exclusion_duplicates)
+
+  # Determine whether to print results
+  if (identical(print, TRUE)) {
+    return(exclusions)
+  } else {
+    invisible(exclusions)
+  }
+}
+
+#' Exclude rows with duplicate IP addresses and/or locations
+#'
+#' @description
+#' The `exclude_duplicates()` function removes
+#' rows of data that have the same IP address and/or same latitude and
+#' longitude. The function is written to work with data from
+#' [Qualtrics](https://www.qualtrics.com/) surveys.
+#'
+#' @inherit check_duplicates details
+#'
+#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
+#' @param silent Logical indicating whether to print message to console. Note
+#' this argument controls the exclude message not the check message.
+#' @param ... Inherit parameters from [mark_duplicates()].
+#'
+#' @family duplicates functions
+#' @family exclude functions
+#' @return
+#' An object of the same type as `x` that excludes rows
+#' with duplicate IP addresses and/or locations.
+#' For a function that just checks for and returns duplicate rows,
+#' use [check_duplicates()]. For a function that marks these rows,
+#' use [mark_duplicates()].
+
+#' @export
+#'
+#' @examples
+#' # Exclude duplicate IP addresses and locations
+#' data(qualtrics_text)
+#' df <- exclude_duplicates(qualtrics_text)
+#'
+#' # Remove preview data first
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_duplicates()
+#'
+#' # Exclude only for duplicate locations
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_duplicates(dupl_location = FALSE)
+exclude_duplicates <- function(x,
+                               print = FALSE,
+                               silent = FALSE,
+                               ...) {
+
+  # Mark and filter duplicates
+  remaining_data <- mark_duplicates(x,
+                                    ...) %>%
+    dplyr::filter(.data$exclusion_duplicates != "duplicates") %>%
+    dplyr::select(-.data$exclusion_duplicates)
+
+  # Print exclusion statement
+  n_remaining <- nrow(remaining_data)
+  n_exclusions <- nrow(x) - n_remaining
+  if (identical(silent, FALSE)) {
+    message(n_exclusions, " out of ", nrow(x),
+            " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+  }
+
+  # Determine whether to print results
+  if (identical(print, TRUE)) {
+    return(remaining_data)
+  } else {
+    invisible(remaining_data)
+  }
 }

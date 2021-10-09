@@ -125,3 +125,135 @@ mark_location <- function(x,
               dplyr::mutate(exclusion_location =
                               stringr::str_replace_na(.data$exclusion_location, "")))
 }
+
+#' Check for locations outside of the US
+#'
+#' @description
+#' The `check_location()` function subsets rows of data, retaining rows
+#' that have locations outside of the US.
+#' The function is written to work with data from
+#' [Qualtrics](https://www.qualtrics.com/) surveys.
+#'
+#' @details
+#' Default column names are set based on output from the
+#' [`qualtRics::fetch_survey()`](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
+#' The function only works for the United States.
+#' It uses the #' [maps::map.where()] to determine if latitude and longitude
+#' are inside the US.
+#'
+#' The function outputs to console a message about the number of rows
+#' with locations outside of the US.
+#'
+#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
+#' @param ... Inherit parameters from [mark_location()].
+#'
+#' @family location functions
+#' @family check functions
+#' @return The output is a data frame of the rows that are located outside of
+#' the US and (if \code{include_na == FALSE}) rows with no location information.
+#' For a function that marks these rows, use [mark_location()].
+#' For a function that excludes these rows, use [exclude_location()].
+#' @export
+#'
+#' @examples
+#' # Check for locations outside of the US
+#' data(qualtrics_text)
+#' check_location(qualtrics_text)
+#'
+#' # Remove preview data first
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_location()
+#'
+#' # Do not print rows to console
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_location(print = FALSE)
+#'
+#' # Do not print message to console
+#' qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   check_location(quiet = TRUE)
+check_location <- function(x,
+                     print = TRUE,
+                     ...) {
+
+  # Mark and filter location
+  exclusions <- mark_location(x,
+                        ...) %>%
+    dplyr::filter(.data$exclusion_location == "location_outside_us") %>%
+    dplyr::select(-.data$exclusion_location)
+
+  # Determine whether to print results
+  if (identical(print, TRUE)) {
+    return(exclusions)
+  } else {
+    invisible(exclusions)
+  }
+}
+
+#' Exclude locations outside of US
+#'
+#' @description
+#' The `exclude_location()` function removes
+#' rows that have locations outside of the US.
+#' The function is written to work with data from
+#' [Qualtrics](https://www.qualtrics.com/) surveys.
+#'
+#' @inherit check_location details
+#'
+#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
+#' @param silent Logical indicating whether to print message to console. Note
+#' this argument controls the exclude message not the check message.
+#' @param ... Inherit parameters from [mark_location()].
+#'
+#' @family location functions
+#' @family exclude functions
+#' @return
+#' An object of the same type as `x` that excludes rows
+#' that are located outside of the US and (if `include_na == FALSE`) rows with
+#' no location information.
+#' For a function that checks for these rows, use [check_location()].
+#' For a function that marks these rows, use [mark_location()].
+#' @export
+#'
+#' @examples
+#' # Exclude locations outside of the US
+#' data(qualtrics_text)
+#' df <- exclude_location(qualtrics_text)
+#'
+#' # Remove preview data first
+#' df <- qualtrics_text %>%
+#'   exclude_preview() %>%
+#'   exclude_location()
+exclude_location <- function(x,
+                       print = FALSE,
+                       silent = FALSE,
+                       ...) {
+
+  # Mark and filter location
+  remaining_data <- mark_location(x,
+                            ...) %>%
+    dplyr::filter(.data$exclusion_location != "location_outside_us") %>%
+    dplyr::select(-.data$exclusion_location)
+
+  # Print exclusion statement
+  n_remaining <- nrow(remaining_data)
+  n_exclusions <- nrow(x) - n_remaining
+  if (identical(silent, FALSE)) {
+    message(n_exclusions, " out of ", nrow(x),
+            " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+  }
+
+  # Determine whether to print results
+  if (identical(print, TRUE)) {
+    return(remaining_data)
+  } else {
+    invisible(remaining_data)
+  }
+}
