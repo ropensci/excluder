@@ -16,6 +16,7 @@ collapse_exclusions(
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 \code{collapse_exclusions()} was renamed to \code{\link[=unite_exclusions]{unite_exclusions()}} to create a more
-consistent API with tidyverse's \code{unite()} function.
+consistent API with tidyverse's \code{unite()} function---please use
+\code{unite_exclusions()}.
 }
 \keyword{internal}

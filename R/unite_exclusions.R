@@ -4,7 +4,8 @@
 #' `r lifecycle::badge("deprecated")`
 #'
 #' `collapse_exclusions()` was renamed to [unite_exclusions()] to create a more
-#' consistent API with tidyverse's `unite()` function.
+#' consistent API with tidyverse's `unite()` function---please use
+#' `unite_exclusions()`.
 #' @keywords internal
 #' @export
 collapse_exclusions <- function(x,
