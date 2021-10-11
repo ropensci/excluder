@@ -81,7 +81,9 @@ mark_duration <- function(x,
   stopifnot("'min_duration' should have a single value" =
               length(min_duration) == 1L)
   if (!is.null(min_duration)) {
-    too_quick <- too_quick_slow <- x[which(duration_vector < min_duration), ]
+    too_quick <- x[which(duration_vector < min_duration), ]
+    too_quick <- dplyr::mutate(too_quick, exclusion_duration = "duration_quick")
+    too_quick_slow <- too_quick
     n_too_quick <- nrow(too_quick)
     if (identical(quiet, FALSE)) {
       message(n_too_quick, " out of ", nrow(x),
@@ -94,7 +96,9 @@ mark_duration <- function(x,
   if (!is.null(max_duration)) {
     stopifnot("'max_duration' should have a single value" =
                 length(max_duration) == 1L)
-    too_slow <- too_quick_slow <- x[which(duration_vector > max_duration), ]
+    too_slow <- x[which(duration_vector > max_duration), ]
+    too_slow <- dplyr::mutate(too_slow, exclusion_duration = "duration_slow")
+    too_quick_slow <- too_slow
     n_too_slow <- nrow(too_slow)
     if (identical(quiet, FALSE)) {
       message(n_too_slow, " out of ", nrow(x),
@@ -113,7 +117,6 @@ mark_duration <- function(x,
 
   # Find rows to mark
   exclusions <- too_quick_slow %>%
-    dplyr::mutate(exclusion_duration = "duration") %>%
     dplyr::select(tidyselect::all_of(id_col), .data$exclusion_duration)
 
   # Mark rows
@@ -193,7 +196,8 @@ check_duration <- function(x,
                               id_col = id_col,
                               duration_col = duration_col,
                               quiet = quiet) %>%
-    dplyr::filter(.data$exclusion_duration == "duration") %>%
+    dplyr::filter(.data$exclusion_duration == "duration_quick" |
+                    .data$exclusion_duration == "duration_slow") %>%
     dplyr::select(-.data$exclusion_duration)
 
   # Determine whether to print results
@@ -259,7 +263,8 @@ exclude_duration <- function(x,
                                   id_col = id_col,
                                   duration_col = duration_col,
                                   quiet = quiet) %>%
-    dplyr::filter(.data$exclusion_duration != "duration") %>%
+    dplyr::filter(.data$exclusion_duration != "duration_quick" &
+                    .data$exclusion_duration != "duration_slow") %>%
     dplyr::select(-.data$exclusion_duration)
 
   # Print exclusion statement
