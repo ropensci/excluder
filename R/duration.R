@@ -141,10 +141,9 @@ mark_duration <- function(x,
 #'
 #' This function returns the fast and slow rows.
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_duration
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
-#' @param ... Inherit parameters from [mark_duration()].
 #'
 #' @family duration functions
 #' @family check functions
@@ -180,12 +179,20 @@ mark_duration <- function(x,
 #'   exclude_preview() %>%
 #'   check_duration(min_duration = 100, quiet = TRUE)
 check_duration <- function(x,
-                           print = TRUE,
-                           ...) {
+                           min_duration = 10,
+                           max_duration = NULL,
+                           id_col = "ResponseId",
+                           duration_col = "Duration (in seconds)",
+                           quiet = FALSE,
+                           print = TRUE) {
 
   # Mark and filter duration
   exclusions <- mark_duration(x,
-                                ...) %>%
+                              min_duration = min_duration,
+                              max_duration = max_duration,
+                              id_col = id_col,
+                              duration_col = duration_col,
+                              quiet = quiet) %>%
     dplyr::filter(.data$exclusion_duration == "duration") %>%
     dplyr::select(-.data$exclusion_duration)
 
@@ -207,12 +214,11 @@ check_duration <- function(x,
 #'
 #' @inherit check_duration details
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_duration
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
-#' @param ... Inherit parameters from [mark_duration()].
 #'
 #' @family duration functions
 #' @family exclude functions
@@ -238,13 +244,21 @@ check_duration <- function(x,
 #'   exclude_preview() %>%
 #'   exclude_duration(max_duration = 800)
 exclude_duration <- function(x,
-                               print = FALSE,
-                               silent = FALSE,
-                               ...) {
+                             min_duration = 10,
+                             max_duration = NULL,
+                             id_col = "ResponseId",
+                             duration_col = "Duration (in seconds)",
+                             quiet = FALSE,
+                             print = FALSE,
+                             silent = FALSE) {
 
   # Mark and filter duration
   remaining_data <- mark_duration(x,
-                                    ...) %>%
+                                  min_duration = min_duration,
+                                  max_duration = max_duration,
+                                  id_col = id_col,
+                                  duration_col = duration_col,
+                                  quiet = quiet) %>%
     dplyr::filter(.data$exclusion_duration != "duration") %>%
     dplyr::select(-.data$exclusion_duration)
 

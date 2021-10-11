@@ -140,10 +140,9 @@ mark_progress <- function(x,
 #' The function outputs to console a message about the number of rows
 #' that have incomplete progress.
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_progress
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
-#' @param ... Inherit parameters from [mark_progress()].
 #'
 #' @family progress functions
 #' @family check functions
@@ -178,12 +177,20 @@ mark_progress <- function(x,
 #'   exclude_preview() %>%
 #'   check_progress(quiet = TRUE)
 check_progress <- function(x,
-                          print = TRUE,
-                          ...) {
+                           min_progress = 100,
+                           id_col = "ResponseId",
+                           finished_col = "Finished",
+                           progress_col = "Progress",
+                           quiet = FALSE,
+                           print = TRUE) {
 
   # Mark and filter progress
   exclusions <- mark_progress(x,
-                             ...) %>%
+                              min_progress = min_progress,
+                              id_col = id_col,
+                              finished_col = finished_col,
+                              progress_col = progress_col,
+                              quiet = quiet) %>%
     dplyr::filter(.data$exclusion_progress == "incomplete_progress") %>%
     dplyr::select(-.data$exclusion_progress)
 
@@ -205,12 +212,11 @@ check_progress <- function(x,
 #'
 #' @inherit check_progress details
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_progress
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
-#' @param ... Inherit parameters from [mark_progress()].
 #'
 #' @family progress functions
 #' @family exclude functions
@@ -241,13 +247,20 @@ check_progress <- function(x,
 #'   exclude_preview() %>%
 #'   exclude_progress(print = FALSE)
 exclude_progress <- function(x,
-                            print = FALSE,
-                            silent = FALSE,
-                            ...) {
+                             min_progress = 100,
+                             id_col = "ResponseId",
+                             finished_col = "Finished",
+                             progress_col = "Progress",
+                             quiet = FALSE,print = FALSE,
+                             silent = FALSE) {
 
   # Mark and filter progress
   remaining_data <- mark_progress(x,
-                                 ...) %>%
+                                  min_progress = min_progress,
+                                  id_col = id_col,
+                                  finished_col = finished_col,
+                                  progress_col = progress_col,
+                                  quiet = quiet) %>%
     dplyr::filter(.data$exclusion_progress != "incomplete_progress") %>%
     dplyr::select(-.data$exclusion_progress)
 

@@ -113,10 +113,9 @@ mark_preview <- function(x,
 #' The function outputs to console a message about the number of rows
 #' that are survey previews.
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_preview
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
-#' @param ... Inherit parameters from [mark_preview()].
 #'
 #' @family preview functions
 #' @family check functions
@@ -143,12 +142,16 @@ mark_preview <- function(x,
 #' qualtrics_text %>%
 #'   check_preview(quiet = TRUE)
 check_preview <- function(x,
-                           print = TRUE,
-                           ...) {
+                          id_col = "ResponseId",
+                          preview_col = "Status",
+                          quiet = FALSE,
+                          print = TRUE) {
 
   # Mark and filter preview
   exclusions <- mark_preview(x,
-                              ...) %>%
+                             id_col = id_col,
+                             preview_col = preview_col,
+                             quiet = quiet) %>%
     dplyr::filter(.data$exclusion_preview == "preview") %>%
     dplyr::select(-.data$exclusion_preview)
 
@@ -170,12 +173,11 @@ check_preview <- function(x,
 #'
 #' @inherit check_preview details
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_preview
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
-#' @param ... Inherit parameters from [mark_preview()].
 #'
 #' @family preview functions
 #' @family exclude functions
@@ -199,13 +201,16 @@ check_preview <- function(x,
 #' df <- qualtrics_text %>%
 #'   exclude_preview(print = FALSE)
 exclude_preview <- function(x,
-                             print = FALSE,
-                             silent = FALSE,
-                             ...) {
+                            id_col = "ResponseId",
+                            preview_col = "Status",
+                            quiet = FALSE,print = FALSE,
+                            silent = FALSE) {
 
   # Mark and filter preview
   remaining_data <- mark_preview(x,
-                                  ...) %>%
+                                 id_col = id_col,
+                                 preview_col = preview_col,
+                                 quiet = quiet) %>%
     dplyr::filter(.data$exclusion_preview != "preview") %>%
     dplyr::select(-.data$exclusion_preview)
 

@@ -4,18 +4,35 @@
 \alias{exclude_duration}
 \title{Exclude rows with minimum or maximum durations}
 \usage{
-exclude_duration(x, print = FALSE, silent = FALSE, ...)
+exclude_duration(
+  x,
+  min_duration = 10,
+  max_duration = NULL,
+  id_col = "ResponseId",
+  duration_col = "Duration (in seconds)",
+  quiet = FALSE,
+  print = FALSE,
+  silent = FALSE
+)
 }
 \arguments{
 \item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
+
+\item{min_duration}{Minimum duration that is too fast in seconds.}
+
+\item{max_duration}{Maximum duration that is too slow in seconds.}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{duration_col}{Column name for durations.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 
 \item{print}{Logical indicating whether to print returned tibble to
 console.}
 
 \item{silent}{Logical indicating whether to print message to console. Note
 this argument controls the exclude message not the check message.}
-
-\item{...}{Inherit parameters from \code{\link[=mark_duration]{mark_duration()}}.}
 }
 \value{
 An object of the same type as \code{x} that excludes rows

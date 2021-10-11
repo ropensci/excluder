@@ -106,7 +106,7 @@ mark_resolution <- function(x,
   invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
               dplyr::mutate(exclusion_resolution =
                               stringr::str_replace_na(.data$exclusion_resolution, ""))
-            )
+  )
 }
 
 #' Check screen resolution
@@ -126,10 +126,9 @@ mark_resolution <- function(x,
 #' The function outputs to console a message about the number of rows
 #' with unacceptable screen resolution.
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_resolution
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
-#' @param ... Inherit parameters from [mark_resolution()].
 #'
 #' @family resolution functions
 #' @family check functions
@@ -159,12 +158,20 @@ mark_resolution <- function(x,
 #'   exclude_preview() %>%
 #'   check_resolution(quiet = TRUE)
 check_resolution <- function(x,
-                           print = TRUE,
-                           ...) {
+                             width_min = 1000,
+                             height_min = 0,
+                             id_col = "ResponseId",
+                             res_col = "Resolution",
+                             quiet = FALSE,
+                             print = TRUE) {
 
   # Mark and filter resolution
   exclusions <- mark_resolution(x,
-                              ...) %>%
+                                width_min = width_min,
+                                height_min = height_min,
+                                id_col = id_col,
+                                res_col = res_col,
+                                quiet = quiet) %>%
     dplyr::filter(.data$exclusion_resolution == "unacceptable_resolution") %>%
     dplyr::select(-.data$exclusion_resolution)
 
@@ -186,12 +193,11 @@ check_resolution <- function(x,
 #'
 #' @inherit check_resolution details
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_resolution
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
-#' @param ... Inherit parameters from [mark_resolution()].
 #'
 #' @family resolution functions
 #' @family exclude functions
@@ -212,13 +218,21 @@ check_resolution <- function(x,
 #'   exclude_preview() %>%
 #'   exclude_resolution()
 exclude_resolution <- function(x,
-                             print = FALSE,
-                             silent = FALSE,
-                             ...) {
+                               width_min = 1000,
+                               height_min = 0,
+                               id_col = "ResponseId",
+                               res_col = "Resolution",
+                               quiet = FALSE,
+                               print = FALSE,
+                               silent = FALSE) {
 
   # Mark and filter resolution
   remaining_data <- mark_resolution(x,
-                                  ...) %>%
+                                    width_min = width_min,
+                                    height_min = height_min,
+                                    id_col = id_col,
+                                    res_col = res_col,
+                                    quiet = quiet) %>%
     dplyr::filter(.data$exclusion_resolution != "unacceptable_resolution") %>%
     dplyr::select(-.data$exclusion_resolution)
 

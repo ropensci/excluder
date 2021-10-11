@@ -4,15 +4,29 @@
 \alias{check_ip}
 \title{Check for IP addresses from outside of a specified country.}
 \usage{
-check_ip(x, print = TRUE, ...)
+check_ip(
+  x,
+  id_col = "ResponseId",
+  ip_col = "IPAddress",
+  country = "US",
+  quiet = FALSE,
+  print = TRUE
+)
 }
 \arguments{
-\item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
+\item{x}{Data frame or tibble (preferably imported from Qualtrics using
+\{qualtRics\}).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{ip_col}{Column name for IP addresses.}
+
+\item{country}{Two-letter abbreviation of country to check (default is "US").}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 
 \item{print}{Logical indicating whether to print returned tibble to
 console.}
-
-\item{...}{Inherit parameters from \code{\link[=mark_ip]{mark_ip()}}.}
 }
 \value{
 An object of the same type as \code{x} that includes the rows with

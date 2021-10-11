@@ -145,10 +145,9 @@ mark_location <- function(x,
 #' The function outputs to console a message about the number of rows
 #' with locations outside of the US.
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_location
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
-#' @param ... Inherit parameters from [mark_location()].
 #'
 #' @family location functions
 #' @family check functions
@@ -178,12 +177,19 @@ mark_location <- function(x,
 #'   exclude_preview() %>%
 #'   check_location(quiet = TRUE)
 check_location <- function(x,
-                     print = TRUE,
-                     ...) {
+                           id_col = "ResponseId",
+                           location_col = c("LocationLatitude",
+                                            "LocationLongitude"),
+                           include_na = FALSE,
+                           quiet = FALSE,
+                           print = TRUE) {
 
   # Mark and filter location
   exclusions <- mark_location(x,
-                        ...) %>%
+                              id_col = id_col,
+                              location_col = location_col,
+                              include_na = include_na,
+                              quiet = quiet) %>%
     dplyr::filter(.data$exclusion_location == "location_outside_us") %>%
     dplyr::select(-.data$exclusion_location)
 
@@ -205,12 +211,11 @@ check_location <- function(x,
 #'
 #' @inherit check_location details
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_location
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
-#' @param ... Inherit parameters from [mark_location()].
 #'
 #' @family location functions
 #' @family exclude functions
@@ -232,13 +237,20 @@ check_location <- function(x,
 #'   exclude_preview() %>%
 #'   exclude_location()
 exclude_location <- function(x,
-                       print = FALSE,
-                       silent = FALSE,
-                       ...) {
+                             id_col = "ResponseId",
+                             location_col = c("LocationLatitude",
+                                              "LocationLongitude"),
+                             include_na = FALSE,
+                             quiet = FALSE,
+                             print = FALSE,
+                             silent = FALSE) {
 
   # Mark and filter location
   remaining_data <- mark_location(x,
-                            ...) %>%
+                                  id_col = id_col,
+                                  location_col = location_col,
+                                  include_na = include_na,
+                                  quiet = quiet) %>%
     dplyr::filter(.data$exclusion_location != "location_outside_us") %>%
     dplyr::select(-.data$exclusion_location)
 

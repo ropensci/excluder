@@ -150,10 +150,9 @@ mark_ip <- function(x,
 #' addresses (likely due to including preview data---see [check_preview()]), it
 #' will print a message alerting to the number of rows with `NA`s.
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_ip
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
-#' @param ... Inherit parameters from [mark_ip()].
 #'
 #' @family ip functions
 #' @family check functions
@@ -194,12 +193,18 @@ mark_ip <- function(x,
 #'   exclude_preview() %>%
 #'   check_ip(quiet = TRUE)
 check_ip <- function(x,
-                           print = TRUE,
-                           ...) {
+                     id_col = "ResponseId",
+                     ip_col = "IPAddress",
+                     country = "US",
+                     quiet = FALSE,
+                     print = TRUE) {
 
   # Mark and filter ip
   exclusions <- mark_ip(x,
-                              ...) %>%
+                        id_col = id_col,
+                        ip_col = ip_col,
+                        country = country,
+                        quiet = quiet) %>%
     dplyr::filter(.data$exclusion_ip == "ip_outside_country") %>%
     dplyr::select(-.data$exclusion_ip)
 
@@ -221,12 +226,11 @@ check_ip <- function(x,
 #'
 #' @inherit check_ip details
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_ip
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
-#' @param ... Inherit parameters from [mark_ip()].
 #'
 #' @family ip functions
 #' @family exclude functions
@@ -252,13 +256,20 @@ check_ip <- function(x,
 #'   exclude_preview() %>%
 #'   exclude_ip(country = "DE")
 exclude_ip <- function(x,
-                             print = FALSE,
-                             silent = FALSE,
-                             ...) {
+                       id_col = "ResponseId",
+                       ip_col = "IPAddress",
+                       country = "US",
+                       quiet = FALSE,
+                       print = FALSE,
+                       silent = FALSE,
+                       ...) {
 
   # Mark and filter ip
   remaining_data <- mark_ip(x,
-                                  ...) %>%
+                            id_col = id_col,
+                            ip_col = ip_col,
+                            country = country,
+                            quiet = quiet) %>%
     dplyr::filter(.data$exclusion_ip != "ip_outside_country") %>%
     dplyr::select(-.data$exclusion_ip)
 

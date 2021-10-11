@@ -126,7 +126,7 @@ mark_duplicates <- function(x,
   # Check for duplicate locations
   if (identical(dupl_location, TRUE)) {
     if (identical(include_na, FALSE)) {
-      n_nas <- ncol(x) - ncol(tidyr::drop_na(x, dplyr::any_of(location_col)))
+      n_nas <- ncol(x) - ncol(tidyr::drop_na(x, tidyselect::any_of(location_col)))
       no_nas <- tidyr::drop_na(x, tidyselect::any_of(location_col))
       if (identical(quiet, FALSE)) {
         message(n_nas, " NAs were found in location.")
@@ -187,10 +187,9 @@ mark_duplicates <- function(x,
 #' These counts are computed independently, so rows may be counted for both
 #' types of duplicates.
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_duplicates
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
-#' @param ... Inherit parameters from [mark_duplicates()].
 #'
 #' @family duplicates functions
 #' @family check functions
@@ -221,12 +220,25 @@ mark_duplicates <- function(x,
 #' qualtrics_text %>%
 #'   check_duplicates(quiet = TRUE)
 check_duplicates <- function(x,
-                             print = TRUE,
-                             ...) {
+                             id_col = "ResponseId",
+                             ip_col = "IPAddress",
+                             location_col = c("LocationLatitude",
+                                              "LocationLongitude"),
+                             dupl_ip = TRUE,
+                             dupl_location = TRUE,
+                             include_na = FALSE,
+                             quiet = FALSE,
+                             print = TRUE) {
 
   # Mark and filter duplicates
   exclusions <- mark_duplicates(x,
-                                ...) %>%
+                                id_col = id_col,
+                                ip_col = ip_col,
+                                location_col = location_col,
+                                dupl_ip = dupl_ip,
+                                dupl_location = dupl_location,
+                                include_na = include_na,
+                                quiet = quiet) %>%
     dplyr::filter(.data$exclusion_duplicates == "duplicates") %>%
     dplyr::select(-.data$exclusion_duplicates)
 
@@ -248,12 +260,11 @@ check_duplicates <- function(x,
 #'
 #' @inherit check_duplicates details
 #'
-#' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @inheritParams mark_duplicates
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
-#' @param ... Inherit parameters from [mark_duplicates()].
 #'
 #' @family duplicates functions
 #' @family exclude functions
@@ -281,13 +292,26 @@ check_duplicates <- function(x,
 #'   exclude_preview() %>%
 #'   exclude_duplicates(dupl_location = FALSE)
 exclude_duplicates <- function(x,
+                               id_col = "ResponseId",
+                               ip_col = "IPAddress",
+                               location_col = c("LocationLatitude",
+                                                "LocationLongitude"),
+                               dupl_ip = TRUE,
+                               dupl_location = TRUE,
+                               include_na = FALSE,
+                               quiet = FALSE,
                                print = FALSE,
-                               silent = FALSE,
-                               ...) {
+                               silent = FALSE) {
 
   # Mark and filter duplicates
   remaining_data <- mark_duplicates(x,
-                                    ...) %>%
+                                    id_col = id_col,
+                                    ip_col = ip_col,
+                                    location_col = location_col,
+                                    dupl_ip = dupl_ip,
+                                    dupl_location = dupl_location,
+                                    include_na = include_na,
+                                    quiet = quiet) %>%
     dplyr::filter(.data$exclusion_duplicates != "duplicates") %>%
     dplyr::select(-.data$exclusion_duplicates)
 

@@ -4,15 +4,31 @@
 \alias{check_progress}
 \title{Check for survey progress}
 \usage{
-check_progress(x, print = TRUE, ...)
+check_progress(
+  x,
+  min_progress = 100,
+  id_col = "ResponseId",
+  finished_col = "Finished",
+  progress_col = "Progress",
+  quiet = FALSE,
+  print = TRUE
+)
 }
 \arguments{
 \item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
 
+\item{min_progress}{Amount of progress considered acceptable to include.}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{finished_col}{Column name for whether survey was completed.}
+
+\item{progress_col}{Column name for percentage of survey completed.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
+
 \item{print}{Logical indicating whether to print returned tibble to
 console.}
-
-\item{...}{Inherit parameters from \code{\link[=mark_progress]{mark_progress()}}.}
 }
 \value{
 The output is a data frame of the rows

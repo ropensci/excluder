@@ -4,18 +4,35 @@
 \alias{exclude_location}
 \title{Exclude locations outside of US}
 \usage{
-exclude_location(x, print = FALSE, silent = FALSE, ...)
+exclude_location(
+  x,
+  id_col = "ResponseId",
+  location_col = c("LocationLatitude", "LocationLongitude"),
+  include_na = FALSE,
+  quiet = FALSE,
+  print = FALSE,
+  silent = FALSE
+)
 }
 \arguments{
 \item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{location_col}{Two element vector specifying columns for latitude
+and longitude (in that order).}
+
+\item{include_na}{Logical indicating whether to include rows with NA in
+latitude and longitude columns in the output list of potentially excluded
+data.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 
 \item{print}{Logical indicating whether to print returned tibble to
 console.}
 
 \item{silent}{Logical indicating whether to print message to console. Note
 this argument controls the exclude message not the check message.}
-
-\item{...}{Inherit parameters from \code{\link[=mark_location]{mark_location()}}.}
 }
 \value{
 An object of the same type as \code{x} that excludes rows

@@ -4,15 +4,25 @@
 \alias{check_preview}
 \title{Check for survey previews}
 \usage{
-check_preview(x, print = TRUE, ...)
+check_preview(
+  x,
+  id_col = "ResponseId",
+  preview_col = "Status",
+  quiet = FALSE,
+  print = TRUE
+)
 }
 \arguments{
 \item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
 
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{preview_col}{Column name for survey preview.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
+
 \item{print}{Logical indicating whether to print returned tibble to
 console.}
-
-\item{...}{Inherit parameters from \code{\link[=mark_preview]{mark_preview()}}.}
 }
 \value{
 The output is a data frame of the rows

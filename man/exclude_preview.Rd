@@ -4,18 +4,29 @@
 \alias{exclude_preview}
 \title{Exclude survey previews}
 \usage{
-exclude_preview(x, print = FALSE, silent = FALSE, ...)
+exclude_preview(
+  x,
+  id_col = "ResponseId",
+  preview_col = "Status",
+  quiet = FALSE,
+  print = FALSE,
+  silent = FALSE
+)
 }
 \arguments{
 \item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{preview_col}{Column name for survey preview.}
+
+\item{quiet}{Logical indicating whether to print message to console.}
 
 \item{print}{Logical indicating whether to print returned tibble to
 console.}
 
 \item{silent}{Logical indicating whether to print message to console. Note
 this argument controls the exclude message not the check message.}
-
-\item{...}{Inherit parameters from \code{\link[=mark_preview]{mark_preview()}}.}
 }
 \value{
 An object of the same type as \code{x} that excludes rows

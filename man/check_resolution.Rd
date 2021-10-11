@@ -4,15 +4,31 @@
 \alias{check_resolution}
 \title{Check screen resolution}
 \usage{
-check_resolution(x, print = TRUE, ...)
+check_resolution(
+  x,
+  width_min = 1000,
+  height_min = 0,
+  id_col = "ResponseId",
+  res_col = "Resolution",
+  quiet = FALSE,
+  print = TRUE
+)
 }
 \arguments{
 \item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
 
+\item{width_min}{Minimum acceptable screen width.}
+
+\item{height_min}{Minimum acceptable screen height.}
+
+\item{id_col}{Column name for unique row ID (e.g., participant).}
+
+\item{res_col}{Column name for screen resolution (in format widthxheight).}
+
+\item{quiet}{Logical indicating whether to print message to console.}
+
 \item{print}{Logical indicating whether to print returned tibble to
 console.}
-
-\item{...}{Inherit parameters from \code{\link[=mark_resolution]{mark_resolution()}}.}
 }
 \value{
 The output is a data frame of the rows that have unacceptable screen
