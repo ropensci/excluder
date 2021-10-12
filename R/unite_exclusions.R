@@ -84,10 +84,10 @@ unite_exclusions <- function(x,
                  na.rm = TRUE,
                  remove = remove) %>%
     dplyr::mutate(exclusions =  # remove extraneous commas from unite
-                    ifelse(substr(.data$exclusions, 1, 1) == ",",
+                    ifelse(substr(.data$exclusions, 1, 1) == separator,
                            sub("^.", "", .data$exclusions), .data$exclusions),
                   exclusions =
                     ifelse(substr(.data$exclusions, nchar(.data$exclusions),
-                                  nchar(.data$exclusions)) == ",",
+                                  nchar(.data$exclusions)) == separator,
                            sub(".$", "", .data$exclusions), .data$exclusions))
 }
