@@ -9,11 +9,11 @@
 #' @keywords internal
 #' @export
 collapse_exclusions <- function(x,
-                             exclusion_types = c("duplicates", "duration",
-                                                 "ip", "location", "preview",
-                                                 "progress", "resolution"),
-                             separator = ",",
-                             remove = TRUE) {
+                                exclusion_types = c("duplicates", "duration",
+                                                    "ip", "location", "preview",
+                                                    "progress", "resolution"),
+                                separator = ",",
+                                remove = TRUE) {
   lifecycle::deprecate_warn("0.3.0", "collapse_exclusions()",
                             "unite_exclusions()")
   unite_exclusions(x, exclusion_types, separator, remove)
@@ -61,11 +61,11 @@ collapse_exclusions <- function(x,
 #' df2 <- df %>%
 #'   unite_exclusions(exclusion_types = c("duplicates", "duration", "ip"))
 unite_exclusions <- function(x,
-                                exclusion_types = c("duplicates", "duration",
-                                                    "ip", "location", "preview",
-                                                    "progress", "resolution"),
-                                separator = ",",
-                                remove = TRUE) {
+                             exclusion_types = c("duplicates", "duration",
+                                                 "ip", "location", "preview",
+                                                 "progress", "resolution"),
+                             separator = ",",
+                             remove = TRUE) {
 
   # Create vectors of exclusion columns to unite
   exclusion_columns_selected <- paste0("exclusion_", exclusion_types)
@@ -83,6 +83,11 @@ unite_exclusions <- function(x,
                  sep = separator,
                  na.rm = TRUE,
                  remove = remove) %>%
-    dplyr::mutate(exclusions =
-                    ifelse(.data$exclusions == "", NA, .data$exclusions))
+    dplyr::mutate(exclusions =  # remove extraneous commas from unite
+                    ifelse(substr(.data$exclusions, 1, 1) == ",",
+                           sub("^.", "", .data$exclusions), .data$exclusions),
+                  exclusions =
+                    ifelse(substr(.data$exclusions, nchar(.data$exclusions),
+                                  nchar(.data$exclusions)) == ",",
+                           sub(".$", "", .data$exclusions), .data$exclusions))
 }
