@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mark IP addresses that come from a specified country. — mark_ip • excluder</title>
+<title>Mark IP addresses from outside of a specified country. — mark_ip • excluder</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Mark IP addresses that come from a specified country. — mark_ip" />
+<meta property="og:title" content="Mark IP addresses from outside of a specified country. — mark_ip" />
 <meta property="og:description" content="The mark_ip() function creates a column labeling
-rows of data that have IP addresses in the specified country.
+rows of data that have IP addresses from outside the specified country.
 The function is written to work with data from
 Qualtrics surveys." />
 
@@ -75,7 +75,7 @@ Qualtrics surveys." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -126,14 +126,14 @@ Qualtrics surveys." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mark IP addresses that come from a specified country.</h1>
+    <h1>Mark IP addresses from outside of a specified country.</h1>
     <small class="dont-index">Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/R/ip.R'><code>R/ip.R</code></a></small>
     <div class="hidden name"><code>mark_ip.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>The <code>mark_ip()</code> function creates a column labeling
-rows of data that have IP addresses in the specified country.
+rows of data that have IP addresses from outside the specified country.
 The function is written to work with data from
 <a href='https://www.qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
@@ -211,12 +211,12 @@ will print a message alerting to the number of rows with <code>NA</code>s.</p>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mark_ip</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows have IP addresses outside of US.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows have IP addresses outside of US.</span></div><div class='input'>
 <span class='co'># Mark IP addresses outside of Germany</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mark_ip</span><span class='op'>(</span>country <span class='op'>=</span> <span class='st'>"DE"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows have IP addresses outside of DE.</span></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>94 out of 98 rows have IP addresses outside of DE.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

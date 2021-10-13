@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -94,19 +94,20 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jeffreyrstevens.github.io/excluder/">excluder</a></span><span class="op">)</span></code></pre></div>
-<p>The <a href="https://jeffreyrstevens.github.io/excluder/">excluder</a> package facilitates checking for, marking, and excluding rows of data frames for common online participant exclusion criteria. This package applies to online data with a focus on data collected from <a href="https://www.qualtrics.com">Qualtrics</a> surveys, and default column names come from importing data with the <a href="https://docs.ropensci.org/qualtRics/"><code>{qualtRics}</code></a> package. This may be most useful for <a href="https://www.mturk.com/">Mechanical Turk</a> data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States. However, the package can be used for data from other sources that need to be screened for IP address, location, duplicated locations, participant progress, survey completion time, and/or screen resolution.</p>
+<p>The <a href="https://jeffreyrstevens.github.io/excluder/">excluder</a> package facilitates marking, checking for, and excluding rows of data frames<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> for common online participant exclusion criteria. This package applies to online data with a focus on data collected from <a href="https://www.qualtrics.com">Qualtrics</a> surveys, and default column names come from importing data with the <a href="https://docs.ropensci.org/qualtRics/"><code>{qualtRics}</code></a> package. This may be most useful for <a href="https://www.mturk.com/">Mechanical Turk</a> data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States. However, the package can be used for data from other sources that need to be screened for IP address, location, duplicated locations, participant progress, survey completion time, and/or screen resolution.</p>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>The package has three core actions:</p>
+<p>The package has three core verbs:</p>
 <ol style="list-style-type: decimal">
 <li>
-<code>check</code> functions search for the exclusion criteria and output a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.</li>
+<code>mark_*()</code> functions add a new column to the original data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing without changing the original data frame.</li>
 <li>
-<code>exclude</code> functions remove rows meeting the exclusion criteria. This is safest to do after checking the rows to ensure the exclusions are correct.</li>
+<code>check_*()</code> functions search for the exclusion criteria and output a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.</li>
 <li>
-<code>mark</code> functions add a new column to the original data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing without changing the original data frame.</li>
+<code>exclude_*()</code> functions remove rows meeting the exclusion criteria. This is safest to do after checking the rows to ensure the exclusions are correct.</li>
 </ol>
+<p>The <code>check_*()</code> and <code>exclude_*()</code> functions call the <code>mark_*()</code> function internally and then filter either the excluded or non-excluded rows. So avoid combining different verbs to sidestep unnecessary passes through the data.</p>
 <p>The package provides seven types of exclusions based on Qualtrics metadata:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -124,6 +125,7 @@
 <li>
 <code>resolution</code> works with rows whose screen resolution is not acceptable.</li>
 </ol>
+<p>The verbs combine with the exclusion types to generate functions. For instance, <code><a href="../reference/mark_duplicates.html">mark_duplicates()</a></code> will mark duplicate rows and <code><a href="../reference/exclude_preview.html">exclude_preview()</a></code> will exclude preview rows.</p>
 <p>There are also helper functions:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -138,7 +140,7 @@
 <h2 class="hasAnchor">
 <a href="#preparing-your-data" class="anchor"></a>Preparing your data</h2>
 <p>If you use the <a href="https://docs.ropensci.org/qualtRics/reference/fetch_survey.html"><code>fetch_survey()</code></a> from the <code>{qualtRics}</code> package to import your Qualtrics data, it will automatically remove the first two label rows from the data set. However, if you directly download your data from Qualtrics, it will include two rows in your data set that include label information. This has two side effects: (1) there are non-data rows that need to be removed from your data set, and (2) all of your columns will be imported as character data types.</p>
-<p>The <a href="https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html"><code>remove_label_rows()</code></a> function will remove these two label rows. Also, by default, it will coerce the Qualtrics metadata columns from character types to the correct formats (e.g., <em>StartDate</em> is coerced to a date, <em>Progress</em> is coerced to numeric). So if you download your data from Qualtrics, you will need to run this function on your data before proceeding.</p>
+<p>The <a href="https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html"><code>remove_label_rows()</code></a> function will remove these two label rows. Also, by default, it will coerce the Qualtrics metadata columns from character types to the correct formats (e.g., <em><code>StartDate</code></em> is coerced to a date, <em><code>Progress</code></em> is coerced to numeric). So if you download your data from Qualtrics, you will need to run this function on your data before proceeding.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">qualtrics_raw</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 102</span>
@@ -182,112 +184,11 @@
 <span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Macintosh", "Windows NT 10…</span>
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span></code></pre></div>
 </div>
-<div id="checking-observations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#checking-observations" class="anchor"></a>Checking observations</h2>
-<p>Often the first step of excluding observations is to check which observations may meet a particular exclusion criterion. The <code>check_*()</code> suite of functions prints a message about the number of observations that meet the exclusion criterion and returns a data frame or tibble that includes only the observations that meet the criterion.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Check for rows with incomplete data then rows with durations less than 100 seconds</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
-<span class="co">#&gt; # A tibble: 6 × 16</span>
-<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
-<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0         99</span>
-<span class="co">#&gt; 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1</span>
-<span class="co">#&gt; 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0         13</span>
-<span class="co">#&gt; 4 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0        48</span>
-<span class="co">#&gt; 5 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5</span>
-<span class="co">#&gt; 6 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address 2.246.67.0         44</span>
-<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Check for rows with with durations less than 100 seconds</span>
-<span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="co">#&gt; 4 out of 100 rows took less time than the minimum duration of 100 seconds.</span>
-<span class="co">#&gt; # A tibble: 4 × 16</span>
-<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
-<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address 84.56.189.0       100</span>
-<span class="co">#&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0         13</span>
-<span class="co">#&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0        48</span>
-<span class="co">#&gt; 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100</span>
-<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
-<p>Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Check for rows with durations less than 100 seconds within rows that did not complete the survey</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
-<span class="co">#&gt; 2 out of 6 rows took less time than the minimum duration of 100 seconds.</span>
-<span class="co">#&gt; # A tibble: 2 × 16</span>
-<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress   Progress</span>
-<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0        13</span>
-<span class="co">#&gt; 2 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0       48</span>
-<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
-</div>
-<div id="excluding-observations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#excluding-observations" class="anchor"></a>Excluding observations</h2>
-<p>After checking which rows meet exclusion criteria, the <code>exclude_*()</code> suite of function will return a data frame that has removed observations that match the exclusion criteria. There is no need to pipe a check into an exclude, as the exclude functions already run the check. Therefore, excludes print a message of the number of observations meeting the criteria.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Exclude survey responses used to preview the survey</span>
-<span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
-<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; Rows: 98</span>
-<span class="co">#&gt; Columns: 16</span>
-<span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:17:22, 2020-12-11 12:17:41, 202…</span>
-<span class="co">#&gt; $ EndDate                 &lt;dttm&gt; 2020-12-11 12:21:41, 2020-12-11 12:22:07, 202…</span>
-<span class="co">#&gt; $ Status                  &lt;chr&gt; "IP Address", "IP Address", "IP Address", "IP …</span>
-<span class="co">#&gt; $ IPAddress               &lt;chr&gt; "73.23.43.0", "16.140.105.0", "107.57.244.0", …</span>
-<span class="co">#&gt; $ Progress                &lt;dbl&gt; 100, 100, 100, 100, 100, 100, 100, 100, 100, 1…</span>
-<span class="co">#&gt; $ `Duration (in seconds)` &lt;dbl&gt; 651, 409, 140, 213, 177, 662, 296, 277, 54, 43…</span>
-<span class="co">#&gt; $ Finished                &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…</span>
-<span class="co">#&gt; $ RecordedDate            &lt;dttm&gt; 2020-12-11 12:21:42, 2020-12-11 12:22:07, 202…</span>
-<span class="co">#&gt; $ ResponseId              &lt;chr&gt; "R_fbYBeNscosfzN9L", "R_yyG1HGXOMNPfWDn", "R_9…</span>
-<span class="co">#&gt; $ LocationLatitude        &lt;dbl&gt; 34.03852, 44.96581, 27.98064, 29.76499, 40.335…</span>
-<span class="co">#&gt; $ LocationLongitude       &lt;dbl&gt; -118.25739, -93.07187, -82.78531, -95.36156, -…</span>
-<span class="co">#&gt; $ UserLanguage            &lt;chr&gt; "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"…</span>
-<span class="co">#&gt; $ Browser                 &lt;chr&gt; "Chrome", "Chrome", "Chrome", "Chrome", "Chrom…</span>
-<span class="co">#&gt; $ Version                 &lt;chr&gt; "87.0.4280.88", "87.0.4280.88", "87.0.4280.88"…</span>
-<span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Windows NT 10.0", "Windows…</span>
-<span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1536x864", "1536x864", "1366x768"…</span></code></pre></div>
-<p>Piping will apply subsequent excludes to the data frames with the previous excludes already applied. Therefore, it often makes sense to remove the preview surveys and incomplete surveys before checking other exclusion types to speed processing.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows then duplicate locations and IP addresses</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
-<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 rows did not complete the study.</span>
-<span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 6 out of 92 rows have duplicate IP addresses.</span>
-<span class="co">#&gt; 0 NAs were found in location.</span>
-<span class="co">#&gt; 9 out of 91 rows have duplicate locations.</span>
-<span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span></code></pre></div>
-</div>
 <div id="marking-observations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#marking-observations" class="anchor"></a>Marking observations</h2>
-<p>Rather than removing observations, you may want to simply mark them for future processing (or not). The <code>mark_*()</code> suite of functions creates a new column for each mark function used that marks which observations violate the exclusion criterion. Like the excludes, marks run the check functions, so they print a message about the number of observations meeting exclusion criteria. Mark functions return a data frame identical to the original with additional columns marking exclusions.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>The core verbs in this package mark them for future processing. The <code>mark_*()</code> suite of functions creates a new column for each mark function used that marks which observations violate the exclusion criterion. They print a message about the number of observations meeting each exclusion criteria. Mark functions return a data frame identical to the original with additional columns marking exclusions.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Mark observations run as preview</span>
 <span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -312,9 +213,9 @@
 <span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Macintosh", "Windows NT 10…</span>
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
 <span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", "", "", "", "", "", "", …</span></code></pre></div>
-<p>Notice the new <code>exclusion_preview</code> column at the end of the data frame. It has marked the first two observations as <code>preview</code>.</p>
+<p>Notice the new <em><code>exclusion_preview</code></em> column at the end of the data frame. It has marked the first two observations as <code>preview</code>.</p>
 <p>Piping multiple mark functions will create multiple rows marking observations for exclusion.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Mark preview and incomplete observations</span>
 <span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -342,8 +243,8 @@
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
 <span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", "", "", "", "", "", "", …</span>
 <span class="co">#&gt; $ exclusion_progress      &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", ""…</span></code></pre></div>
-<p>To unite all of the marked columns into a single column, use the <code><a href="../reference/unite_exclusions.html">unite_exclusions()</a></code> function. This will create a new <code>exclusions</code> columns that will unite all exclusions in each observation into a single column.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<p>To unite all of the marked columns into a single column, use the <code><a href="../reference/unite_exclusions.html">unite_exclusions()</a></code> function. This will create a new <code>exclusions</code> columns that will unite all exclusions in each observation into a single column. Here we move the combined <em><code>exclusions</code></em> column to the beginning of the data frame to view it.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -354,22 +255,22 @@
 <span class="co">#&gt; # A tibble: 100 × 17</span>
 <span class="co">#&gt;    exclusions  StartDate           EndDate             Status IPAddress Progress</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 preview,du… 2020-12-11 12:06:52 2020-12-11 12:10:30 Surve… &lt;NA&gt;           100</span>
-<span class="co">#&gt;  2 preview,    2020-12-11 12:06:43 2020-12-11 12:11:27 Surve… &lt;NA&gt;           100</span>
-<span class="co">#&gt;  3 ,           2020-12-11 12:17:22 2020-12-11 12:21:41 IP Ad… 73.23.43…      100</span>
-<span class="co">#&gt;  4 ,duration   2020-12-11 12:17:41 2020-12-11 12:22:07 IP Ad… 16.140.1…      100</span>
-<span class="co">#&gt;  5 ,duration   2020-12-11 12:19:45 2020-12-11 12:23:16 IP Ad… 107.57.2…      100</span>
-<span class="co">#&gt;  6 ,duration   2020-12-11 12:37:51 2020-12-11 12:43:09 IP Ad… 15.232.1…      100</span>
-<span class="co">#&gt;  7 ,duration   2020-12-11 12:41:23 2020-12-11 12:44:37 IP Ad… 24.195.9…      100</span>
-<span class="co">#&gt;  8 ,           2020-12-11 12:37:04 2020-12-11 12:45:50 IP Ad… 98.75.20…      100</span>
-<span class="co">#&gt;  9 ,duration   2020-12-11 12:55:35 2020-12-11 12:59:24 IP Ad… 51.113.1…      100</span>
-<span class="co">#&gt; 10 ,duration   2020-12-11 13:22:34 2020-12-11 13:35:19 IP Ad… 17.163.1…      100</span>
+<span class="co">#&gt;  1 "preview,d… 2020-12-11 12:06:52 2020-12-11 12:10:30 Surve… &lt;NA&gt;           100</span>
+<span class="co">#&gt;  2 "preview"   2020-12-11 12:06:43 2020-12-11 12:11:27 Surve… &lt;NA&gt;           100</span>
+<span class="co">#&gt;  3 ""          2020-12-11 12:17:22 2020-12-11 12:21:41 IP Ad… 73.23.43…      100</span>
+<span class="co">#&gt;  4 "duration_… 2020-12-11 12:17:41 2020-12-11 12:22:07 IP Ad… 16.140.1…      100</span>
+<span class="co">#&gt;  5 "duration_… 2020-12-11 12:19:45 2020-12-11 12:23:16 IP Ad… 107.57.2…      100</span>
+<span class="co">#&gt;  6 "duration_… 2020-12-11 12:37:51 2020-12-11 12:43:09 IP Ad… 15.232.1…      100</span>
+<span class="co">#&gt;  7 "duration_… 2020-12-11 12:41:23 2020-12-11 12:44:37 IP Ad… 24.195.9…      100</span>
+<span class="co">#&gt;  8 ""          2020-12-11 12:37:04 2020-12-11 12:45:50 IP Ad… 98.75.20…      100</span>
+<span class="co">#&gt;  9 "duration_… 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Ad… 51.113.1…      100</span>
+<span class="co">#&gt; 10 "duration_… 2020-12-11 13:22:34 2020-12-11 13:35:19 IP Ad… 17.163.1…      100</span>
 <span class="co">#&gt; # … with 90 more rows, and 11 more variables: Duration (in seconds) &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   Finished &lt;lgl&gt;, RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;,</span>
 <span class="co">#&gt; #   LocationLatitude &lt;dbl&gt;, LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;,</span>
 <span class="co">#&gt; #   Browser &lt;chr&gt;, Version &lt;chr&gt;, Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
-<p>Multiple exclusions are separated by <code>,</code> but the separating character can be controlled by the <code>separator</code> argument. By default, the multiple exclusion columns are removed from the final data frame, but this can be turned off by setting the <code>remove</code> argument to <code>FALSE</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p>Multiple exclusions are separated by <code>,</code> by default, but the separating character can be controlled by the <code>separator</code> argument. By default, the multiple exclusion columns are removed from the final data frame, but this can be turned off by setting the <code>remove</code> argument to <code>FALSE</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -380,27 +281,185 @@
 <span class="co">#&gt; # A tibble: 100 × 19</span>
 <span class="co">#&gt;    exclusions  StartDate           EndDate             Status IPAddress Progress</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 preview;du… 2020-12-11 12:06:52 2020-12-11 12:10:30 Surve… &lt;NA&gt;           100</span>
-<span class="co">#&gt;  2 preview;    2020-12-11 12:06:43 2020-12-11 12:11:27 Surve… &lt;NA&gt;           100</span>
-<span class="co">#&gt;  3 ;           2020-12-11 12:17:22 2020-12-11 12:21:41 IP Ad… 73.23.43…      100</span>
-<span class="co">#&gt;  4 ;duration   2020-12-11 12:17:41 2020-12-11 12:22:07 IP Ad… 16.140.1…      100</span>
-<span class="co">#&gt;  5 ;duration   2020-12-11 12:19:45 2020-12-11 12:23:16 IP Ad… 107.57.2…      100</span>
-<span class="co">#&gt;  6 ;duration   2020-12-11 12:37:51 2020-12-11 12:43:09 IP Ad… 15.232.1…      100</span>
-<span class="co">#&gt;  7 ;duration   2020-12-11 12:41:23 2020-12-11 12:44:37 IP Ad… 24.195.9…      100</span>
-<span class="co">#&gt;  8 ;           2020-12-11 12:37:04 2020-12-11 12:45:50 IP Ad… 98.75.20…      100</span>
-<span class="co">#&gt;  9 ;duration   2020-12-11 12:55:35 2020-12-11 12:59:24 IP Ad… 51.113.1…      100</span>
-<span class="co">#&gt; 10 ;duration   2020-12-11 13:22:34 2020-12-11 13:35:19 IP Ad… 17.163.1…      100</span>
+<span class="co">#&gt;  1 "preview;d… 2020-12-11 12:06:52 2020-12-11 12:10:30 Surve… &lt;NA&gt;           100</span>
+<span class="co">#&gt;  2 "preview"   2020-12-11 12:06:43 2020-12-11 12:11:27 Surve… &lt;NA&gt;           100</span>
+<span class="co">#&gt;  3 ""          2020-12-11 12:17:22 2020-12-11 12:21:41 IP Ad… 73.23.43…      100</span>
+<span class="co">#&gt;  4 "duration_… 2020-12-11 12:17:41 2020-12-11 12:22:07 IP Ad… 16.140.1…      100</span>
+<span class="co">#&gt;  5 "duration_… 2020-12-11 12:19:45 2020-12-11 12:23:16 IP Ad… 107.57.2…      100</span>
+<span class="co">#&gt;  6 "duration_… 2020-12-11 12:37:51 2020-12-11 12:43:09 IP Ad… 15.232.1…      100</span>
+<span class="co">#&gt;  7 "duration_… 2020-12-11 12:41:23 2020-12-11 12:44:37 IP Ad… 24.195.9…      100</span>
+<span class="co">#&gt;  8 ""          2020-12-11 12:37:04 2020-12-11 12:45:50 IP Ad… 98.75.20…      100</span>
+<span class="co">#&gt;  9 "duration_… 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Ad… 51.113.1…      100</span>
+<span class="co">#&gt; 10 "duration_… 2020-12-11 13:22:34 2020-12-11 13:35:19 IP Ad… 17.163.1…      100</span>
 <span class="co">#&gt; # … with 90 more rows, and 13 more variables: Duration (in seconds) &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   Finished &lt;lgl&gt;, RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;,</span>
 <span class="co">#&gt; #   LocationLatitude &lt;dbl&gt;, LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;,</span>
 <span class="co">#&gt; #   Browser &lt;chr&gt;, Version &lt;chr&gt;, Operating System &lt;chr&gt;, Resolution &lt;chr&gt;,</span>
 <span class="co">#&gt; #   exclusion_preview &lt;chr&gt;, exclusion_duration &lt;chr&gt;</span></code></pre></div>
 </div>
+<div id="checking-observations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#checking-observations" class="anchor"></a>Checking observations</h2>
+<p>The <code>check_*()</code> suite of functions return a data frame that includes only the observations that meet the criterion. Since these functions first run the appropriate <code>mark_*()</code> function, they also print a message about the number of observations that meet the exclusion criterion.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Check for rows with incomplete data</span>
+<span class="va">df</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
+<span class="co">#&gt; # A tibble: 6 × 16</span>
+<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
+<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0         99</span>
+<span class="co">#&gt; 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1</span>
+<span class="co">#&gt; 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0         13</span>
+<span class="co">#&gt; 4 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0        48</span>
+<span class="co">#&gt; 5 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5</span>
+<span class="co">#&gt; 6 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address 2.246.67.0         44</span>
+<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
+<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
+<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Check for rows with durations less than 100 seconds</span>
+<span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; 4 out of 100 rows took less time than the minimum duration of 100 seconds.</span>
+<span class="co">#&gt; # A tibble: 4 × 16</span>
+<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
+<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address 84.56.189.0       100</span>
+<span class="co">#&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0         13</span>
+<span class="co">#&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0        48</span>
+<span class="co">#&gt; 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100</span>
+<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
+<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
+<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<p>Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Check for rows with durations less than 100 seconds in rows that did not complete the survey</span>
+<span class="va">df</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
+<span class="co">#&gt; 2 out of 6 rows took less time than the minimum duration of 100 seconds.</span>
+<span class="co">#&gt; # A tibble: 2 × 16</span>
+<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress   Progress</span>
+<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0        13</span>
+<span class="co">#&gt; 2 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0       48</span>
+<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
+<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
+<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<p>To check all data for multiple criteria, use the <code>mark_*()</code> functions followed by a filter.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Check for multiple criteria</span>
+<span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">exclusions</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span>
+<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
+<span class="co">#&gt; 82 out of 100 rows took less time than the minimum duration of 500 seconds.</span>
+<span class="co">#&gt; # A tibble: 83 × 17</span>
+<span class="co">#&gt;    StartDate           EndDate             Status         IPAddress    Progress</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;          &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview &lt;NA&gt;              100</span>
+<span class="co">#&gt;  2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview &lt;NA&gt;              100</span>
+<span class="co">#&gt;  3 2020-12-11 12:17:41 2020-12-11 12:22:07 IP Address     16.140.105.0      100</span>
+<span class="co">#&gt;  4 2020-12-11 12:19:45 2020-12-11 12:23:16 IP Address     107.57.244.0      100</span>
+<span class="co">#&gt;  5 2020-12-11 12:37:51 2020-12-11 12:43:09 IP Address     15.232.167.0      100</span>
+<span class="co">#&gt;  6 2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address     24.195.91.0       100</span>
+<span class="co">#&gt;  7 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address     51.113.171.0      100</span>
+<span class="co">#&gt;  8 2020-12-11 13:22:34 2020-12-11 13:35:19 IP Address     17.163.199.0      100</span>
+<span class="co">#&gt;  9 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address     84.56.189.0       100</span>
+<span class="co">#&gt; 10 2020-12-11 17:02:00 2020-12-11 17:03:30 IP Address     70.203.63.0       100</span>
+<span class="co">#&gt; # … with 73 more rows, and 12 more variables: Duration (in seconds) &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   Finished &lt;lgl&gt;, RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;,</span>
+<span class="co">#&gt; #   LocationLatitude &lt;dbl&gt;, LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;,</span>
+<span class="co">#&gt; #   Browser &lt;chr&gt;, Version &lt;chr&gt;, Operating System &lt;chr&gt;, Resolution &lt;chr&gt;,</span>
+<span class="co">#&gt; #   exclusions &lt;chr&gt;</span></code></pre></div>
+</div>
+<div id="excluding-observations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#excluding-observations" class="anchor"></a>Excluding observations</h2>
+<p>The <code>exclude_*()</code> suite of function will return a data frame that has removed observations that match the exclusion criteria. Exclude functions print their own messages about the number of observations excluded.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Exclude survey responses used to preview the survey</span>
+<span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; Rows: 98</span>
+<span class="co">#&gt; Columns: 16</span>
+<span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:17:22, 2020-12-11 12:17:41, 202…</span>
+<span class="co">#&gt; $ EndDate                 &lt;dttm&gt; 2020-12-11 12:21:41, 2020-12-11 12:22:07, 202…</span>
+<span class="co">#&gt; $ Status                  &lt;chr&gt; "IP Address", "IP Address", "IP Address", "IP …</span>
+<span class="co">#&gt; $ IPAddress               &lt;chr&gt; "73.23.43.0", "16.140.105.0", "107.57.244.0", …</span>
+<span class="co">#&gt; $ Progress                &lt;dbl&gt; 100, 100, 100, 100, 100, 100, 100, 100, 100, 1…</span>
+<span class="co">#&gt; $ `Duration (in seconds)` &lt;dbl&gt; 651, 409, 140, 213, 177, 662, 296, 277, 54, 43…</span>
+<span class="co">#&gt; $ Finished                &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…</span>
+<span class="co">#&gt; $ RecordedDate            &lt;dttm&gt; 2020-12-11 12:21:42, 2020-12-11 12:22:07, 202…</span>
+<span class="co">#&gt; $ ResponseId              &lt;chr&gt; "R_fbYBeNscosfzN9L", "R_yyG1HGXOMNPfWDn", "R_9…</span>
+<span class="co">#&gt; $ LocationLatitude        &lt;dbl&gt; 34.03852, 44.96581, 27.98064, 29.76499, 40.335…</span>
+<span class="co">#&gt; $ LocationLongitude       &lt;dbl&gt; -118.25739, -93.07187, -82.78531, -95.36156, -…</span>
+<span class="co">#&gt; $ UserLanguage            &lt;chr&gt; "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"…</span>
+<span class="co">#&gt; $ Browser                 &lt;chr&gt; "Chrome", "Chrome", "Chrome", "Chrome", "Chrom…</span>
+<span class="co">#&gt; $ Version                 &lt;chr&gt; "87.0.4280.88", "87.0.4280.88", "87.0.4280.88"…</span>
+<span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Windows NT 10.0", "Windows…</span>
+<span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1536x864", "1536x864", "1366x768"…</span></code></pre></div>
+<p>Piping will apply subsequent excludes to the data frames with the previous excludes already applied. Therefore, it often makes sense to remove the preview surveys and incomplete surveys before checking other exclusion types to speed processing.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows then duplicate locations and IP addresses</span>
+<span class="va">df</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
+<span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span></code></pre></div>
+</div>
+<div id="messages-and-console-output" class="section level2">
+<h2 class="hasAnchor">
+<a href="#messages-and-console-output" class="anchor"></a>Messages and console output</h2>
+<p>Messages about the number of rows meeting the exclusion criteria are printed to the console by default. These messages are generated by the <code>mark_*()</code> functions and carry over to <code>check_*()</code> functions. They can be turn off by setting <code>quiet</code> to <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Turn off marking/checking messages with quiet = TRUE</span>
+<span class="va">df</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span>quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 6 × 16</span>
+<span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
+<span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0         99</span>
+<span class="co">#&gt; 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1</span>
+<span class="co">#&gt; 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address 15.223.0.0         13</span>
+<span class="co">#&gt; 4 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address 19.127.87.0        48</span>
+<span class="co">#&gt; 5 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address 40.146.247.0        5</span>
+<span class="co">#&gt; 6 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address 2.246.67.0         44</span>
+<span class="co">#&gt; # … with 11 more variables: Duration (in seconds) &lt;dbl&gt;, Finished &lt;lgl&gt;,</span>
+<span class="co">#&gt; #   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;, LocationLatitude &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;, Browser &lt;chr&gt;, Version &lt;chr&gt;,</span>
+<span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
+<p>Note that <code>exclude_*()</code> functions have the <code>mark_*()</code> messages turned off by default and produce their own messages about exclusions. To silence these messages, set <code>silent</code> to <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Turn off exclusion messages with silent = TRUE</span>
+<span class="va">df</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>Though <code>exclude_*()</code> functions do not print the data frame to the console, <code>mark_*()</code> and <code>check_*()</code> do. To avoid printing to the console, set <code>print</code> = <code>FALSE</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Turn off marking/checking printing data frame with print = FALSE</span>
+<span class="va">df</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span>print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span></code></pre></div>
+</div>
 <div id="deidentifying-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#deidentifying-data" class="anchor"></a>Deidentifying data</h2>
-<p>By default, Qualtrics records participant IP address and location.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> You can also record properties of the participants’ computers such as operating system, web browser type and version, and screen resolution.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> While these pieces of information can be useful for excluding observations, they carry potentially identifiable information. Therefore, you may want to remove them from data frame before saving or processing it. The <code><a href="../reference/deidentify.html">deidentify()</a></code> function removes potentially identifiable data columns collected by Qualtrics. By default, the function uses a strict rule to remove IP address, location, and computer information (browser type and version, operating system, and screen resolution).</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p>By default, Qualtrics records participant IP address and location.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> You can also record properties of the participants’ computers such as operating system, web browser type and version, and screen resolution.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> While these pieces of information can be useful for excluding observations, they carry potentially identifiable information. Therefore, you may want to remove them from data frame before saving or processing it. The <code><a href="../reference/deidentify.html">deidentify()</a></code> function removes potentially identifiable data columns collected by Qualtrics. By default, the function uses a strict rule to remove IP address, location, and computer information (browser type and version, operating system, and screen resolution).</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows</span>
 <span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -408,13 +467,8 @@
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 rows did not complete the study.</span>
 <span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 6 out of 92 rows have duplicate IP addresses.</span>
-<span class="co">#&gt; 0 NAs were found in location.</span>
-<span class="co">#&gt; 9 out of 91 rows have duplicate locations.</span>
 <span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
 <span class="co">#&gt; Rows: 83</span>
 <span class="co">#&gt; Columns: 8</span>
@@ -427,7 +481,7 @@
 <span class="co">#&gt; $ RecordedDate            &lt;dttm&gt; 2020-12-11 12:21:42, 2020-12-11 12:22:07, 202…</span>
 <span class="co">#&gt; $ ResponseId              &lt;chr&gt; "R_fbYBeNscosfzN9L", "R_yyG1HGXOMNPfWDn", "R_9…</span></code></pre></div>
 <p>If the computer information is not considered sensitive, it can be kept by setting the <code>strict</code> argument to <code>FALSE</code>, thereby only removing IP address and location.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows</span>
 <span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -435,13 +489,8 @@
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span>strict <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 rows did not complete the study.</span>
 <span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 6 out of 92 rows have duplicate IP addresses.</span>
-<span class="co">#&gt; 0 NAs were found in location.</span>
-<span class="co">#&gt; 9 out of 91 rows have duplicate locations.</span>
 <span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
 <span class="co">#&gt; Rows: 83</span>
 <span class="co">#&gt; Columns: 12</span>
@@ -461,8 +510,9 @@
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>To avoid recording this potentially identifiable information, go to <em>Survey options</em> &gt; <em>Security</em> &gt; <em>Anonymize responses</em>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>You can turn these on by adding a new question (usually to the beginning of your survey) and choosing <em>Meta info</em> as the question type.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Though the functions take data frames input, they produce <a href="https://tibble.tidyverse.org/">tibbles</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>To avoid recording this potentially identifiable information, go to <em>Survey options</em> &gt; <em>Security</em> &gt; <em>Anonymize responses</em>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>You can turn these on by adding a new question (usually to the beginning of your survey) and choosing <em>Meta info</em> as the question type.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>

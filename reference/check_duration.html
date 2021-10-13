@@ -75,7 +75,7 @@ Qualtrics surveys." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -138,7 +138,15 @@ The function is written to work with data from
 <a href='https://www.qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_duration</span><span class='op'>(</span><span class='va'>x</span>, print <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>check_duration</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  min_duration <span class='op'>=</span> <span class='fl'>10</span>,
+  max_duration <span class='op'>=</span> <span class='cn'>NULL</span>,
+  id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>,
+  duration_col <span class='op'>=</span> <span class='st'>"Duration (in seconds)"</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  print <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,13 +156,29 @@ The function is written to work with data from
       <td><p>Data frame (preferably imported from Qualtrics using {qualtRics}).</p></td>
     </tr>
     <tr>
+      <th>min_duration</th>
+      <td><p>Minimum duration that is too fast in seconds.</p></td>
+    </tr>
+    <tr>
+      <th>max_duration</th>
+      <td><p>Maximum duration that is too slow in seconds.</p></td>
+    </tr>
+    <tr>
+      <th>id_col</th>
+      <td><p>Column name for unique row ID (e.g., participant).</p></td>
+    </tr>
+    <tr>
+      <th>duration_col</th>
+      <td><p>Column name for durations.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical indicating whether to print message to console.</p></td>
+    </tr>
+    <tr>
       <th>print</th>
       <td><p>Logical indicating whether to print returned tibble to
 console.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Inherit parameters from <code><a href='mark_duration.html'>mark_duration()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -214,7 +238,7 @@ messages about the number of rows that are too fast or too slow.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duration</span><span class='op'>(</span>min_duration <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows took less time than the minimum duration of 100 seconds.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows took less time than the minimum duration of 100 seconds.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100
 #&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
 #&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48
@@ -238,7 +262,7 @@ messages about the number of rows that are too fast or too slow.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duration</span><span class='op'>(</span>max_duration <span class='op'>=</span> <span class='fl'>800</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows took less time than the minimum duration of 10 seconds.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 98 rows took more time than the maximum duration of 800 seconds.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status  IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows took less time than the minimum duration of 10 seconds.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 98 rows took more time than the maximum duration of 800 seconds.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status  IPAddress Progress
 #&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0       99
 #&gt; 2 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address 22.51.31.0      100
 #&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
@@ -254,12 +278,12 @@ messages about the number of rows that are too fast or too slow.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duration</span><span class='op'>(</span>min_duration <span class='op'>=</span> <span class='fl'>100</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows took less time than the minimum duration of 100 seconds.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows took less time than the minimum duration of 100 seconds.</span></div><div class='input'>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_duration</span><span class='op'>(</span>min_duration <span class='op'>=</span> <span class='fl'>100</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100
 #&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
 #&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48

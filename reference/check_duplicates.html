@@ -75,7 +75,7 @@ Qualtrics surveys." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -138,7 +138,17 @@ function is written to work with data from
 <a href='https://www.qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_duplicates</span><span class='op'>(</span><span class='va'>x</span>, print <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>check_duplicates</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>,
+  ip_col <span class='op'>=</span> <span class='st'>"IPAddress"</span>,
+  location_col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"LocationLatitude"</span>, <span class='st'>"LocationLongitude"</span><span class='op'>)</span>,
+  dupl_ip <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  dupl_location <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  include_na <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  print <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,13 +158,40 @@ function is written to work with data from
       <td><p>Data frame (preferably imported from Qualtrics using {qualtRics}).</p></td>
     </tr>
     <tr>
+      <th>id_col</th>
+      <td><p>Column name for unique row ID (e.g., participant).</p></td>
+    </tr>
+    <tr>
+      <th>ip_col</th>
+      <td><p>Column name for IP addresses.</p></td>
+    </tr>
+    <tr>
+      <th>location_col</th>
+      <td><p>Two element vector specifying columns for latitude and
+longitude (in that order).</p></td>
+    </tr>
+    <tr>
+      <th>dupl_ip</th>
+      <td><p>Logical indicating whether to check IP addresses.</p></td>
+    </tr>
+    <tr>
+      <th>dupl_location</th>
+      <td><p>Logical indicating whether to check latitude and
+longitude.</p></td>
+    </tr>
+    <tr>
+      <th>include_na</th>
+      <td><p>Logical indicating whether to include rows with NAs for
+IP address and location as potentially excluded rows.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical indicating whether to print message to console.</p></td>
+    </tr>
+    <tr>
       <th>print</th>
       <td><p>Logical indicating whether to print returned tibble to
 console.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Inherit parameters from <code><a href='mark_duplicates.html'>mark_duplicates()</a></code>.</p></td>
     </tr>
     </table>
 

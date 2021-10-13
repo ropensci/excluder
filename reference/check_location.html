@@ -75,7 +75,7 @@ Qualtrics surveys." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -138,7 +138,14 @@ The function is written to work with data from
 <a href='https://www.qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_location</span><span class='op'>(</span><span class='va'>x</span>, print <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>check_location</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>,
+  location_col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"LocationLatitude"</span>, <span class='st'>"LocationLongitude"</span><span class='op'>)</span>,
+  include_na <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  print <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,13 +155,28 @@ The function is written to work with data from
       <td><p>Data frame (preferably imported from Qualtrics using {qualtRics}).</p></td>
     </tr>
     <tr>
+      <th>id_col</th>
+      <td><p>Column name for unique row ID (e.g., participant).</p></td>
+    </tr>
+    <tr>
+      <th>location_col</th>
+      <td><p>Two element vector specifying columns for latitude
+and longitude (in that order).</p></td>
+    </tr>
+    <tr>
+      <th>include_na</th>
+      <td><p>Logical indicating whether to include rows with NA in
+latitude and longitude columns in the output list of potentially excluded
+data.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical indicating whether to print message to console.</p></td>
+    </tr>
+    <tr>
       <th>print</th>
       <td><p>Logical indicating whether to print returned tibble to
 console.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Inherit parameters from <code><a href='mark_location.html'>mark_location()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -222,7 +244,7 @@ with locations outside of the US.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_location</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 rows were located outside of the US.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 rows were located outside of the US.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100
 #&gt; 2 2020-12-17 15:40:46 2020-12-17 15:45:20 IP Address  26.195.73.0      100
 #&gt; 3 2020-12-17 15:41:54 2020-12-17 15:47:24 IP Address  97.10.196.0      100
@@ -254,12 +276,12 @@ with locations outside of the US.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_location</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 rows were located outside of the US.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 rows were located outside of the US.</span></div><div class='input'>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_location</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100
 #&gt; 2 2020-12-17 15:40:46 2020-12-17 15:45:20 IP Address  26.195.73.0      100
 #&gt; 3 2020-12-17 15:41:54 2020-12-17 15:47:24 IP Address  97.10.196.0      100

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check for IP addresses that come from a specified country. — check_ip • excluder</title>
+<title>Check for IP addresses from outside of a specified country. — check_ip • excluder</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Check for IP addresses that come from a specified country. — check_ip" />
+<meta property="og:title" content="Check for IP addresses from outside of a specified country. — check_ip" />
 <meta property="og:description" content="The check_ip() function subsets rows of data, retaining rows
-that have IP addresses in the specified country.
+that have IP addresses from outside the specified country.
 The function is written to work with data from
 Qualtrics surveys." />
 
@@ -75,7 +75,7 @@ Qualtrics surveys." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -126,35 +126,55 @@ Qualtrics surveys." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check for IP addresses that come from a specified country.</h1>
+    <h1>Check for IP addresses from outside of a specified country.</h1>
     <small class="dont-index">Source: <a href='https://github.com/jeffreyrstevens/excluder/blob/master/R/ip.R'><code>R/ip.R</code></a></small>
     <div class="hidden name"><code>check_ip.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>The <code>check_ip()</code> function subsets rows of data, retaining rows
-that have IP addresses in the specified country.
+that have IP addresses from outside the specified country.
 The function is written to work with data from
 <a href='https://www.qualtrics.com/'>Qualtrics</a> surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_ip</span><span class='op'>(</span><span class='va'>x</span>, print <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>check_ip</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>,
+  ip_col <span class='op'>=</span> <span class='st'>"IPAddress"</span>,
+  country <span class='op'>=</span> <span class='st'>"US"</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  print <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Data frame (preferably imported from Qualtrics using {qualtRics}).</p></td>
+      <td><p>Data frame or tibble (preferably imported from Qualtrics using
+{qualtRics}).</p></td>
+    </tr>
+    <tr>
+      <th>id_col</th>
+      <td><p>Column name for unique row ID (e.g., participant).</p></td>
+    </tr>
+    <tr>
+      <th>ip_col</th>
+      <td><p>Column name for IP addresses.</p></td>
+    </tr>
+    <tr>
+      <th>country</th>
+      <td><p>Two-letter abbreviation of country to check (default is "US").</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical indicating whether to print message to console.</p></td>
     </tr>
     <tr>
       <th>print</th>
       <td><p>Logical indicating whether to print returned tibble to
 console.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Inherit parameters from <code><a href='mark_ip.html'>mark_ip()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -221,40 +241,439 @@ from <a href='http://www.iwik.org/ipcountry/'>http://www.iwik.org/ipcountry/</a>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_ip</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows have IP addresses outside of US.</span></div><div class='output co'>#&gt;  [1] StartDate             EndDate               Status               
-#&gt;  [4] IPAddress             Progress              Duration (in seconds)
-#&gt;  [7] Finished              RecordedDate          ResponseId           
-#&gt; [10] LocationLatitude      LocationLongitude     UserLanguage         
-#&gt; [13] Browser               Version               Operating System     
-#&gt; [16] Resolution           
-#&gt; &lt;0 rows&gt; (or 0-length row.names)</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows have IP addresses outside of US.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status   IPAddress Progress
+#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address 84.56.189.0      100
+#&gt; 2 2020-12-11 17:09:18 2020-12-11 17:16:57 IP Address 31.252.29.0      100
+#&gt; 3 2020-12-17 15:47:37 2020-12-17 15:51:33 IP Address 89.167.14.0      100
+#&gt; 4 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address  2.246.67.0       44
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3
+#&gt; 2                   229     TRUE 2020-12-11 17:16:57 R_XUU5qhep0Xe1GyW
+#&gt; 3                   297     TRUE 2020-12-17 15:51:33 R_bEHQBqkV97IcXfD
+#&gt; 4                   355    FALSE 2020-12-17 15:55:06 R_UfSQq1VXYkVcxdJ
+#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#&gt; 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88
+#&gt; 2         33.87347        -117.92215           EN  Chrome 87.0.4280.88
+#&gt; 3         35.39816         -78.81702           EN  Chrome 87.0.4280.88
+#&gt; 4         37.79058        -121.96737           EN  Chrome 87.0.4280.67
+#&gt;   Operating System Resolution
+#&gt; 1  Windows NT 10.0   1600x900
+#&gt; 2  Windows NT 10.0   1366x768
+#&gt; 3        Macintosh   1280x800
+#&gt; 4        Macintosh   1280x800</div><div class='input'>
 <span class='co'># Check for IP addresses outside of Germany</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_ip</span><span class='op'>(</span>country <span class='op'>=</span> <span class='st'>"DE"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows have IP addresses outside of DE.</span></div><div class='output co'>#&gt;  [1] StartDate             EndDate               Status               
-#&gt;  [4] IPAddress             Progress              Duration (in seconds)
-#&gt;  [7] Finished              RecordedDate          ResponseId           
-#&gt; [10] LocationLatitude      LocationLongitude     UserLanguage         
-#&gt; [13] Browser               Version               Operating System     
-#&gt; [16] Resolution           
-#&gt; &lt;0 rows&gt; (or 0-length row.names)</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>94 out of 98 rows have IP addresses outside of DE.</span></div><div class='output co'>#&gt;              StartDate             EndDate     Status     IPAddress Progress
+#&gt; 1  2020-12-11 12:17:22 2020-12-11 12:21:41 IP Address    73.23.43.0      100
+#&gt; 2  2020-12-11 12:17:41 2020-12-11 12:22:07 IP Address  16.140.105.0      100
+#&gt; 3  2020-12-11 12:19:45 2020-12-11 12:23:16 IP Address  107.57.244.0      100
+#&gt; 4  2020-12-11 12:37:51 2020-12-11 12:43:09 IP Address  15.232.167.0      100
+#&gt; 5  2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address   24.195.91.0      100
+#&gt; 6  2020-12-11 12:37:04 2020-12-11 12:45:50 IP Address   98.75.201.0      100
+#&gt; 7  2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address  51.113.171.0      100
+#&gt; 8  2020-12-11 13:22:34 2020-12-11 13:35:19 IP Address  17.163.199.0      100
+#&gt; 9  2020-12-11 17:02:00 2020-12-11 17:03:30 IP Address   70.203.63.0      100
+#&gt; 10 2020-12-11 17:01:32 2020-12-11 17:09:41 IP Address   33.185.89.0      100
+#&gt; 11 2020-12-11 17:05:21 2020-12-11 17:16:27 IP Address  40.222.151.0      100
+#&gt; 12 2020-12-11 17:29:18 2020-12-11 17:34:04 IP Address   64.71.222.0      100
+#&gt; 13 2020-12-11 17:34:23 2020-12-11 17:38:04 IP Address   13.139.19.0      100
+#&gt; 14 2020-12-11 17:36:12 2020-12-11 17:46:47 IP Address   45.16.214.0      100
+#&gt; 15 2020-12-11 17:46:05 2020-12-11 17:52:10 IP Address   76.193.55.0      100
+#&gt; 16 2020-12-11 18:01:26 2020-12-11 18:07:19 IP Address  33.129.208.0      100
+#&gt; 17 2020-12-17 15:40:59 2020-12-17 15:42:56 IP Address  32.235.180.0      100
+#&gt; 18 2020-12-17 15:40:42 2020-12-17 15:43:13 IP Address  23.235.165.0      100
+#&gt; 19 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address    22.51.31.0       99
+#&gt; 20 2020-12-17 15:40:52 2020-12-17 15:43:39 IP Address  32.164.134.0      100
+#&gt; 21 2020-12-17 15:41:17 2020-12-17 15:43:53 IP Address    34.29.29.0      100
+#&gt; 22 2020-12-17 15:41:41 2020-12-17 15:44:08 IP Address  33.171.228.0      100
+#&gt; 23 2020-12-17 15:41:05 2020-12-17 15:44:26 IP Address    12.76.83.0      100
+#&gt; 24 2020-12-17 15:42:13 2020-12-17 15:44:39 IP Address 107.101.170.0      100
+#&gt; 25 2020-12-17 15:42:26 2020-12-17 15:45:01 IP Address  20.217.173.0      100
+#&gt; 26 2020-12-17 15:41:01 2020-12-17 15:45:07 IP Address   28.160.55.0      100
+#&gt; 27 2020-12-17 15:41:36 2020-12-17 15:45:08 IP Address  69.163.151.0      100
+#&gt; 28 2020-12-17 15:41:14 2020-12-17 15:45:19 IP Address    48.46.53.0      100
+#&gt; 29 2020-12-17 15:40:46 2020-12-17 15:45:20 IP Address   26.195.73.0      100
+#&gt; 30 2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address   24.195.91.0      100
+#&gt; 31 2020-12-17 15:42:24 2020-12-17 15:45:47 IP Address   35.98.203.0      100
+#&gt; 32 2020-12-17 15:40:50 2020-12-17 15:46:03 IP Address    71.49.49.0      100
+#&gt; 33 2020-12-17 15:40:31 2020-12-17 15:46:16 IP Address   44.19.138.0      100
+#&gt; 34 2020-12-17 15:40:57 2020-12-17 15:46:19 IP Address  99.120.178.0      100
+#&gt; 35 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address  71.146.112.0        1
+#&gt; 36 2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address   55.73.114.0      100
+#&gt; 37 2020-12-17 15:41:22 2020-12-17 15:46:29 IP Address   67.49.133.0      100
+#&gt; 38 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address    15.223.0.0       13
+#&gt; 39 2020-12-17 15:41:41 2020-12-17 15:46:42 IP Address  104.210.32.0      100
+#&gt; 40 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address   19.127.87.0       48
+#&gt; 41 2020-12-17 15:44:48 2020-12-17 15:46:55 IP Address    72.240.1.0      100
+#&gt; 42 2020-12-17 15:41:00 2020-12-17 15:47:08 IP Address 104.243.207.0      100
+#&gt; 43 2020-12-17 15:41:25 2020-12-17 15:47:19 IP Address  21.225.119.0      100
+#&gt; 44 2020-12-17 15:45:08 2020-12-17 15:47:24 IP Address  16.123.176.0      100
+#&gt; 45 2020-12-17 15:41:54 2020-12-17 15:47:24 IP Address   97.10.196.0      100
+#&gt; 46 2020-12-17 15:41:00 2020-12-17 15:47:29 IP Address  44.236.187.0      100
+#&gt; 47 2020-12-17 15:41:49 2020-12-17 15:47:48 IP Address  38.210.187.0      100
+#&gt; 48 2020-12-17 15:44:30 2020-12-17 15:47:57 IP Address    48.17.71.0      100
+#&gt; 49 2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address   55.73.114.0      100
+#&gt; 50 2020-12-17 15:42:41 2020-12-17 15:48:02 IP Address   6.146.172.0      100
+#&gt; 51 2020-12-17 15:43:51 2020-12-17 15:48:19 IP Address   16.136.53.0      100
+#&gt; 52 2020-12-17 15:43:54 2020-12-17 15:48:20 IP Address    33.30.59.0      100
+#&gt; 53 2020-12-17 15:43:06 2020-12-17 15:48:21 IP Address    66.124.7.0      100
+#&gt; 54 2020-12-17 15:42:22 2020-12-17 15:48:38 IP Address   56.195.10.0      100
+#&gt; 55 2020-12-17 15:44:32 2020-12-17 15:48:45 IP Address    6.20.135.0      100
+#&gt; 56 2020-12-17 15:40:57 2020-12-17 15:48:56 IP Address    6.79.107.0      100
+#&gt; 57 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address  21.134.217.0      100
+#&gt; 58 2020-12-17 15:45:41 2020-12-17 15:49:07 IP Address    20.244.6.0      100
+#&gt; 59 2020-12-17 15:40:52 2020-12-17 15:49:08 IP Address    99.29.49.0      100
+#&gt; 60 2020-12-17 15:44:30 2020-12-17 15:49:22 IP Address  104.41.163.0      100
+#&gt; 61 2020-12-17 15:46:56 2020-12-17 15:49:23 IP Address  28.221.112.0      100
+#&gt; 62 2020-12-17 15:46:41 2020-12-17 15:49:25 IP Address    47.80.53.0      100
+#&gt; 63 2020-12-17 15:41:27 2020-12-17 15:49:47 IP Address  65.159.184.0      100
+#&gt; 64 2020-12-17 15:47:34 2020-12-17 15:49:52 IP Address    56.12.83.0      100
+#&gt; 65 2020-12-17 15:42:18 2020-12-17 15:50:03 IP Address   16.206.29.0      100
+#&gt; 66 2020-12-17 15:42:45 2020-12-17 15:50:13 IP Address    26.236.1.0      100
+#&gt; 67 2020-12-17 15:44:11 2020-12-17 15:50:25 IP Address  32.188.104.0      100
+#&gt; 68 2020-12-17 15:48:15 2020-12-17 15:50:28 IP Address   38.67.178.0      100
+#&gt; 69 2020-12-17 15:41:04 2020-12-17 15:50:31 IP Address    6.10.127.0      100
+#&gt; 70 2020-12-17 15:48:12 2020-12-17 15:50:50 IP Address   19.45.134.0      100
+#&gt; 71 2020-12-17 15:44:56 2020-12-17 15:51:34 IP Address   12.40.231.0      100
+#&gt; 72 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address    22.51.31.0      100
+#&gt; 73 2020-12-17 15:45:51 2020-12-17 15:51:48 IP Address   3.145.255.0      100
+#&gt; 74 2020-12-17 15:49:42 2020-12-17 15:51:50 IP Address  40.146.247.0        5
+#&gt; 75 2020-12-17 15:46:16 2020-12-17 15:51:50 IP Address   52.94.218.0      100
+#&gt; 76 2020-12-17 15:48:36 2020-12-17 15:52:01 IP Address  12.247.210.0      100
+#&gt; 77 2020-12-17 15:46:39 2020-12-17 15:52:20 IP Address  76.149.164.0      100
+#&gt; 78 2020-12-17 15:45:45 2020-12-17 15:52:23 IP Address   55.85.168.0      100
+#&gt; 79 2020-12-17 15:45:14 2020-12-17 15:52:24 IP Address 108.246.109.0      100
+#&gt; 80 2020-12-17 15:48:56 2020-12-17 15:52:24 IP Address    35.188.6.0      100
+#&gt; 81 2020-12-17 15:41:37 2020-12-17 15:52:39 IP Address    74.20.82.0      100
+#&gt; 82 2020-12-17 15:49:09 2020-12-17 15:52:41 IP Address  104.55.125.0      100
+#&gt; 83 2020-12-17 15:46:50 2020-12-17 15:53:41 IP Address    52.24.57.0      100
+#&gt; 84 2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address    22.51.31.0      100
+#&gt; 85 2020-12-17 15:49:06 2020-12-17 15:53:54 IP Address    3.240.10.0      100
+#&gt; 86 2020-12-17 15:44:31 2020-12-17 15:54:06 IP Address   38.64.190.0      100
+#&gt; 87 2020-12-17 15:48:48 2020-12-17 15:54:12 IP Address  54.232.129.0      100
+#&gt; 88 2020-12-17 15:51:16 2020-12-17 15:54:28 IP Address   66.215.26.0      100
+#&gt; 89 2020-12-17 15:48:37 2020-12-17 15:55:03 IP Address  98.211.119.0      100
+#&gt; 90 2020-12-17 15:50:06 2020-12-17 15:55:03 IP Address   70.38.187.0      100
+#&gt; 91 2020-12-17 15:50:21 2020-12-17 15:55:14 IP Address    38.82.71.0      100
+#&gt; 92 2020-12-17 15:50:01 2020-12-17 15:55:16 IP Address   66.215.75.0      100
+#&gt; 93 2020-12-17 15:47:42 2020-12-17 15:55:23 IP Address    100.26.8.0      100
+#&gt; 94 2020-12-17 15:45:16 2020-12-17 15:55:43 IP Address  67.133.227.0      100
+#&gt;    Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                    651     TRUE 2020-12-11 12:21:42 R_fbYBeNscosfzN9L
+#&gt; 2                    409     TRUE 2020-12-11 12:22:07 R_yyG1HGXOMNPfWDn
+#&gt; 3                    140     TRUE 2020-12-11 12:23:16 R_9dnzH1VI9mf8gle
+#&gt; 4                    213     TRUE 2020-12-11 12:43:09 R_1BoPF5igdMw536H
+#&gt; 5                    177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB
+#&gt; 6                    662     TRUE 2020-12-11 12:45:51 R_6OZ4weICjHVtEkg
+#&gt; 7                    296     TRUE 2020-12-11 12:59:24 R_Y27gVhACEH3aUUE
+#&gt; 8                    277     TRUE 2020-12-11 13:35:19 R_ed0N9zgbymHSLLd
+#&gt; 9                    432     TRUE 2020-12-11 17:03:30 R_EGB3bwfPkaisVrs
+#&gt; 10                   103     TRUE 2020-12-11 17:09:41 R_pSKmDMG6TiZ0aGN
+#&gt; 11                   496     TRUE 2020-12-11 17:16:28 R_EDEYKveWY04MZi3
+#&gt; 12                   313     TRUE 2020-12-11 17:34:05 R_rCUKbrfaQBx0xf5
+#&gt; 13                   321     TRUE 2020-12-11 17:38:04 R_wCVncc0srj4P4A9
+#&gt; 14                   299     TRUE 2020-12-11 17:46:48 R_fWk2dUmxcSiN3EJ
+#&gt; 15                   320     TRUE 2020-12-11 17:52:10 R_yR2DWsoC62ftmmd
+#&gt; 16                   356     TRUE 2020-12-11 18:07:19 R_9FGBBxoszIYuM6z
+#&gt; 17                   280     TRUE 2020-12-17 15:42:56 R_R1dUIcQVU8CgOQs
+#&gt; 18                   434     TRUE 2020-12-17 15:43:13 R_tX5NknhjAYsnwLD
+#&gt; 19                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
+#&gt; 20                   375     TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt
+#&gt; 21                   163     TRUE 2020-12-17 15:43:54 R_y0u8c7Zoa5hu7JR
+#&gt; 22                   364     TRUE 2020-12-17 15:44:08 R_zSfDR6JuUPHVgfG
+#&gt; 23                   470     TRUE 2020-12-17 15:44:26 R_aPsQjtqUx8QyZMw
+#&gt; 24                   259     TRUE 2020-12-17 15:44:39 R_f6zeQUfBcLcuW0d
+#&gt; 25                   489     TRUE 2020-12-17 15:45:01 R_4ApQtflpravDDnu
+#&gt; 26                   283     TRUE 2020-12-17 15:45:07 R_8WYXfpBtVXCyuqK
+#&gt; 27                   301     TRUE 2020-12-17 15:45:08 R_P2EXpXCEoPMSxFB
+#&gt; 28                   559     TRUE 2020-12-17 15:45:19 R_vscdIaEwQJtBmR9
+#&gt; 29                   341     TRUE 2020-12-17 15:45:21 R_RCLqTKWdIen8A1Z
+#&gt; 30                   521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP
+#&gt; 31                   181     TRUE 2020-12-17 15:45:48 R_D6ZNSIORUWkzxos
+#&gt; 32                   217     TRUE 2020-12-17 15:46:03 R_otvyHTl6FXMLzgd
+#&gt; 33                   320     TRUE 2020-12-17 15:46:16 R_iUeOCrJmNsXtsXC
+#&gt; 34                   333     TRUE 2020-12-17 15:46:20 R_HfnAAjNF7JovJbG
+#&gt; 35                   627    FALSE 2020-12-17 15:46:23 R_1cvaTAoXO7XW1vi
+#&gt; 36                   236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC
+#&gt; 37                   212     TRUE 2020-12-17 15:46:29 R_LqmsoBPL27xOIi3
+#&gt; 38                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
+#&gt; 39                   264     TRUE 2020-12-17 15:46:42 R_6RYnN4LYlDniV2D
+#&gt; 40                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
+#&gt; 41                   158     TRUE 2020-12-17 15:46:56 R_i7HCAU0w51Aa4MD
+#&gt; 42                   511     TRUE 2020-12-17 15:47:08 R_LH01951CWD0EpLv
+#&gt; 43                   181     TRUE 2020-12-17 15:47:19 R_0nj60jONOwpqZLC
+#&gt; 44                   286     TRUE 2020-12-17 15:47:24 R_o08jpNIfDT6cOdA
+#&gt; 45                   380     TRUE 2020-12-17 15:47:24 R_9bLdiaLyyfUlM7q
+#&gt; 46                   459     TRUE 2020-12-17 15:47:29 R_Mn4JCJqe0NwOKpQ
+#&gt; 47                   368     TRUE 2020-12-17 15:47:48 R_N2k3PNtEAjRI2El
+#&gt; 48                   339     TRUE 2020-12-17 15:47:58 R_hEJfTQuUySzm9Ef
+#&gt; 49                   526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI
+#&gt; 50                   394     TRUE 2020-12-17 15:48:02 R_uCdD9sfSqOQ418r
+#&gt; 51                   191     TRUE 2020-12-17 15:48:20 R_VokcYzvEcINQMWt
+#&gt; 52                   543     TRUE 2020-12-17 15:48:20 R_GCi4SP33Y2O3Zsy
+#&gt; 53                   210     TRUE 2020-12-17 15:48:22 R_uGam8XPGH3sJ3jH
+#&gt; 54                   225     TRUE 2020-12-17 15:48:38 R_eFwD4iFzNUTkfpW
+#&gt; 55                   632     TRUE 2020-12-17 15:48:45 R_YizuQ0gOXYXzgYg
+#&gt; 56                   397     TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ
+#&gt; 57                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire
+#&gt; 58                   314     TRUE 2020-12-17 15:49:08 R_7lRNLskxLI4PI5f
+#&gt; 59                   234     TRUE 2020-12-17 15:49:09 R_M8PpmDiJ7vXS9vO
+#&gt; 60                   166     TRUE 2020-12-17 15:49:22 R_m4feVX6kV1hDKyG
+#&gt; 61                   641     TRUE 2020-12-17 15:49:24 R_ZBg4KsT1piDqN5Y
+#&gt; 62                   255     TRUE 2020-12-17 15:49:25 R_Tvk5uhVcSrNuCHa
+#&gt; 63                   205     TRUE 2020-12-17 15:49:48 R_3CW5AYZbsBMxA3n
+#&gt; 64                   136     TRUE 2020-12-17 15:49:52 R_eW74UodPpyCM0NY
+#&gt; 65                   566     TRUE 2020-12-17 15:50:04 R_DUMc8sVzlLpu3xE
+#&gt; 66                   159     TRUE 2020-12-17 15:50:13 R_omYa7FkDOGFV6zK
+#&gt; 67                   201     TRUE 2020-12-17 15:50:26 R_UIfPuGrPFYRUF3b
+#&gt; 68                   429     TRUE 2020-12-17 15:50:28 R_gGVBhajYEJQ62KN
+#&gt; 69                   161     TRUE 2020-12-17 15:50:31 R_seijWfHRUbFPOm0
+#&gt; 70                   385     TRUE 2020-12-17 15:50:50 R_qpTsaJuwHs6Cc8b
+#&gt; 71                   548     TRUE 2020-12-17 15:51:34 R_p8QkyTuxS9RYVWU
+#&gt; 72                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
+#&gt; 73                   348     TRUE 2020-12-17 15:51:49 R_SG9duhsoysmQrZf
+#&gt; 74                   307    FALSE 2020-12-17 15:51:50 R_HFKclPO5wWGNsFs
+#&gt; 75                   185     TRUE 2020-12-17 15:51:50 R_5T43AwvQXtF96Hq
+#&gt; 76                   199     TRUE 2020-12-17 15:52:01 R_QdGXTRC6C6dg0xq
+#&gt; 77                   373     TRUE 2020-12-17 15:52:20 R_sJcbtpActYeyDwl
+#&gt; 78                   194     TRUE 2020-12-17 15:52:23 R_DoG50QcwJRIPs99
+#&gt; 79                   267     TRUE 2020-12-17 15:52:24 R_CDpEjKb1UgP1KiY
+#&gt; 80                   175     TRUE 2020-12-17 15:52:25 R_CegS8uh09zOvT6y
+#&gt; 81                   483     TRUE 2020-12-17 15:52:39 R_cUxV8jJ9yOsYsKa
+#&gt; 82                   404     TRUE 2020-12-17 15:52:41 R_GWjtLqPIuuKgRZC
+#&gt; 83                   339     TRUE 2020-12-17 15:53:41 R_et8rmjaxZ4F0MqM
+#&gt; 84                   246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch
+#&gt; 85                   293     TRUE 2020-12-17 15:53:55 R_KiVCN59xWUnZyLw
+#&gt; 86                   312     TRUE 2020-12-17 15:54:07 R_uu1aNgZJKe3i8oI
+#&gt; 87                   149     TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM
+#&gt; 88                   285     TRUE 2020-12-17 15:54:28 R_SwoiAKU1uTqAjZH
+#&gt; 89                   518     TRUE 2020-12-17 15:55:03 R_oTn6oGRmfWcIM1m
+#&gt; 90                   267     TRUE 2020-12-17 15:55:04 R_Qbx9mK1iPLJzc4r
+#&gt; 91                   703     TRUE 2020-12-17 15:55:15 R_ZYQSiMjNqYEVHN4
+#&gt; 92                   525     TRUE 2020-12-17 15:55:16 R_I8rAyEeHD7f3bHi
+#&gt; 93                   147     TRUE 2020-12-17 15:55:23 R_OvEVgjfLzfiZ8lB
+#&gt; 94                   154     TRUE 2020-12-17 15:55:43 R_iEgZWF5bmgsCZvG
+#&gt;    LocationLatitude LocationLongitude UserLanguage       Browser       Version
+#&gt; 1          34.03852        -118.25739           EN        Chrome  87.0.4280.88
+#&gt; 2          44.96581         -93.07187           EN        Chrome  87.0.4280.88
+#&gt; 3          27.98064         -82.78531           EN        Chrome  87.0.4280.88
+#&gt; 4          29.76499         -95.36156           EN        Chrome  87.0.4280.88
+#&gt; 5          40.33554         -75.92698           EN        Chrome 86.0.4240.198
+#&gt; 6          29.41433         -98.50342           EN          Edge   84.0.522.52
+#&gt; 7          40.69746         -74.02277           EN        Chrome  87.0.4280.88
+#&gt; 8          33.41401        -111.55062           EN       Firefox          83.0
+#&gt; 9          39.95853         -75.15760           EN          Edge   84.0.522.52
+#&gt; 10         41.72026         -87.74872           EN       Firefox          84.0
+#&gt; 11         43.60660        -116.39702           EN        Chrome 84.0.4147.136
+#&gt; 12         38.30621         -85.80354           EN        Chrome  87.0.4280.88
+#&gt; 13         39.94426         -75.17187           EN        Chrome  87.0.4280.88
+#&gt; 14         30.44958         -84.26941           EN        Chrome  87.0.4280.88
+#&gt; 15         36.87392         -89.59066           EN        Chrome 86.0.4240.199
+#&gt; 16         38.86740         -77.11789           EN        Chrome  87.0.4280.88
+#&gt; 17         42.91094         -87.86027           EN        Chrome  87.0.4280.88
+#&gt; 18         42.48020         -71.28746           EN        Chrome  87.0.4280.88
+#&gt; 19         37.28265        -120.50248           EN        Chrome  87.0.4280.88
+#&gt; 20         45.50412        -122.78665           EN        Chrome  87.0.4280.88
+#&gt; 21         43.07659         -89.41012           EN        Chrome  87.0.4280.88
+#&gt; 22         31.21322         -85.40050           EN        Chrome  87.0.4280.88
+#&gt; 23         39.02141         -87.72310           EN        Chrome  87.0.4280.88
+#&gt; 24         42.43382        -123.33358           EN       Firefox          84.0
+#&gt; 25         43.18294         -85.24739           EN        Chrome  88.0.4324.27
+#&gt; 26         43.36813        -124.21626           EN        Chrome  87.0.4280.88
+#&gt; 27         37.32957        -122.02562           EN          Edge   84.0.522.52
+#&gt; 28         37.32346        -122.03172           EN        Chrome  87.0.4280.88
+#&gt; 29         42.25303         -71.00212           EN        Chrome  87.0.4280.88
+#&gt; 30         40.33554         -75.92698           EN        Chrome  87.0.4280.88
+#&gt; 31         43.01740         -83.68259           EN        Chrome  87.0.4280.88
+#&gt; 32         42.71054         -73.74890           EN        Chrome  87.0.4280.88
+#&gt; 33         42.33122         -77.65774           EN        Chrome  87.0.4280.88
+#&gt; 34         34.04487        -118.25104           EN        Chrome 87.0.4280.109
+#&gt; 35         34.03605        -117.04066           EN          &lt;NA&gt;          &lt;NA&gt;
+#&gt; 36         28.56411         -81.54902           EN        Chrome  87.0.4280.88
+#&gt; 37         29.76568         -95.36087           EN        Chrome  87.0.4280.88
+#&gt; 38         34.77804         -84.96198           DE        Chrome  83.0.4103.61
+#&gt; 39         35.91814         -88.77264           EN        Chrome  87.0.4280.88
+#&gt; 40         33.66715        -117.82543           EN        Chrome  87.0.4280.88
+#&gt; 41         41.85443         -87.64565           EN        Chrome  87.0.4280.88
+#&gt; 42         34.50406         -82.64951           EN        Chrome  87.0.4280.88
+#&gt; 43         40.87077         -73.96697           EN        Chrome  87.0.4280.88
+#&gt; 44         34.08441        -117.44287           EN        Chrome  87.0.4280.88
+#&gt; 45               NA                NA           EN        Chrome  87.0.4280.88
+#&gt; 46         38.90370         -77.02778           EN        Chrome  87.0.4280.88
+#&gt; 47         48.85205         -95.75681           EN        Chrome  87.0.4280.88
+#&gt; 48         40.71187         -74.00837           EN Chrome iPhone  87.0.4280.77
+#&gt; 49         28.56411         -81.54902           EN        Chrome  87.0.4280.88
+#&gt; 50         39.61266         -86.10765           EN        Chrome  87.0.4280.88
+#&gt; 51         34.08953        -117.62469           EN        Chrome  87.0.4280.88
+#&gt; 52         45.51576        -122.68390           EN        Chrome  87.0.4280.88
+#&gt; 53         39.92034         -75.12523           EN        Chrome  87.0.4280.88
+#&gt; 54         40.35586         -74.68112           EN        Chrome  87.0.4280.88
+#&gt; 55         39.62145        -104.94657           EN        Chrome  87.0.4280.88
+#&gt; 56         45.50412        -122.78665           EN        Chrome  87.0.4280.88
+#&gt; 57         34.76243         -96.69044           EN        Chrome  87.0.4280.88
+#&gt; 58         30.22021         -92.02372           EN        Chrome  87.0.4280.88
+#&gt; 59         40.70961         -74.01063           EN        Chrome 87.0.4280.109
+#&gt; 60         39.26736         -76.79828           EN       Firefox          83.0
+#&gt; 61         44.31560         -69.77450           EN        Chrome  87.0.4280.88
+#&gt; 62         45.52602        -122.67364           EN          Edge   88.0.705.18
+#&gt; 63         33.67348        -111.94295           EN        Chrome  87.0.4280.88
+#&gt; 64         45.48118        -122.80960           EN        Chrome  87.0.4280.88
+#&gt; 65         36.16582        -115.14638           EN        Chrome  86.0.4240.75
+#&gt; 66         30.43275         -84.28624           EN        Chrome  87.0.4280.88
+#&gt; 67         41.85307         -87.64701           EN        Chrome  87.0.4280.88
+#&gt; 68         32.23909        -110.90913           EN          Edge   87.0.664.66
+#&gt; 69         41.10140         -73.96800           EN        Chrome  87.0.4280.88
+#&gt; 70         41.86902         -87.63458           EN        Chrome  87.0.4280.88
+#&gt; 71         32.92666         -96.75124           EN        Chrome  87.0.4280.88
+#&gt; 72         37.28265        -120.50248           EN       Firefox          83.0
+#&gt; 73         39.46953         -87.41108           EN        Chrome  87.0.4280.88
+#&gt; 74         29.29882         -81.04289           EN       Firefox          81.0
+#&gt; 75         36.15678        -115.15541           EN        Chrome  87.0.4280.88
+#&gt; 76         35.92692         -88.76387           EN        Chrome 87.0.4280.101
+#&gt; 77         30.29587         -81.39196           EN        Chrome  87.0.4280.88
+#&gt; 78         39.27688         -76.62569           EN        Chrome  87.0.4280.88
+#&gt; 79         33.44272        -112.07971           EN       Firefox          83.0
+#&gt; 80         42.28207         -85.59687           EN        Chrome  87.0.4280.88
+#&gt; 81         39.63179         -79.95364           EN        Chrome  87.0.4280.88
+#&gt; 82         41.44980         -82.18540           EN        Chrome 87.0.4280.101
+#&gt; 83         35.47588         -97.50811           EN        Chrome  87.0.4280.88
+#&gt; 84         37.28265        -120.50248           EN          Edge   84.0.522.52
+#&gt; 85         35.22907         -80.84116           EN        Chrome  87.0.4280.88
+#&gt; 86         39.18626         -85.93656           EN        Chrome 86.0.4240.111
+#&gt; 87         45.50412        -122.78665           EN        Chrome  87.0.4280.88
+#&gt; 88         43.06228         -88.40227           EN        Chrome  87.0.4280.88
+#&gt; 89         40.39747         -79.81181           EN        Chrome  88.0.4324.41
+#&gt; 90         31.81687         -86.63048           EN       Firefox          84.0
+#&gt; 91         39.29035         -76.61222           EN          Edge   84.0.522.52
+#&gt; 92         37.44174        -122.14316           EN        Chrome  87.0.4280.88
+#&gt; 93         38.34822         -81.63422           EN        Safari        14.0.1
+#&gt; 94         28.30875         -81.41260           EN        Chrome  87.0.4280.88
+#&gt;           Operating System Resolution
+#&gt; 1          Windows NT 10.0   1366x768
+#&gt; 2          Windows NT 10.0   1536x864
+#&gt; 3          Windows NT 10.0   1536x864
+#&gt; 4          Windows NT 10.0   1366x768
+#&gt; 5                Macintosh   1280x800
+#&gt; 6          Windows NT 10.0  1920x1080
+#&gt; 7          Windows NT 10.0   1440x900
+#&gt; 8          Windows NT 10.0   1440x900
+#&gt; 9          Windows NT 10.0  1680x1050
+#&gt; 10         Windows NT 10.0   1600x900
+#&gt; 11 CrOS armv7l 13099.110.0   1366x768
+#&gt; 12         Windows NT 10.0   1536x864
+#&gt; 13         Windows NT 10.0   1440x900
+#&gt; 14         Windows NT 10.0  1920x1080
+#&gt; 15 CrOS x86_64 13421.102.0   1138x640
+#&gt; 16         Windows NT 10.0   1536x864
+#&gt; 17               Macintosh   1440x900
+#&gt; 18         Windows NT 10.0  1920x1080
+#&gt; 19         Windows NT 10.0   1366x768
+#&gt; 20         Windows NT 10.0  1920x1080
+#&gt; 21         Windows NT 10.0   1366x768
+#&gt; 22         Windows NT 10.0   1600x900
+#&gt; 23         Windows NT 10.0   1366x768
+#&gt; 24                  Ubuntu   1280x800
+#&gt; 25         Windows NT 10.0  1901x1070
+#&gt; 26         Windows NT 10.0  1920x1080
+#&gt; 27         Windows NT 10.0  1920x1080
+#&gt; 28         Windows NT 10.0   1366x768
+#&gt; 29         Windows NT 10.0  1920x1080
+#&gt; 30          Windows NT 6.1   1366x768
+#&gt; 31         Windows NT 10.0   1360x768
+#&gt; 32         Windows NT 10.0  1920x1080
+#&gt; 33         Windows NT 10.0   1423x800
+#&gt; 34  CrOS x86_64 13505.73.0   1280x850
+#&gt; 35                    &lt;NA&gt;       &lt;NA&gt;
+#&gt; 36         Windows NT 10.0  1920x1080
+#&gt; 37         Windows NT 10.0  1920x1080
+#&gt; 38         Windows NT 10.0   1366x768
+#&gt; 39         Windows NT 10.0   1280x720
+#&gt; 40         Windows NT 10.0   1188x668
+#&gt; 41         Windows NT 10.0   1280x720
+#&gt; 42         Windows NT 10.0   1600x900
+#&gt; 43         Windows NT 10.0   1366x768
+#&gt; 44         Windows NT 10.0  1920x1080
+#&gt; 45         Windows NT 10.0   1536x864
+#&gt; 46         Windows NT 10.0  1920x1080
+#&gt; 47         Windows NT 10.0  1920x1080
+#&gt; 48                  iPhone    375x667
+#&gt; 49         Windows NT 10.0   1536x864
+#&gt; 50  CrOS x86_64 13505.63.0   1366x768
+#&gt; 51         Windows NT 10.0   1536x864
+#&gt; 52         Windows NT 10.0  1920x1080
+#&gt; 53  CrOS x86_64 13505.63.0   1366x768
+#&gt; 54         Windows NT 10.0   1536x864
+#&gt; 55          Windows NT 6.3  1920x1080
+#&gt; 56         Windows NT 10.0   1536x864
+#&gt; 57         Windows NT 10.0   1368x912
+#&gt; 58         Windows NT 10.0   1366x768
+#&gt; 59  CrOS x86_64 13505.73.0   1366x768
+#&gt; 60         Windows NT 10.0  2560x1440
+#&gt; 61         Windows NT 10.0   1366x768
+#&gt; 62         Windows NT 10.0   1360x768
+#&gt; 63         Windows NT 10.0   1280x720
+#&gt; 64         Windows NT 10.0   1366x768
+#&gt; 65         Windows NT 10.0   1536x864
+#&gt; 66         Windows NT 10.0  1920x1080
+#&gt; 67         Windows NT 10.0  2560x1440
+#&gt; 68         Windows NT 10.0  1920x1080
+#&gt; 69         Windows NT 10.0   1600x900
+#&gt; 70         Windows NT 10.0  1920x1080
+#&gt; 71         Windows NT 10.0   1280x720
+#&gt; 72         Windows NT 10.0   1440x960
+#&gt; 73         Windows NT 10.0  1280x1024
+#&gt; 74         Windows NT 10.0   1366x768
+#&gt; 75         Windows NT 10.0  1920x1080
+#&gt; 76              Android 10    360x740
+#&gt; 77         Windows NT 10.0   1536x864
+#&gt; 78  CrOS x86_64 13505.63.0   1366x768
+#&gt; 79         Windows NT 10.0  1920x1080
+#&gt; 80         Windows NT 10.0   1188x668
+#&gt; 81         Windows NT 10.0  1920x1080
+#&gt; 82               Android 9    360x740
+#&gt; 83  CrOS x86_64 13505.63.0   1366x768
+#&gt; 84         Windows NT 10.0  1920x1080
+#&gt; 85         Windows NT 10.0  2560x1440
+#&gt; 86         Windows NT 10.0  3440x1440
+#&gt; 87         Windows NT 10.0  1920x1080
+#&gt; 88         Windows NT 10.0   1366x768
+#&gt; 89         Windows NT 10.0   1366x768
+#&gt; 90                  Ubuntu   1280x800
+#&gt; 91         Windows NT 10.0   1536x864
+#&gt; 92         Windows NT 10.0   1366x768
+#&gt; 93               Macintosh   834x1194
+#&gt; 94            Linux x86_64  1920x1080</div><div class='input'>
 <span class='co'># Do not print rows to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_ip</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>0 out of 98 rows have IP addresses outside of US.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows have IP addresses outside of US.</span></div><div class='input'>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_ip</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;  [1] StartDate             EndDate               Status               
-#&gt;  [4] IPAddress             Progress              Duration (in seconds)
-#&gt;  [7] Finished              RecordedDate          ResponseId           
-#&gt; [10] LocationLatitude      LocationLongitude     UserLanguage         
-#&gt; [13] Browser               Version               Operating System     
-#&gt; [16] Resolution           
-#&gt; &lt;0 rows&gt; (or 0-length row.names)</div></pre>
+</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status   IPAddress Progress
+#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address 84.56.189.0      100
+#&gt; 2 2020-12-11 17:09:18 2020-12-11 17:16:57 IP Address 31.252.29.0      100
+#&gt; 3 2020-12-17 15:47:37 2020-12-17 15:51:33 IP Address 89.167.14.0      100
+#&gt; 4 2020-12-17 15:49:28 2020-12-17 15:55:06 IP Address  2.246.67.0       44
+#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
+#&gt; 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3
+#&gt; 2                   229     TRUE 2020-12-11 17:16:57 R_XUU5qhep0Xe1GyW
+#&gt; 3                   297     TRUE 2020-12-17 15:51:33 R_bEHQBqkV97IcXfD
+#&gt; 4                   355    FALSE 2020-12-17 15:55:06 R_UfSQq1VXYkVcxdJ
+#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
+#&gt; 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88
+#&gt; 2         33.87347        -117.92215           EN  Chrome 87.0.4280.88
+#&gt; 3         35.39816         -78.81702           EN  Chrome 87.0.4280.88
+#&gt; 4         37.79058        -121.96737           EN  Chrome 87.0.4280.67
+#&gt;   Operating System Resolution
+#&gt; 1  Windows NT 10.0   1600x900
+#&gt; 2  Windows NT 10.0   1366x768
+#&gt; 3        Macintosh   1280x800
+#&gt; 4        Macintosh   1280x800</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
