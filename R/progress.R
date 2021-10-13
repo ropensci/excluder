@@ -251,7 +251,8 @@ exclude_progress <- function(x,
                              id_col = "ResponseId",
                              finished_col = "Finished",
                              progress_col = "Progress",
-                             quiet = FALSE,print = FALSE,
+                             quiet = TRUE,
+                             print = FALSE,
                              silent = FALSE) {
 
   # Mark and filter progress

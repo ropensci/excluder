@@ -9,7 +9,7 @@ exclude_ip(
   id_col = "ResponseId",
   ip_col = "IPAddress",
   country = "US",
-  quiet = FALSE,
+  quiet = TRUE,
   print = FALSE,
   silent = FALSE
 )

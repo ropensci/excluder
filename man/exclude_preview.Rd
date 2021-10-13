@@ -8,7 +8,7 @@ exclude_preview(
   x,
   id_col = "ResponseId",
   preview_col = "Status",
-  quiet = FALSE,
+  quiet = TRUE,
   print = FALSE,
   silent = FALSE
 )

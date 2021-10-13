@@ -299,7 +299,7 @@ exclude_duplicates <- function(x,
                                dupl_ip = TRUE,
                                dupl_location = TRUE,
                                include_na = FALSE,
-                               quiet = FALSE,
+                               quiet = TRUE,
                                print = FALSE,
                                silent = FALSE) {
 

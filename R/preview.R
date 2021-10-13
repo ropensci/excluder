@@ -203,7 +203,8 @@ check_preview <- function(x,
 exclude_preview <- function(x,
                             id_col = "ResponseId",
                             preview_col = "Status",
-                            quiet = FALSE,print = FALSE,
+                            quiet = TRUE,
+                            print = FALSE,
                             silent = FALSE) {
 
   # Mark and filter preview

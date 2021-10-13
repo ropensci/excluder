@@ -252,7 +252,7 @@ exclude_duration <- function(x,
                              max_duration = NULL,
                              id_col = "ResponseId",
                              duration_col = "Duration (in seconds)",
-                             quiet = FALSE,
+                             quiet = TRUE,
                              print = FALSE,
                              silent = FALSE) {
 

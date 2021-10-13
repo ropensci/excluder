@@ -9,7 +9,7 @@ exclude_location(
   id_col = "ResponseId",
   location_col = c("LocationLatitude", "LocationLongitude"),
   include_na = FALSE,
-  quiet = FALSE,
+  quiet = TRUE,
   print = FALSE,
   silent = FALSE
 )

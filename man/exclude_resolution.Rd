@@ -10,7 +10,7 @@ exclude_resolution(
   height_min = 0,
   id_col = "ResponseId",
   res_col = "Resolution",
-  quiet = FALSE,
+  quiet = TRUE,
   print = FALSE,
   silent = FALSE
 )

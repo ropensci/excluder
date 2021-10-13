@@ -10,7 +10,7 @@ exclude_progress(
   id_col = "ResponseId",
   finished_col = "Finished",
   progress_col = "Progress",
-  quiet = FALSE,
+  quiet = TRUE,
   print = FALSE,
   silent = FALSE
 )
