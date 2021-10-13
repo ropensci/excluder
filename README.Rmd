@@ -41,9 +41,9 @@ devtools::install_github("jeffreyrstevens/excluder")
 ## Verbs
 This package provides three primary verbs:
 
+* `mark` functions add a new column to the original data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing without changing the original data frame.
 * `check` functions search for the exclusion criteria and output a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.
 * `exclude` functions remove rows meeting the exclusion criteria. This is safest to do after checking the rows to ensure the exclusions are correct.
-* `mark` functions add a new column to the original data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing without changing the original data frame.
 
 ## Exclusion types
 This package provides seven types of exclusions based on Qualtrics metadata. If you have ideas for other metadata exclusions, please submit them as [issues](https://github.com/jeffreyrstevens/excluder/issues). Note, the intent of this package is not to develop functions for excluding rows based on survey-specific data but on general, frequently used metadata.
@@ -59,14 +59,35 @@ This package provides seven types of exclusions based on Qualtrics metadata. If 
 
 ## Usage
 
-The verbs and exclusion types combine with `_` to create the functions, such as [`check_duplicates()`](https://jeffreyrstevens.github.io/excluder/reference/check_duplicates.html), [`exclude_ip()`](https://jeffreyrstevens.github.io/excluder/reference/exclude_ip.html), and [`mark_duration()`](https://jeffreyrstevens.github.io/excluder/reference/mark_duration.html). Multiple functions can be linked together using the [`{magrittr}`](https://magrittr.tidyverse.org/) pipe `%>%`. For datasets downloaded directly from Qualtrics, use [`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html) to remove the first two rows of labels and convert date and numeric columns in the metadata and use [`deidentify()`](https://jeffreyrstevens.github.io/excluder/reference/deidentify.html) to remove standard Qualtrics columns with identifiable information.
+The verbs and exclusion types combine with `_` to create the functions, such as [`check_duplicates()`](https://jeffreyrstevens.github.io/excluder/reference/check_duplicates.html), [`exclude_ip()`](https://jeffreyrstevens.github.io/excluder/reference/exclude_ip.html), and [`mark_duration()`](https://jeffreyrstevens.github.io/excluder/reference/mark_duration.html). Multiple functions can be linked together using the [`{magrittr}`](https://magrittr.tidyverse.org/) pipe `%>%`. For datasets downloaded directly from Qualtrics, use [`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html) to remove the first two rows of labels and convert date and numeric columns in the metadata, and use [`deidentify()`](https://jeffreyrstevens.github.io/excluder/reference/deidentify.html) to remove standard Qualtrics columns with identifiable information (e.g., IP addresses, geolocation).
+
+### Marking
+The `mark_*()` functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be piped together with `%>%` for multiple exclusion types.
+
+```{r mark1}
+library(excluder)
+# Mark preview and short duration rows
+df <- qualtrics_text %>%
+  mark_preview() %>%
+  mark_duration(min_duration = 200)
+tibble::glimpse(df)
+```
+
+Use the [`unite_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html) function to unite all of the marked columns into a single column.
+```{r mark2}
+# Collapse labels for preview and short duration rows
+df <- qualtrics_text %>%
+  mark_preview() %>%
+  mark_duration(min_duration = 200) %>%
+  unite_exclusions(exclusion_types = c("preview", "duration"))
+tibble::glimpse(df)
+```
 
 ### Checking
 
 The `check_*()` functions output messages about the number of rows that meet the exclusion criteria. Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.
 
 ```{r check1}
-library(excluder)
 # Check for preview rows
 qualtrics_text %>%
   check_preview()
@@ -101,26 +122,6 @@ df <- qualtrics_text %>%
   exclude_resolution() %>%
   exclude_ip() %>%
   exclude_location()
-```
-
-### Marking
-The `mark_*()` functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be piped together with `%>%` for multiple exclusion types.
-
-```{r mark1}
-# Mark preview and short duration rows
-df <- qualtrics_text %>%
-  mark_preview() %>%
-  mark_duration(min_duration = 200)
-tibble::glimpse(df)
-```
-Use the [`unite_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html) function to unite all of the marked columns into a single column.
-```{r mark2}
-# Collapse labels for preview and short duration rows
-df <- qualtrics_text %>%
-  mark_preview() %>%
-  mark_duration(min_duration = 200) %>%
-  unite_exclusions(exclusion_types = c("preview", "duration"))
-tibble::glimpse(df)
 ```
 
 ## Citing this package

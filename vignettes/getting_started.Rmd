@@ -19,16 +19,18 @@ knitr::opts_chunk$set(
 library(excluder)
 ```
 
-The `{excluder}` package facilitates checking for, marking, and excluding rows of data frames for common online participant exclusion criteria. This package applies to online data with a focus on data collected from [Qualtrics](https://www.qualtrics.com) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package. This may be most useful for [Mechanical Turk](https://www.mturk.com/) data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States.  However, the package can be used for data from other sources that need to be screened for IP address, location, duplicated locations, participant progress, survey completion time, and/or screen resolution.
+The `{excluder}` package facilitates marking, checking for, and excluding rows of data frames^[Though the functions take data frames input, they produce [tibbles](https://tibble.tidyverse.org/).] for common online participant exclusion criteria. This package applies to online data with a focus on data collected from [Qualtrics](https://www.qualtrics.com) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package. This may be most useful for [Mechanical Turk](https://www.mturk.com/) data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States.  However, the package can be used for data from other sources that need to be screened for IP address, location, duplicated locations, participant progress, survey completion time, and/or screen resolution.
 
 
 ## Usage
 
-The package has three core actions:
+The package has three core verbs:
 
-1. `check` functions search for the exclusion criteria and output a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.
-1. `exclude` functions remove rows meeting the exclusion criteria. This is safest to do after checking the rows to ensure the exclusions are correct.
-1. `mark` functions add a new column to the original data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing without changing the original data frame.
+1. `mark_*()` functions add a new column to the original data frame that labels the rows meeting the exclusion criteria. This is useful to label the potential exclusions for future processing without changing the original data frame.
+1. `check_*()` functions search for the exclusion criteria and output a message with the number of rows meeting the criteria and a data frame of the rows meeting the criteria. This is useful for viewing the potential exclusions.
+1. `exclude_*()` functions remove rows meeting the exclusion criteria. This is safest to do after checking the rows to ensure the exclusions are correct.
+
+The `check_*()` and `exclude_*()` functions call the `mark_*()` function internally and then filter either the excluded or non-excluded rows. So avoid combining different verbs to sidestep unnecessary passes through the data.
 
 The package provides seven types of exclusions based on Qualtrics metadata:
 
@@ -40,6 +42,8 @@ The package provides seven types of exclusions based on Qualtrics metadata:
 1. `progress` works with rows in which the survey was not complete.
 1. `resolution` works with rows whose screen resolution is not acceptable.
 
+The verbs combine with the exclusion types to generate functions. For instance, `mark_duplicates()` will mark duplicate rows and `exclude_preview()` will exclude preview rows.
+
 There are also helper functions:
 
 1. [`unite_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html)  unites all of the columns marked by `mark` functions into a single column (each use of a `mark` function creates a new column).
@@ -49,7 +53,7 @@ There are also helper functions:
 ## Preparing your data
 If you use the [`fetch_survey()`](https://docs.ropensci.org/qualtRics/reference/fetch_survey.html) from the `{qualtRics}` package to import your Qualtrics data, it will automatically remove the first two label rows from the data set. However, if you directly download your data from Qualtrics, it will include two rows in your data set that include label information. This has two side effects: (1) there are non-data rows that need to be removed from your data set, and (2) all of your columns will be imported as character data types.
 
-The [`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html) function will remove these two label rows. Also, by default, it will coerce the Qualtrics metadata columns from character types to the correct formats (e.g., _StartDate_ is coerced to a date, _Progress_ is coerced to numeric). So if you download your data from Qualtrics, you will need to run this function on your data before proceeding.
+The [`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html) function will remove these two label rows. Also, by default, it will coerce the Qualtrics metadata columns from character types to the correct formats (e.g., _`StartDate`_ is coerced to a date, _`Progress`_ is coerced to numeric). So if you download your data from Qualtrics, you will need to run this function on your data before proceeding.
 
 ```{r}
 dplyr::glimpse(qualtrics_raw)
@@ -60,16 +64,59 @@ df <- remove_label_rows(qualtrics_raw) %>%
 ```
 
 
+## Marking observations
+The core verbs in this package mark them for future processing. The `mark_*()` suite of functions creates a new column for each mark function used that marks which observations violate the exclusion criterion. They print a message about the number of observations meeting each exclusion criteria. Mark functions return a data frame identical to the original with additional columns marking exclusions.
+
+```{r mark1}
+# Mark observations run as preview
+df %>% 
+  mark_preview() %>% 
+  dplyr::glimpse()
+```
+
+Notice the new _`exclusion_preview`_ column at the end of the data frame. It has marked the first two observations as `preview`.
+
+Piping multiple mark functions will create multiple rows marking observations for exclusion.
+
+```{r mark2}
+# Mark preview and incomplete observations
+df %>% 
+  mark_preview() %>% 
+  mark_progress() %>% 
+  dplyr::glimpse()
+```
+
+To unite all of the marked columns into a single column, use the `unite_exclusions()` function. This will create a new `exclusions` columns that will unite all exclusions in each observation into a single column. Here we move the combined _`exclusions`_ column to the beginning of the data frame to view it.
+
+```{r mark3}
+df %>% 
+  mark_preview() %>% 
+  mark_duration(min = 500) %>% 
+  unite_exclusions() %>% 
+  dplyr::relocate(exclusions, .before = StartDate)
+```
+
+Multiple exclusions are separated by `,` by default, but the separating character can be controlled by the `separator` argument. By default, the multiple exclusion columns are removed from the final data frame, but this can be turned off by setting the `remove` argument to `FALSE`. 
+
+```{r mark4}
+df %>% 
+  mark_preview() %>% 
+  mark_duration(min = 500) %>% 
+  unite_exclusions(separator = ";", remove = FALSE) %>% 
+  dplyr::relocate(exclusions, .before = StartDate)
+```
+
+
 ## Checking observations
 
-Often the first step of excluding observations is to check which observations may meet a particular exclusion criterion. The `check_*()` suite of functions prints a message about the number of observations that meet the exclusion criterion and returns a data frame or tibble that includes only the observations that meet the criterion. 
+The `check_*()` suite of functions return a data frame that includes only the observations that meet the criterion. Since these functions first run the appropriate `mark_*()` function, they also print a message about the number of observations that meet the exclusion criterion.
 ```{r check1}
-# Check for rows with incomplete data then rows with durations less than 100 seconds
+# Check for rows with incomplete data
 df %>%
   check_progress()
 ```
 ```{r check2}
-# Check for rows with with durations less than 100 seconds
+# Check for rows with durations less than 100 seconds
 df %>% 
   check_duration(min_duration = 100)
 ```
@@ -77,15 +124,25 @@ df %>%
 Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.
 
 ```{r check3}
-# Check for rows with durations less than 100 seconds within rows that did not complete the survey
+# Check for rows with durations less than 100 seconds in rows that did not complete the survey
 df %>%
   check_progress() %>%
   check_duration(min_duration = 100)
 ```
 
+To check all data for multiple criteria, use the `mark_*()` functions followed by a filter.
+
+```{r mark_check}
+# Check for multiple criteria
+df %>% 
+  mark_preview() %>% 
+  mark_duration(min = 500) %>% 
+  unite_exclusions() %>% 
+  dplyr::filter(exclusions != "")
+```
 
 ## Excluding observations
-After checking which rows meet exclusion criteria, the `exclude_*()` suite of function will return a data frame that has removed observations that match the exclusion criteria. There is no need to pipe a check into an exclude, as the exclude functions already run the check. Therefore, excludes print a message of the number of observations meeting the criteria.
+The `exclude_*()` suite of function will return a data frame that has removed observations that match the exclusion criteria. Exclude functions print their own messages about the number of observations excluded.
 
 ```{r exclude1}
 # Exclude survey responses used to preview the survey
@@ -104,48 +161,32 @@ df %>%
   exclude_duplicates()
 ```
 
-## Marking observations
-Rather than removing observations, you may want to simply mark them for future processing (or not). The `mark_*()` suite of functions creates a new column for each mark function used that marks which observations violate the exclusion criterion. Like the excludes, marks run the check functions, so they print a message about the number of observations meeting exclusion criteria. Mark functions return a data frame identical to the original with additional columns marking exclusions.
+## Messages and console output
+Messages about the number of rows meeting the exclusion criteria are printed to the console by default. These messages are generated by the `mark_*()` functions and carry over to `check_*()` functions. They can be turn off by setting `quiet` to `TRUE`.
 
-```{r mark1}
-# Mark observations run as preview
-df %>% 
-  mark_preview() %>% 
-  dplyr::glimpse()
+```{r quiet}
+# Turn off marking/checking messages with quiet = TRUE
+df %>%
+  check_progress(quiet = TRUE)
 ```
 
-Notice the new `exclusion_preview` column at the end of the data frame. It has marked the first two observations as `preview`.
+Note that `exclude_*()` functions have the `mark_*()` messages turned off by default and produce their own messages about exclusions. To silence these messages, set `silent` to `TRUE`.
 
-Piping multiple mark functions will create multiple rows marking observations for exclusion.
-
-```{r mark2}
-# Mark preview and incomplete observations
-df %>% 
-  mark_preview() %>% 
-  mark_progress() %>% 
-  dplyr::glimpse()
+```{r silent}
+# Turn off exclusion messages with silent = TRUE
+df %>%
+  exclude_preview(silent = TRUE) %>%
+  exclude_progress(silent = TRUE) %>%
+  exclude_duplicates(silent = TRUE)
 ```
 
-To unite all of the marked columns into a single column, use the `unite_exclusions()` function. This will create a new `exclusions` columns that will unite all exclusions in each observation into a single column. 
+Though `exclude_*()` functions do not print the data frame to the console, `mark_*()` and `check_*()` do. To avoid printing to the console, set `print` = `FALSE`.
 
-```{r mark3}
-df %>% 
-  mark_preview() %>% 
-  mark_duration(min = 500) %>% 
-  unite_exclusions() %>% 
-  dplyr::relocate(exclusions, .before = StartDate)
+```{r printoff}
+# Turn off marking/checking printing data frame with print = FALSE
+df %>%
+  check_progress(print = FALSE)
 ```
-
-Multiple exclusions are separated by `,` but the separating character can be controlled by the `separator` argument. By default, the multiple exclusion columns are removed from the final data frame, but this can be turned off by setting the `remove` argument to `FALSE`. 
-
-```{r mark4}
-df %>% 
-  mark_preview() %>% 
-  mark_duration(min = 500) %>% 
-  unite_exclusions(separator = ";", remove = FALSE) %>% 
-  dplyr::relocate(exclusions, .before = StartDate)
-```
-
 
 ## Deidentifying data
 
