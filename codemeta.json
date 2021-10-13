@@ -11,7 +11,7 @@
   "relatedLink": "https://jeffreyrstevens.github.io/excluder/",
   "issueTracker": "https://github.com/jeffreyrstevens/excluder/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
