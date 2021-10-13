@@ -261,8 +261,7 @@ exclude_ip <- function(x,
                        country = "US",
                        quiet = FALSE,
                        print = FALSE,
-                       silent = FALSE,
-                       ...) {
+                       silent = FALSE) {
 
   # Mark and filter ip
   remaining_data <- mark_ip(x,

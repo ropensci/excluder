@@ -11,8 +11,7 @@ exclude_ip(
   country = "US",
   quiet = FALSE,
   print = FALSE,
-  silent = FALSE,
-  ...
+  silent = FALSE
 )
 }
 \arguments{
