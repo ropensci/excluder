@@ -129,22 +129,50 @@
     <div id="excluder-030" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#excluder-030" class="anchor"></a>excluder 0.3.0</h1>
+<div id="new-features" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>NEW FEATURES</h3>
 <ul>
-<li>The primary functionality of the package has moved from the <code>check_*()</code> functions to the <code>mark_*()</code> functions. Thus, <code>check_*()</code> and <code>exclude_*()</code> now first call <code>mark_*()</code> to mark the rows with exclusion criteria, then filter the excluded rows. The documentation for <code>check_*()</code> and <code>exclude_*()</code> now inherit the arguments from <code>mark_*()</code>. This change has been updated in the README and Getting Started vignette.</li>
-<li>
-<code><a href="../reference/collapse_exclusions.html">collapse_exclusions()</a></code> has been renamed <code><a href="../reference/unite_exclusions.html">unite_exclusions()</a></code> to match {tidyverse} terminology. <code><a href="../reference/collapse_exclusions.html">collapse_exclusions()</a></code> is now deprecated and will be removed later. <code>unite_exlusions()</code> also switched from using NA to "" for rows with no exclusions. Combined columns now no longer have leftover separators.</li>
 <li>The <code>mark_durations()</code> function now marks fast and slow durations separately.</li>
+<li>The primary functionality of the package has moved from the <code>check_*()</code> functions to the <code>mark_*()</code> functions. Thus, <code>check_*()</code> and <code>exclude_*()</code> now first call <code>mark_*()</code> to mark the rows with exclusion criteria, then filter the excluded rows. The documentation for <code>check_*()</code> and <code>exclude_*()</code> now inherit the arguments from <code>mark_*()</code>. This change has been updated in the README and Getting Started vignette.</li>
+</ul>
+</div>
+<div id="minor-improvements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-improvements" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<ul>
 <li>
 <code>exclude__*()</code> functions now have <code>print = FALSE</code> and <code>quiet = TRUE</code> set as default argument values.</li>
 <li>Calls to <code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code> have been replaced with <code>bind_cols()</code> and <code><a href="https://dplyr.tidyverse.org/reference/pull.html">dplyr::pull()</a></code> has been replaced with <code>[[]]</code>.</li>
 <li>Calls to <code>all_of()</code> and <code>any_of()</code> now refer to {tidyselect} rather than {dplyr}.</li>
 <li>
 <code>if()</code> statements are now more robust by using <code><a href="https://rdrr.io/r/base/identical.html">identical()</a></code> rather than <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code> and <code><a href="https://rdrr.io/r/base/Logic.html">&amp;&amp;</a></code> instead of <code><a href="https://rdrr.io/r/base/Logic.html">&amp;</a></code>.</li>
-<li>The {stringer} package is now imported instead of suggested.</li>
-<li>The <code>*_ip()</code> functions and documentation have been updated to fix a bug/typo to clarify that they mark, check, and exclude rows with IP addresses outside of the specified country.</li>
-<li>Package links are replaced with external URLs.</li>
+<li>The {stringr} package is now imported instead of suggested.</li>
 <li>All mark, check, and exclude functions for a particular exclusion type have been combined into a single R file. So now each exclusion type has its own R file. Similarly, data file scripts have been combined into a single file.</li>
 </ul>
+</div>
+<div id="bug-fixes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>BUG FIXES</h3>
+<ul>
+<li>The <code>*_ip()</code> functions and documentation have been updated to fix a bug/typo to clarify that they mark, check, and exclude rows with IP addresses outside of the specified country.</li>
+</ul>
+</div>
+<div id="deprecated-and-defunct" class="section level3">
+<h3 class="hasAnchor">
+<a href="#deprecated-and-defunct" class="anchor"></a>DEPRECATED AND DEFUNCT</h3>
+<ul>
+<li>
+<code><a href="../reference/collapse_exclusions.html">collapse_exclusions()</a></code> has been renamed <code><a href="../reference/unite_exclusions.html">unite_exclusions()</a></code> to match {tidyverse} terminology. <code><a href="../reference/collapse_exclusions.html">collapse_exclusions()</a></code> is now deprecated and will be removed in a future version, use <code>unite_exlusions()</code>. <code>unite_exlusions()</code> also switched from using NA to "" for rows with no exclusions. Combined columns now no longer have leftover separators.</li>
+</ul>
+</div>
+<div id="documentation-fixes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#documentation-fixes" class="anchor"></a>DOCUMENTATION FIXES</h3>
+<ul>
+<li>Package links are replaced with external URLs.</li>
+</ul>
+</div>
 </div>
     <div id="excluder-022" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.2">
