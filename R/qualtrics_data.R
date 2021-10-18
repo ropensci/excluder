@@ -4,7 +4,7 @@
 #' browser metadata collected and exported with "Use choice text".
 #' These data were randomly generated using [iptools::ip_random()] and
 #' [rgeolocate::ip2location()](
-#' https://cran.r-project.org/web/packages/rgeolocate/rgeolocate.pdf) functions.
+#' https://cran.r-project.org/package=rgeolocate) functions.
 #' This dataset includes the two header rows of with column information that is
 #' exported by Qualtrics.
 #'
@@ -39,7 +39,7 @@
 #' browser metadata collected and exported with "Use numeric values".
 #' These data were randomly generated using [iptools::ip_random()] and
 #' [rgeolocate::ip2location()](
-#' https://cran.r-project.org/web/packages/rgeolocate/rgeolocate.pdf) functions.
+#' https://cran.r-project.org/package=rgeolocate) functions.
 #'
 #' @format A data frame with 100 rows and 16 variables:
 #' \describe{
@@ -72,7 +72,7 @@
 #' browser metadata collected and exported with "Use choice text".
 #' These data were randomly generated using [iptools::ip_random()] and
 #' [rgeolocate::ip2location()](
-#' https://cran.r-project.org/web/packages/rgeolocate/rgeolocate.pdf) functions.
+#' https://cran.r-project.org/package=rgeolocate) functions.
 #'
 #' @format A data frame with 100 rows and 16 variables:
 #' \describe{

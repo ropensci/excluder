@@ -35,7 +35,7 @@ qualtrics_numeric
 A dataset containing the metadata from a standard Qualtrics survey with
 browser metadata collected and exported with "Use numeric values".
 These data were randomly generated using \code{\link[iptools:ip_random]{iptools::ip_random()}} and
-\href{https://cran.r-project.org/web/packages/rgeolocate/rgeolocate.pdf}{rgeolocate::ip2location()} functions.
+\href{https://cran.r-project.org/package=rgeolocate}{rgeolocate::ip2location()} functions.
 }
 \seealso{
 Other data: 
