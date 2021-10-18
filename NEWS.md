@@ -1,16 +1,31 @@
 # excluder 0.3.0
 
-* The primary functionality of the package has moved from the `check_*()` functions to the `mark_*()` functions. Thus, `check_*()` and `exclude_*()` now first call `mark_*()` to mark the rows with exclusion criteria, then filter the excluded rows. The documentation for `check_*()` and `exclude_*()` now inherit the arguments from `mark_*()`. This change has been updated in the README and Getting Started vignette.
-* `collapse_exclusions()` has been renamed `unite_exclusions()` to match {tidyverse} terminology. `collapse_exclusions()` is now deprecated and will be removed later. `unite_exlusions()` also switched from using NA to "" for rows with no exclusions. Combined columns now no longer have leftover separators.
+### NEW FEATURES
+
 * The `mark_durations()` function now marks fast and slow durations separately.
+* The primary functionality of the package has moved from the `check_*()` functions to the `mark_*()` functions. Thus, `check_*()` and `exclude_*()` now first call `mark_*()` to mark the rows with exclusion criteria, then filter the excluded rows. The documentation for `check_*()` and `exclude_*()` now inherit the arguments from `mark_*()`. This change has been updated in the README and Getting Started vignette.
+
+### MINOR IMPROVEMENTS
+
 * `exclude__*()` functions now have `print = FALSE` and `quiet = TRUE` set as default argument values.
 * Calls to `rbind()` have been replaced with `bind_cols()` and `dplyr::pull()` has been replaced with `[[]]`.
 * Calls to `all_of()` and `any_of()` now refer to {tidyselect} rather than {dplyr}.
 * `if()` statements are now more robust by using `identical()` rather than `==` and `&&` instead of `&`.
-* The {stringer} package is now imported instead of suggested.
-* The `*_ip()` functions and documentation have been updated to fix a bug/typo to clarify that they mark, check, and exclude rows with IP addresses outside of the specified country.
-* Package links are replaced with external URLs.
+* The {stringr} package is now imported instead of suggested.
 * All mark, check, and exclude functions for a particular exclusion type have been combined into a single R file. So now each exclusion type has its own R file. Similarly, data file scripts have been combined into a single file.
+
+### BUG FIXES
+
+* The `*_ip()` functions and documentation have been updated to fix a bug/typo to clarify that they mark, check, and exclude rows with IP addresses outside of the specified country.
+
+### DEPRECATED AND DEFUNCT
+
+* `collapse_exclusions()` has been renamed `unite_exclusions()` to match {tidyverse} terminology. `collapse_exclusions()` is now deprecated and will be removed in a future version, use `unite_exlusions()`. `unite_exlusions()` also switched from using NA to "" for rows with no exclusions. Combined columns now no longer have leftover separators.
+
+### DOCUMENTATION FIXES
+
+* Package links are replaced with external URLs.
+
 
 # excluder 0.2.2
 
