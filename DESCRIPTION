@@ -2,11 +2,20 @@ Package: excluder
 Title: Checks for Exclusion Criteria in Online Data
 Version: 0.3.0
 Authors@R: 
-    person(given = "Jeffrey R.",
+  c(person(given = "Jeffrey R.",
            family = "Stevens",
            role = c("aut", "cre"),
            email = "jeffrey.r.stevens@gmail.com",
-           comment = c(ORCID = "0000-0003-2375-1360"))
+           comment = c(ORCID = "0000-0003-2375-1360")),
+    person(given = "Joseph",
+             family = "O'Brien",
+             role = c("rev"),
+             comment = c(ORCID = "0000-0001-9851-5077")),
+    person(given = "Julia",
+             family = "Silge",
+             role = c("rev"),
+             email = "julia.silge@gmail.com",
+             comment = c(ORCID = "0000-0002-3671-836X")))
 Description: Data that are collected through online sources such as Mechanical 
             Turk may require excluding data because of IP address duplication, 
             geolocation, or completion duration. This package facilitates

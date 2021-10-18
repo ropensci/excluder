@@ -20,5 +20,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Jeffrey R. Stevens \email{jeffrey.r.stevens@gmail.com} (\href{https://orcid.org/0000-0003-2375-1360}{ORCID})
 
+Other contributors:
+\itemize{
+  \item Joseph O'Brien (\href{https://orcid.org/0000-0001-9851-5077}{ORCID}) [reviewer]
+  \item Julia Silge \email{julia.silge@gmail.com} (\href{https://orcid.org/0000-0002-3671-836X}{ORCID}) [reviewer]
+}
+
 }
 \keyword{internal}
