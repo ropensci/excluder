@@ -1,8 +1,10 @@
 # Test mark_preview()
 
 test_that("Output class is same as input class", {
-  expect_s3_class(mark_preview(qualtrics_numeric, quiet = TRUE),
-                  class(qualtrics_numeric))
+  expect_s3_class(
+    mark_preview(qualtrics_numeric, quiet = TRUE),
+    class(qualtrics_numeric)
+  )
 })
 
 test_that("Messages displayed by default", {
@@ -21,8 +23,10 @@ test_that("Marks create data frames of correct size", {
 # Test check_preview()
 
 test_that("Output class is same as input class", {
-  expect_s3_class(check_preview(qualtrics_numeric, quiet = TRUE),
-                  class(qualtrics_numeric))
+  expect_s3_class(
+    check_preview(qualtrics_numeric, quiet = TRUE),
+    class(qualtrics_numeric)
+  )
 })
 
 test_that("Messages displayed by default", {
@@ -41,8 +45,10 @@ test_that("Checks create data frames of correct size", {
 # Test exclude_preview()
 
 test_that("Output class is same as input class", {
-  suppressMessages(expect_s3_class(exclude_preview(qualtrics_numeric),
-                                   class(qualtrics_numeric)))
+  suppressMessages(expect_s3_class(
+    exclude_preview(qualtrics_numeric),
+    class(qualtrics_numeric)
+  ))
 })
 
 test_that("Messages displayed by default", {
@@ -50,7 +56,9 @@ test_that("Messages displayed by default", {
 })
 
 test_that("No messages displayed when quiet = TRUE and silent = TRUE", {
-  expect_message(exclude_preview(qualtrics_numeric, quiet = TRUE, silent = TRUE), NA)
+  expect_message(
+    exclude_preview(qualtrics_numeric, quiet = TRUE, silent = TRUE), NA
+  )
 })
 
 test_that("Excludes create data frames of correct size", {

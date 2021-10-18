@@ -59,14 +59,18 @@ mark_ip <- function(x,
   # Check for presence of required column
   column_names <- names(x)
   ## id_col
-  stopifnot("'id_col' should only have a single column name" =
-              length(id_col) == 1L)
+  stopifnot(
+    "'id_col' should only have a single column name" =
+      length(id_col) == 1L
+  )
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID ('id_col') was not found.")
   }
   ## ip_col
-  stopifnot("'ip_col' should only have a single column name" =
-              length(ip_col) == 1L)
+  stopifnot(
+    "'ip_col' should only have a single column name" =
+      length(ip_col) == 1L
+  )
   if (!ip_col %in% column_names) {
     stop("The column specifying IP address ('ip_col') was not found.")
   }
@@ -88,10 +92,14 @@ mark_ip <- function(x,
   # Remove rows with NAs for IP addresses
   na_rows <- which(is.na(ip_vector))
   n_na_rows <- length(na_rows)
-  if (n_na_rows > 0 && identical(quiet, FALSE)){
-    message(n_na_rows, " out of ", nrow(x),
-            paste0(" rows have NA values for IP addresses (check for preview ",
-                   "data with 'check_preview()')."))
+  if (n_na_rows > 0 && identical(quiet, FALSE)) {
+    message(
+      n_na_rows, " out of ", nrow(x),
+      paste0(
+        " rows have NA values for IP addresses (check for preview ",
+        "data with 'check_preview()')."
+      )
+    )
   }
   if (n_na_rows > 0) {
     filtered_data <- x[-na_rows, ]
@@ -113,8 +121,10 @@ mark_ip <- function(x,
 
   # Print message and return output
   if (identical(quiet, FALSE)) {
-    message(n_outside_country, " out of ", nrow(x),
-            " rows have IP addresses outside of ", country, ".")
+    message(
+      n_outside_country, " out of ", nrow(x),
+      " rows have IP addresses outside of ", country, "."
+    )
   }
 
   # Find rows to mark
@@ -124,8 +134,10 @@ mark_ip <- function(x,
 
   # Mark rows
   invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-              dplyr::mutate(exclusion_ip =
-                              stringr::str_replace_na(.data$exclusion_ip, "")))
+    dplyr::mutate(
+      exclusion_ip =
+        stringr::str_replace_na(.data$exclusion_ip, "")
+    ))
 }
 
 #' Check for IP addresses from outside of a specified country.
@@ -201,10 +213,11 @@ check_ip <- function(x,
 
   # Mark and filter ip
   exclusions <- mark_ip(x,
-                        id_col = id_col,
-                        ip_col = ip_col,
-                        country = country,
-                        quiet = quiet) %>%
+    id_col = id_col,
+    ip_col = ip_col,
+    country = country,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_ip == "ip_outside_country") %>%
     dplyr::select(-.data$exclusion_ip)
 
@@ -265,10 +278,11 @@ exclude_ip <- function(x,
 
   # Mark and filter ip
   remaining_data <- mark_ip(x,
-                            id_col = id_col,
-                            ip_col = ip_col,
-                            country = country,
-                            quiet = quiet) %>%
+    id_col = id_col,
+    ip_col = ip_col,
+    country = country,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_ip != "ip_outside_country") %>%
     dplyr::select(-.data$exclusion_ip)
 
@@ -276,8 +290,10 @@ exclude_ip <- function(x,
   n_remaining <- nrow(remaining_data)
   n_exclusions <- nrow(x) - n_remaining
   if (identical(silent, FALSE)) {
-    message(n_exclusions, " out of ", nrow(x),
-            " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+    message(
+      n_exclusions, " out of ", nrow(x),
+      " duplicate rows were excluded, leaving ", n_remaining, " rows."
+    )
   }
 
   # Determine whether to print results

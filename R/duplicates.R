@@ -58,8 +58,10 @@
 mark_duplicates <- function(x,
                             id_col = "ResponseId",
                             ip_col = "IPAddress",
-                            location_col = c("LocationLatitude",
-                                             "LocationLongitude"),
+                            location_col = c(
+                              "LocationLatitude",
+                              "LocationLongitude"
+                            ),
                             dupl_ip = TRUE,
                             dupl_location = TRUE,
                             include_na = FALSE,
@@ -68,19 +70,23 @@ mark_duplicates <- function(x,
   # Check for presence of required columns
   column_names <- names(x)
   ## id_col
-  stopifnot("'id_col' should only have a single column name." =
-              length(id_col) == 1L)
+  stopifnot(
+    "'id_col' should only have a single column name." =
+      length(id_col) == 1L
+  )
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID ('id_col') was not found.")
   }
   ## location_col
-  stopifnot("'location_col' must have two columns: latitude and longitude." =
-              length(id_col) == 1L)
+  stopifnot(
+    "'location_col' must have two columns: latitude and longitude." =
+      length(id_col) == 1L
+  )
   if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) {
     stop("The column specifying location ('location_col') was not found.")
   }
   ## ip_col
-  stopifnot("'ip_col' should have a single column name"= length(ip_col) == 1L)
+  stopifnot("'ip_col' should have a single column name" = length(ip_col) == 1L)
   if (!ip_col %in% column_names) {
     stop("The column specifying IP address ('ip_col') was not found.")
   }
@@ -118,26 +124,36 @@ mark_duplicates <- function(x,
       dplyr::select(-.data$dupe_count)
     n_same_ip <- nrow(same_ip)
     if (identical(quiet, FALSE)) {
-      message(n_same_ip, " out of ", nrow(no_nas),
-              " rows have duplicate IP addresses.")
+      message(
+        n_same_ip, " out of ", nrow(no_nas),
+        " rows have duplicate IP addresses."
+      )
     }
   }
 
   # Check for duplicate locations
   if (identical(dupl_location, TRUE)) {
     if (identical(include_na, FALSE)) {
-      n_nas <- ncol(x) - ncol(tidyr::drop_na(x, tidyselect::any_of(location_col)))
+      n_nas <- ncol(x) - ncol(tidyr::drop_na(
+        x,
+        tidyselect::any_of(location_col)
+      ))
       no_nas <- tidyr::drop_na(x, tidyselect::any_of(location_col))
       if (identical(quiet, FALSE)) {
         message(n_nas, " NAs were found in location.")
       }
     }
-    same_location <- janitor::get_dupes(no_nas, tidyselect::all_of(location_col)) %>%
+    same_location <- janitor::get_dupes(
+      no_nas,
+      tidyselect::all_of(location_col)
+    ) %>%
       dplyr::select(-.data$dupe_count)
     n_same_location <- nrow(same_location)
     if (identical(quiet, FALSE)) {
-      message(n_same_location, " out of ", nrow(no_nas),
-              " rows have duplicate locations.")
+      message(
+        n_same_location, " out of ", nrow(no_nas),
+        " rows have duplicate locations."
+      )
     }
   }
 
@@ -150,8 +166,10 @@ mark_duplicates <- function(x,
     duplicates <- same_ip
   } else {
     duplicates <- NULL
-    stop(paste0("You must specify location or IP address checks with ",
-                "'dupl_location' or 'dupl_ip'."))
+    stop(paste0(
+      "You must specify location or IP address checks with ",
+      "'dupl_location' or 'dupl_ip'."
+    ))
   }
 
   # Find rows to mark
@@ -162,9 +180,12 @@ mark_duplicates <- function(x,
 
   # Mark rows
   invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-              dplyr::mutate(exclusion_duplicates =
-                              stringr::str_replace_na(.data$exclusion_duplicates, ""))
-  )
+    dplyr::mutate(
+      exclusion_duplicates =
+        stringr::str_replace_na(
+          .data$exclusion_duplicates, ""
+        )
+    ))
 }
 
 #' Check for duplicate IP addresses and/or locations
@@ -222,8 +243,10 @@ mark_duplicates <- function(x,
 check_duplicates <- function(x,
                              id_col = "ResponseId",
                              ip_col = "IPAddress",
-                             location_col = c("LocationLatitude",
-                                              "LocationLongitude"),
+                             location_col = c(
+                               "LocationLatitude",
+                               "LocationLongitude"
+                             ),
                              dupl_ip = TRUE,
                              dupl_location = TRUE,
                              include_na = FALSE,
@@ -232,13 +255,14 @@ check_duplicates <- function(x,
 
   # Mark and filter duplicates
   exclusions <- mark_duplicates(x,
-                                id_col = id_col,
-                                ip_col = ip_col,
-                                location_col = location_col,
-                                dupl_ip = dupl_ip,
-                                dupl_location = dupl_location,
-                                include_na = include_na,
-                                quiet = quiet) %>%
+    id_col = id_col,
+    ip_col = ip_col,
+    location_col = location_col,
+    dupl_ip = dupl_ip,
+    dupl_location = dupl_location,
+    include_na = include_na,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_duplicates == "duplicates") %>%
     dplyr::select(-.data$exclusion_duplicates)
 
@@ -294,8 +318,10 @@ check_duplicates <- function(x,
 exclude_duplicates <- function(x,
                                id_col = "ResponseId",
                                ip_col = "IPAddress",
-                               location_col = c("LocationLatitude",
-                                                "LocationLongitude"),
+                               location_col = c(
+                                 "LocationLatitude",
+                                 "LocationLongitude"
+                               ),
                                dupl_ip = TRUE,
                                dupl_location = TRUE,
                                include_na = FALSE,
@@ -305,13 +331,14 @@ exclude_duplicates <- function(x,
 
   # Mark and filter duplicates
   remaining_data <- mark_duplicates(x,
-                                    id_col = id_col,
-                                    ip_col = ip_col,
-                                    location_col = location_col,
-                                    dupl_ip = dupl_ip,
-                                    dupl_location = dupl_location,
-                                    include_na = include_na,
-                                    quiet = quiet) %>%
+    id_col = id_col,
+    ip_col = ip_col,
+    location_col = location_col,
+    dupl_ip = dupl_ip,
+    dupl_location = dupl_location,
+    include_na = include_na,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_duplicates != "duplicates") %>%
     dplyr::select(-.data$exclusion_duplicates)
 
@@ -319,8 +346,10 @@ exclude_duplicates <- function(x,
   n_remaining <- nrow(remaining_data)
   n_exclusions <- nrow(x) - n_remaining
   if (identical(silent, FALSE)) {
-    message(n_exclusions, " out of ", nrow(x),
-            " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+    message(
+      n_exclusions, " out of ", nrow(x),
+      " duplicate rows were excluded, leaving ", n_remaining, " rows."
+    )
   }
 
   # Determine whether to print results

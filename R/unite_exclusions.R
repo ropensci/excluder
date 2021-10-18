@@ -9,13 +9,17 @@
 #' @keywords internal
 #' @export
 collapse_exclusions <- function(x,
-                                exclusion_types = c("duplicates", "duration",
-                                                    "ip", "location", "preview",
-                                                    "progress", "resolution"),
+                                exclusion_types = c(
+                                  "duplicates", "duration",
+                                  "ip", "location", "preview",
+                                  "progress", "resolution"
+                                ),
                                 separator = ",",
                                 remove = TRUE) {
-  lifecycle::deprecate_warn("0.3.0", "collapse_exclusions()",
-                            "unite_exclusions()")
+  lifecycle::deprecate_warn(
+    "0.3.0", "collapse_exclusions()",
+    "unite_exclusions()"
+  )
   unite_exclusions(x, exclusion_types, separator, remove)
 }
 
@@ -61,9 +65,11 @@ collapse_exclusions <- function(x,
 #' df2 <- df %>%
 #'   unite_exclusions(exclusion_types = c("duplicates", "duration", "ip"))
 unite_exclusions <- function(x,
-                             exclusion_types = c("duplicates", "duration",
-                                                 "ip", "location", "preview",
-                                                 "progress", "resolution"),
+                             exclusion_types = c(
+                               "duplicates", "duration",
+                               "ip", "location", "preview",
+                               "progress", "resolution"
+                             ),
                              separator = ",",
                              remove = TRUE) {
 
@@ -73,21 +79,30 @@ unite_exclusions <- function(x,
     names(x)[which(names(x) %in% exclusion_columns_selected)]
 
   # Check for presence of exclusion column(s)
-  stopifnot("No exclusion columns found. Run 'mark_*()' functions to mark columns." =
-              length(exclusion_columns_to_unite) >= 1L)
+  stopifnot(
+    "No exclusion columns found. Run 'mark_*()' functions to mark columns." =
+      length(exclusion_columns_to_unite) >= 1L
+  )
 
   # Unite and delete columns
   x %>%
     tidyr::unite("exclusions",
-                 tidyselect::all_of(exclusion_columns_to_unite),
-                 sep = separator,
-                 na.rm = TRUE,
-                 remove = remove) %>%
-    dplyr::mutate(exclusions =  # remove extraneous commas from unite
-                    ifelse(substr(.data$exclusions, 1, 1) == separator,
-                           sub("^.", "", .data$exclusions), .data$exclusions),
-                  exclusions =
-                    ifelse(substr(.data$exclusions, nchar(.data$exclusions),
-                                  nchar(.data$exclusions)) == separator,
-                           sub(".$", "", .data$exclusions), .data$exclusions))
+      tidyselect::all_of(exclusion_columns_to_unite),
+      sep = separator,
+      na.rm = TRUE,
+      remove = remove
+    ) %>%
+    dplyr::mutate(
+      exclusions = # remove extraneous commas from unite
+        ifelse(substr(.data$exclusions, 1, 1) == separator,
+          sub("^.", "", .data$exclusions), .data$exclusions
+        ),
+      exclusions =
+        ifelse(substr(
+          .data$exclusions, nchar(.data$exclusions),
+          nchar(.data$exclusions)
+        ) == separator,
+        sub(".$", "", .data$exclusions), .data$exclusions
+        )
+    )
 }

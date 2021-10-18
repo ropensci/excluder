@@ -49,23 +49,27 @@ mark_resolution <- function(x,
   # Check for presence of required column
   column_names <- names(x)
   ## id_col
-  stopifnot("id_col should only have a single column name" =
-              length(id_col) == 1L)
+  stopifnot(
+    "id_col should only have a single column name" =
+      length(id_col) == 1L
+  )
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID ('id_col') was not found.")
   }
   ## res_col
-  stopifnot("res_col should have a single column name"= length(res_col) == 1L)
+  stopifnot("res_col should have a single column name" = length(res_col) == 1L)
   if (!res_col %in% column_names) {
     stop("The column specifying resolution ('res_col') was not found.")
   }
 
   # Check width or height minimum
-  stopifnot("width_min should have a single value"= length(width_min) == 1L)
-  stopifnot("height_min should have a single value"= length(height_min) == 1L)
+  stopifnot("width_min should have a single value" = length(width_min) == 1L)
+  stopifnot("height_min should have a single value" = length(height_min) == 1L)
   if (identical(width_min, 0) && identical(height_min, 0)) {
-    stop(paste0("You must specify a minimum resolution for width or height ",
-                "with 'width_min' or 'height_min'."))
+    stop(paste0(
+      "You must specify a minimum resolution for width or height ",
+      "with 'width_min' or 'height_min'."
+    ))
   }
 
   # Extract duration vector
@@ -80,9 +84,10 @@ mark_resolution <- function(x,
 
   filtered_data <- x %>%
     tidyr::separate(res_col,
-                    c("width", "height"),
-                    sep = "x",
-                    remove = FALSE) %>%
+      c("width", "height"),
+      sep = "x",
+      remove = FALSE
+    ) %>%
     dplyr::mutate(
       width = readr::parse_number(.data$width),
       height = readr::parse_number(.data$height)
@@ -92,9 +97,11 @@ mark_resolution <- function(x,
 
   # Print message and return output
   if (identical(quiet, FALSE)) {
-    message(n_wrong_resolution, " out of ", nrow(x),
-            " rows have screen resolution width less than ",
-            width_min, " or height less than ", height_min, ".")
+    message(
+      n_wrong_resolution, " out of ", nrow(x),
+      " rows have screen resolution width less than ",
+      width_min, " or height less than ", height_min, "."
+    )
   }
 
   # Find rows to mark
@@ -104,9 +111,12 @@ mark_resolution <- function(x,
 
   # Mark rows
   invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-              dplyr::mutate(exclusion_resolution =
-                              stringr::str_replace_na(.data$exclusion_resolution, ""))
-  )
+    dplyr::mutate(
+      exclusion_resolution =
+        stringr::str_replace_na(
+          .data$exclusion_resolution, ""
+        )
+    ))
 }
 
 #' Check screen resolution
@@ -167,11 +177,12 @@ check_resolution <- function(x,
 
   # Mark and filter resolution
   exclusions <- mark_resolution(x,
-                                width_min = width_min,
-                                height_min = height_min,
-                                id_col = id_col,
-                                res_col = res_col,
-                                quiet = quiet) %>%
+    width_min = width_min,
+    height_min = height_min,
+    id_col = id_col,
+    res_col = res_col,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_resolution == "unacceptable_resolution") %>%
     dplyr::select(-.data$exclusion_resolution)
 
@@ -228,11 +239,12 @@ exclude_resolution <- function(x,
 
   # Mark and filter resolution
   remaining_data <- mark_resolution(x,
-                                    width_min = width_min,
-                                    height_min = height_min,
-                                    id_col = id_col,
-                                    res_col = res_col,
-                                    quiet = quiet) %>%
+    width_min = width_min,
+    height_min = height_min,
+    id_col = id_col,
+    res_col = res_col,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_resolution != "unacceptable_resolution") %>%
     dplyr::select(-.data$exclusion_resolution)
 
@@ -240,8 +252,10 @@ exclude_resolution <- function(x,
   n_remaining <- nrow(remaining_data)
   n_exclusions <- nrow(x) - n_remaining
   if (identical(silent, FALSE)) {
-    message(n_exclusions, " out of ", nrow(x),
-            " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+    message(
+      n_exclusions, " out of ", nrow(x),
+      " duplicate rows were excluded, leaving ", n_remaining, " rows."
+    )
   }
 
   # Determine whether to print results

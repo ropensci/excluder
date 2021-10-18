@@ -48,16 +48,20 @@
 #'   mark_location()
 mark_location <- function(x,
                           id_col = "ResponseId",
-                          location_col = c("LocationLatitude",
-                                           "LocationLongitude"),
+                          location_col = c(
+                            "LocationLatitude",
+                            "LocationLongitude"
+                          ),
                           include_na = FALSE,
                           quiet = FALSE) {
 
   # Check for presence of required column
   column_names <- names(x)
   ## id_col
-  stopifnot("'id_col' should only have a single column name" =
-              length(id_col) == 1L)
+  stopifnot(
+    "'id_col' should only have a single column name" =
+      length(id_col) == 1L
+  )
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID ('id_col') was not found.")
   }
@@ -109,10 +113,14 @@ mark_location <- function(x,
 
   # Print messages and return output
   if (identical(quiet, FALSE)) {
-    message(n_no_location, " out of ", n_rows,
-            " rows had no information on location.")
-    message(n_outside_us, " out of ", n_rows,
-            " rows were located outside of the US.")
+    message(
+      n_no_location, " out of ", n_rows,
+      " rows had no information on location."
+    )
+    message(
+      n_outside_us, " out of ", n_rows,
+      " rows were located outside of the US."
+    )
   }
 
   # Find rows to mark
@@ -122,8 +130,12 @@ mark_location <- function(x,
 
   # Mark rows
   invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-              dplyr::mutate(exclusion_location =
-                              stringr::str_replace_na(.data$exclusion_location, "")))
+    dplyr::mutate(
+      exclusion_location =
+        stringr::str_replace_na(
+          .data$exclusion_location, ""
+        )
+    ))
 }
 
 #' Check for locations outside of the US
@@ -178,18 +190,21 @@ mark_location <- function(x,
 #'   check_location(quiet = TRUE)
 check_location <- function(x,
                            id_col = "ResponseId",
-                           location_col = c("LocationLatitude",
-                                            "LocationLongitude"),
+                           location_col = c(
+                             "LocationLatitude",
+                             "LocationLongitude"
+                           ),
                            include_na = FALSE,
                            quiet = FALSE,
                            print = TRUE) {
 
   # Mark and filter location
   exclusions <- mark_location(x,
-                              id_col = id_col,
-                              location_col = location_col,
-                              include_na = include_na,
-                              quiet = quiet) %>%
+    id_col = id_col,
+    location_col = location_col,
+    include_na = include_na,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_location == "location_outside_us") %>%
     dplyr::select(-.data$exclusion_location)
 
@@ -238,8 +253,10 @@ check_location <- function(x,
 #'   exclude_location()
 exclude_location <- function(x,
                              id_col = "ResponseId",
-                             location_col = c("LocationLatitude",
-                                              "LocationLongitude"),
+                             location_col = c(
+                               "LocationLatitude",
+                               "LocationLongitude"
+                             ),
                              include_na = FALSE,
                              quiet = TRUE,
                              print = FALSE,
@@ -247,10 +264,11 @@ exclude_location <- function(x,
 
   # Mark and filter location
   remaining_data <- mark_location(x,
-                                  id_col = id_col,
-                                  location_col = location_col,
-                                  include_na = include_na,
-                                  quiet = quiet) %>%
+    id_col = id_col,
+    location_col = location_col,
+    include_na = include_na,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_location != "location_outside_us") %>%
     dplyr::select(-.data$exclusion_location)
 
@@ -258,8 +276,10 @@ exclude_location <- function(x,
   n_remaining <- nrow(remaining_data)
   n_exclusions <- nrow(x) - n_remaining
   if (identical(silent, FALSE)) {
-    message(n_exclusions, " out of ", nrow(x),
-            " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+    message(
+      n_exclusions, " out of ", nrow(x),
+      " duplicate rows were excluded, leaving ", n_remaining, " rows."
+    )
   }
 
   # Determine whether to print results

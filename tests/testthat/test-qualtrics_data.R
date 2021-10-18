@@ -13,16 +13,30 @@ test_that("Data sets include exclusion criteria", {
   expect_true(any(qualtrics_raw$Finished == FALSE))
 
   # Check for durations < 100 s
-  suppressWarnings(expect_true(any(as.numeric(qualtrics_raw$`Duration (in seconds)`) < 100)))
+  suppressWarnings(
+    expect_true(any(as.numeric(qualtrics_raw$`Duration (in seconds)`) < 100))
+  )
 
   # Check for small screen resolution
-  suppressWarnings(expect_true(any(as.numeric(stringr::str_split(qualtrics_raw$Resolution, "x", simplify = TRUE)[, 1]) < 1000)))
+  suppressWarnings(
+    expect_true(any(as.numeric(stringr::str_split(
+      qualtrics_raw$Resolution, "x",
+      simplify = TRUE
+    )[, 1]) < 1000))
+  )
 
   # Check for duplicate IP addresses
   expect_true(nrow(janitor::get_dupes(qualtrics_raw, IPAddress)) > 0)
 
   # Check for duplicate latitude and longitude
-  expect_true(nrow(janitor::get_dupes(qualtrics_raw, dplyr::any_of(c("LocationLatitude", "LocationLongitude")))) > 0)
+  expect_true(
+    nrow(janitor::get_dupes(
+      qualtrics_raw,
+      dplyr::any_of(
+        c("LocationLatitude", "LocationLongitude")
+      )
+    )) > 0
+  )
 })
 
 # Test qualtrics_numeric()
@@ -44,14 +58,22 @@ test_that("Data sets include exclusion criteria", {
 
   # Check for small screen resolution
   expect_true(any(as.numeric(stringr::str_split(qualtrics_numeric$Resolution,
-                                                "x",
-                                                simplify = TRUE)[, 1]) < 1000))
+    "x",
+    simplify = TRUE
+  )[, 1]) < 1000))
 
   # Check for duplicate IP addresses
   expect_true(nrow(janitor::get_dupes(qualtrics_numeric, IPAddress)) > 0)
 
   # Check for duplicate latitude and longitude
-  expect_true(nrow(janitor::get_dupes(qualtrics_numeric, dplyr::any_of(c("LocationLatitude", "LocationLongitude")))) > 0)
+  expect_true(
+    nrow(janitor::get_dupes(
+      qualtrics_numeric,
+      dplyr::any_of(
+        c("LocationLatitude", "LocationLongitude")
+      )
+    )) > 0
+  )
 })
 
 # Test qualtrics_text()
@@ -73,12 +95,20 @@ test_that("Data sets include exclusion criteria", {
 
   # Check for small screen resolution
   expect_true(any(as.numeric(stringr::str_split(qualtrics_text$Resolution,
-                                                "x",
-                                                simplify = TRUE)[, 1]) < 1000))
+    "x",
+    simplify = TRUE
+  )[, 1]) < 1000))
 
   # Check for duplicate IP addresses
   expect_true(nrow(janitor::get_dupes(qualtrics_text, IPAddress)) > 0)
 
   # Check for duplicate latitude and longitude
-  expect_true(nrow(janitor::get_dupes(qualtrics_text, dplyr::any_of(c("LocationLatitude", "LocationLongitude")))) > 0)
+  expect_true(
+    nrow(janitor::get_dupes(
+      qualtrics_text,
+      dplyr::any_of(
+        c("LocationLatitude", "LocationLongitude")
+      )
+    )) > 0
+  )
 })

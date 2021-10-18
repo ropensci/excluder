@@ -47,14 +47,18 @@ mark_preview <- function(x,
   # Check for presence of required column
   column_names <- names(x)
   ## id_col
-  stopifnot("'id_col' should only have a single column name" =
-              length(id_col) == 1L)
+  stopifnot(
+    "'id_col' should only have a single column name" =
+      length(id_col) == 1L
+  )
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID ('id_col') was not found.")
   }
   ## preview_col
-  stopifnot("'preview_col' should have a single column name" =
-              length(preview_col) == 1L)
+  stopifnot(
+    "'preview_col' should have a single column name" =
+      length(preview_col) == 1L
+  )
   if (!preview_col %in% column_names) {
     stop("The column specifying previews ('preview_col') was not found.")
   }
@@ -65,21 +69,29 @@ mark_preview <- function(x,
   } else if (is.numeric(x[[preview_col]])) {
     filtered_data <- dplyr::filter(x, .data[[preview_col]] == 1)
   } else {
-    stop("The column ", preview_col,
-         " is not of type character or numeric, so it cannot be checked.")
+    stop(
+      "The column ", preview_col,
+      " is not of type character or numeric, so it cannot be checked."
+    )
   }
   n_previews <- nrow(filtered_data)
 
   # Print message and return output
   if (identical(quiet, FALSE)) {
     if (n_previews > 0) {
-      message(n_previews, " out of ", nrow(x),
-              paste0(" rows were collected as previews. It is highly ",
-                     "recommended to exclude these rows before further ",
-                     "checking."))
+      message(
+        n_previews, " out of ", nrow(x),
+        paste0(
+          " rows were collected as previews. It is highly ",
+          "recommended to exclude these rows before further ",
+          "checking."
+        )
+      )
     } else {
-      message(n_previews, " out of ", nrow(x),
-              " rows were collected as previews.")
+      message(
+        n_previews, " out of ", nrow(x),
+        " rows were collected as previews."
+      )
     }
   }
 
@@ -90,8 +102,12 @@ mark_preview <- function(x,
 
   # Mark rows
   invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-              dplyr::mutate(exclusion_preview =
-                              stringr::str_replace_na(.data$exclusion_preview, "")))
+    dplyr::mutate(
+      exclusion_preview =
+        stringr::str_replace_na(
+          .data$exclusion_preview, ""
+        )
+    ))
 }
 
 #' Check for survey previews
@@ -149,9 +165,10 @@ check_preview <- function(x,
 
   # Mark and filter preview
   exclusions <- mark_preview(x,
-                             id_col = id_col,
-                             preview_col = preview_col,
-                             quiet = quiet) %>%
+    id_col = id_col,
+    preview_col = preview_col,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_preview == "preview") %>%
     dplyr::select(-.data$exclusion_preview)
 
@@ -209,9 +226,10 @@ exclude_preview <- function(x,
 
   # Mark and filter preview
   remaining_data <- mark_preview(x,
-                                 id_col = id_col,
-                                 preview_col = preview_col,
-                                 quiet = quiet) %>%
+    id_col = id_col,
+    preview_col = preview_col,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_preview != "preview") %>%
     dplyr::select(-.data$exclusion_preview)
 
@@ -219,8 +237,10 @@ exclude_preview <- function(x,
   n_remaining <- nrow(remaining_data)
   n_exclusions <- nrow(x) - n_remaining
   if (identical(silent, FALSE)) {
-    message(n_exclusions, " out of ", nrow(x),
-            " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+    message(
+      n_exclusions, " out of ", nrow(x),
+      " duplicate rows were excluded, leaving ", n_remaining, " rows."
+    )
   }
 
   # Determine whether to print results

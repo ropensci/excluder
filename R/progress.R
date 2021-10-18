@@ -50,7 +50,6 @@
 #' df <- qualtrics_numeric %>%
 #'   exclude_preview() %>%
 #'   mark_progress(min_progress = 98)
-#'
 mark_progress <- function(x,
                           min_progress = 100,
                           id_col = "ResponseId",
@@ -61,19 +60,25 @@ mark_progress <- function(x,
   # Check for presence of required column
   column_names <- names(x)
   ## id_col
-  stopifnot("'id_col' should only have a single column name" =
-              length(id_col) == 1L)
+  stopifnot(
+    "'id_col' should only have a single column name" =
+      length(id_col) == 1L
+  )
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID ('id_col') was not found.")
   }
   ## finished_col
   if (!finished_col %in% column_names) {
-    stop(paste0("The column specifying whether a participant finished ",
-                "('finished_col') was not found."))
+    stop(paste0(
+      "The column specifying whether a participant finished ",
+      "('finished_col') was not found."
+    ))
   }
   ## progress_col
-  stopifnot("'progress_col' should have a single column name" =
-              length(progress_col) == 1L)
+  stopifnot(
+    "'progress_col' should have a single column name" =
+      length(progress_col) == 1L
+  )
   if (!progress_col %in% column_names) {
     stop("The column specifying progress ('progress_col') was not found.")
   }
@@ -84,26 +89,34 @@ mark_progress <- function(x,
   } else if (is.numeric(x[[finished_col]])) {
     incomplete <- dplyr::filter(x, .data[[finished_col]] == 0)
   } else {
-    stop("The column ", finished_col,
-         " is not of type logical or numeric, so it cannot be checked.")
+    stop(
+      "The column ", finished_col,
+      " is not of type logical or numeric, so it cannot be checked."
+    )
   }
   n_incomplete <- nrow(incomplete)
 
   # If minimum percent specified, find cases below minimum
-  stopifnot("min_progress should have a single value" =
-              length(min_progress) == 1L)
+  stopifnot(
+    "min_progress should have a single value" =
+      length(min_progress) == 1L
+  )
   if (min_progress < 100) {
     incomplete <- dplyr::filter(x, .data[[progress_col]] < min_progress)
     n_below_min <- nrow(incomplete)
     if (identical(quiet, FALSE)) {
-      message(n_incomplete, " rows did not complete the study, and ",
-              n_below_min, " of those completed less than ",
-              min_progress, "% of the study.")
+      message(
+        n_incomplete, " rows did not complete the study, and ",
+        n_below_min, " of those completed less than ",
+        min_progress, "% of the study."
+      )
     }
   } else {
     if (identical(quiet, FALSE)) {
-      message(n_incomplete, " out of ", nrow(x),
-              " rows did not complete the study.")
+      message(
+        n_incomplete, " out of ", nrow(x),
+        " rows did not complete the study."
+      )
     }
   }
 
@@ -114,8 +127,12 @@ mark_progress <- function(x,
 
   # Mark rows
   invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-              dplyr::mutate(exclusion_progress =
-                              stringr::str_replace_na(.data$exclusion_progress, "")))
+    dplyr::mutate(
+      exclusion_progress =
+        stringr::str_replace_na(
+          .data$exclusion_progress, ""
+        )
+    ))
 }
 
 #' Check for survey progress
@@ -186,11 +203,12 @@ check_progress <- function(x,
 
   # Mark and filter progress
   exclusions <- mark_progress(x,
-                              min_progress = min_progress,
-                              id_col = id_col,
-                              finished_col = finished_col,
-                              progress_col = progress_col,
-                              quiet = quiet) %>%
+    min_progress = min_progress,
+    id_col = id_col,
+    finished_col = finished_col,
+    progress_col = progress_col,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_progress == "incomplete_progress") %>%
     dplyr::select(-.data$exclusion_progress)
 
@@ -257,11 +275,12 @@ exclude_progress <- function(x,
 
   # Mark and filter progress
   remaining_data <- mark_progress(x,
-                                  min_progress = min_progress,
-                                  id_col = id_col,
-                                  finished_col = finished_col,
-                                  progress_col = progress_col,
-                                  quiet = quiet) %>%
+    min_progress = min_progress,
+    id_col = id_col,
+    finished_col = finished_col,
+    progress_col = progress_col,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_progress != "incomplete_progress") %>%
     dplyr::select(-.data$exclusion_progress)
 
@@ -269,8 +288,10 @@ exclude_progress <- function(x,
   n_remaining <- nrow(remaining_data)
   n_exclusions <- nrow(x) - n_remaining
   if (identical(silent, FALSE)) {
-    message(n_exclusions, " out of ", nrow(x),
-            " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+    message(
+      n_exclusions, " out of ", nrow(x),
+      " duplicate rows were excluded, leaving ", n_remaining, " rows."
+    )
   }
 
   # Determine whether to print results

@@ -20,8 +20,9 @@ test_that("Data frames are correct size", {
   withr::local_options(lifecycle_verbosity = "quiet")
   expect_true(ncol(collapse_exclusions(df)) == 17)
   expect_true(ncol(collapse_exclusions(df,
-                                       exclusion_types =
-                                         c("duplicates", "duration", "ip"))) == 21)
+    exclusion_types =
+      c("duplicates", "duration", "ip")
+  )) == 21)
 })
 
 test_that("Error displayed when exclusion columns not present", {

@@ -1,8 +1,10 @@
 # Test mark_ip()
 
 test_that("Output class is same as input class", {
-  expect_s3_class(mark_ip(qualtrics_numeric, quiet = TRUE),
-                  class(qualtrics_numeric))
+  expect_s3_class(
+    mark_ip(qualtrics_numeric, quiet = TRUE),
+    class(qualtrics_numeric)
+  )
 })
 
 test_that("Messages displayed by default", {
@@ -21,8 +23,10 @@ test_that("Marks create data frames of correct size", {
 # Test check_ip()
 
 test_that("Output class is same as input class", {
-  expect_s3_class(check_ip(qualtrics_numeric, quiet = TRUE),
-                  class(qualtrics_numeric))
+  expect_s3_class(
+    check_ip(qualtrics_numeric, quiet = TRUE),
+    class(qualtrics_numeric)
+  )
 })
 
 test_that("Messages displayed by default", {
@@ -41,8 +45,10 @@ test_that("Checks create data frames of correct size", {
 # Test exclude_ip()
 
 test_that("Output class is same as input class", {
-  suppressMessages(expect_s3_class(exclude_ip(qualtrics_numeric),
-                                   class(qualtrics_numeric)))
+  suppressMessages(expect_s3_class(
+    exclude_ip(qualtrics_numeric),
+    class(qualtrics_numeric)
+  ))
 })
 
 test_that("Messages displayed by default", {

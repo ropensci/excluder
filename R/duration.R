@@ -57,14 +57,18 @@ mark_duration <- function(x,
   # Check for presence of required columns
   column_names <- names(x)
   ## id_col
-  stopifnot("'id_col' should only have a single column name" =
-              length(id_col) == 1L)
+  stopifnot(
+    "'id_col' should only have a single column name" =
+      length(id_col) == 1L
+  )
   if (!id_col %in% column_names) {
     stop("The column specifying the participant ID ('id_col') was not found.")
   }
   ## duration_col
-  stopifnot("'duration_col' should have a single column name" =
-              length(duration_col) == 1L)
+  stopifnot(
+    "'duration_col' should have a single column name" =
+      length(duration_col) == 1L
+  )
   if (!duration_col %in% column_names) {
     stop("The column specifying duration ('duration_col') was not found.")
   }
@@ -78,32 +82,40 @@ mark_duration <- function(x,
   }
 
   # Find participants quicker than minimum
-  stopifnot("'min_duration' should have a single value" =
-              length(min_duration) == 1L)
+  stopifnot(
+    "'min_duration' should have a single value" =
+      length(min_duration) == 1L
+  )
   if (!is.null(min_duration)) {
     too_quick <- x[which(duration_vector < min_duration), ]
     too_quick <- dplyr::mutate(too_quick, exclusion_duration = "duration_quick")
     too_quick_slow <- too_quick
     n_too_quick <- nrow(too_quick)
     if (identical(quiet, FALSE)) {
-      message(n_too_quick, " out of ", nrow(x),
-              " rows took less time than the minimum duration of ",
-              min_duration, " seconds.")
+      message(
+        n_too_quick, " out of ", nrow(x),
+        " rows took less time than the minimum duration of ",
+        min_duration, " seconds."
+      )
     }
   }
 
   # Find participants slower than maximum
   if (!is.null(max_duration)) {
-    stopifnot("'max_duration' should have a single value" =
-                length(max_duration) == 1L)
+    stopifnot(
+      "'max_duration' should have a single value" =
+        length(max_duration) == 1L
+    )
     too_slow <- x[which(duration_vector > max_duration), ]
     too_slow <- dplyr::mutate(too_slow, exclusion_duration = "duration_slow")
     too_quick_slow <- too_slow
     n_too_slow <- nrow(too_slow)
     if (identical(quiet, FALSE)) {
-      message(n_too_slow, " out of ", nrow(x),
-              " rows took more time than the maximum duration of ",
-              max_duration, " seconds.")
+      message(
+        n_too_slow, " out of ", nrow(x),
+        " rows took more time than the maximum duration of ",
+        max_duration, " seconds."
+      )
     }
   }
 
@@ -121,8 +133,12 @@ mark_duration <- function(x,
 
   # Mark rows
   invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-              dplyr::mutate(exclusion_duration =
-                              stringr::str_replace_na(.data$exclusion_duration, "")))
+    dplyr::mutate(
+      exclusion_duration =
+        stringr::str_replace_na(
+          .data$exclusion_duration, ""
+        )
+    ))
 }
 
 #' Check for minimum or maximum durations
@@ -191,13 +207,14 @@ check_duration <- function(x,
 
   # Mark and filter duration
   exclusions <- mark_duration(x,
-                              min_duration = min_duration,
-                              max_duration = max_duration,
-                              id_col = id_col,
-                              duration_col = duration_col,
-                              quiet = quiet) %>%
+    min_duration = min_duration,
+    max_duration = max_duration,
+    id_col = id_col,
+    duration_col = duration_col,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_duration == "duration_quick" |
-                    .data$exclusion_duration == "duration_slow") %>%
+      .data$exclusion_duration == "duration_slow") %>%
     dplyr::select(-.data$exclusion_duration)
 
   # Determine whether to print results
@@ -258,21 +275,24 @@ exclude_duration <- function(x,
 
   # Mark and filter duration
   remaining_data <- mark_duration(x,
-                                  min_duration = min_duration,
-                                  max_duration = max_duration,
-                                  id_col = id_col,
-                                  duration_col = duration_col,
-                                  quiet = quiet) %>%
+    min_duration = min_duration,
+    max_duration = max_duration,
+    id_col = id_col,
+    duration_col = duration_col,
+    quiet = quiet
+  ) %>%
     dplyr::filter(.data$exclusion_duration != "duration_quick" &
-                    .data$exclusion_duration != "duration_slow") %>%
+      .data$exclusion_duration != "duration_slow") %>%
     dplyr::select(-.data$exclusion_duration)
 
   # Print exclusion statement
   n_remaining <- nrow(remaining_data)
   n_exclusions <- nrow(x) - n_remaining
   if (identical(silent, FALSE)) {
-    message(n_exclusions, " out of ", nrow(x),
-            " duplicate rows were excluded, leaving ", n_remaining, " rows.")
+    message(
+      n_exclusions, " out of ", nrow(x),
+      " duplicate rows were excluded, leaving ", n_remaining, " rows."
+    )
   }
 
   # Determine whether to print results
