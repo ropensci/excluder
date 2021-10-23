@@ -28,6 +28,7 @@ RoxygenNote: 7.1.2
 URL: https://jeffreyrstevens.github.io/excluder/, https://github.com/jeffreyrstevens/excluder/
 BugReports: https://github.com/jeffreyrstevens/excluder/issues/
 Imports: 
+    cli,
     dplyr,
     iptools,
     janitor,
