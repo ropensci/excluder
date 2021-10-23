@@ -77,10 +77,8 @@ mark_duration <- function(x,
     too_quick_slow <- too_quick
     n_too_quick <- nrow(too_quick)
     if (identical(quiet, FALSE)) {
-      message(
-        n_too_quick, " out of ", nrow(x),
-        " rows took less time than the minimum duration of ",
-        min_duration, " seconds."
+      cli::cli_alert_info(
+        "{n_too_quick} out of {nrow(x)} row{?s} took less time than {min_duration}."
       )
     }
   }
@@ -96,10 +94,8 @@ mark_duration <- function(x,
     too_quick_slow <- too_slow
     n_too_slow <- nrow(too_slow)
     if (identical(quiet, FALSE)) {
-      message(
-        n_too_slow, " out of ", nrow(x),
-        " rows took more time than the maximum duration of ",
-        max_duration, " seconds."
+      cli::cli_alert_info(
+        "{n_too_slow} out of {nrow(x)} row{?s} took more time than {max_duration}."
       )
     }
   }

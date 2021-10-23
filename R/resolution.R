@@ -85,10 +85,8 @@ mark_resolution <- function(x,
 
   # Print message and return output
   if (identical(quiet, FALSE)) {
-    message(
-      n_wrong_resolution, " out of ", nrow(x),
-      " rows have screen resolution width less than ",
-      width_min, " or height less than ", height_min, "."
+    cli::cli_alert_info(
+      "{n_wrong_resolution} out of {nrow(x)} row{?/s} had screen resolutions less than {width_min} or height less than {height_min}."
     )
   }
 

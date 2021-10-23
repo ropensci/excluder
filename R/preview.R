@@ -64,18 +64,12 @@ mark_preview <- function(x,
   # Print message and return output
   if (identical(quiet, FALSE)) {
     if (n_previews > 0) {
-      message(
-        n_previews, " out of ", nrow(x),
-        paste0(
-          " rows were collected as previews. It is highly ",
-          "recommended to exclude these rows before further ",
-          "checking."
-        )
+      cli::cli_alert_info(
+        "{n_previews} row{?s} w{?as/ere} collected as previews. It is highly recommended to exclude these rows before further processing."
       )
     } else {
-      message(
-        n_previews, " out of ", nrow(x),
-        " rows were collected as previews."
+      cli::cli_alert_info(
+        "{n_previews} out of {nrow(x)} row{?s} {cli::qty(n_previews)}w{?as/ere} collected as previews."
       )
     }
   }

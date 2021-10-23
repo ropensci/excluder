@@ -100,14 +100,17 @@ mark_duplicates <- function(x,
   if (identical(dupl_ip, TRUE)) {
     if (identical(include_na, FALSE)) {
       no_nas <- tidyr::drop_na(x, tidyselect::all_of(ip_col))
+      n_nas <- nrow(x) - nrow(no_nas)
     }
     same_ip <- janitor::get_dupes(no_nas, tidyselect::all_of(ip_col)) %>%
       dplyr::select(-.data$dupe_count)
     n_same_ip <- nrow(same_ip)
     if (identical(quiet, FALSE)) {
-      message(
-        n_same_ip, " out of ", nrow(no_nas),
-        " rows have duplicate IP addresses."
+      cli::cli_alert_info(
+        "{n_nas} NA{?s} w{?as/ere} found in IP addresses."
+      )
+      cli::cli_alert_info(
+        "{n_same_ip} out of {nrow(no_nas)} row{?s} had duplicate IP addresses."
       )
     }
   }
@@ -115,13 +118,12 @@ mark_duplicates <- function(x,
   # Check for duplicate locations
   if (identical(dupl_location, TRUE)) {
     if (identical(include_na, FALSE)) {
-      n_nas <- ncol(x) - ncol(tidyr::drop_na(
-        x,
-        tidyselect::any_of(location_col)
-      ))
       no_nas <- tidyr::drop_na(x, tidyselect::any_of(location_col))
+      n_nas <- nrow(x) - nrow(no_nas)
       if (identical(quiet, FALSE)) {
-        message(n_nas, " NAs were found in location.")
+        cli::cli_alert_info(
+          "{n_nas} NA{?s} w{?as/ere} found in location."
+        )
       }
     }
     same_location <- janitor::get_dupes(
@@ -131,9 +133,8 @@ mark_duplicates <- function(x,
       dplyr::select(-.data$dupe_count)
     n_same_location <- nrow(same_location)
     if (identical(quiet, FALSE)) {
-      message(
-        n_same_location, " out of ", nrow(no_nas),
-        " rows have duplicate locations."
+      cli::cli_alert_info(
+        "{n_same_location} out of {nrow(no_nas)} row{?s} had duplicate locations."
       )
     }
   }

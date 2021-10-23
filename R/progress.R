@@ -84,17 +84,14 @@ mark_progress <- function(x,
     incomplete <- dplyr::filter(x, .data[[progress_col]] < min_progress)
     n_below_min <- nrow(incomplete)
     if (identical(quiet, FALSE)) {
-      message(
-        n_incomplete, " rows did not complete the study, and ",
-        n_below_min, " of those completed less than ",
-        min_progress, "% of the study."
+      cli::cli_alert_info(
+        "{n_incomplete} row{?/s} did not complete the study, and {n_below_min} of those completed less than {min_progress}% of the study."
       )
     }
   } else {
     if (identical(quiet, FALSE)) {
-      message(
-        n_incomplete, " out of ", nrow(x),
-        " rows did not complete the study."
+      cli::cli_alert_info(
+        "{n_incomplete} out of {nrow(x)} row{?/s} did not complete the study."
       )
     }
   }

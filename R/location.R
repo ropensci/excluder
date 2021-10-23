@@ -99,13 +99,11 @@ mark_location <- function(x,
 
   # Print messages and return output
   if (identical(quiet, FALSE)) {
-    message(
-      n_no_location, " out of ", n_rows,
-      " rows had no information on location."
+    cli::cli_alert_info(
+      "{n_no_location} out of {n_rows} row{?s} had no information on location."
     )
-    message(
-      n_outside_us, " out of ", n_rows,
-      " rows were located outside of the US."
+    cli::cli_alert_info(
+      "{n_outside_us} out of {n_rows} row{?s} {cli::qty(n_outside_us)}w{?as/ere} located outside of the US."
     )
   }
 

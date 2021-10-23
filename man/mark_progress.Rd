@@ -65,7 +65,6 @@ df <- qualtrics_text \%>\%
 df <- qualtrics_numeric \%>\%
   exclude_preview() \%>\%
   mark_progress(min_progress = 98)
-
 }
 \seealso{
 Other progress functions: 

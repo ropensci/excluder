@@ -78,12 +78,8 @@ mark_ip <- function(x,
   na_rows <- which(is.na(ip_vector))
   n_na_rows <- length(na_rows)
   if (n_na_rows > 0 && identical(quiet, FALSE)) {
-    message(
-      n_na_rows, " out of ", nrow(x),
-      paste0(
-        " rows have NA values for IP addresses (check for preview ",
-        "data with 'check_preview()')."
-      )
+    cli::cli_alert_info(
+      "{n_na_rows} out of {nrow(x)} row{?s} had NA values for IP addresses (check for preview data with 'check_preview()')."
     )
   }
   if (n_na_rows > 0) {
@@ -106,9 +102,8 @@ mark_ip <- function(x,
 
   # Print message and return output
   if (identical(quiet, FALSE)) {
-    message(
-      n_outside_country, " out of ", nrow(x),
-      " rows have IP addresses outside of ", country, "."
+    cli::cli_alert_info(
+      "{n_outside_country} out of {nrow(x)} row{?s} had IP address outside of {country}."
     )
   }
 
