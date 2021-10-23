@@ -56,22 +56,8 @@ mark_location <- function(x,
                           quiet = FALSE) {
 
   # Check for presence of required column
-  column_names <- names(x)
-  ## id_col
-  stopifnot(
-    "'id_col' should only have a single column name" =
-      length(id_col) == 1L
-  )
-  if (!id_col %in% column_names) {
-    stop("The column specifying the participant ID ('id_col') was not found.")
-  }
-  ## location_col
-  if (length(location_col) != 2) {
-    stop("'location_col' must have two columns: latitude and longitude.")
-  }
-  if (!location_col[1] %in% column_names | !location_col[2] %in% column_names) {
-    stop("The column specifying location ('location_col') was not found.")
-  }
+  check_columns(x, id_col, 1L)
+  check_columns(x, location_col, 2L)
 
   # Extract latitude and longitude
   latitude <- x[[location_col[1]]]

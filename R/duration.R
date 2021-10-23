@@ -55,23 +55,8 @@ mark_duration <- function(x,
                           quiet = FALSE) {
 
   # Check for presence of required columns
-  column_names <- names(x)
-  ## id_col
-  stopifnot(
-    "'id_col' should only have a single column name" =
-      length(id_col) == 1L
-  )
-  if (!id_col %in% column_names) {
-    stop("The column specifying the participant ID ('id_col') was not found.")
-  }
-  ## duration_col
-  stopifnot(
-    "'duration_col' should have a single column name" =
-      length(duration_col) == 1L
-  )
-  if (!duration_col %in% column_names) {
-    stop("The column specifying duration ('duration_col') was not found.")
-  }
+  check_columns(x, id_col, 1L)
+  check_columns(x, duration_col, 1L)
 
   # Extract duration vector
   duration_vector <- x[[duration_col]]

@@ -15,3 +15,4 @@ console.}
 \description{
 Prints the data to the console. \emph{This function is not exported.}
 }
+\keyword{internal}

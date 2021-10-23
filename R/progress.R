@@ -58,30 +58,9 @@ mark_progress <- function(x,
                           quiet = FALSE) {
 
   # Check for presence of required column
-  column_names <- names(x)
-  ## id_col
-  stopifnot(
-    "'id_col' should only have a single column name" =
-      length(id_col) == 1L
-  )
-  if (!id_col %in% column_names) {
-    stop("The column specifying the participant ID ('id_col') was not found.")
-  }
-  ## finished_col
-  if (!finished_col %in% column_names) {
-    stop(paste0(
-      "The column specifying whether a participant finished ",
-      "('finished_col') was not found."
-    ))
-  }
-  ## progress_col
-  stopifnot(
-    "'progress_col' should have a single column name" =
-      length(progress_col) == 1L
-  )
-  if (!progress_col %in% column_names) {
-    stop("The column specifying progress ('progress_col') was not found.")
-  }
+  check_columns(x, id_col, 1L)
+  check_columns(x, finished_col, 1L)
+  check_columns(x, progress_col, 1L)
 
   # Find incomplete cases
   if (is.logical(x[[finished_col]])) {

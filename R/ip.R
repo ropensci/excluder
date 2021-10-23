@@ -57,23 +57,8 @@ mark_ip <- function(x,
                     quiet = FALSE) {
 
   # Check for presence of required column
-  column_names <- names(x)
-  ## id_col
-  stopifnot(
-    "'id_col' should only have a single column name" =
-      length(id_col) == 1L
-  )
-  if (!id_col %in% column_names) {
-    stop("The column specifying the participant ID ('id_col') was not found.")
-  }
-  ## ip_col
-  stopifnot(
-    "'ip_col' should only have a single column name" =
-      length(ip_col) == 1L
-  )
-  if (!ip_col %in% column_names) {
-    stop("The column specifying IP address ('ip_col') was not found.")
-  }
+  check_columns(x, id_col, 1L)
+  check_columns(x, ip_col, 1L)
 
   # Extract IP address, latitude, and longitude vectors
   ip_vector <- x[[ip_col]]

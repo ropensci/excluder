@@ -13,9 +13,53 @@
 #' @return The result of calling `rhs(lhs)`.
 NULL
 
+#' Check number and names of columns
+#'
+#' Determines whether the correct number and names of columns were specified
+#' as arguments to the functions. \emph{This function is not exported.}
+#'
+#' @param x Data set.
+#' @param column Name of column argument to check.
+#' @param col_num Expected number of columns.
+#'
+#' @keywords internal
+#'
+check_columns <- function(x, column, col_num = 1L) {
+  # Check number of columns
+  col_name <- substitute(column)
+  col_num = as.integer(col_num)
+  if (length(column) != col_num) {
+    if (col_num == 1) {
+      msg <- paste0("'", col_name, "' requires ", col_num, " column name.")
+    } else {
+      msg <- paste0("'", col_name, "' requires ", col_num, " column names.")
+    }
+    stop(msg)
+  }
+
+  # Check column names
+  column_names <- names(x)
+  if (col_num == 1) {
+    if (!column %in% column_names) {
+      msg <- paste0("The column '", column,
+                    "' was not found in the data frame.")
+      stop(msg)
+    }
+  } else if (!column[1] %in% column_names) {
+    msg <- paste0("The column '", column[1],
+                  "' was not found in the data frame.")
+    stop(msg)
+  } else if (!column[2] %in% column_names) {
+    msg <- paste0("The column '", column[2],
+                  "' was not found in the data frame.")
+    stop(msg)
+  }
+}
+
 #' Print number of excluded rows
 #'
-#' Prints a message to the console with the number of excluded rows. \emph{This function is not exported.}
+#' Prints a message to the console with the number of excluded rows.
+#' \emph{This function is not exported.}
 #'
 #' @param remaining_data Data after removing exclusions.
 #' @param x Original data before removing exclusions.
@@ -26,7 +70,8 @@ NULL
 print_exclusion <- function(remaining_data, x, msg) {
   n_remaining <- nrow(remaining_data)
   n_exclusions <- nrow(x) - n_remaining
-  cli::cli_alert_info("{n_exclusions} out of {nrow(x)} {msg} were excluded, leaving {n_remaining} rows.")
+  cli::cli_alert_info(
+    "{n_exclusions} out of {nrow(x)} {msg} were excluded, leaving {n_remaining} rows.")
 }
 
 #' Print data to console

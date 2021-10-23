@@ -14,6 +14,7 @@ print_exclusion(remaining_data, x, msg)
 \item{msg}{Text to describe what types of rows were excluded.}
 }
 \description{
-Prints a message to the console with the number of excluded rows. \emph{This function is not exported.}
+Prints a message to the console with the number of excluded rows.
+\emph{This function is not exported.}
 }
 \keyword{internal}

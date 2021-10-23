@@ -45,23 +45,8 @@ mark_preview <- function(x,
                          quiet = FALSE) {
 
   # Check for presence of required column
-  column_names <- names(x)
-  ## id_col
-  stopifnot(
-    "'id_col' should only have a single column name" =
-      length(id_col) == 1L
-  )
-  if (!id_col %in% column_names) {
-    stop("The column specifying the participant ID ('id_col') was not found.")
-  }
-  ## preview_col
-  stopifnot(
-    "'preview_col' should have a single column name" =
-      length(preview_col) == 1L
-  )
-  if (!preview_col %in% column_names) {
-    stop("The column specifying previews ('preview_col') was not found.")
-  }
+  check_columns(x, id_col, 1L)
+  check_columns(x, preview_col, 1L)
 
   # Check for preview rows
   if (is.character(x[[preview_col]])) {
