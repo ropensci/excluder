@@ -267,11 +267,7 @@ check_duplicates <- function(x,
     dplyr::select(-.data$exclusion_duplicates)
 
   # Determine whether to print results
-  if (identical(print, TRUE)) {
-    return(exclusions)
-  } else {
-    invisible(exclusions)
-  }
+  print_data(exclusions, print)
 }
 
 #' Exclude rows with duplicate IP addresses and/or locations
@@ -348,9 +344,5 @@ exclude_duplicates <- function(x,
   }
 
   # Determine whether to print results
-  if (identical(print, TRUE)) {
-    return(remaining_data)
-  } else {
-    invisible(remaining_data)
-  }
+  print_data(remaining_data, print)
 }

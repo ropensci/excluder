@@ -173,11 +173,7 @@ check_preview <- function(x,
     dplyr::select(-.data$exclusion_preview)
 
   # Determine whether to print results
-  if (identical(print, TRUE)) {
-    return(exclusions)
-  } else {
-    invisible(exclusions)
-  }
+  print_data(exclusions, print)
 }
 
 #' Exclude survey previews
@@ -239,9 +235,5 @@ exclude_preview <- function(x,
   }
 
   # Determine whether to print results
-  if (identical(print, TRUE)) {
-    return(remaining_data)
-  } else {
-    invisible(remaining_data)
-  }
+  print_data(remaining_data, print)
 }

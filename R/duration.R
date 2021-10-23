@@ -218,11 +218,7 @@ check_duration <- function(x,
     dplyr::select(-.data$exclusion_duration)
 
   # Determine whether to print results
-  if (identical(print, TRUE)) {
-    return(exclusions)
-  } else {
-    invisible(exclusions)
-  }
+  print_data(exclusions, print)
 }
 
 #' Exclude rows with minimum or maximum durations
@@ -292,9 +288,5 @@ exclude_duration <- function(x,
   }
 
   # Determine whether to print results
-  if (identical(print, TRUE)) {
-    return(remaining_data)
-  } else {
-    invisible(remaining_data)
-  }
+  print_data(remaining_data, print)
 }
