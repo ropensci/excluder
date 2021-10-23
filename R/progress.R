@@ -285,13 +285,8 @@ exclude_progress <- function(x,
     dplyr::select(-.data$exclusion_progress)
 
   # Print exclusion statement
-  n_remaining <- nrow(remaining_data)
-  n_exclusions <- nrow(x) - n_remaining
   if (identical(silent, FALSE)) {
-    message(
-      n_exclusions, " out of ", nrow(x),
-      " duplicate rows were excluded, leaving ", n_remaining, " rows."
-    )
+    print_exclusion(remaining_data, x, "rows with incomplete progress")
   }
 
   # Determine whether to print results
