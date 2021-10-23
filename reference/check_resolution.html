@@ -213,7 +213,7 @@ with unacceptable screen resolution.</p>
     <pre class="examples"><div class='input'><span class='co'># Check for survey previews</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='fu'>check_resolution</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>4 out of 100 rows have screen resolution width less than 1000 or height less than 0.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 4 out of 100 rows had screen resolutions less than 1000 or height less than 0.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-17 15:44:30 2020-12-17 15:47:57 IP Address   48.17.71.0      100
 #&gt; 2 2020-12-17 15:48:36 2020-12-17 15:52:01 IP Address 12.247.210.0      100
 #&gt; 3 2020-12-17 15:49:09 2020-12-17 15:52:41 IP Address 104.55.125.0      100
@@ -237,7 +237,7 @@ with unacceptable screen resolution.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_resolution</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows have screen resolution width less than 1000 or height less than 0.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 4 out of 98 rows had screen resolutions less than 1000 or height less than 0.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-17 15:44:30 2020-12-17 15:47:57 IP Address   48.17.71.0      100
 #&gt; 2 2020-12-17 15:48:36 2020-12-17 15:52:01 IP Address 12.247.210.0      100
 #&gt; 3 2020-12-17 15:49:09 2020-12-17 15:52:41 IP Address 104.55.125.0      100
@@ -261,12 +261,12 @@ with unacceptable screen resolution.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_resolution</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>4 out of 98 rows have screen resolution width less than 1000 or height less than 0.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 4 out of 98 rows had screen resolutions less than 1000 or height less than 0.</span></div><div class='input'>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_resolution</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-17 15:44:30 2020-12-17 15:47:57 IP Address   48.17.71.0      100
 #&gt; 2 2020-12-17 15:48:36 2020-12-17 15:52:01 IP Address 12.247.210.0      100
 #&gt; 3 2020-12-17 15:49:09 2020-12-17 15:52:41 IP Address 104.55.125.0      100

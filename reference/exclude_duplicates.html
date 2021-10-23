@@ -235,17 +235,17 @@ types of duplicates.</p>
     <pre class="examples"><div class='input'><span class='co'># Exclude duplicate IP addresses and locations</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>exclude_duplicates</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>10 out of 100 duplicate rows were excluded, leaving 90 rows.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 10 out of 100 duplicate rows were excluded, leaving 90 rows.</span></div><div class='input'>
 <span class='co'># Remove preview data first</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>exclude_duplicates</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>10 out of 98 duplicate rows were excluded, leaving 88 rows.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 10 out of 98 duplicate rows were excluded, leaving 88 rows.</span></div><div class='input'>
 <span class='co'># Exclude only for duplicate locations</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>exclude_duplicates</span><span class='op'>(</span>dupl_location <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>7 out of 98 duplicate rows were excluded, leaving 91 rows.</span></div></pre>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 7 out of 98 duplicate rows were excluded, leaving 91 rows.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -4,6 +4,9 @@
     <loc>https://jeffreyrstevens.github.io/excluder/index.html</loc>
   </url>
   <url>
+    <loc>https://jeffreyrstevens.github.io/excluder/reference/check_columns.html</loc>
+  </url>
+  <url>
     <loc>https://jeffreyrstevens.github.io/excluder/reference/check_duplicates.html</loc>
   </url>
   <url>
@@ -77,6 +80,12 @@
   </url>
   <url>
     <loc>https://jeffreyrstevens.github.io/excluder/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://jeffreyrstevens.github.io/excluder/reference/print_data.html</loc>
+  </url>
+  <url>
+    <loc>https://jeffreyrstevens.github.io/excluder/reference/print_exclusion.html</loc>
   </url>
   <url>
     <loc>https://jeffreyrstevens.github.io/excluder/reference/qualtrics_numeric.html</loc>

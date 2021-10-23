@@ -212,7 +212,7 @@ with locations outside of the US.</p>
     <pre class="examples"><div class='input'><span class='co'># Check for locations outside of the US</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='fu'>check_location</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>1 out of 100 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 100 rows were located outside of the US.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 1 out of 100 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 5 out of 100 rows were located outside of the US.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100
 #&gt; 2 2020-12-17 15:40:46 2020-12-17 15:45:20 IP Address  26.195.73.0      100
 #&gt; 3 2020-12-17 15:41:54 2020-12-17 15:47:24 IP Address  97.10.196.0      100
@@ -244,7 +244,7 @@ with locations outside of the US.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_location</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 rows were located outside of the US.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 5 out of 98 rows were located outside of the US.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100
 #&gt; 2 2020-12-17 15:40:46 2020-12-17 15:45:20 IP Address  26.195.73.0      100
 #&gt; 3 2020-12-17 15:41:54 2020-12-17 15:47:24 IP Address  97.10.196.0      100
@@ -276,12 +276,12 @@ with locations outside of the US.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_location</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'>5 out of 98 rows were located outside of the US.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 1 out of 98 rows had no information on location.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 5 out of 98 rows were located outside of the US.</span></div><div class='input'>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_location</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100
 #&gt; 2 2020-12-17 15:40:46 2020-12-17 15:45:20 IP Address  26.195.73.0      100
 #&gt; 3 2020-12-17 15:41:54 2020-12-17 15:47:24 IP Address  97.10.196.0      100

@@ -217,7 +217,7 @@ that have incomplete progress.</p>
     <pre class="examples"><div class='input'><span class='co'># Check for rows with incomplete progress</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='fu'>check_progress</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>6 out of 100 rows did not complete the study.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 6 out of 100 rows did not complete the study.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99
 #&gt; 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1
 #&gt; 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
@@ -249,7 +249,7 @@ that have incomplete progress.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_progress</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 98 rows did not complete the study.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 6 out of 98 rows did not complete the study.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99
 #&gt; 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1
 #&gt; 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
@@ -281,7 +281,7 @@ that have incomplete progress.</p>
 <span class='va'>qualtrics_numeric</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_progress</span><span class='op'>(</span>min_progress <span class='op'>=</span> <span class='fl'>98</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>6 rows did not complete the study, and 5 of those completed less than 98% of the study.</span></div><div class='output co'>#&gt;             StartDate             EndDate Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 6 rows did not complete the study, and 5 of those completed less than 98% of the study.</span></div><div class='output co'>#&gt;             StartDate             EndDate Status    IPAddress Progress
 #&gt; 1 2020-12-17 15:40:56 2020-12-17 15:46:23      0 71.146.112.0        1
 #&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37      0   15.223.0.0       13
 #&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45      0  19.127.87.0       48
@@ -309,12 +309,12 @@ that have incomplete progress.</p>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_progress</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'>6 out of 98 rows did not complete the study.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 6 out of 98 rows did not complete the study.</span></div><div class='input'>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_progress</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 duplicate rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
 #&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99
 #&gt; 2 2020-12-17 15:40:56 2020-12-17 15:46:23 IP Address 71.146.112.0        1
 #&gt; 3 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13

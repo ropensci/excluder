@@ -204,7 +204,7 @@ that are survey previews.</p>
     <pre class="examples"><div class='input'><span class='co'># Check for survey previews</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
 <span class='fu'>check_preview</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt;             StartDate             EndDate         Status IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span></div><div class='output co'>#&gt;             StartDate             EndDate         Status IPAddress Progress
 #&gt; 1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview      &lt;NA&gt;      100
 #&gt; 2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview      &lt;NA&gt;      100
 #&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
@@ -219,7 +219,7 @@ that are survey previews.</p>
 <span class='co'># Works for Qualtrics data exported as numeric values, too</span>
 <span class='va'>qualtrics_numeric</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_preview</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='output co'>#&gt;             StartDate             EndDate Status IPAddress Progress
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span></div><div class='output co'>#&gt;             StartDate             EndDate Status IPAddress Progress
 #&gt; 1 2020-12-11 12:06:52 2020-12-11 12:10:30      1      &lt;NA&gt;      100
 #&gt; 2 2020-12-11 12:06:43 2020-12-11 12:11:27      1      &lt;NA&gt;      100
 #&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
@@ -234,7 +234,7 @@ that are survey previews.</p>
 <span class='co'># Do not print rows to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_preview</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span></div><div class='input'>
 <span class='co'># Do not print message to console</span>
 <span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_preview</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>

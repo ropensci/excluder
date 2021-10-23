@@ -193,7 +193,7 @@
 <span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
+<span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
 <span class="co">#&gt; Rows: 100</span>
 <span class="co">#&gt; Columns: 17</span>
 <span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202…</span>
@@ -221,8 +221,8 @@
   <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/mark_progress.html">mark_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
+<span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
+<span class="co">#&gt; ℹ 6 out of 100 rows did not complete the study.</span>
 <span class="co">#&gt; Rows: 100</span>
 <span class="co">#&gt; Columns: 18</span>
 <span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202…</span>
@@ -250,8 +250,8 @@
   <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">exclusions</span>, .before <span class="op">=</span> <span class="va">StartDate</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
-<span class="co">#&gt; 82 out of 100 rows took less time than the minimum duration of 500 seconds.</span>
+<span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
+<span class="co">#&gt; ℹ 82 out of 100 rows took less time than 500.</span>
 <span class="co">#&gt; # A tibble: 100 × 17</span>
 <span class="co">#&gt;    exclusions  StartDate           EndDate             Status IPAddress Progress</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;</span>
@@ -276,8 +276,8 @@
   <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span>separator <span class="op">=</span> <span class="st">";"</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">exclusions</span>, .before <span class="op">=</span> <span class="va">StartDate</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
-<span class="co">#&gt; 82 out of 100 rows took less time than the minimum duration of 500 seconds.</span>
+<span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
+<span class="co">#&gt; ℹ 82 out of 100 rows took less time than 500.</span>
 <span class="co">#&gt; # A tibble: 100 × 19</span>
 <span class="co">#&gt;    exclusions  StartDate           EndDate             Status IPAddress Progress</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;</span>
@@ -305,7 +305,7 @@
 <code class="sourceCode R"><span class="co"># Check for rows with incomplete data</span>
 <span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
+<span class="co">#&gt; ℹ 6 out of 100 rows did not complete the study.</span>
 <span class="co">#&gt; # A tibble: 6 × 16</span>
 <span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
 <span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
@@ -323,7 +323,7 @@
 <code class="sourceCode R"><span class="co"># Check for rows with durations less than 100 seconds</span>
 <span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="co">#&gt; 4 out of 100 rows took less time than the minimum duration of 100 seconds.</span>
+<span class="co">#&gt; ℹ 4 out of 100 rows took less time than 100.</span>
 <span class="co">#&gt; # A tibble: 4 × 16</span>
 <span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
 <span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
@@ -341,8 +341,8 @@
 <span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
-<span class="co">#&gt; 2 out of 6 rows took less time than the minimum duration of 100 seconds.</span>
+<span class="co">#&gt; ℹ 6 out of 100 rows did not complete the study.</span>
+<span class="co">#&gt; ℹ 2 out of 6 rows took less time than 100.</span>
 <span class="co">#&gt; # A tibble: 2 × 16</span>
 <span class="co">#&gt;   StartDate           EndDate             Status     IPAddress   Progress</span>
 <span class="co">#&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;</span>
@@ -360,8 +360,8 @@
   <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">exclusions</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
-<span class="co">#&gt; 82 out of 100 rows took less time than the minimum duration of 500 seconds.</span>
+<span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
+<span class="co">#&gt; ℹ 82 out of 100 rows took less time than 500.</span>
 <span class="co">#&gt; # A tibble: 83 × 17</span>
 <span class="co">#&gt;    StartDate           EndDate             Status         IPAddress    Progress</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;          &lt;chr&gt;           &lt;dbl&gt;</span>
@@ -390,7 +390,7 @@
 <span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
 <span class="co">#&gt; Rows: 98</span>
 <span class="co">#&gt; Columns: 16</span>
 <span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:17:22, 2020-12-11 12:17:41, 202…</span>
@@ -416,9 +416,9 @@
   <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span></code></pre></div>
+<span class="co">#&gt; ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; ℹ 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
+<span class="co">#&gt; ℹ 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span></code></pre></div>
 </div>
 <div id="messages-and-console-output" class="section level2">
 <h2 class="hasAnchor">
@@ -453,7 +453,7 @@
 <code class="sourceCode R"><span class="co"># Turn off marking/checking printing data frame with print = FALSE</span>
 <span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span>print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span></code></pre></div>
+<span class="co">#&gt; ℹ 6 out of 100 rows did not complete the study.</span></code></pre></div>
 </div>
 <div id="deidentifying-data" class="section level2">
 <h2 class="hasAnchor">
@@ -467,9 +467,9 @@
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
+<span class="co">#&gt; ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; ℹ 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
+<span class="co">#&gt; ℹ 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
 <span class="co">#&gt; Rows: 83</span>
 <span class="co">#&gt; Columns: 8</span>
 <span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:17:22, 2020-12-11 12:17:41, 202…</span>
@@ -489,9 +489,9 @@
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span>strict <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
-<span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
-<span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
+<span class="co">#&gt; ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; ℹ 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
+<span class="co">#&gt; ℹ 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
 <span class="co">#&gt; Rows: 83</span>
 <span class="co">#&gt; Columns: 12</span>
 <span class="co">#&gt; $ StartDate               &lt;dttm&gt; 2020-12-11 12:17:22, 2020-12-11 12:17:41, 202…</span>
