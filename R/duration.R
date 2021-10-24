@@ -61,11 +61,6 @@ mark_duration <- function(x,
   # Extract duration vector
   duration_vector <- x[[duration_col]]
 
-  # Check column type
-  if (!is.numeric(duration_vector)) {
-    stop("Please ensure 'duration_col' data type is numeric.")
-  }
-
   # Find participants quicker than minimum
   stopifnot(
     "'min_duration' should have a single value" =

@@ -77,23 +77,10 @@ mark_duplicates <- function(x,
   latitude <- x[[location_col[1]]]
   longitude <- x[[location_col[2]]]
 
-  # Check column types
-  ## IP address column
-  if (is.character(ip_vector)) {
-    classify_ip <- iptools::ip_classify(ip_vector)
-    if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) {
-      stop("Invalid IP addresses in 'ip_col'.")
-    }
-  } else {
-    stop("Please ensure 'ip_col' data type is character.")
-  }
-
-  ## Latitude and longitude columns
-  if (!is.numeric(latitude)) {
-    stop("Please ensure latitude column data type is numeric.")
-  }
-  if (!is.numeric(longitude)) {
-    stop("Please ensure longitude column data type is numeric.")
+  # Check for valid IP addresses
+  classify_ip <- iptools::ip_classify(ip_vector)
+  if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) {
+    stop("Invalid IP addresses in 'ip_col'.")
   }
 
   # Check for duplicate IP addresses

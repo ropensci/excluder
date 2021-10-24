@@ -63,15 +63,10 @@ mark_ip <- function(x,
   # Extract IP address, latitude, and longitude vectors
   ip_vector <- x[[ip_col]]
 
-  # Check column types
-  ## IP address column
-  if (is.character(ip_vector)) {
-    classify_ip <- iptools::ip_classify(ip_vector)
-    if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) {
-      stop("Invalid IP addresses in 'ip_col'.")
-    }
-  } else {
-    stop("Please ensure 'ip_col' data type is character.")
+  # Check for valid IP addresses
+  classify_ip <- iptools::ip_classify(ip_vector)
+  if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) {
+    stop("Invalid IP addresses in 'ip_col'.")
   }
 
   # Remove rows with NAs for IP addresses

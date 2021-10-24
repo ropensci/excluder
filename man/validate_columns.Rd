@@ -10,8 +10,6 @@ validate_columns(x, column)
 \item{x}{Data set.}
 
 \item{column}{Name of column argument to check.}
-
-\item{col_num}{Expected number of columns.}
 }
 \description{
 Determines whether the correct number and names of columns were specified

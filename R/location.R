@@ -63,14 +63,6 @@ mark_location <- function(x,
   latitude <- x[[location_col[1]]]
   longitude <- x[[location_col[2]]]
 
-  # Check column types
-  if (!is.numeric(latitude)) {
-    stop("Please ensure latitude column data type is numeric.")
-  }
-  if (!is.numeric(longitude)) {
-    stop("Please ensure longitude column data type is numeric.")
-  }
-
   # Find number of rows
   n_rows <- nrow(x)
 

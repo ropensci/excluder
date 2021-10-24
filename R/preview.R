@@ -48,16 +48,14 @@ mark_preview <- function(x,
   validate_columns(x, id_col)
   validate_columns(x, preview_col)
 
+  # Extract preview vector
+  preview_vector <- x[[preview_col]]
+
   # Check for preview rows
-  if (is.character(x[[preview_col]])) {
+  if (is.character(preview_vector)) {
     filtered_data <- dplyr::filter(x, .data[[preview_col]] == "Survey Preview")
-  } else if (is.numeric(x[[preview_col]])) {
+  } else if (is.numeric(preview_vector)) {
     filtered_data <- dplyr::filter(x, .data[[preview_col]] == 1)
-  } else {
-    stop(
-      "The column ", preview_col,
-      " is not of type character or numeric, so it cannot be checked."
-    )
   }
   n_previews <- nrow(filtered_data)
 

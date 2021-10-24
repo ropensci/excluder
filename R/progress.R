@@ -62,16 +62,14 @@ mark_progress <- function(x,
   validate_columns(x, finished_col)
   validate_columns(x, progress_col)
 
+  # Extract finished and progress vectors
+  finished_vector <- x[[finished_col]]
+
   # Find incomplete cases
-  if (is.logical(x[[finished_col]])) {
+  if (is.logical(finished_vector)) {
     incomplete <- dplyr::filter(x, .data[[finished_col]] == FALSE)
-  } else if (is.numeric(x[[finished_col]])) {
+  } else if (is.numeric(finished_vector)) {
     incomplete <- dplyr::filter(x, .data[[finished_col]] == 0)
-  } else {
-    stop(
-      "The column ", finished_col,
-      " is not of type logical or numeric, so it cannot be checked."
-    )
   }
   n_incomplete <- nrow(incomplete)
 

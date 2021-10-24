@@ -13,14 +13,13 @@
 #' @return The result of calling `rhs(lhs)`.
 NULL
 
-#' Check number and names of columns
+#' Check number, names, and type of columns
 #'
 #' Determines whether the correct number and names of columns were specified
 #' as arguments to the functions. \emph{This function is not exported.}
 #'
 #' @param x Data set.
 #' @param column Name of column argument to check.
-#' @param col_num Expected number of columns.
 #'
 #' @keywords internal
 #'
@@ -28,14 +27,12 @@ validate_columns <- function(x, column) {
   # Extract column name
   col_name <- substitute(column)
 
-  # Set parameters for columns
+  # Check number of columns
   if (col_name == "location_col") {
     col_num = 2L
   } else {
     col_num = 1L
   }
-
-  # Check number of columns
   if (length(column) != col_num) {
     if (col_num == 1) {
       msg <- paste0("'", col_name, "' requires ", col_num, " column name.")
@@ -66,6 +63,31 @@ validate_columns <- function(x, column) {
     stop(msg)
   }
 
+  # Check column data type
+  col_label <- as.character(col_name)
+  if (col_label %in% c("ip_col", "res_col")) {
+    if (!is.character(x[[column]])) {
+      msg <- paste0("Please ensure '", col_name, "' data type is character.")
+      stop(msg)
+    }
+  } else if (col_label %in% c("location_col", "duration_col", "progress_col")) {
+    if (!is.numeric(x[[column[1]]])) {
+      msg <- paste0("Please ensure '", col_name, "' data type is numeric.")
+      stop(msg)
+    }
+  } else if (col_label == "preview_col") {
+    if (!is.character(x[[column]]) & !is.numeric(x[[column]])) {
+      print(typeof(x[[column]]))
+      msg <- paste0("Please ensure '", col_name, "' data type is character or numeric.")
+      stop(msg)
+    }
+  } else if (col_label == "finished") {
+    if (!is.logical(x[[column]]) & !is.numeric(x[[column]])) {
+      print(typeof(x[[column]]))
+      msg <- paste0("Please ensure '", col_name, "' data type is character or numeric.")
+      stop(msg)
+    }
+  }
 }
 
 #' Print number of excluded rows

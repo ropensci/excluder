@@ -50,6 +50,9 @@ mark_resolution <- function(x,
   validate_columns(x, id_col)
   validate_columns(x, res_col)
 
+  # Extract duration vector
+  res_vector <- x[[res_col]]
+
   # Check width or height minimum
   stopifnot("width_min should have a single value" = length(width_min) == 1L)
   stopifnot("height_min should have a single value" = length(height_min) == 1L)
@@ -59,9 +62,6 @@ mark_resolution <- function(x,
       "with 'width_min' or 'height_min'."
     ))
   }
-
-  # Extract duration vector
-  res_vector <- x[[res_col]]
 
   # Check column type
   if (!is.character(res_vector)) {
