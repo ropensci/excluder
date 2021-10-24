@@ -57,8 +57,8 @@ mark_ip <- function(x,
                     quiet = FALSE) {
 
   # Check for presence of required column
-  check_columns(x, id_col, 1L)
-  check_columns(x, ip_col, 1L)
+  validate_columns(x, id_col)
+  validate_columns(x, ip_col)
 
   # Extract IP address, latitude, and longitude vectors
   ip_vector <- x[[ip_col]]

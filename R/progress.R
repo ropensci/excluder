@@ -58,9 +58,9 @@ mark_progress <- function(x,
                           quiet = FALSE) {
 
   # Check for presence of required column
-  check_columns(x, id_col, 1L)
-  check_columns(x, finished_col, 1L)
-  check_columns(x, progress_col, 1L)
+  validate_columns(x, id_col)
+  validate_columns(x, finished_col)
+  validate_columns(x, progress_col)
 
   # Find incomplete cases
   if (is.logical(x[[finished_col]])) {

@@ -56,8 +56,8 @@ mark_location <- function(x,
                           quiet = FALSE) {
 
   # Check for presence of required column
-  check_columns(x, id_col, 1L)
-  check_columns(x, location_col, 2L)
+  validate_columns(x, id_col)
+  validate_columns(x, location_col)
 
   # Extract latitude and longitude
   latitude <- x[[location_col[1]]]

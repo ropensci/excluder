@@ -55,8 +55,8 @@ mark_duration <- function(x,
                           quiet = FALSE) {
 
   # Check for presence of required columns
-  check_columns(x, id_col, 1L)
-  check_columns(x, duration_col, 1L)
+  validate_columns(x, id_col)
+  validate_columns(x, duration_col)
 
   # Extract duration vector
   duration_vector <- x[[duration_col]]

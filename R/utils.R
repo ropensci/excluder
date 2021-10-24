@@ -24,16 +24,27 @@ NULL
 #'
 #' @keywords internal
 #'
-check_columns <- function(x, column, col_num = 1L) {
-  # Check number of columns
+validate_columns <- function(x, column) {
+  # Extract column name
   col_name <- substitute(column)
-  col_num = as.integer(col_num)
+
+  # Set parameters for columns
+  if (col_name == "location_col") {
+    col_num = 2L
+  } else {
+    col_num = 1L
+  }
+
+  # Check number of columns
   if (length(column) != col_num) {
     if (col_num == 1) {
       msg <- paste0("'", col_name, "' requires ", col_num, " column name.")
     } else {
       msg <- paste0("'", col_name, "' requires ", col_num, " column names.")
     }
+    stop(msg)
+  } else if (length(column) == 2L & column[1] == column[2]) {
+    msg <- paste0("The same column name was entered twice in '", col_name,"'.")
     stop(msg)
   }
 
@@ -54,6 +65,7 @@ check_columns <- function(x, column, col_num = 1L) {
                   "' was not found in the data frame.")
     stop(msg)
   }
+
 }
 
 #' Print number of excluded rows

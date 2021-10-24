@@ -47,8 +47,8 @@ mark_resolution <- function(x,
                             quiet = FALSE) {
 
   # Check for presence of required column
-  check_columns(x, id_col, 1L)
-  check_columns(x, res_col, 1L)
+  validate_columns(x, id_col)
+  validate_columns(x, res_col)
 
   # Check width or height minimum
   stopifnot("width_min should have a single value" = length(width_min) == 1L)
