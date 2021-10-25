@@ -11,7 +11,7 @@ exclude_progress(
   finished_col = "Finished",
   progress_col = "Progress",
   quiet = TRUE,
-  print = FALSE,
+  print = TRUE,
   silent = FALSE
 )
 }

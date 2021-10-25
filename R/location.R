@@ -222,7 +222,7 @@ exclude_location <- function(x,
                              ),
                              include_na = FALSE,
                              quiet = TRUE,
-                             print = FALSE,
+                             print = TRUE,
                              silent = FALSE) {
 
   # Mark and filter location

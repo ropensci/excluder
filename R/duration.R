@@ -233,7 +233,7 @@ exclude_duration <- function(x,
                              id_col = "ResponseId",
                              duration_col = "Duration (in seconds)",
                              quiet = TRUE,
-                             print = FALSE,
+                             print = TRUE,
                              silent = FALSE) {
 
   # Mark and filter duration

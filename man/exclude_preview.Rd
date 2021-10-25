@@ -9,7 +9,7 @@ exclude_preview(
   id_col = "ResponseId",
   preview_col = "Status",
   quiet = TRUE,
-  print = FALSE,
+  print = TRUE,
   silent = FALSE
 )
 }

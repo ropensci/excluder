@@ -11,7 +11,7 @@ exclude_resolution(
   id_col = "ResponseId",
   res_col = "Resolution",
   quiet = TRUE,
-  print = FALSE,
+  print = TRUE,
   silent = FALSE
 )
 }

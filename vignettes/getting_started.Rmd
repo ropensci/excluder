@@ -158,7 +158,7 @@ Piping will apply subsequent excludes to the data frames with the previous exclu
 df %>%
   exclude_preview() %>%
   exclude_progress() %>%
-  exclude_duplicates()
+  exclude_duplicates(print = FALSE)
 ```
 
 ## Messages and console output

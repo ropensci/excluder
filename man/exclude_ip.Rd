@@ -10,7 +10,7 @@ exclude_ip(
   ip_col = "IPAddress",
   country = "US",
   quiet = TRUE,
-  print = FALSE,
+  print = TRUE,
   silent = FALSE
 )
 }

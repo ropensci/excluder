@@ -281,7 +281,7 @@ exclude_duplicates <- function(x,
                                dupl_location = TRUE,
                                include_na = FALSE,
                                quiet = TRUE,
-                               print = FALSE,
+                               print = TRUE,
                                silent = FALSE) {
 
   # Mark and filter duplicates

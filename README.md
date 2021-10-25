@@ -135,7 +135,7 @@ tibble::glimpse(df)
 #> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10…
 #> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864…
 #> $ exclusion_preview       <chr> "preview", "preview", "", "", "", "", "", "", …
-#> $ exclusion_duration      <chr> "", "", "", "", "duration_quick", "", "duratio…
+#> $ exclusion_duration      <chr> "", "", "", "", "duration", "", "duration", ""…
 ```
 
 Use the
@@ -147,7 +147,7 @@ function to unite all of the marked columns into a single column.
 df <- qualtrics_text %>%
   mark_preview() %>%
   mark_duration(min_duration = 200) %>%
-  unite_exclusions(exclusion_types = c("preview", "duration"))
+  unite_exclusions()
 #> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
 #> 23 out of 100 rows took less time than the minimum duration of 200 seconds.
 tibble::glimpse(df)
@@ -169,7 +169,7 @@ tibble::glimpse(df)
 #> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…
 #> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10…
 #> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864…
-#> $ exclusions              <chr> "preview", "preview", "", "", "duration_quick"…
+#> $ exclusions              <chr> "preview,", "preview,", ",", ",", ",duration",…
 ```
 
 ### Checking
@@ -212,7 +212,9 @@ of rows meeting the exclusion criteria.
 df <- qualtrics_text %>%
   exclude_duration(min_duration = 100) %>%
   exclude_progress()
+#> 4 out of 100 rows took less time than the minimum duration of 100 seconds.
 #> 4 out of 100 duplicate rows were excluded, leaving 96 rows.
+#> 4 out of 96 rows did not complete the study.
 #> 4 out of 96 duplicate rows were excluded, leaving 92 rows.
 dim(df)
 #> [1] 92 16
@@ -223,7 +225,9 @@ dim(df)
 df <- qualtrics_text %>%
   exclude_progress() %>%
   exclude_duration(min_duration = 100)
+#> 6 out of 100 rows did not complete the study.
 #> 6 out of 100 duplicate rows were excluded, leaving 94 rows.
+#> 2 out of 94 rows took less time than the minimum duration of 100 seconds.
 #> 2 out of 94 duplicate rows were excluded, leaving 92 rows.
 dim(df)
 #> [1] 92 16
@@ -244,12 +248,22 @@ df <- qualtrics_text %>%
   exclude_resolution() %>%
   exclude_ip() %>%
   exclude_location()
+#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
 #> 2 out of 100 duplicate rows were excluded, leaving 98 rows.
+#> 6 out of 98 rows did not complete the study.
 #> 6 out of 98 duplicate rows were excluded, leaving 92 rows.
+#> 6 out of 92 rows have duplicate IP addresses.
+#> 0 NAs were found in location.
+#> 9 out of 91 rows have duplicate locations.
 #> 9 out of 92 duplicate rows were excluded, leaving 83 rows.
+#> 2 out of 83 rows took less time than the minimum duration of 100 seconds.
 #> 2 out of 83 duplicate rows were excluded, leaving 81 rows.
+#> 4 out of 81 rows have screen resolution width less than 1000 or height less than 0.
 #> 4 out of 81 duplicate rows were excluded, leaving 77 rows.
+#> 2 out of 77 rows have IP addresses outside of US.
 #> 2 out of 77 duplicate rows were excluded, leaving 75 rows.
+#> 1 out of 75 rows had no information on location.
+#> 3 out of 75 rows were located outside of the US.
 #> 4 out of 75 duplicate rows were excluded, leaving 71 rows.
 ```
 

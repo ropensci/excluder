@@ -237,7 +237,7 @@ exclude_ip <- function(x,
                        ip_col = "IPAddress",
                        country = "US",
                        quiet = TRUE,
-                       print = FALSE,
+                       print = TRUE,
                        silent = FALSE) {
 
   # Mark and filter ip

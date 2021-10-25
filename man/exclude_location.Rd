@@ -10,7 +10,7 @@ exclude_location(
   location_col = c("LocationLatitude", "LocationLongitude"),
   include_na = FALSE,
   quiet = TRUE,
-  print = FALSE,
+  print = TRUE,
   silent = FALSE
 )
 }

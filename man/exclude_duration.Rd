@@ -11,7 +11,7 @@ exclude_duration(
   id_col = "ResponseId",
   duration_col = "Duration (in seconds)",
   quiet = TRUE,
-  print = FALSE,
+  print = TRUE,
   silent = FALSE
 )
 }
