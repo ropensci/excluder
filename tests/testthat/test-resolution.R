@@ -89,14 +89,17 @@ test_that("Messages displayed by default", {
 
 test_that("No messages displayed when quiet = TRUE and silent = TRUE", {
   expect_message(
-    exclude_resolution(qualtrics_numeric, quiet = TRUE, silent = TRUE), NA)
+    exclude_resolution(qualtrics_numeric, quiet = TRUE, silent = TRUE), NA
+  )
 })
 
 test_that("Excludes create data frames of correct size", {
   suppressMessages(
-    expect_true(nrow(exclude_resolution(qualtrics_numeric)) == 96))
+    expect_true(nrow(exclude_resolution(qualtrics_numeric)) == 96)
+  )
   suppressMessages(
-    expect_true(ncol(exclude_resolution(qualtrics_numeric)) == 16))
+    expect_true(ncol(exclude_resolution(qualtrics_numeric)) == 16)
+  )
   suppressMessages(expect_true(nrow(exclude_resolution(qualtrics_numeric,
     height_min = 800,
     width_min = 0

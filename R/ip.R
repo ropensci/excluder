@@ -102,18 +102,10 @@ mark_ip <- function(x,
     )
   }
 
-  # Find rows to mark
-  exclusions <- filtered_data %>%
-    dplyr::mutate(exclusion_ip = "ip_outside_country") %>%
-    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_ip)
-
-  # Mark rows
-  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-    dplyr::mutate(
-      exclusion_ip =
-        stringr::str_replace_na(.data$exclusion_ip, "")
-    ))
+  # Mark exclusion rows
+  mark_rows(x, filtered_data, id_col, "ip")
 }
+
 
 #' Check for IP addresses from outside of a specified country.
 #'
@@ -193,12 +185,13 @@ check_ip <- function(x,
     country = country,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_ip == "ip_outside_country") %>%
+    dplyr::filter(.data$exclusion_ip == "ip") %>%
     dplyr::select(-.data$exclusion_ip)
 
   # Determine whether to print results
   print_data(exclusions, print)
 }
+
 
 #' Exclude IP addresses from outside of a specified country.
 #'
@@ -254,12 +247,13 @@ exclude_ip <- function(x,
     country = country,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_ip != "ip_outside_country") %>%
+    dplyr::filter(.data$exclusion_ip != "ip") %>%
     dplyr::select(-.data$exclusion_ip)
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {
-    print_exclusion(remaining_data, x, "rows with IP addresses outside of the specified country")
+    print_exclusion(remaining_data, x,
+                    "rows with IP addresses outside of the specified country")
   }
 
   # Determine whether to print results

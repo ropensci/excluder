@@ -128,34 +128,23 @@ mark_duplicates <- function(x,
 
   # Create data frame of duplicates if both location and IP address are used
   if (identical(dupl_location, TRUE) && identical(dupl_ip, TRUE)) {
-    duplicates <- dplyr::bind_rows(same_location, same_ip)
+    filtered_data <- dplyr::bind_rows(same_location, same_ip)
   } else if (identical(dupl_location, TRUE)) {
-    duplicates <- same_location
+    filtered_data <- same_location
   } else if (identical(dupl_ip, TRUE)) {
-    duplicates <- same_ip
+    filtered_data <- same_ip
   } else {
-    duplicates <- NULL
+    filtered_data <- NULL
     stop(paste0(
       "You must specify location or IP address checks with ",
       "'dupl_location' or 'dupl_ip'."
     ))
   }
 
-  # Find rows to mark
-  exclusions <- duplicates %>%
-    dplyr::mutate(exclusion_duplicates = "duplicates") %>%
-    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_duplicates) %>%
-    dplyr::distinct()
-
-  # Mark rows
-  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-    dplyr::mutate(
-      exclusion_duplicates =
-        stringr::str_replace_na(
-          .data$exclusion_duplicates, ""
-        )
-    ))
+  # Mark exclusion rows
+  mark_rows(x, filtered_data, id_col, "duplicates")
 }
+
 
 #' Check for duplicate IP addresses and/or locations
 #'
@@ -238,6 +227,7 @@ check_duplicates <- function(x,
   # Determine whether to print results
   print_data(exclusions, print)
 }
+
 
 #' Exclude rows with duplicate IP addresses and/or locations
 #'

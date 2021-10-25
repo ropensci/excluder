@@ -69,7 +69,7 @@ mark_duration <- function(x,
   if (!is.null(min_duration)) {
     too_quick <- x[which(duration_vector < min_duration), ]
     too_quick <- dplyr::mutate(too_quick, exclusion_duration = "duration_quick")
-    too_quick_slow <- too_quick
+    filtered_data <- too_quick
     n_too_quick <- nrow(too_quick)
     if (identical(quiet, FALSE)) {
       cli::cli_alert_info(
@@ -86,7 +86,7 @@ mark_duration <- function(x,
     )
     too_slow <- x[which(duration_vector > max_duration), ]
     too_slow <- dplyr::mutate(too_slow, exclusion_duration = "duration_slow")
-    too_quick_slow <- too_slow
+    filtered_data <- too_slow
     n_too_slow <- nrow(too_slow)
     if (identical(quiet, FALSE)) {
       cli::cli_alert_info(
@@ -97,25 +97,15 @@ mark_duration <- function(x,
 
   # Combine quick and slow participants
   if (!is.null(min_duration) && !is.null(max_duration)) {
-    too_quick_slow <- dplyr::bind_rows(too_quick, too_slow)
+    filtered_data <- dplyr::bind_rows(too_quick, too_slow)
   } else if (is.null(min_duration) && is.null(max_duration)) {
     stop("You must specify either a minimum or maximum duration.'")
-    too_quick_slow <- NULL
   }
 
-  # Find rows to mark
-  exclusions <- too_quick_slow %>%
-    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_duration)
-
-  # Mark rows
-  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-    dplyr::mutate(
-      exclusion_duration =
-        stringr::str_replace_na(
-          .data$exclusion_duration, ""
-        )
-    ))
+  # Mark exclusion rows
+  mark_rows(x, filtered_data, id_col, "duration")
 }
+
 
 #' Check for minimum or maximum durations
 #'
@@ -196,6 +186,7 @@ check_duration <- function(x,
   # Determine whether to print results
   print_data(exclusions, print)
 }
+
 
 #' Exclude rows with minimum or maximum durations
 #'

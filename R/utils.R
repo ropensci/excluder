@@ -13,6 +13,7 @@
 #' @return The result of calling `rhs(lhs)`.
 NULL
 
+
 #' Check number, names, and type of columns
 #'
 #' Determines whether the correct number and names of columns were specified
@@ -29,9 +30,9 @@ validate_columns <- function(x, column) {
 
   # Check number of columns
   if (col_name == "location_col") {
-    col_num = 2L
+    col_num <- 2L
   } else {
-    col_num = 1L
+    col_num <- 1L
   }
   if (length(column) != col_num) {
     if (col_num == 1) {
@@ -41,7 +42,7 @@ validate_columns <- function(x, column) {
     }
     stop(msg)
   } else if (length(column) == 2L & column[1] == column[2]) {
-    msg <- paste0("The same column name was entered twice in '", col_name,"'.")
+    msg <- paste0("The same column name was entered twice in '", col_name, "'.")
     stop(msg)
   }
 
@@ -49,17 +50,23 @@ validate_columns <- function(x, column) {
   column_names <- names(x)
   if (col_num == 1) {
     if (!column %in% column_names) {
-      msg <- paste0("The column '", column,
-                    "' was not found in the data frame.")
+      msg <- paste0(
+        "The column '", column,
+        "' was not found in the data frame."
+      )
       stop(msg)
     }
   } else if (!column[1] %in% column_names) {
-    msg <- paste0("The column '", column[1],
-                  "' was not found in the data frame.")
+    msg <- paste0(
+      "The column '", column[1],
+      "' was not found in the data frame."
+    )
     stop(msg)
   } else if (!column[2] %in% column_names) {
-    msg <- paste0("The column '", column[2],
-                  "' was not found in the data frame.")
+    msg <- paste0(
+      "The column '", column[2],
+      "' was not found in the data frame."
+    )
     stop(msg)
   }
 
@@ -78,17 +85,51 @@ validate_columns <- function(x, column) {
   } else if (col_label == "preview_col") {
     if (!is.character(x[[column]]) & !is.numeric(x[[column]])) {
       print(typeof(x[[column]]))
-      msg <- paste0("Please ensure '", col_name, "' data type is character or numeric.")
+      msg <- paste0("Please ensure '", col_name,
+                    "' data type is character or numeric.")
       stop(msg)
     }
   } else if (col_label == "finished") {
     if (!is.logical(x[[column]]) & !is.numeric(x[[column]])) {
       print(typeof(x[[column]]))
-      msg <- paste0("Please ensure '", col_name, "' data type is character or numeric.")
+      msg <- paste0("Please ensure '", col_name,
+                    "' data type is character or numeric.")
       stop(msg)
     }
   }
 }
+
+
+#' Return marked rows
+#'
+#' Create new column marking rows that meet exclusion criteria.
+#' \emph{This function is not exported.}
+#'
+#' @param x Original data.
+#' @param exclusion_data Data to be excluded.
+#' @param id_col Column name for unique row ID (e.g., participant).
+#' @param exclusion_type Column name for exclusion column.
+#'
+#' @importFrom rlang :=
+#' @keywords internal
+#'
+mark_rows <- function(x, filtered_data, id_col, exclusion_type) {
+  exclusion_col <- paste0("exclusion_", exclusion_type)
+  if (exclusion_type != "duration") {
+    exclusions <- filtered_data %>%
+      dplyr::mutate({{ exclusion_col }} := exclusion_type)
+  } else {
+    exclusions <- filtered_data
+  }
+  exclusions <- exclusions %>%
+    dplyr::select(tidyselect::all_of(id_col), {{ exclusion_col }}) %>%
+    dplyr::distinct()
+  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
+    dplyr::mutate(
+      dplyr::across({{ exclusion_col }}, ~ tidyr::replace_na(., ""))
+    ))
+}
+
 
 #' Print number of excluded rows
 #'
@@ -105,7 +146,8 @@ print_exclusion <- function(remaining_data, x, msg) {
   n_remaining <- nrow(remaining_data)
   n_exclusions <- nrow(x) - n_remaining
   cli::cli_alert_info(
-    "{n_exclusions} out of {nrow(x)} {msg} were excluded, leaving {n_remaining} rows.")
+    "{n_exclusions} out of {nrow(x)} {msg} were excluded, leaving {n_remaining} rows."
+  )
 }
 
 #' Print data to console

@@ -72,20 +72,10 @@ mark_preview <- function(x,
     }
   }
 
-  # Find rows to mark
-  exclusions <- filtered_data %>%
-    dplyr::mutate(exclusion_preview = "preview") %>%
-    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_preview)
-
-  # Mark rows
-  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-    dplyr::mutate(
-      exclusion_preview =
-        stringr::str_replace_na(
-          .data$exclusion_preview, ""
-        )
-    ))
+  # Mark exclusion rows
+  mark_rows(x, filtered_data, id_col, "preview")
 }
+
 
 #' Check for survey previews
 #'
@@ -152,6 +142,7 @@ check_preview <- function(x,
   # Determine whether to print results
   print_data(exclusions, print)
 }
+
 
 #' Exclude survey previews
 #'

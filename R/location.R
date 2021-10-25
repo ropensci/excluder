@@ -84,9 +84,9 @@ mark_location <- function(x,
 
   # Combine no location with outside US
   if (identical(include_na, FALSE)) {
-    location_issues <- dplyr::bind_rows(no_location, outside_us)
+    filtered_data <- dplyr::bind_rows(no_location, outside_us)
   } else {
-    location_issues <- outside_us
+    filtered_data <- outside_us
   }
 
   # Print messages and return output
@@ -99,20 +99,10 @@ mark_location <- function(x,
     )
   }
 
-  # Find rows to mark
-  exclusions <- location_issues %>%
-    dplyr::mutate(exclusion_location = "location_outside_us") %>%
-    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_location)
-
-  # Mark rows
-  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-    dplyr::mutate(
-      exclusion_location =
-        stringr::str_replace_na(
-          .data$exclusion_location, ""
-        )
-    ))
+  # Mark exclusion rows
+  mark_rows(x, filtered_data, id_col, "location")
 }
+
 
 #' Check for locations outside of the US
 #'
@@ -181,12 +171,13 @@ check_location <- function(x,
     include_na = include_na,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_location == "location_outside_us") %>%
+    dplyr::filter(.data$exclusion_location == "location") %>%
     dplyr::select(-.data$exclusion_location)
 
   # Determine whether to print results
   print_data(exclusions, print)
 }
+
 
 #' Exclude locations outside of US
 #'
@@ -241,7 +232,7 @@ exclude_location <- function(x,
     include_na = include_na,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_location != "location_outside_us") %>%
+    dplyr::filter(.data$exclusion_location != "location") %>%
     dplyr::select(-.data$exclusion_location)
 
   # Print exclusion statement

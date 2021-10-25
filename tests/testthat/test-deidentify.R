@@ -21,7 +21,7 @@ test_that("non-strict columns are removed", {
   expect_false("IP Address" %in% colnames(deidentify(qualtrics_numeric)))
   expect_false("Location Latitude" %in% colnames(deidentify(qualtrics_numeric)))
   expect_false("Location Longitude" %in%
-                 colnames(deidentify(qualtrics_numeric)))
+    colnames(deidentify(qualtrics_numeric)))
   expect_false("User Language" %in% colnames(deidentify(qualtrics_numeric)))
   expect_false("IPAddress" %in% colnames(deidentify(qualtrics_numeric)))
 })

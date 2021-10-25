@@ -67,11 +67,11 @@ mark_progress <- function(x,
 
   # Find incomplete cases
   if (is.logical(finished_vector)) {
-    incomplete <- dplyr::filter(x, .data[[finished_col]] == FALSE)
+    filtered_data <- dplyr::filter(x, .data[[finished_col]] == FALSE)
   } else if (is.numeric(finished_vector)) {
-    incomplete <- dplyr::filter(x, .data[[finished_col]] == 0)
+    filtered_data <- dplyr::filter(x, .data[[finished_col]] == 0)
   }
-  n_incomplete <- nrow(incomplete)
+  n_incomplete <- nrow(filtered_data)
 
   # If minimum percent specified, find cases below minimum
   stopifnot(
@@ -79,8 +79,8 @@ mark_progress <- function(x,
       length(min_progress) == 1L
   )
   if (min_progress < 100) {
-    incomplete <- dplyr::filter(x, .data[[progress_col]] < min_progress)
-    n_below_min <- nrow(incomplete)
+    filtered_data <- dplyr::filter(x, .data[[progress_col]] < min_progress)
+    n_below_min <- nrow(filtered_data)
     if (identical(quiet, FALSE)) {
       cli::cli_alert_info(
         "{n_incomplete} row{?/s} did not complete the study, and {n_below_min} of those completed less than {min_progress}% of the study."
@@ -94,20 +94,10 @@ mark_progress <- function(x,
     }
   }
 
-  # Find rows to mark
-  exclusions <- incomplete %>%
-    dplyr::mutate(exclusion_progress = "incomplete_progress") %>%
-    dplyr::select(tidyselect::all_of(id_col), .data$exclusion_progress)
-
-  # Mark rows
-  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
-    dplyr::mutate(
-      exclusion_progress =
-        stringr::str_replace_na(
-          .data$exclusion_progress, ""
-        )
-    ))
+  # Mark exclusion rows
+  mark_rows(x, filtered_data, id_col, "progress")
 }
+
 
 #' Check for survey progress
 #'
@@ -183,12 +173,13 @@ check_progress <- function(x,
     progress_col = progress_col,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_progress == "incomplete_progress") %>%
+    dplyr::filter(.data$exclusion_progress == "progress") %>%
     dplyr::select(-.data$exclusion_progress)
 
   # Determine whether to print results
   print_data(exclusions, print)
 }
+
 
 #' Exclude survey progress
 #'
@@ -251,7 +242,7 @@ exclude_progress <- function(x,
     progress_col = progress_col,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_progress != "incomplete_progress") %>%
+    dplyr::filter(.data$exclusion_progress != "progress") %>%
     dplyr::select(-.data$exclusion_progress)
 
   # Print exclusion statement

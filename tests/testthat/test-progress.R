@@ -77,7 +77,8 @@ test_that("Messages displayed by default", {
 
 test_that("No messages displayed when quiet = TRUE and silent = TRUE", {
   expect_message(
-    exclude_progress(qualtrics_numeric, quiet = TRUE, silent = TRUE), NA)
+    exclude_progress(qualtrics_numeric, quiet = TRUE, silent = TRUE), NA
+  )
 })
 
 test_that("Excludes create data frames of correct size", {
