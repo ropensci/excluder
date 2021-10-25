@@ -170,14 +170,14 @@
 <span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Macintosh", "Windows NT 10…</span>
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
 <span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", "", "", "", "", "", "", …</span>
-<span class="co">#&gt; $ exclusion_duration      &lt;chr&gt; "", "", "", "", "duration_quick", "", "duratio…</span></code></pre></div>
+<span class="co">#&gt; $ exclusion_duration      &lt;chr&gt; "", "", "", "", "duration", "", "duration", ""…</span></code></pre></div>
 <p>Use the <a href="https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html"><code>unite_exclusions()</code></a> function to unite all of the marked columns into a single column.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Collapse labels for preview and short duration rows</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">200</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span>exclusion_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"preview"</span>, <span class="st">"duration"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; 23 out of 100 rows took less time than the minimum duration of 200 seconds.</span>
 <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
@@ -199,7 +199,7 @@
 <span class="co">#&gt; $ Version                 &lt;chr&gt; "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…</span>
 <span class="co">#&gt; $ `Operating System`      &lt;chr&gt; "Windows NT 10.0", "Macintosh", "Windows NT 10…</span>
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "1366x768", "1680x1050", "1366x768", "1536x864…</span>
-<span class="co">#&gt; $ exclusions              &lt;chr&gt; "preview", "preview", "", "", "duration_quick"…</span></code></pre></div>
+<span class="co">#&gt; $ exclusions              &lt;chr&gt; "preview,", "preview,", ",", ",", ",duration",…</span></code></pre></div>
 </div>
 <div id="checking" class="section level3">
 <h3 class="hasAnchor">
@@ -232,7 +232,9 @@
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/exclude_duration.html">exclude_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 4 out of 100 rows took less time than the minimum duration of 100 seconds.</span>
 <span class="co">#&gt; 4 out of 100 duplicate rows were excluded, leaving 96 rows.</span>
+<span class="co">#&gt; 4 out of 96 rows did not complete the study.</span>
 <span class="co">#&gt; 4 out of 96 duplicate rows were excluded, leaving 92 rows.</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; [1] 92 16</span></code></pre></div>
@@ -241,7 +243,9 @@
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/exclude_duration.html">exclude_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; 6 out of 100 rows did not complete the study.</span>
 <span class="co">#&gt; 6 out of 100 duplicate rows were excluded, leaving 94 rows.</span>
+<span class="co">#&gt; 2 out of 94 rows took less time than the minimum duration of 100 seconds.</span>
 <span class="co">#&gt; 2 out of 94 duplicate rows were excluded, leaving 92 rows.</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; [1] 92 16</span></code></pre></div>
@@ -256,12 +260,22 @@
   <span class="fu"><a href="reference/exclude_resolution.html">exclude_resolution</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/exclude_ip.html">exclude_ip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/exclude_location.html">exclude_location</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.</span>
 <span class="co">#&gt; 2 out of 100 duplicate rows were excluded, leaving 98 rows.</span>
+<span class="co">#&gt; 6 out of 98 rows did not complete the study.</span>
 <span class="co">#&gt; 6 out of 98 duplicate rows were excluded, leaving 92 rows.</span>
+<span class="co">#&gt; 6 out of 92 rows have duplicate IP addresses.</span>
+<span class="co">#&gt; 0 NAs were found in location.</span>
+<span class="co">#&gt; 9 out of 91 rows have duplicate locations.</span>
 <span class="co">#&gt; 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span>
+<span class="co">#&gt; 2 out of 83 rows took less time than the minimum duration of 100 seconds.</span>
 <span class="co">#&gt; 2 out of 83 duplicate rows were excluded, leaving 81 rows.</span>
+<span class="co">#&gt; 4 out of 81 rows have screen resolution width less than 1000 or height less than 0.</span>
 <span class="co">#&gt; 4 out of 81 duplicate rows were excluded, leaving 77 rows.</span>
+<span class="co">#&gt; 2 out of 77 rows have IP addresses outside of US.</span>
 <span class="co">#&gt; 2 out of 77 duplicate rows were excluded, leaving 75 rows.</span>
+<span class="co">#&gt; 1 out of 75 rows had no information on location.</span>
+<span class="co">#&gt; 3 out of 75 rows were located outside of the US.</span>
 <span class="co">#&gt; 4 out of 75 duplicate rows were excluded, leaving 71 rows.</span></code></pre></div>
 </div>
 </div>

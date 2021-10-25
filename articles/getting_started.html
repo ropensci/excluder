@@ -415,7 +415,7 @@
 <span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span>print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
 <span class="co">#&gt; ℹ 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
 <span class="co">#&gt; ℹ 9 out of 92 duplicate rows were excluded, leaving 83 rows.</span></code></pre></div>
@@ -447,7 +447,24 @@
 <span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 83 × 16</span>
+<span class="co">#&gt;    StartDate           EndDate             Status     IPAddress    Progress</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 2020-12-11 12:17:22 2020-12-11 12:21:41 IP Address 73.23.43.0        100</span>
+<span class="co">#&gt;  2 2020-12-11 12:17:41 2020-12-11 12:22:07 IP Address 16.140.105.0      100</span>
+<span class="co">#&gt;  3 2020-12-11 12:19:45 2020-12-11 12:23:16 IP Address 107.57.244.0      100</span>
+<span class="co">#&gt;  4 2020-12-11 12:37:51 2020-12-11 12:43:09 IP Address 15.232.167.0      100</span>
+<span class="co">#&gt;  5 2020-12-11 12:37:04 2020-12-11 12:45:50 IP Address 98.75.201.0       100</span>
+<span class="co">#&gt;  6 2020-12-11 12:55:35 2020-12-11 12:59:24 IP Address 51.113.171.0      100</span>
+<span class="co">#&gt;  7 2020-12-11 13:22:34 2020-12-11 13:35:19 IP Address 17.163.199.0      100</span>
+<span class="co">#&gt;  8 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address 84.56.189.0       100</span>
+<span class="co">#&gt;  9 2020-12-11 17:02:00 2020-12-11 17:03:30 IP Address 70.203.63.0       100</span>
+<span class="co">#&gt; 10 2020-12-11 17:01:32 2020-12-11 17:09:41 IP Address 33.185.89.0       100</span>
+<span class="co">#&gt; # … with 73 more rows, and 11 more variables: Duration (in seconds) &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   Finished &lt;lgl&gt;, RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;,</span>
+<span class="co">#&gt; #   LocationLatitude &lt;dbl&gt;, LocationLongitude &lt;dbl&gt;, UserLanguage &lt;chr&gt;,</span>
+<span class="co">#&gt; #   Browser &lt;chr&gt;, Version &lt;chr&gt;, Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
 <p>Though <code>exclude_*()</code> functions do not print the data frame to the console, <code>mark_*()</code> and <code>check_*()</code> do. To avoid printing to the console, set <code>print</code> = <code>FALSE</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Turn off marking/checking printing data frame with print = FALSE</span>
