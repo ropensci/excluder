@@ -9,7 +9,8 @@ mark_location(
   id_col = "ResponseId",
   location_col = c("LocationLatitude", "LocationLongitude"),
   include_na = FALSE,
-  quiet = FALSE
+  quiet = FALSE,
+  print = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ latitude and longitude columns in the output list of potentially excluded
 data.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
+
+\item{print}{Logical indicating whether to print returned tibble to
+console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

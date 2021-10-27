@@ -12,7 +12,8 @@ mark_duplicates(
   dupl_ip = TRUE,
   dupl_location = TRUE,
   include_na = FALSE,
-  quiet = FALSE
+  quiet = FALSE,
+  print = TRUE
 )
 }
 \arguments{
@@ -34,6 +35,9 @@ longitude.}
 IP address and location as potentially excluded rows.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
+
+\item{print}{Logical indicating whether to print returned tibble to
+console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

@@ -25,6 +25,8 @@
 #' latitude and longitude columns in the output list of potentially excluded
 #' data.
 #' @param quiet Logical indicating whether to print message to console.
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
 #'
 #'
 #' @family location functions
@@ -53,7 +55,8 @@ mark_location <- function(x,
                             "LocationLongitude"
                           ),
                           include_na = FALSE,
-                          quiet = FALSE) {
+                          quiet = FALSE,
+                          print = TRUE) {
 
   # Check for presence of required column
   validate_columns(x, id_col)
@@ -100,7 +103,8 @@ mark_location <- function(x,
   }
 
   # Mark exclusion rows
-  mark_rows(x, filtered_data, id_col, "location")
+  marked_data <- mark_rows(x, filtered_data, id_col, "location")
+  print_data(marked_data, print)
 }
 
 
@@ -124,8 +128,6 @@ mark_location <- function(x,
 #' with locations outside of the US.
 #'
 #' @inheritParams mark_location
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #'
 #' @family location functions
 #' @family check functions
@@ -190,8 +192,6 @@ check_location <- function(x,
 #' @inherit check_location details
 #'
 #' @inheritParams mark_location
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
 #'

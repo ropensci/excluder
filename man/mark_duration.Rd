@@ -10,7 +10,8 @@ mark_duration(
   max_duration = NULL,
   id_col = "ResponseId",
   duration_col = "Duration (in seconds)",
-  quiet = FALSE
+  quiet = FALSE,
+  print = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ mark_duration(
 \item{duration_col}{Column name for durations.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
+
+\item{print}{Logical indicating whether to print returned tibble to
+console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

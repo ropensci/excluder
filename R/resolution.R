@@ -20,6 +20,8 @@
 #' @param id_col Column name for unique row ID (e.g., participant).
 #' @param res_col Column name for screen resolution (in format widthxheight).
 #' @param quiet Logical indicating whether to print message to console.
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
 #'
 #' @family resolution functions
 #' @family mark functions
@@ -44,7 +46,8 @@ mark_resolution <- function(x,
                             height_min = 0,
                             id_col = "ResponseId",
                             res_col = "Resolution",
-                            quiet = FALSE) {
+                            quiet = FALSE,
+                            print = TRUE) {
 
   # Check for presence of required column
   validate_columns(x, id_col)
@@ -91,7 +94,8 @@ mark_resolution <- function(x,
   }
 
   # Mark exclusion rows
-  mark_rows(x, filtered_data, id_col, "resolution")
+  marked_data <- mark_rows(x, filtered_data, id_col, "resolution")
+  print_data(marked_data, print)
 }
 
 
@@ -113,8 +117,6 @@ mark_resolution <- function(x,
 #' with unacceptable screen resolution.
 #'
 #' @inheritParams mark_resolution
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #'
 #' @family resolution functions
 #' @family check functions
@@ -178,8 +180,6 @@ check_resolution <- function(x,
 #' @inherit check_resolution details
 #'
 #' @inheritParams mark_resolution
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
 #'

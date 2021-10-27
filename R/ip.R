@@ -26,7 +26,9 @@
 #' @param ip_col Column name for IP addresses.
 #' @param country Two-letter abbreviation of country to check (default is "US").
 #' @param quiet Logical indicating whether to print message to console.
-
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
+#'
 #' @family ip functions
 #' @family mark functions
 #' @return
@@ -54,7 +56,8 @@ mark_ip <- function(x,
                     id_col = "ResponseId",
                     ip_col = "IPAddress",
                     country = "US",
-                    quiet = FALSE) {
+                    quiet = FALSE,
+                    print = TRUE) {
 
   # Check for presence of required column
   validate_columns(x, id_col)
@@ -103,7 +106,8 @@ mark_ip <- function(x,
   }
 
   # Mark exclusion rows
-  mark_rows(x, filtered_data, id_col, "ip")
+  marked_data <- mark_rows(x, filtered_data, id_col, "ip")
+  print_data(marked_data, print)
 }
 
 
@@ -130,8 +134,6 @@ mark_ip <- function(x,
 #' will print a message alerting to the number of rows with `NA`s.
 #'
 #' @inheritParams mark_ip
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #'
 #' @family ip functions
 #' @family check functions
@@ -204,8 +206,6 @@ check_ip <- function(x,
 #' @inherit check_ip details
 #'
 #' @inheritParams mark_ip
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
 #'

@@ -4,7 +4,13 @@
 \alias{mark_preview}
 \title{Mark survey previews}
 \usage{
-mark_preview(x, id_col = "ResponseId", preview_col = "Status", quiet = FALSE)
+mark_preview(
+  x,
+  id_col = "ResponseId",
+  preview_col = "Status",
+  quiet = FALSE,
+  print = TRUE
+)
 }
 \arguments{
 \item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
@@ -14,6 +20,9 @@ mark_preview(x, id_col = "ResponseId", preview_col = "Status", quiet = FALSE)
 \item{preview_col}{Column name for survey preview.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
+
+\item{print}{Logical indicating whether to print returned tibble to
+console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

@@ -21,6 +21,8 @@
 #' @param id_col Column name for unique row ID (e.g., participant).
 #' @param preview_col Column name for survey preview.
 #' @param quiet Logical indicating whether to print message to console.
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
 #'
 #' @family preview functions
 #' @family mark functions
@@ -42,7 +44,8 @@
 mark_preview <- function(x,
                          id_col = "ResponseId",
                          preview_col = "Status",
-                         quiet = FALSE) {
+                         quiet = FALSE,
+                         print = TRUE) {
 
   # Check for presence of required column
   validate_columns(x, id_col)
@@ -73,7 +76,8 @@ mark_preview <- function(x,
   }
 
   # Mark exclusion rows
-  mark_rows(x, filtered_data, id_col, "preview")
+  marked_data <- mark_rows(x, filtered_data, id_col, "preview")
+  print_data(marked_data, print)
 }
 
 
@@ -97,8 +101,6 @@ mark_preview <- function(x,
 #' that are survey previews.
 #'
 #' @inheritParams mark_preview
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #'
 #' @family preview functions
 #' @family check functions
@@ -155,8 +157,6 @@ check_preview <- function(x,
 #' @inherit check_preview details
 #'
 #' @inheritParams mark_preview
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
 #'

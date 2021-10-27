@@ -29,6 +29,8 @@
 #' @param include_na Logical indicating whether to include rows with NAs for
 #' IP address and location as potentially excluded rows.
 #' @param quiet Logical indicating whether to print message to console.
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
 #'
 #' @family duplicates functions
 #' @family mark functions
@@ -65,7 +67,8 @@ mark_duplicates <- function(x,
                             dupl_ip = TRUE,
                             dupl_location = TRUE,
                             include_na = FALSE,
-                            quiet = FALSE) {
+                            quiet = FALSE,
+                            print = TRUE) {
 
   # Check for presence of required columns
   validate_columns(x, id_col)
@@ -142,7 +145,8 @@ mark_duplicates <- function(x,
   }
 
   # Mark exclusion rows
-  mark_rows(x, filtered_data, id_col, "duplicates")
+  marked_data <- mark_rows(x, filtered_data, id_col, "duplicates")
+  print_data(marked_data, print)
 }
 
 
@@ -167,8 +171,6 @@ mark_duplicates <- function(x,
 #' types of duplicates.
 #'
 #' @inheritParams mark_duplicates
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #'
 #' @family duplicates functions
 #' @family check functions
@@ -240,8 +242,6 @@ check_duplicates <- function(x,
 #' @inherit check_duplicates details
 #'
 #' @inheritParams mark_duplicates
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
 #'

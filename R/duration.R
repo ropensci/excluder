@@ -23,6 +23,8 @@
 #' @param id_col Column name for unique row ID (e.g., participant).
 #' @param duration_col Column name for durations.
 #' @param quiet Logical indicating whether to print message to console.
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
 #'
 #' @family duration functions
 #' @family mark functions
@@ -52,7 +54,8 @@ mark_duration <- function(x,
                           max_duration = NULL,
                           id_col = "ResponseId",
                           duration_col = "Duration (in seconds)",
-                          quiet = FALSE) {
+                          quiet = FALSE,
+                          print = TRUE) {
 
   # Check for presence of required columns
   validate_columns(x, id_col)
@@ -103,7 +106,8 @@ mark_duration <- function(x,
   }
 
   # Mark exclusion rows
-  mark_rows(x, filtered_data, id_col, "duration")
+  marked_data <- mark_rows(x, filtered_data, id_col, "duration")
+  print_data(marked_data, print)
 }
 
 
@@ -127,8 +131,6 @@ mark_duration <- function(x,
 #' This function returns the fast and slow rows.
 #'
 #' @inheritParams mark_duration
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #'
 #' @family duration functions
 #' @family check functions
@@ -199,8 +201,6 @@ check_duration <- function(x,
 #' @inherit check_duration details
 #'
 #' @inheritParams mark_duration
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
 #'

@@ -10,7 +10,8 @@ mark_resolution(
   height_min = 0,
   id_col = "ResponseId",
   res_col = "Resolution",
-  quiet = FALSE
+  quiet = FALSE,
+  print = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ mark_resolution(
 \item{res_col}{Column name for screen resolution (in format widthxheight).}
 
 \item{quiet}{Logical indicating whether to print message to console.}
+
+\item{print}{Logical indicating whether to print returned tibble to
+console.}
 }
 \value{
 An object of the same type as \code{x} that includes a column marking rows

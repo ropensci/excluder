@@ -26,6 +26,8 @@
 #' @param finished_col Column name for whether survey was completed.
 #' @param progress_col Column name for percentage of survey completed.
 #' @param quiet Logical indicating whether to print message to console.
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
 #'
 #' @family progress functions
 #' @family mark functions
@@ -55,7 +57,8 @@ mark_progress <- function(x,
                           id_col = "ResponseId",
                           finished_col = "Finished",
                           progress_col = "Progress",
-                          quiet = FALSE) {
+                          quiet = FALSE,
+                          print = TRUE) {
 
   # Check for presence of required column
   validate_columns(x, id_col)
@@ -95,7 +98,8 @@ mark_progress <- function(x,
   }
 
   # Mark exclusion rows
-  mark_rows(x, filtered_data, id_col, "progress")
+  marked_data <- mark_rows(x, filtered_data, id_col, "progress")
+  print_data(marked_data, print)
 }
 
 
@@ -122,8 +126,6 @@ mark_progress <- function(x,
 #' that have incomplete progress.
 #'
 #' @inheritParams mark_progress
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #'
 #' @family progress functions
 #' @family check functions
@@ -192,8 +194,6 @@ check_progress <- function(x,
 #' @inherit check_progress details
 #'
 #' @inheritParams mark_progress
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
 #' @param silent Logical indicating whether to print message to console. Note
 #' this argument controls the exclude message not the check message.
 #'

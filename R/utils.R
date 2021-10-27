@@ -113,7 +113,10 @@ validate_columns <- function(x, column) {
 #' @importFrom rlang :=
 #' @keywords internal
 #'
-mark_rows <- function(x, filtered_data, id_col, exclusion_type) {
+mark_rows <- function(x,
+                      filtered_data,
+                      id_col,
+                      exclusion_type) {
   exclusion_col <- paste0("exclusion_", exclusion_type)
   if (exclusion_type != "duration") {
     exclusions <- filtered_data %>%
@@ -124,10 +127,11 @@ mark_rows <- function(x, filtered_data, id_col, exclusion_type) {
   exclusions <- exclusions %>%
     dplyr::select(tidyselect::all_of(id_col), {{ exclusion_col }}) %>%
     dplyr::distinct()
-  invisible(dplyr::left_join(x, exclusions, by = id_col) %>%
+  x %>%
+    dplyr::left_join(exclusions, by = id_col) %>%
     dplyr::mutate(
       dplyr::across({{ exclusion_col }}, ~ tidyr::replace_na(., ""))
-    ))
+    )
 }
 
 
