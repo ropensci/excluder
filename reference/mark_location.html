@@ -143,7 +143,8 @@ The function is written to work with data from
   id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>,
   location_col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"LocationLatitude"</span>, <span class='st'>"LocationLongitude"</span><span class='op'>)</span>,
   include_na <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  print <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -171,6 +172,11 @@ data.</p></td>
     <tr>
       <th>quiet</th>
       <td><p>Logical indicating whether to print message to console.</p></td>
+    </tr>
+    <tr>
+      <th>print</th>
+      <td><p>Logical indicating whether to print returned tibble to
+console.</p></td>
     </tr>
     </table>
 
