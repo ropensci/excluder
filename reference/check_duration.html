@@ -144,6 +144,7 @@ The function is written to work with data from
   max_duration <span class='op'>=</span> <span class='cn'>NULL</span>,
   id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>,
   duration_col <span class='op'>=</span> <span class='st'>"Duration (in seconds)"</span>,
+  keep <span class='op'>=</span> <span class='cn'>FALSE</span>,
   quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
   print <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
@@ -170,6 +171,10 @@ The function is written to work with data from
     <tr>
       <th>duration_col</th>
       <td><p>Column name for durations.</p></td>
+    </tr>
+    <tr>
+      <th>keep</th>
+      <td><p>Logical indicating whether to keep or remove exclusion column.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -211,98 +216,111 @@ messages about the number of rows that are too fast or too slow.</p>
 <code><a href='check_resolution.html'>check_resolution</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Check for durations faster than 100 seconds</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-<span class='fu'>check_duration</span><span class='op'>(</span><span class='va'>qualtrics_text</span>, min_duration <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 4 out of 100 rows took less time than 100.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
-#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100
-#&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
-#&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48
-#&gt; 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100
-#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
-#&gt; 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3
-#&gt; 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
-#&gt; 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
-#&gt; 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire
-#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
-#&gt; 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88
-#&gt; 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61
-#&gt; 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88
-#&gt; 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88
-#&gt;   Operating System Resolution
-#&gt; 1  Windows NT 10.0   1600x900
-#&gt; 2  Windows NT 10.0   1366x768
-#&gt; 3  Windows NT 10.0   1188x668
-#&gt; 4  Windows NT 10.0   1368x912</div><div class='input'>
-<span class='co'># Remove preview data first</span>
-<span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_duration</span><span class='op'>(</span>min_duration <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 4 out of 98 rows took less time than 100.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
-#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100
-#&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
-#&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48
-#&gt; 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100
-#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
-#&gt; 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3
-#&gt; 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
-#&gt; 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
-#&gt; 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire
-#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
-#&gt; 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88
-#&gt; 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61
-#&gt; 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88
-#&gt; 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88
-#&gt;   Operating System Resolution
-#&gt; 1  Windows NT 10.0   1600x900
-#&gt; 2  Windows NT 10.0   1366x768
-#&gt; 3  Windows NT 10.0   1188x668
-#&gt; 4  Windows NT 10.0   1368x912</div><div class='input'>
-<span class='co'># Check only for durations slower than 800 seconds</span>
-<span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_duration</span><span class='op'>(</span>max_duration <span class='op'>=</span> <span class='fl'>800</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 0 out of 98 rows took less time than 10.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 98 rows took more time than 800.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status  IPAddress Progress
-#&gt; 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0       99
-#&gt; 2 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address 22.51.31.0      100
-#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
-#&gt; 1                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
-#&gt; 2                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
-#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
-#&gt; 1         37.28265         -120.5025           EN  Chrome 87.0.4280.88
-#&gt; 2         37.28265         -120.5025           EN Firefox         83.0
-#&gt;   Operating System Resolution
-#&gt; 1  Windows NT 10.0   1366x768
-#&gt; 2  Windows NT 10.0   1440x960</div><div class='input'>
-<span class='co'># Do not print rows to console</span>
-<span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_duration</span><span class='op'>(</span>min_duration <span class='op'>=</span> <span class='fl'>100</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 4 out of 98 rows took less time than 100.</span></div><div class='input'>
-<span class='co'># Do not print message to console</span>
-<span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_duration</span><span class='op'>(</span>min_duration <span class='op'>=</span> <span class='fl'>100</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status    IPAddress Progress
-#&gt; 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100
-#&gt; 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13
-#&gt; 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48
-#&gt; 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100
-#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
-#&gt; 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3
-#&gt; 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj
-#&gt; 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ
-#&gt; 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire
-#&gt;   LocationLatitude LocationLongitude UserLanguage Browser      Version
-#&gt; 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88
-#&gt; 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61
-#&gt; 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88
-#&gt; 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88
-#&gt;   Operating System Resolution
-#&gt; 1  Windows NT 10.0   1600x900
-#&gt; 2  Windows NT 10.0   1366x768
-#&gt; 3  Windows NT 10.0   1188x668
-#&gt; 4  Windows NT 10.0   1368x912</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Check for durations faster than 100 seconds</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>check_duration</span><span class='op'>(</span><span class='va'>qualtrics_text</span>, min_duration <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 4 out of 100 rows took less time than 100.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             StartDate             EndDate     Status    IPAddress Progress</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Operating System Resolution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  Windows NT 10.0   1600x900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  Windows NT 10.0   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  Windows NT 10.0   1188x668</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  Windows NT 10.0   1368x912</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Remove preview data first</span></span>
+<span class='r-in'><span class='va'>qualtrics_text</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>check_duration</span><span class='op'>(</span>min_duration <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 4 out of 98 rows took less time than 100.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             StartDate             EndDate     Status    IPAddress Progress</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Operating System Resolution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  Windows NT 10.0   1600x900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  Windows NT 10.0   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  Windows NT 10.0   1188x668</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  Windows NT 10.0   1368x912</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Check only for durations slower than 800 seconds</span></span>
+<span class='r-in'><span class='va'>qualtrics_text</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>check_duration</span><span class='op'>(</span>max_duration <span class='op'>=</span> <span class='fl'>800</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 0 out of 98 rows took less time than 10.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 2 out of 98 rows took more time than 800.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             StartDate             EndDate     Status  IPAddress Progress</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address 22.51.31.0       99</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address 22.51.31.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         37.28265         -120.5025           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         37.28265         -120.5025           EN Firefox         83.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Operating System Resolution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  Windows NT 10.0   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  Windows NT 10.0   1440x960</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Do not print rows to console</span></span>
+<span class='r-in'><span class='va'>qualtrics_text</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>check_duration</span><span class='op'>(</span>min_duration <span class='op'>=</span> <span class='fl'>100</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 4 out of 98 rows took less time than 100.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Do not print message to console</span></span>
+<span class='r-in'><span class='va'>qualtrics_text</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='exclude_preview.html'>exclude_preview</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>check_duration</span><span class='op'>(</span>min_duration <span class='op'>=</span> <span class='fl'>100</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             StartDate             EndDate     Status    IPAddress Progress</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2020-12-11 16:59:08 2020-12-11 17:02:05 IP Address  84.56.189.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2020-12-17 15:41:52 2020-12-17 15:46:37 IP Address   15.223.0.0       13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2020-12-17 15:41:27 2020-12-17 15:46:45 IP Address  19.127.87.0       48</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 2020-12-17 15:46:46 2020-12-17 15:49:02 IP Address 21.134.217.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                    54     TRUE 2020-12-11 17:02:05 R_2RQ5kfCKKHudpj3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                    40    FALSE 2020-12-17 15:46:37 R_Dx6w74UfhnGhAmj</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                    74    FALSE 2020-12-17 15:46:46 R_ewyyOOPADLGo9xZ</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                    72     TRUE 2020-12-17 15:49:02 R_PKKUJ04DtpTEire</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   LocationLatitude LocationLongitude UserLanguage Browser      Version</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         43.23353         -77.55959           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         34.77804         -84.96198           DE  Chrome 83.0.4103.61</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         33.66715        -117.82543           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         34.76243         -96.69044           EN  Chrome 87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Operating System Resolution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  Windows NT 10.0   1600x900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  Windows NT 10.0   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  Windows NT 10.0   1188x668</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  Windows NT 10.0   1368x912</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

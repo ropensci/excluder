@@ -168,26 +168,29 @@ IP address and location.</p>
 so that these columns can be used to exclude rows.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>qualtrics_numeric</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "StartDate"             "EndDate"               "Status"               
-#&gt;  [4] "IPAddress"             "Progress"              "Duration (in seconds)"
-#&gt;  [7] "Finished"              "RecordedDate"          "ResponseId"           
-#&gt; [10] "LocationLatitude"      "LocationLongitude"     "UserLanguage"         
-#&gt; [13] "Browser"               "Version"               "Operating System"     
-#&gt; [16] "Resolution"           </div><div class='input'>
-<span class='co'># Remove IP address, location, and computer information columns</span>
-<span class='va'>deid</span> <span class='op'>&lt;-</span> <span class='fu'>deidentify</span><span class='op'>(</span><span class='va'>qualtrics_numeric</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>deid</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "StartDate"             "EndDate"               "Status"               
-#&gt; [4] "Progress"              "Duration (in seconds)" "Finished"             
-#&gt; [7] "RecordedDate"          "ResponseId"           </div><div class='input'>
-<span class='co'># Remove only IP address and location columns</span>
-<span class='va'>deid2</span> <span class='op'>&lt;-</span> <span class='fu'>deidentify</span><span class='op'>(</span><span class='va'>qualtrics_numeric</span>, strict <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>deid2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "StartDate"             "EndDate"               "Status"               
-#&gt;  [4] "Progress"              "Duration (in seconds)" "Finished"             
-#&gt;  [7] "RecordedDate"          "ResponseId"            "Browser"              
-#&gt; [10] "Version"               "Operating System"      "Resolution"           </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>qualtrics_numeric</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "StartDate"             "EndDate"               "Status"               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] "IPAddress"             "Progress"              "Duration (in seconds)"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "Finished"              "RecordedDate"          "ResponseId"           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] "LocationLatitude"      "LocationLongitude"     "UserLanguage"         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] "Browser"               "Version"               "Operating System"     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [16] "Resolution"           </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Remove IP address, location, and computer information columns</span></span>
+<span class='r-in'><span class='va'>deid</span> <span class='op'>&lt;-</span> <span class='fu'>deidentify</span><span class='op'>(</span><span class='va'>qualtrics_numeric</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>deid</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "StartDate"             "EndDate"               "Status"               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "Progress"              "Duration (in seconds)" "Finished"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [7] "RecordedDate"          "ResponseId"           </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Remove only IP address and location columns</span></span>
+<span class='r-in'><span class='va'>deid2</span> <span class='op'>&lt;-</span> <span class='fu'>deidentify</span><span class='op'>(</span><span class='va'>qualtrics_numeric</span>, strict <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>deid2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "StartDate"             "EndDate"               "Status"               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] "Progress"              "Duration (in seconds)" "Finished"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "RecordedDate"          "ResponseId"            "Browser"              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] "Version"               "Operating System"      "Resolution"           </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

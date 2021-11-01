@@ -139,7 +139,7 @@
 <div id="preparing-your-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#preparing-your-data" class="anchor"></a>Preparing your data</h2>
-<p>If you use the <a href="https://docs.ropensci.org/qualtRics/reference/fetch_survey.html"><code>fetch_survey()</code></a> from the <code>{qualtRics}</code> package to import your Qualtrics data, it will automatically remove the first two label rows from the data set. However, if you directly download your data from Qualtrics, it will include two rows in your data set that include label information. This has two side effects: (1) there are non-data rows that need to be removed from your data set, and (2) all of your columns will be imported as character data types.</p>
+<p>If you use the <a href="https://docs.ropensci.org/qualtRics/reference/fetch_survey.html"><code>fetch_survey()</code></a> from the <a href="https://docs.ropensci.org/qualtRics/">qualtRics</a> package to import your Qualtrics data, it will automatically remove the first two label rows from the data set. However, if you directly download your data from Qualtrics, it will include two rows in your data set that include label information. This has two side effects: (1) there are non-data rows that need to be removed from your data set, and (2) all of your columns will be imported as character data types.</p>
 <p>The <a href="https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html"><code>remove_label_rows()</code></a> function will remove these two label rows. Also, by default, it will coerce the Qualtrics metadata columns from character types to the correct formats (e.g., <em><code>StartDate</code></em> is coerced to a date, <em><code>Progress</code></em> is coerced to numeric). So if you download your data from Qualtrics, you will need to run this function on your data before proceeding.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">qualtrics_raw</span><span class="op">)</span>
@@ -163,7 +163,7 @@
 <span class="co">#&gt; $ Resolution              &lt;chr&gt; "Browser Meta Info - Resolution", "{\"ImportId…</span>
 <span class="co">#</span>
 <span class="co"># Remove label rows and coerce metadata columns</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/remove_label_rows.html">remove_label_rows</a></span><span class="op">(</span><span class="va">qualtrics_raw</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/remove_label_rows.html">remove_label_rows</a></span><span class="op">(</span><span class="va">qualtrics_raw</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 100</span>
 <span class="co">#&gt; Columns: 16</span>
@@ -190,8 +190,8 @@
 <p>The core verbs in this package mark them for future processing. The <code>mark_*()</code> suite of functions creates a new column for each mark function used that marks which observations violate the exclusion criterion. They print a message about the number of observations meeting each exclusion criteria. Mark functions return a data frame identical to the original with additional columns marking exclusions.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Mark observations run as preview</span>
-<span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
 <span class="co">#&gt; Rows: 100</span>
@@ -217,9 +217,9 @@
 <p>Piping multiple mark functions will create multiple rows marking observations for exclusion.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Mark preview and incomplete observations</span>
-<span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mark_progress.html">mark_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/mark_progress.html">mark_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
 <span class="co">#&gt; ℹ 6 out of 100 rows did not complete the study.</span>
@@ -245,10 +245,10 @@
 <span class="co">#&gt; $ exclusion_progress      &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", ""…</span></code></pre></div>
 <p>To unite all of the marked columns into a single column, use the <code><a href="../reference/unite_exclusions.html">unite_exclusions()</a></code> function. This will create a new <code>exclusions</code> columns that will unite all exclusions in each observation into a single column. Here we move the combined <em><code>exclusions</code></em> column to the beginning of the data frame to view it.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">exclusions</span>, .before <span class="op">=</span> <span class="va">StartDate</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
 <span class="co">#&gt; ℹ 82 out of 100 rows took less time than 500.</span>
@@ -271,10 +271,10 @@
 <span class="co">#&gt; #   Browser &lt;chr&gt;, Version &lt;chr&gt;, Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
 <p>Multiple exclusions are separated by <code>,</code> by default, but the separating character can be controlled by the <code>separator</code> argument. By default, the multiple exclusion columns are removed from the final data frame, but this can be turned off by setting the <code>remove</code> argument to <code>FALSE</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span>separator <span class="op">=</span> <span class="st">";"</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span>separator <span class="op">=</span> <span class="st">";"</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">exclusions</span>, .before <span class="op">=</span> <span class="va">StartDate</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
 <span class="co">#&gt; ℹ 82 out of 100 rows took less time than 500.</span>
@@ -303,7 +303,7 @@
 <p>The <code>check_*()</code> suite of functions return a data frame that includes only the observations that meet the criterion. Since these functions first run the appropriate <code>mark_*()</code> function, they also print a message about the number of observations that meet the exclusion criterion.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check for rows with incomplete data</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 6 out of 100 rows did not complete the study.</span>
 <span class="co">#&gt; # A tibble: 6 × 16</span>
@@ -321,7 +321,7 @@
 <span class="co">#&gt; #   Operating System &lt;chr&gt;, Resolution &lt;chr&gt;</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check for rows with durations less than 100 seconds</span>
-<span class="va">df</span> <span class="op">%&gt;%</span> 
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 4 out of 100 rows took less time than 100.</span>
 <span class="co">#&gt; # A tibble: 4 × 16</span>
@@ -338,8 +338,8 @@
 <p>Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check for rows with durations less than 100 seconds in rows that did not complete the survey</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/check_duration.html">check_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 6 out of 100 rows did not complete the study.</span>
 <span class="co">#&gt; ℹ 2 out of 6 rows took less time than 100.</span>
@@ -355,10 +355,10 @@
 <p>To check all data for multiple criteria, use the <code>mark_*()</code> functions followed by a filter.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check for multiple criteria</span>
-<span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/mark_duration.html">mark_duration</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/unite_exclusions.html">unite_exclusions</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">exclusions</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.</span>
 <span class="co">#&gt; ℹ 82 out of 100 rows took less time than 500.</span>
@@ -387,8 +387,8 @@
 <p>The <code>exclude_*()</code> suite of function will return a data frame that has removed observations that match the exclusion criteria. Exclude functions print their own messages about the number of observations excluded.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude survey responses used to preview the survey</span>
-<span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
 <span class="co">#&gt; Rows: 98</span>
@@ -412,9 +412,9 @@
 <p>Piping will apply subsequent excludes to the data frames with the previous excludes already applied. Therefore, it often makes sense to remove the preview surveys and incomplete surveys before checking other exclusion types to speed processing.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows then duplicate locations and IP addresses</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span>print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
 <span class="co">#&gt; ℹ 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
@@ -426,7 +426,7 @@
 <p>Messages about the number of rows meeting the exclusion criteria are printed to the console by default. These messages are generated by the <code>mark_*()</code> functions and carry over to <code>check_*()</code> functions. They can be turn off by setting <code>quiet</code> to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Turn off marking/checking messages with quiet = TRUE</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span>quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 × 16</span>
 <span class="co">#&gt;   StartDate           EndDate             Status     IPAddress    Progress</span>
@@ -444,9 +444,9 @@
 <p>Note that <code>exclude_*()</code> functions have the <code>mark_*()</code> messages turned off by default and produce their own messages about exclusions. To silence these messages, set <code>silent</code> to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Turn off exclusion messages with silent = TRUE</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 83 × 16</span>
 <span class="co">#&gt;    StartDate           EndDate             Status     IPAddress    Progress</span>
@@ -468,7 +468,7 @@
 <p>Though <code>exclude_*()</code> functions do not print the data frame to the console, <code>mark_*()</code> and <code>check_*()</code> do. To avoid printing to the console, set <code>print</code> = <code>FALSE</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Turn off marking/checking printing data frame with print = FALSE</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/check_progress.html">check_progress</a></span><span class="op">(</span>print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 6 out of 100 rows did not complete the study.</span></code></pre></div>
 </div>
@@ -478,11 +478,11 @@
 <p>By default, Qualtrics records participant IP address and location.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> You can also record properties of the participants’ computers such as operating system, web browser type and version, and screen resolution.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> While these pieces of information can be useful for excluding observations, they carry potentially identifiable information. Therefore, you may want to remove them from data frame before saving or processing it. The <code><a href="../reference/deidentify.html">deidentify()</a></code> function removes potentially identifiable data columns collected by Qualtrics. By default, the function uses a strict rule to remove IP address, location, and computer information (browser type and version, operating system, and screen resolution).</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
 <span class="co">#&gt; ℹ 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>
@@ -500,11 +500,11 @@
 <p>If the computer information is not considered sensitive, it can be kept by setting the <code>strict</code> argument to <code>FALSE</code>, thereby only removing IP address and location.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span>strict <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/exclude_duplicates.html">exclude_duplicates</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/deidentify.html">deidentify</a></span><span class="op">(</span>strict <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.</span>
 <span class="co">#&gt; ℹ 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.</span>

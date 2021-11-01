@@ -146,6 +146,7 @@ function is written to work with data from
   dupl_ip <span class='op'>=</span> <span class='cn'>TRUE</span>,
   dupl_location <span class='op'>=</span> <span class='cn'>TRUE</span>,
   include_na <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep <span class='op'>=</span> <span class='cn'>FALSE</span>,
   quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
   print <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
@@ -183,6 +184,10 @@ longitude.</p></td>
       <th>include_na</th>
       <td><p>Logical indicating whether to include rows with NAs for
 IP address and location as potentially excluded rows.</p></td>
+    </tr>
+    <tr>
+      <th>keep</th>
+      <td><p>Logical indicating whether to keep or remove exclusion column.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -226,139 +231,152 @@ types of duplicates.</p>
 <code><a href='check_resolution.html'>check_resolution</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Check for duplicate IP addresses and locations</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-<span class='fu'>check_duplicates</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 NAs were found in IP addresses.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 7 out of 98 rows had duplicate IP addresses.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 1 NA was found in location.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 10 out of 99 rows had duplicate locations.</span></div><div class='output co'>#&gt;              StartDate             EndDate     Status    IPAddress Progress
-#&gt; 1  2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address  24.195.91.0      100
-#&gt; 2  2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99
-#&gt; 3  2020-12-17 15:40:52 2020-12-17 15:43:39 IP Address 32.164.134.0      100
-#&gt; 4  2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address  24.195.91.0      100
-#&gt; 5  2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address  55.73.114.0      100
-#&gt; 6  2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address  55.73.114.0      100
-#&gt; 7  2020-12-17 15:40:57 2020-12-17 15:48:56 IP Address   6.79.107.0      100
-#&gt; 8  2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address   22.51.31.0      100
-#&gt; 9  2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address   22.51.31.0      100
-#&gt; 10 2020-12-17 15:48:48 2020-12-17 15:54:12 IP Address 54.232.129.0      100
-#&gt;    Duration (in seconds) Finished        RecordedDate        ResponseId
-#&gt; 1                    177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB
-#&gt; 2                    879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
-#&gt; 3                    375     TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt
-#&gt; 4                    521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP
-#&gt; 5                    236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC
-#&gt; 6                    526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI
-#&gt; 7                    397     TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ
-#&gt; 8                    872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
-#&gt; 9                    246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch
-#&gt; 10                   149     TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM
-#&gt;    LocationLatitude LocationLongitude UserLanguage Browser       Version
-#&gt; 1          40.33554         -75.92698           EN  Chrome 86.0.4240.198
-#&gt; 2          37.28265        -120.50248           EN  Chrome  87.0.4280.88
-#&gt; 3          45.50412        -122.78665           EN  Chrome  87.0.4280.88
-#&gt; 4          40.33554         -75.92698           EN  Chrome  87.0.4280.88
-#&gt; 5          28.56411         -81.54902           EN  Chrome  87.0.4280.88
-#&gt; 6          28.56411         -81.54902           EN  Chrome  87.0.4280.88
-#&gt; 7          45.50412        -122.78665           EN  Chrome  87.0.4280.88
-#&gt; 8          37.28265        -120.50248           EN Firefox          83.0
-#&gt; 9          37.28265        -120.50248           EN    Edge   84.0.522.52
-#&gt; 10         45.50412        -122.78665           EN  Chrome  87.0.4280.88
-#&gt;    Operating System Resolution
-#&gt; 1         Macintosh   1280x800
-#&gt; 2   Windows NT 10.0   1366x768
-#&gt; 3   Windows NT 10.0  1920x1080
-#&gt; 4    Windows NT 6.1   1366x768
-#&gt; 5   Windows NT 10.0  1920x1080
-#&gt; 6   Windows NT 10.0   1536x864
-#&gt; 7   Windows NT 10.0   1536x864
-#&gt; 8   Windows NT 10.0   1440x960
-#&gt; 9   Windows NT 10.0  1920x1080
-#&gt; 10  Windows NT 10.0  1920x1080</div><div class='input'>
-<span class='co'># Check only for duplicate locations</span>
-<span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_duplicates</span><span class='op'>(</span>dupl_location <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 NAs were found in IP addresses.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 7 out of 98 rows had duplicate IP addresses.</span></div><div class='output co'>#&gt;             StartDate             EndDate     Status   IPAddress Progress
-#&gt; 1 2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address 24.195.91.0      100
-#&gt; 2 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address  22.51.31.0       99
-#&gt; 3 2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address 24.195.91.0      100
-#&gt; 4 2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address 55.73.114.0      100
-#&gt; 5 2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address 55.73.114.0      100
-#&gt; 6 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address  22.51.31.0      100
-#&gt; 7 2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address  22.51.31.0      100
-#&gt;   Duration (in seconds) Finished        RecordedDate        ResponseId
-#&gt; 1                   177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB
-#&gt; 2                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
-#&gt; 3                   521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP
-#&gt; 4                   236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC
-#&gt; 5                   526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI
-#&gt; 6                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
-#&gt; 7                   246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch
-#&gt;   LocationLatitude LocationLongitude UserLanguage Browser       Version
-#&gt; 1         40.33554         -75.92698           EN  Chrome 86.0.4240.198
-#&gt; 2         37.28265        -120.50248           EN  Chrome  87.0.4280.88
-#&gt; 3         40.33554         -75.92698           EN  Chrome  87.0.4280.88
-#&gt; 4         28.56411         -81.54902           EN  Chrome  87.0.4280.88
-#&gt; 5         28.56411         -81.54902           EN  Chrome  87.0.4280.88
-#&gt; 6         37.28265        -120.50248           EN Firefox          83.0
-#&gt; 7         37.28265        -120.50248           EN    Edge   84.0.522.52
-#&gt;   Operating System Resolution
-#&gt; 1        Macintosh   1280x800
-#&gt; 2  Windows NT 10.0   1366x768
-#&gt; 3   Windows NT 6.1   1366x768
-#&gt; 4  Windows NT 10.0  1920x1080
-#&gt; 5  Windows NT 10.0   1536x864
-#&gt; 6  Windows NT 10.0   1440x960
-#&gt; 7  Windows NT 10.0  1920x1080</div><div class='input'>
-<span class='co'># Do not print rows to console</span>
-<span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_duplicates</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 2 NAs were found in IP addresses.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 7 out of 98 rows had duplicate IP addresses.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 1 NA was found in location.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> 10 out of 99 rows had duplicate locations.</span></div><div class='input'>
-<span class='co'># Do not print message to console</span>
-<span class='va'>qualtrics_text</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_duplicates</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;              StartDate             EndDate     Status    IPAddress Progress
-#&gt; 1  2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address  24.195.91.0      100
-#&gt; 2  2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99
-#&gt; 3  2020-12-17 15:40:52 2020-12-17 15:43:39 IP Address 32.164.134.0      100
-#&gt; 4  2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address  24.195.91.0      100
-#&gt; 5  2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address  55.73.114.0      100
-#&gt; 6  2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address  55.73.114.0      100
-#&gt; 7  2020-12-17 15:40:57 2020-12-17 15:48:56 IP Address   6.79.107.0      100
-#&gt; 8  2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address   22.51.31.0      100
-#&gt; 9  2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address   22.51.31.0      100
-#&gt; 10 2020-12-17 15:48:48 2020-12-17 15:54:12 IP Address 54.232.129.0      100
-#&gt;    Duration (in seconds) Finished        RecordedDate        ResponseId
-#&gt; 1                    177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB
-#&gt; 2                    879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz
-#&gt; 3                    375     TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt
-#&gt; 4                    521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP
-#&gt; 5                    236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC
-#&gt; 6                    526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI
-#&gt; 7                    397     TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ
-#&gt; 8                    872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7
-#&gt; 9                    246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch
-#&gt; 10                   149     TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM
-#&gt;    LocationLatitude LocationLongitude UserLanguage Browser       Version
-#&gt; 1          40.33554         -75.92698           EN  Chrome 86.0.4240.198
-#&gt; 2          37.28265        -120.50248           EN  Chrome  87.0.4280.88
-#&gt; 3          45.50412        -122.78665           EN  Chrome  87.0.4280.88
-#&gt; 4          40.33554         -75.92698           EN  Chrome  87.0.4280.88
-#&gt; 5          28.56411         -81.54902           EN  Chrome  87.0.4280.88
-#&gt; 6          28.56411         -81.54902           EN  Chrome  87.0.4280.88
-#&gt; 7          45.50412        -122.78665           EN  Chrome  87.0.4280.88
-#&gt; 8          37.28265        -120.50248           EN Firefox          83.0
-#&gt; 9          37.28265        -120.50248           EN    Edge   84.0.522.52
-#&gt; 10         45.50412        -122.78665           EN  Chrome  87.0.4280.88
-#&gt;    Operating System Resolution
-#&gt; 1         Macintosh   1280x800
-#&gt; 2   Windows NT 10.0   1366x768
-#&gt; 3   Windows NT 10.0  1920x1080
-#&gt; 4    Windows NT 6.1   1366x768
-#&gt; 5   Windows NT 10.0  1920x1080
-#&gt; 6   Windows NT 10.0   1536x864
-#&gt; 7   Windows NT 10.0   1536x864
-#&gt; 8   Windows NT 10.0   1440x960
-#&gt; 9   Windows NT 10.0  1920x1080
-#&gt; 10  Windows NT 10.0  1920x1080</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Check for duplicate IP addresses and locations</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>check_duplicates</span><span class='op'>(</span><span class='va'>qualtrics_text</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 2 NAs were found in IP addresses.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 7 out of 98 rows had duplicate IP addresses.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 1 NA was found in location.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 10 out of 99 rows had duplicate locations.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              StartDate             EndDate     Status    IPAddress Progress</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address  24.195.91.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  2020-12-17 15:40:52 2020-12-17 15:43:39 IP Address 32.164.134.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address  24.195.91.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address  55.73.114.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address  55.73.114.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2020-12-17 15:40:57 2020-12-17 15:48:56 IP Address   6.79.107.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address   22.51.31.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address   22.51.31.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 2020-12-17 15:48:48 2020-12-17 15:54:12 IP Address 54.232.129.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                    177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                    879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                    375     TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                    521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5                    236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6                    526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7                    397     TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8                    872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9                    246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10                   149     TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    LocationLatitude LocationLongitude UserLanguage Browser       Version</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1          40.33554         -75.92698           EN  Chrome 86.0.4240.198</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2          37.28265        -120.50248           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3          45.50412        -122.78665           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4          40.33554         -75.92698           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5          28.56411         -81.54902           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6          28.56411         -81.54902           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7          45.50412        -122.78665           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8          37.28265        -120.50248           EN Firefox          83.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9          37.28265        -120.50248           EN    Edge   84.0.522.52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10         45.50412        -122.78665           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Operating System Resolution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         Macintosh   1280x800</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   Windows NT 10.0   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   Windows NT 10.0  1920x1080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4    Windows NT 6.1   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   Windows NT 10.0  1920x1080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   Windows NT 10.0   1536x864</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   Windows NT 10.0   1536x864</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   Windows NT 10.0   1440x960</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   Windows NT 10.0  1920x1080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  Windows NT 10.0  1920x1080</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Check only for duplicate locations</span></span>
+<span class='r-in'><span class='va'>qualtrics_text</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>check_duplicates</span><span class='op'>(</span>dupl_location <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 2 NAs were found in IP addresses.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 7 out of 98 rows had duplicate IP addresses.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             StartDate             EndDate     Status   IPAddress Progress</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address 24.195.91.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address  22.51.31.0       99</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address 24.195.91.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address 55.73.114.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address 55.73.114.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address  22.51.31.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7 2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address  22.51.31.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                   177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                   879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                   521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                   236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5                   526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6                   872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7                   246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   LocationLatitude LocationLongitude UserLanguage Browser       Version</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         40.33554         -75.92698           EN  Chrome 86.0.4240.198</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         37.28265        -120.50248           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         40.33554         -75.92698           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         28.56411         -81.54902           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5         28.56411         -81.54902           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6         37.28265        -120.50248           EN Firefox          83.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7         37.28265        -120.50248           EN    Edge   84.0.522.52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Operating System Resolution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1        Macintosh   1280x800</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  Windows NT 10.0   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   Windows NT 6.1   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  Windows NT 10.0  1920x1080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  Windows NT 10.0   1536x864</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  Windows NT 10.0   1440x960</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  Windows NT 10.0  1920x1080</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Do not print rows to console</span></span>
+<span class='r-in'><span class='va'>qualtrics_text</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>check_duplicates</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 2 NAs were found in IP addresses.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 7 out of 98 rows had duplicate IP addresses.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 1 NA was found in location.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>ℹ</span> 10 out of 99 rows had duplicate locations.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Do not print message to console</span></span>
+<span class='r-in'><span class='va'>qualtrics_text</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>check_duplicates</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              StartDate             EndDate     Status    IPAddress Progress</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2020-12-11 12:41:23 2020-12-11 12:44:37 IP Address  24.195.91.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2020-12-17 15:40:53 2020-12-17 15:43:25 IP Address   22.51.31.0       99</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  2020-12-17 15:40:52 2020-12-17 15:43:39 IP Address 32.164.134.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2020-12-17 15:41:17 2020-12-17 15:45:42 IP Address  24.195.91.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2020-12-17 15:42:47 2020-12-17 15:46:26 IP Address  55.73.114.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  2020-12-17 15:42:18 2020-12-17 15:48:00 IP Address  55.73.114.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2020-12-17 15:40:57 2020-12-17 15:48:56 IP Address   6.79.107.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2020-12-17 15:46:51 2020-12-17 15:51:38 IP Address   22.51.31.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  2020-12-17 15:48:53 2020-12-17 15:53:48 IP Address   22.51.31.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 2020-12-17 15:48:48 2020-12-17 15:54:12 IP Address 54.232.129.0      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Duration (in seconds) Finished        RecordedDate        ResponseId</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                    177     TRUE 2020-12-11 12:44:37 R_LAt58JGEyKNWZlB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                    879    FALSE 2020-12-17 15:43:25 R_AkQyJypPyjgribz</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                    375     TRUE 2020-12-17 15:43:39 R_H5MqcQoWznreNBt</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                    521     TRUE 2020-12-17 15:45:42 R_GNVaLC9Sb2ZDzQP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5                    236     TRUE 2020-12-17 15:46:26 R_7UzegytocfkyrWC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6                    526     TRUE 2020-12-17 15:48:00 R_NiK6d3RgjuJh1OI</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7                    397     TRUE 2020-12-17 15:48:56 R_8ezIj0X0p2lJuCQ</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8                    872     TRUE 2020-12-17 15:51:39 R_Gbz5en48KgnCXT7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9                    246     TRUE 2020-12-17 15:53:48 R_AJfrQqClQNvWIch</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10                   149     TRUE 2020-12-17 15:54:12 R_Kc9BGXO793zEqHM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    LocationLatitude LocationLongitude UserLanguage Browser       Version</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1          40.33554         -75.92698           EN  Chrome 86.0.4240.198</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2          37.28265        -120.50248           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3          45.50412        -122.78665           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4          40.33554         -75.92698           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5          28.56411         -81.54902           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6          28.56411         -81.54902           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7          45.50412        -122.78665           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8          37.28265        -120.50248           EN Firefox          83.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9          37.28265        -120.50248           EN    Edge   84.0.522.52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10         45.50412        -122.78665           EN  Chrome  87.0.4280.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Operating System Resolution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         Macintosh   1280x800</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   Windows NT 10.0   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   Windows NT 10.0  1920x1080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4    Windows NT 6.1   1366x768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   Windows NT 10.0  1920x1080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   Windows NT 10.0   1536x864</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   Windows NT 10.0   1536x864</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   Windows NT 10.0   1440x960</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   Windows NT 10.0  1920x1080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  Windows NT 10.0  1920x1080</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
