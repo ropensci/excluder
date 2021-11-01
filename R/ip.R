@@ -25,6 +25,8 @@
 #' @param id_col Column name for unique row ID (e.g., participant).
 #' @param ip_col Column name for IP addresses.
 #' @param country Two-letter abbreviation of country to check (default is "US").
+#' @param include_na Logical indicating whether to include rows with NA in
+#' IP address column in the output list of potentially excluded data.
 #' @param quiet Logical indicating whether to print message to console.
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
@@ -56,6 +58,7 @@ mark_ip <- function(x,
                     id_col = "ResponseId",
                     ip_col = "IPAddress",
                     country = "US",
+                    include_na = FALSE,
                     quiet = FALSE,
                     print = TRUE) {
 
@@ -97,6 +100,12 @@ mark_ip <- function(x,
   filtered_data <- dplyr::filter(filtered_data, .data$outside == TRUE) %>%
     dplyr::select(-.data$outside)
   n_outside_country <- nrow(filtered_data)
+
+  # Filter NAs when requested
+  if (identical(include_na, TRUE)) {
+    na_data <- x[na_rows, ]
+    filtered_data <- dplyr::bind_rows(filtered_data, na_data)
+  }
 
   # Print message and return output
   if (identical(quiet, FALSE)) {
@@ -236,6 +245,7 @@ exclude_ip <- function(x,
                        id_col = "ResponseId",
                        ip_col = "IPAddress",
                        country = "US",
+                       include_na = FALSE,
                        quiet = TRUE,
                        print = TRUE,
                        silent = FALSE) {
@@ -245,6 +255,7 @@ exclude_ip <- function(x,
     id_col = id_col,
     ip_col = ip_col,
     country = country,
+    include_na = include_na,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_ip != "ip") %>%

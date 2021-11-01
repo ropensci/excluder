@@ -9,6 +9,7 @@ exclude_ip(
   id_col = "ResponseId",
   ip_col = "IPAddress",
   country = "US",
+  include_na = FALSE,
   quiet = TRUE,
   print = TRUE,
   silent = FALSE
@@ -23,6 +24,9 @@ exclude_ip(
 \item{ip_col}{Column name for IP addresses.}
 
 \item{country}{Two-letter abbreviation of country to check (default is "US").}
+
+\item{include_na}{Logical indicating whether to include rows with NA in
+IP address column in the output list of potentially excluded data.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 
