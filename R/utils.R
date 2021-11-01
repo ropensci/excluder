@@ -14,6 +14,101 @@
 NULL
 
 
+#' Keep column with marked rows
+#'
+#' For check_*() functions, keep the column that has marked rows and move to
+#' first column or remove the column depending on `keep` flag.
+#' \emph{This function is not exported.}
+#'
+#' @param x Data set.
+#' @param column Name of exclusion column.
+#' @param keep Logical indicating whether to keep or remove exclusion column.
+#'
+#' @keywords internal
+#'
+keep_marked_column <- function(x, column, keep) {
+  if (identical(keep, FALSE)) {
+    x %>% dplyr::select(-{{ column }})
+  } else {
+    x %>% dplyr::relocate(.data[[column]])
+  }
+}
+
+
+#' Return marked rows
+#'
+#' Create new column marking rows that meet exclusion criteria.
+#' \emph{This function is not exported.}
+#'
+#' @param x Original data.
+#' @param filtered_data Data to be excluded.
+#' @param id_col Column name for unique row ID (e.g., participant).
+#' @param exclusion_type Column name for exclusion column.
+#'
+#' @importFrom rlang :=
+#' @keywords internal
+#'
+mark_rows <- function(x,
+                      filtered_data,
+                      id_col,
+                      exclusion_type) {
+  exclusion_col <- paste0("exclusion_", exclusion_type)
+  if (exclusion_type != "duration") {
+    exclusions <- filtered_data %>%
+      dplyr::mutate({{ exclusion_col }} := exclusion_type)
+  } else {
+    exclusions <- filtered_data
+  }
+  exclusions <- exclusions %>%
+    dplyr::select(tidyselect::all_of(id_col), {{ exclusion_col }}) %>%
+    dplyr::distinct()
+  x %>%
+    dplyr::left_join(exclusions, by = id_col) %>%
+    dplyr::mutate(
+      dplyr::across({{ exclusion_col }}, ~ tidyr::replace_na(., ""))
+    )
+}
+
+
+#' Print number of excluded rows
+#'
+#' Prints a message to the console with the number of excluded rows.
+#' \emph{This function is not exported.}
+#'
+#' @param remaining_data Data after removing exclusions.
+#' @param x Original data before removing exclusions.
+#' @param msg Text to describe what types of rows were excluded.
+#'
+#' @keywords internal
+#'
+print_exclusion <- function(remaining_data, x, msg) {
+  n_remaining <- nrow(remaining_data)
+  n_exclusions <- nrow(x) - n_remaining
+  cli::cli_alert_info(
+    "{n_exclusions} out of {nrow(x)} {msg} were excluded, leaving {n_remaining} rows."
+  )
+}
+
+
+#' Print data to console
+#'
+#' Prints the data to the console. \emph{This function is not exported.}
+#'
+#' @param x Data set to print or not
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
+#'
+#' @keywords internal
+#'
+print_data <- function(x, print) {
+  if (identical(print, TRUE)) {
+    return(x)
+  } else {
+    invisible(x)
+  }
+}
+
+
 #' Check number, names, and type of columns
 #'
 #' Determines whether the correct number and names of columns were specified
@@ -99,75 +194,3 @@ validate_columns <- function(x, column) {
   }
 }
 
-
-#' Return marked rows
-#'
-#' Create new column marking rows that meet exclusion criteria.
-#' \emph{This function is not exported.}
-#'
-#' @param x Original data.
-#' @param exclusion_data Data to be excluded.
-#' @param id_col Column name for unique row ID (e.g., participant).
-#' @param exclusion_type Column name for exclusion column.
-#'
-#' @importFrom rlang :=
-#' @keywords internal
-#'
-mark_rows <- function(x,
-                      filtered_data,
-                      id_col,
-                      exclusion_type) {
-  exclusion_col <- paste0("exclusion_", exclusion_type)
-  if (exclusion_type != "duration") {
-    exclusions <- filtered_data %>%
-      dplyr::mutate({{ exclusion_col }} := exclusion_type)
-  } else {
-    exclusions <- filtered_data
-  }
-  exclusions <- exclusions %>%
-    dplyr::select(tidyselect::all_of(id_col), {{ exclusion_col }}) %>%
-    dplyr::distinct()
-  x %>%
-    dplyr::left_join(exclusions, by = id_col) %>%
-    dplyr::mutate(
-      dplyr::across({{ exclusion_col }}, ~ tidyr::replace_na(., ""))
-    )
-}
-
-
-#' Print number of excluded rows
-#'
-#' Prints a message to the console with the number of excluded rows.
-#' \emph{This function is not exported.}
-#'
-#' @param remaining_data Data after removing exclusions.
-#' @param x Original data before removing exclusions.
-#' @param msg Text to describe what types of rows were excluded.
-#'
-#' @keywords internal
-#'
-print_exclusion <- function(remaining_data, x, msg) {
-  n_remaining <- nrow(remaining_data)
-  n_exclusions <- nrow(x) - n_remaining
-  cli::cli_alert_info(
-    "{n_exclusions} out of {nrow(x)} {msg} were excluded, leaving {n_remaining} rows."
-  )
-}
-
-#' Print data to console
-#'
-#' Prints the data to the console. \emph{This function is not exported.}
-#'
-#' @param x Data set to print or not
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
-#'
-#' @keywords internal
-#'
-print_data <- function(x, print) {
-  if (identical(print, TRUE)) {
-    return(x)
-  } else {
-    invisible(x)
-  }
-}

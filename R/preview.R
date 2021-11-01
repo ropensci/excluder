@@ -101,6 +101,7 @@ mark_preview <- function(x,
 #' that are survey previews.
 #'
 #' @inheritParams mark_preview
+#' @param keep Logical indicating whether to keep or remove exclusion column.
 #'
 #' @family preview functions
 #' @family check functions
@@ -129,6 +130,7 @@ mark_preview <- function(x,
 check_preview <- function(x,
                           id_col = "ResponseId",
                           preview_col = "Status",
+                          keep = FALSE,
                           quiet = FALSE,
                           print = TRUE) {
 
@@ -139,7 +141,7 @@ check_preview <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_preview == "preview") %>%
-    dplyr::select(-.data$exclusion_preview)
+    keep_marked_column(exclusion_preview, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

@@ -8,6 +8,7 @@ check_preview(
   x,
   id_col = "ResponseId",
   preview_col = "Status",
+  keep = FALSE,
   quiet = FALSE,
   print = TRUE
 )
@@ -18,6 +19,8 @@ check_preview(
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{preview_col}{Column name for survey preview.}
+
+\item{keep}{Logical indicating whether to keep or remove exclusion column.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 

@@ -9,6 +9,7 @@ check_ip(
   id_col = "ResponseId",
   ip_col = "IPAddress",
   country = "US",
+  keep = FALSE,
   quiet = FALSE,
   print = TRUE
 )
@@ -22,6 +23,8 @@ check_ip(
 \item{ip_col}{Column name for IP addresses.}
 
 \item{country}{Two-letter abbreviation of country to check (default is "US").}
+
+\item{keep}{Logical indicating whether to keep or remove exclusion column.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 

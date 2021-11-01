@@ -9,6 +9,7 @@ check_location(
   id_col = "ResponseId",
   location_col = c("LocationLatitude", "LocationLongitude"),
   include_na = FALSE,
+  keep = FALSE,
   quiet = FALSE,
   print = TRUE
 )
@@ -24,6 +25,8 @@ and longitude (in that order).}
 \item{include_na}{Logical indicating whether to include rows with NA in
 latitude and longitude columns in the output list of potentially excluded
 data.}
+
+\item{keep}{Logical indicating whether to keep or remove exclusion column.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 

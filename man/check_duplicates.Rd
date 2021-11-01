@@ -12,6 +12,7 @@ check_duplicates(
   dupl_ip = TRUE,
   dupl_location = TRUE,
   include_na = FALSE,
+  keep = FALSE,
   quiet = FALSE,
   print = TRUE
 )
@@ -33,6 +34,8 @@ longitude.}
 
 \item{include_na}{Logical indicating whether to include rows with NAs for
 IP address and location as potentially excluded rows.}
+
+\item{keep}{Logical indicating whether to keep or remove exclusion column.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 

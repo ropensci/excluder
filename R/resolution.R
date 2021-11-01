@@ -117,6 +117,7 @@ mark_resolution <- function(x,
 #' with unacceptable screen resolution.
 #'
 #' @inheritParams mark_resolution
+#' @param keep Logical indicating whether to keep or remove exclusion column.
 #'
 #' @family resolution functions
 #' @family check functions
@@ -150,6 +151,7 @@ check_resolution <- function(x,
                              height_min = 0,
                              id_col = "ResponseId",
                              res_col = "Resolution",
+                             keep = FALSE,
                              quiet = FALSE,
                              print = TRUE) {
 
@@ -162,7 +164,7 @@ check_resolution <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_resolution == "resolution") %>%
-    dplyr::select(-.data$exclusion_resolution)
+    keep_marked_column(exclusion_resolution, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

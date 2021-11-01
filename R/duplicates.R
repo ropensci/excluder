@@ -145,8 +145,7 @@ mark_duplicates <- function(x,
   }
 
   # Mark exclusion rows
-  marked_data <- mark_rows(x, filtered_data, id_col, "duplicates")
-  print_data(marked_data, print)
+  mark_rows(x, filtered_data, id_col, "duplicates")
 }
 
 
@@ -171,6 +170,7 @@ mark_duplicates <- function(x,
 #' types of duplicates.
 #'
 #' @inheritParams mark_duplicates
+#' @param keep Logical indicating whether to keep or remove exclusion column.
 #'
 #' @family duplicates functions
 #' @family check functions
@@ -210,6 +210,7 @@ check_duplicates <- function(x,
                              dupl_ip = TRUE,
                              dupl_location = TRUE,
                              include_na = FALSE,
+                             keep = FALSE,
                              quiet = FALSE,
                              print = TRUE) {
 
@@ -224,7 +225,7 @@ check_duplicates <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_duplicates == "duplicates") %>%
-    dplyr::select(-.data$exclusion_duplicates)
+    keep_marked_column(exclusion_duplicates, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

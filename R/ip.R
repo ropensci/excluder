@@ -143,6 +143,7 @@ mark_ip <- function(x,
 #' will print a message alerting to the number of rows with `NA`s.
 #'
 #' @inheritParams mark_ip
+#' @param keep Logical indicating whether to keep or remove exclusion column.
 #'
 #' @family ip functions
 #' @family check functions
@@ -186,6 +187,7 @@ check_ip <- function(x,
                      id_col = "ResponseId",
                      ip_col = "IPAddress",
                      country = "US",
+                     keep = FALSE,
                      quiet = FALSE,
                      print = TRUE) {
 
@@ -197,7 +199,7 @@ check_ip <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_ip == "ip") %>%
-    dplyr::select(-.data$exclusion_ip)
+    keep_marked_column(exclusion_ip, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

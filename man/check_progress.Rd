@@ -10,6 +10,7 @@ check_progress(
   id_col = "ResponseId",
   finished_col = "Finished",
   progress_col = "Progress",
+  keep = FALSE,
   quiet = FALSE,
   print = TRUE
 )
@@ -24,6 +25,8 @@ check_progress(
 \item{finished_col}{Column name for whether survey was completed.}
 
 \item{progress_col}{Column name for percentage of survey completed.}
+
+\item{keep}{Logical indicating whether to keep or remove exclusion column.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 

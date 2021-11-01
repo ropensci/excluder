@@ -10,6 +10,7 @@ check_duration(
   max_duration = NULL,
   id_col = "ResponseId",
   duration_col = "Duration (in seconds)",
+  keep = FALSE,
   quiet = FALSE,
   print = TRUE
 )
@@ -24,6 +25,8 @@ check_duration(
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{duration_col}{Column name for durations.}
+
+\item{keep}{Logical indicating whether to keep or remove exclusion column.}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 

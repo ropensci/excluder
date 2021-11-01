@@ -126,6 +126,7 @@ mark_progress <- function(x,
 #' that have incomplete progress.
 #'
 #' @inheritParams mark_progress
+#' @param keep Logical indicating whether to keep or remove exclusion column.
 #'
 #' @family progress functions
 #' @family check functions
@@ -164,6 +165,7 @@ check_progress <- function(x,
                            id_col = "ResponseId",
                            finished_col = "Finished",
                            progress_col = "Progress",
+                           keep = FALSE,
                            quiet = FALSE,
                            print = TRUE) {
 
@@ -176,7 +178,7 @@ check_progress <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_progress == "progress") %>%
-    dplyr::select(-.data$exclusion_progress)
+    keep_marked_column(exclusion_progress, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

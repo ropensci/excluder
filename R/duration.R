@@ -131,6 +131,7 @@ mark_duration <- function(x,
 #' This function returns the fast and slow rows.
 #'
 #' @inheritParams mark_duration
+#' @param keep Logical indicating whether to keep or remove exclusion column.
 #'
 #' @family duration functions
 #' @family check functions
@@ -170,6 +171,7 @@ check_duration <- function(x,
                            max_duration = NULL,
                            id_col = "ResponseId",
                            duration_col = "Duration (in seconds)",
+                           keep = FALSE,
                            quiet = FALSE,
                            print = TRUE) {
 
@@ -183,7 +185,7 @@ check_duration <- function(x,
   ) %>%
     dplyr::filter(.data$exclusion_duration == "duration_quick" |
       .data$exclusion_duration == "duration_slow") %>%
-    dplyr::select(-.data$exclusion_duration)
+    keep_marked_column(exclusion_duration, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

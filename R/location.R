@@ -128,6 +128,7 @@ mark_location <- function(x,
 #' with locations outside of the US.
 #'
 #' @inheritParams mark_location
+#' @param keep Logical indicating whether to keep or remove exclusion column.
 #'
 #' @family location functions
 #' @family check functions
@@ -163,6 +164,7 @@ check_location <- function(x,
                              "LocationLongitude"
                            ),
                            include_na = FALSE,
+                           keep = FALSE,
                            quiet = FALSE,
                            print = TRUE) {
 
@@ -174,7 +176,7 @@ check_location <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_location == "location") %>%
-    dplyr::select(-.data$exclusion_location)
+    keep_marked_column(exclusion_location, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

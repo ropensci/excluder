@@ -9,11 +9,11 @@ mark_rows(x, filtered_data, id_col, exclusion_type)
 \arguments{
 \item{x}{Original data.}
 
+\item{filtered_data}{Data to be excluded.}
+
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{exclusion_type}{Column name for exclusion column.}
-
-\item{exclusion_data}{Data to be excluded.}
 }
 \description{
 Create new column marking rows that meet exclusion criteria.
