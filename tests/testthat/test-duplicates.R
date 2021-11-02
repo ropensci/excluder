@@ -34,6 +34,12 @@ test_that("Marks create data frames of correct size", {
   suppressMessages(expect_true(
     ncol(mark_duplicates(qualtrics_numeric, dupl_location = FALSE)) == 17
   ))
+  suppressMessages(expect_true(
+    nrow(mark_duplicates(qualtrics_numeric, include_na = TRUE)) == 100
+  ))
+  suppressMessages(expect_true(
+    ncol(mark_duplicates(qualtrics_numeric, include_na = TRUE)) == 17
+  ))
 })
 
 # Test check_duplicates()
@@ -71,6 +77,12 @@ test_that("Checks create data frames of correct size", {
   ))
   suppressMessages(expect_true(
     ncol(check_duplicates(qualtrics_numeric, dupl_location = FALSE)) == 16
+  ))
+  suppressMessages(expect_true(
+    nrow(check_duplicates(qualtrics_numeric, include_na = TRUE)) == 13
+  ))
+  suppressMessages(expect_true(
+    ncol(check_duplicates(qualtrics_numeric, include_na = TRUE)) == 16
   ))
   suppressMessages(expect_true(
     nrow(check_duplicates(qualtrics_numeric, keep = TRUE)) == 10
@@ -124,5 +136,11 @@ test_that("Excludes create data frames of correct size", {
   ))
   suppressMessages(expect_true(
     ncol(exclude_duplicates(qualtrics_numeric, dupl_location = FALSE)) == 16
+  ))
+  suppressMessages(expect_true(
+    nrow(exclude_duplicates(qualtrics_numeric, include_na = TRUE)) == 87
+  ))
+  suppressMessages(expect_true(
+    ncol(exclude_duplicates(qualtrics_numeric, include_na = TRUE)) == 16
   ))
 })

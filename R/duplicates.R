@@ -88,43 +88,39 @@ mark_duplicates <- function(x,
 
   # Check for duplicate IP addresses
   if (identical(dupl_ip, TRUE)) {
-    if (identical(include_na, FALSE)) {
-      no_nas <- tidyr::drop_na(x, tidyselect::all_of(ip_col))
-      n_nas <- nrow(x) - nrow(no_nas)
-    }
-    same_ip <- janitor::get_dupes(no_nas, tidyselect::all_of(ip_col)) %>%
+    no_nas_ip <- tidyr::drop_na(x, tidyselect::all_of(ip_col))
+    n_nas_ip <- nrow(x) - nrow(no_nas_ip)
+    same_ip <- janitor::get_dupes(no_nas_ip, tidyselect::all_of(ip_col)) %>%
       dplyr::select(-.data$dupe_count)
     n_same_ip <- nrow(same_ip)
     if (identical(quiet, FALSE)) {
       cli::cli_alert_info(
-        "{n_nas} NA{?s} w{?as/ere} found in IP addresses."
+        "{n_nas_ip} NA{?s} w{?as/ere} found in IP addresses."
       )
       cli::cli_alert_info(
-        "{n_same_ip} out of {nrow(no_nas)} row{?s} had duplicate IP addresses."
+        "{n_same_ip} out of {nrow(same_ip)} row{?s} had duplicate IP addresses."
       )
     }
   }
 
   # Check for duplicate locations
   if (identical(dupl_location, TRUE)) {
-    if (identical(include_na, FALSE)) {
-      no_nas <- tidyr::drop_na(x, tidyselect::any_of(location_col))
-      n_nas <- nrow(x) - nrow(no_nas)
-      if (identical(quiet, FALSE)) {
-        cli::cli_alert_info(
-          "{n_nas} NA{?s} w{?as/ere} found in location."
-        )
-      }
+    no_nas_loc <- tidyr::drop_na(x, tidyselect::any_of(location_col))
+    n_nas_loc <- nrow(x) - nrow(no_nas_loc)
+    if (identical(quiet, FALSE)) {
+      cli::cli_alert_info(
+        "{n_nas_loc} NA{?s} w{?as/ere} found in location."
+      )
     }
     same_location <- janitor::get_dupes(
-      no_nas,
+      no_nas_loc,
       tidyselect::all_of(location_col)
     ) %>%
       dplyr::select(-.data$dupe_count)
     n_same_location <- nrow(same_location)
     if (identical(quiet, FALSE)) {
       cli::cli_alert_info(
-        "{n_same_location} out of {nrow(no_nas)} row{?s} had duplicate locations."
+        "{n_same_location} out of {nrow(same_location)} row{?s} had duplicate locations."
       )
     }
   }
@@ -142,6 +138,15 @@ mark_duplicates <- function(x,
       "You must specify location or IP address checks with ",
       "'dupl_location' or 'dupl_ip'."
     ))
+  }
+
+  # Filter NAs when requested
+  if (identical(include_na, TRUE)) {
+    na_rows_ip <- which(is.na(ip_vector))
+    na_rows_loc <- which(is.na(latitude))
+    na_rows <- unique(c(na_rows_ip, na_rows_loc))
+    na_data <- x[na_rows, ]
+    filtered_data <- dplyr::bind_rows(filtered_data, na_data)
   }
 
   # Mark exclusion rows
