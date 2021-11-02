@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   getting_started: getting_started.html
-last_built: 2021-11-02T20:16Z
+last_built: 2021-11-02T21:32Z
 urls:
   reference: https://jeffreyrstevens.github.io/excluder/reference
   article: https://jeffreyrstevens.github.io/excluder/articles

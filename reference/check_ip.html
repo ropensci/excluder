@@ -143,6 +143,7 @@ The function is written to work with data from
   id_col <span class='op'>=</span> <span class='st'>"ResponseId"</span>,
   ip_col <span class='op'>=</span> <span class='st'>"IPAddress"</span>,
   country <span class='op'>=</span> <span class='st'>"US"</span>,
+  include_na <span class='op'>=</span> <span class='cn'>FALSE</span>,
   keep <span class='op'>=</span> <span class='cn'>FALSE</span>,
   quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
   print <span class='op'>=</span> <span class='cn'>TRUE</span>
@@ -167,6 +168,11 @@ The function is written to work with data from
     <tr>
       <th>country</th>
       <td><p>Two-letter abbreviation of country to check (default is "US").</p></td>
+    </tr>
+    <tr>
+      <th>include_na</th>
+      <td><p>Logical indicating whether to include rows with NA in
+IP address column in the output list of potentially excluded data.</p></td>
     </tr>
     <tr>
       <th>keep</th>
