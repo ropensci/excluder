@@ -185,7 +185,7 @@ check_duration <- function(x,
   ) %>%
     dplyr::filter(.data$exclusion_duration == "duration_quick" |
       .data$exclusion_duration == "duration_slow") %>%
-    keep_marked_column(exclusion_duration, keep)
+    keep_marked_column(.data$exclusion_duration, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

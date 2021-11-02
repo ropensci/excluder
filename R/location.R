@@ -176,7 +176,7 @@ check_location <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_location == "location") %>%
-    keep_marked_column(exclusion_location, keep)
+    keep_marked_column(.data$exclusion_location, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

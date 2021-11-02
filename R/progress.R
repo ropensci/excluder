@@ -178,7 +178,7 @@ check_progress <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_progress == "progress") %>%
-    keep_marked_column(exclusion_progress, keep)
+    keep_marked_column(.data$exclusion_progress, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

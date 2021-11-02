@@ -199,7 +199,7 @@ check_ip <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_ip == "ip") %>%
-    keep_marked_column(exclusion_ip, keep)
+    keep_marked_column(.data$exclusion_ip, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)

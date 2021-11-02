@@ -225,7 +225,7 @@ check_duplicates <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_duplicates == "duplicates") %>%
-    keep_marked_column(exclusion_duplicates, keep)
+    keep_marked_column(.data$exclusion_duplicates, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)
