@@ -27,10 +27,10 @@ NULL
 #' @keywords internal
 #'
 keep_marked_column <- function(x, column, keep) {
-  if (identical(keep, FALSE)) {
+  if (!keep) {
     x %>% dplyr::select(-{{ column }})
   } else {
-    x %>% dplyr::relocate(.data[[column]])
+    x %>% dplyr::relocate({{ column }})
   }
 }
 
