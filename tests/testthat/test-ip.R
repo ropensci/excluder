@@ -41,6 +41,12 @@ test_that("Checks create data frames of correct size", {
   suppressMessages(expect_true(nrow(check_ip(qualtrics_numeric)) == 4))
   suppressMessages(expect_true(ncol(check_ip(qualtrics_numeric)) == 16))
   suppressMessages(expect_true(
+    nrow(check_ip(qualtrics_numeric, include_na = TRUE)) == 4
+  ))
+  suppressMessages(expect_true(
+    ncol(check_ip(qualtrics_numeric, include_na = TRUE)) == 16
+  ))
+  suppressMessages(expect_true(
     nrow(check_ip(qualtrics_numeric, keep = TRUE)) == 4
   ))
   suppressMessages(expect_true(
@@ -75,4 +81,10 @@ test_that("No exclude messages displayed when quiet = TRUE and silent = TRUE", {
 test_that("Excludes create data frames of correct size", {
   suppressMessages(expect_true(nrow(exclude_ip(qualtrics_numeric)) == 96))
   suppressMessages(expect_true(ncol(exclude_ip(qualtrics_numeric)) == 16))
+  suppressMessages(expect_true(
+    nrow(exclude_ip(qualtrics_numeric, include_na = TRUE)) == 94
+  ))
+  suppressMessages(expect_true(
+    ncol(exclude_ip(qualtrics_numeric, include_na = TRUE)) == 16
+  ))
 })

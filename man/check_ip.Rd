@@ -9,6 +9,7 @@ check_ip(
   id_col = "ResponseId",
   ip_col = "IPAddress",
   country = "US",
+  include_na = FALSE,
   keep = FALSE,
   quiet = FALSE,
   print = TRUE
@@ -23,6 +24,9 @@ check_ip(
 \item{ip_col}{Column name for IP addresses.}
 
 \item{country}{Two-letter abbreviation of country to check (default is "US").}
+
+\item{include_na}{Logical indicating whether to include rows with NA in
+IP address column in the output list of potentially excluded data.}
 
 \item{keep}{Logical indicating whether to keep or remove exclusion column.}
 
