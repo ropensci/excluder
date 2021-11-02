@@ -164,7 +164,7 @@ check_resolution <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_resolution == "resolution") %>%
-    keep_marked_column(exclusion_resolution, keep)
+    keep_marked_column(.data$exclusion_resolution, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)
