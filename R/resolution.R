@@ -225,8 +225,10 @@ exclude_resolution <- function(x,
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {
-    print_exclusion(remaining_data, x,
-                    "rows with unacceptable screen resolution")
+    print_exclusion(
+      remaining_data, x,
+      "rows with unacceptable screen resolution"
+    )
   }
 
   # Determine whether to print results
