@@ -31,12 +31,19 @@ More details are available on the package [website](https://jeffreyrstevens.gith
 
 ## Installation
 
-You can install the released version of `{excluder}`  [GitHub](https://github.com/) with:
+You can install the stable released version of `{excluder}` from [GitHub](https://github.com/) with:
 
-``` r
+```{r eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("jeffreyrstevens/excluder")
 ```
+
+You can install the latest developmental version with:
+
+```{r eval = FALSE}
+devtools::install_github("jeffreyrstevens/excluder@devel")
+```
+
 
 ## Verbs
 This package provides three primary verbs:

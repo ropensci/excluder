@@ -36,12 +36,18 @@ vignette](https://jeffreyrstevens.github.io/excluder/articles/getting_started.ht
 
 ## Installation
 
-You can install the released version of `{excluder}`
+You can install the stable released version of `{excluder}` from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("jeffreyrstevens/excluder")
+```
+
+You can install the latest developmental version with:
+
+``` r
+devtools::install_github("jeffreyrstevens/excluder@devel")
 ```
 
 ## Verbs
