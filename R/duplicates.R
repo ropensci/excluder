@@ -150,7 +150,8 @@ mark_duplicates <- function(x,
   }
 
   # Mark exclusion rows
-  mark_rows(x, filtered_data, id_col, "duplicates")
+  marked_data <- mark_rows(x, filtered_data, id_col, "duplicates")
+  print_data(marked_data, print)
 }
 
 

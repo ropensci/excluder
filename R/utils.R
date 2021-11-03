@@ -179,19 +179,17 @@ validate_columns <- function(x, column) {
     }
   } else if (col_label == "preview_col") {
     if (!is.character(x[[column]]) & !is.numeric(x[[column]])) {
-      print(typeof(x[[column]]))
       msg <- paste0(
         "Please ensure '", col_name,
         "' data type is character or numeric."
       )
       stop(msg)
     }
-  } else if (col_label == "finished") {
+  } else if (col_label == "finished_col") {
     if (!is.logical(x[[column]]) & !is.numeric(x[[column]])) {
-      print(typeof(x[[column]]))
       msg <- paste0(
         "Please ensure '", col_name,
-        "' data type is character or numeric."
+        "' data type is logical or numeric."
       )
       stop(msg)
     }
