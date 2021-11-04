@@ -70,6 +70,25 @@ mark_rows <- function(x,
 }
 
 
+#' Print data to console
+#'
+#' Prints the data to the console. \emph{This function is not exported.}
+#'
+#' @param x Data set to print or not
+#' @param print Logical indicating whether to print returned tibble to
+#' console.
+#'
+#' @keywords internal
+#'
+print_data <- function(x, print) {
+  if (identical(print, TRUE)) {
+    return(x)
+  } else {
+    invisible(x)
+  }
+}
+
+
 #' Print number of excluded rows
 #'
 #' Prints a message to the console with the number of excluded rows.
@@ -87,25 +106,6 @@ print_exclusion <- function(remaining_data, x, msg) {
   cli::cli_alert_info(
     "{n_exclusions} out of {nrow(x)} {msg} were excluded, leaving {n_remaining} rows."
   )
-}
-
-
-#' Print data to console
-#'
-#' Prints the data to the console. \emph{This function is not exported.}
-#'
-#' @param x Data set to print or not
-#' @param print Logical indicating whether to print returned tibble to
-#' console.
-#'
-#' @keywords internal
-#'
-print_data <- function(x, print) {
-  if (identical(print, TRUE)) {
-    return(x)
-  } else {
-    invisible(x)
-  }
 }
 
 
