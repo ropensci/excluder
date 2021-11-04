@@ -117,29 +117,29 @@ library(excluder)
 df <- qualtrics_text %>%
   mark_preview() %>%
   mark_duration(min_duration = 200)
-#> i 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.
-#> i 23 out of 100 rows took less time than 200.
+#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
+#> 23 out of 100 rows took less time than the minimum duration of 200 seconds.
 tibble::glimpse(df)
 #> Rows: 100
 #> Columns: 18
-#> $ StartDate               <dttm> 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202~
-#> $ EndDate                 <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202~
-#> $ Status                  <chr> "Survey Preview", "Survey Preview", "IP Addres~
-#> $ IPAddress               <chr> NA, NA, "73.23.43.0", "16.140.105.0", "107.57.~
-#> $ Progress                <dbl> 100, 100, 100, 100, 100, 100, 100, 100, 100, 1~
-#> $ `Duration (in seconds)` <dbl> 465, 545, 651, 409, 140, 213, 177, 662, 296, 2~
-#> $ Finished                <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE~
-#> $ RecordedDate            <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202~
-#> $ ResponseId              <chr> "R_xLWiuPaNuURSFXY", "R_Q5lqYw6emJQZx2o", "R_f~
-#> $ LocationLatitude        <dbl> 29.73694, 39.74107, 34.03852, 44.96581, 27.980~
-#> $ LocationLongitude       <dbl> -94.97599, -121.82490, -118.25739, -93.07187, ~
-#> $ UserLanguage            <chr> "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"~
-#> $ Browser                 <chr> "Chrome", "Chrome", "Chrome", "Chrome", "Chrom~
-#> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"~
-#> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10~
-#> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864~
-#> $ exclusion_preview       <chr> "preview", "preview", "", "", "", "", "", "", ~
-#> $ exclusion_duration      <chr> "", "", "", "", "duration_quick", "", "duratio~
+#> $ StartDate               <dttm> 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202…
+#> $ EndDate                 <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…
+#> $ Status                  <chr> "Survey Preview", "Survey Preview", "IP Addres…
+#> $ IPAddress               <chr> NA, NA, "73.23.43.0", "16.140.105.0", "107.57.…
+#> $ Progress                <dbl> 100, 100, 100, 100, 100, 100, 100, 100, 100, 1…
+#> $ `Duration (in seconds)` <dbl> 465, 545, 651, 409, 140, 213, 177, 662, 296, 2…
+#> $ Finished                <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
+#> $ RecordedDate            <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…
+#> $ ResponseId              <chr> "R_xLWiuPaNuURSFXY", "R_Q5lqYw6emJQZx2o", "R_f…
+#> $ LocationLatitude        <dbl> 29.73694, 39.74107, 34.03852, 44.96581, 27.980…
+#> $ LocationLongitude       <dbl> -94.97599, -121.82490, -118.25739, -93.07187, …
+#> $ UserLanguage            <chr> "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"…
+#> $ Browser                 <chr> "Chrome", "Chrome", "Chrome", "Chrome", "Chrom…
+#> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…
+#> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10…
+#> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864…
+#> $ exclusion_preview       <chr> "preview", "preview", "", "", "", "", "", "", …
+#> $ exclusion_duration      <chr> "", "", "", "", "duration", "", "duration", ""…
 ```
 
 Use the
@@ -152,28 +152,28 @@ df <- qualtrics_text %>%
   mark_preview() %>%
   mark_duration(min_duration = 200) %>%
   unite_exclusions()
-#> i 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.
-#> i 23 out of 100 rows took less time than 200.
+#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
+#> 23 out of 100 rows took less time than the minimum duration of 200 seconds.
 tibble::glimpse(df)
 #> Rows: 100
 #> Columns: 17
-#> $ StartDate               <dttm> 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202~
-#> $ EndDate                 <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202~
-#> $ Status                  <chr> "Survey Preview", "Survey Preview", "IP Addres~
-#> $ IPAddress               <chr> NA, NA, "73.23.43.0", "16.140.105.0", "107.57.~
-#> $ Progress                <dbl> 100, 100, 100, 100, 100, 100, 100, 100, 100, 1~
-#> $ `Duration (in seconds)` <dbl> 465, 545, 651, 409, 140, 213, 177, 662, 296, 2~
-#> $ Finished                <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE~
-#> $ RecordedDate            <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202~
-#> $ ResponseId              <chr> "R_xLWiuPaNuURSFXY", "R_Q5lqYw6emJQZx2o", "R_f~
-#> $ LocationLatitude        <dbl> 29.73694, 39.74107, 34.03852, 44.96581, 27.980~
-#> $ LocationLongitude       <dbl> -94.97599, -121.82490, -118.25739, -93.07187, ~
-#> $ UserLanguage            <chr> "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"~
-#> $ Browser                 <chr> "Chrome", "Chrome", "Chrome", "Chrome", "Chrom~
-#> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"~
-#> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10~
-#> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864~
-#> $ exclusions              <chr> "preview", "preview", "", "", "duration_quick"~
+#> $ StartDate               <dttm> 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202…
+#> $ EndDate                 <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…
+#> $ Status                  <chr> "Survey Preview", "Survey Preview", "IP Addres…
+#> $ IPAddress               <chr> NA, NA, "73.23.43.0", "16.140.105.0", "107.57.…
+#> $ Progress                <dbl> 100, 100, 100, 100, 100, 100, 100, 100, 100, 1…
+#> $ `Duration (in seconds)` <dbl> 465, 545, 651, 409, 140, 213, 177, 662, 296, 2…
+#> $ Finished                <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
+#> $ RecordedDate            <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…
+#> $ ResponseId              <chr> "R_xLWiuPaNuURSFXY", "R_Q5lqYw6emJQZx2o", "R_f…
+#> $ LocationLatitude        <dbl> 29.73694, 39.74107, 34.03852, 44.96581, 27.980…
+#> $ LocationLongitude       <dbl> -94.97599, -121.82490, -118.25739, -93.07187, …
+#> $ UserLanguage            <chr> "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"…
+#> $ Browser                 <chr> "Chrome", "Chrome", "Chrome", "Chrome", "Chrom…
+#> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…
+#> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10…
+#> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864…
+#> $ exclusions              <chr> "preview,", "preview,", ",", ",", ",duration",…
 ```
 
 ### Checking
@@ -188,7 +188,7 @@ criterion.
 # Check for preview rows
 qualtrics_text %>%
   check_preview()
-#> i 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.
+#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
 #>             StartDate             EndDate         Status IPAddress Progress
 #> 1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview      <NA>      100
 #> 2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview      <NA>      100
@@ -216,8 +216,10 @@ of rows meeting the exclusion criteria.
 df <- qualtrics_text %>%
   exclude_duration(min_duration = 100) %>%
   exclude_progress()
-#> i 4 out of 100 rows of short and/or long duration were excluded, leaving 96 rows.
-#> i 4 out of 96 rows with incomplete progress were excluded, leaving 92 rows.
+#> 4 out of 100 rows took less time than the minimum duration of 100 seconds.
+#> 4 out of 100 duplicate rows were excluded, leaving 96 rows.
+#> 4 out of 96 rows did not complete the study.
+#> 4 out of 96 duplicate rows were excluded, leaving 92 rows.
 dim(df)
 #> [1] 92 16
 ```
@@ -227,8 +229,10 @@ dim(df)
 df <- qualtrics_text %>%
   exclude_progress() %>%
   exclude_duration(min_duration = 100)
-#> i 6 out of 100 rows with incomplete progress were excluded, leaving 94 rows.
-#> i 2 out of 94 rows of short and/or long duration were excluded, leaving 92 rows.
+#> 6 out of 100 rows did not complete the study.
+#> 6 out of 100 duplicate rows were excluded, leaving 94 rows.
+#> 2 out of 94 rows took less time than the minimum duration of 100 seconds.
+#> 2 out of 94 duplicate rows were excluded, leaving 92 rows.
 dim(df)
 #> [1] 92 16
 ```
@@ -248,13 +252,23 @@ df <- qualtrics_text %>%
   exclude_resolution() %>%
   exclude_ip() %>%
   exclude_location()
-#> i 2 out of 100 preview rows were excluded, leaving 98 rows.
-#> i 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.
-#> i 9 out of 92 duplicate rows were excluded, leaving 83 rows.
-#> i 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.
-#> i 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.
-#> i 2 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 75 rows.
-#> i 4 out of 75 rows outside of the US were excluded, leaving 71 rows.
+#> 2 out of 100 rows were collected as previews. It is highly recommended to exclude these rows before further checking.
+#> 2 out of 100 duplicate rows were excluded, leaving 98 rows.
+#> 6 out of 98 rows did not complete the study.
+#> 6 out of 98 duplicate rows were excluded, leaving 92 rows.
+#> 6 out of 92 rows have duplicate IP addresses.
+#> 0 NAs were found in location.
+#> 9 out of 91 rows have duplicate locations.
+#> 9 out of 92 duplicate rows were excluded, leaving 83 rows.
+#> 2 out of 83 rows took less time than the minimum duration of 100 seconds.
+#> 2 out of 83 duplicate rows were excluded, leaving 81 rows.
+#> 4 out of 81 rows have screen resolution width less than 1000 or height less than 0.
+#> 4 out of 81 duplicate rows were excluded, leaving 77 rows.
+#> 2 out of 77 rows have IP addresses outside of US.
+#> 2 out of 77 duplicate rows were excluded, leaving 75 rows.
+#> 1 out of 75 rows had no information on location.
+#> 3 out of 75 rows were located outside of the US.
+#> 4 out of 75 duplicate rows were excluded, leaving 71 rows.
 ```
 
 ## Citing this package
@@ -275,9 +289,8 @@ issue](https://github.com/ropensci/excluder/issues/new/choose) or
 [contact the maintainer](mailto:jeffrey.r.stevens@gmail.com) first.
 
 Please note that the excluder project is released with a [Contributor
-Code of
-Conduct](https://devguide.ropensci.org/collaboration.html#coc-file). By
-contributing to this project, you agree to abide by its terms.
+Code of Conduct](https://ropensci.org/code-of-conduct/). By contributing
+to this project, you agree to abide by its terms.
 
 ## Acknowledgements
 
