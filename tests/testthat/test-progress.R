@@ -7,12 +7,20 @@ test_that("Mark output class is same as input class", {
   )
 })
 
-test_that("Mark essages displayed by default", {
+test_that("Mark messages are displayed properly", {
   suppressMessages(expect_message(mark_progress(qualtrics_numeric)))
+  suppressMessages(expect_message(
+    mark_progress(qualtrics_numeric, quiet = FALSE),
+    "rows did not complete the study"
+  ))
+  expect_message(mark_progress(qualtrics_numeric, quiet = TRUE), NA)
 })
 
-test_that("No mark messages displayed when quiet = TRUE", {
-  expect_message(mark_progress(qualtrics_numeric, quiet = TRUE), NA)
+test_that("Mark output is printed properly", {
+  expect_visible(mark_progress(qualtrics_numeric, quiet = TRUE))
+  expect_invisible(
+    mark_progress(qualtrics_numeric, quiet = TRUE, print = FALSE
+    ))
 })
 
 test_that("Marks create data frames of correct size", {
@@ -39,12 +47,20 @@ test_that("Check output class is same as input class", {
   )
 })
 
-test_that("Check messages displayed by default", {
+test_that("Check messages are displayed properly", {
   suppressMessages(expect_message(check_progress(qualtrics_numeric)))
+  suppressMessages(expect_message(
+    check_progress(qualtrics_numeric, quiet = FALSE),
+    "rows did not complete the study"
+  ))
+  expect_message(check_progress(qualtrics_numeric, quiet = TRUE), NA)
 })
 
-test_that("No check messages displayed when quiet = TRUE", {
-  expect_message(check_progress(qualtrics_numeric, quiet = TRUE), NA)
+test_that("Check output is printed properly", {
+  expect_visible(check_progress(qualtrics_numeric, quiet = TRUE))
+  expect_invisible(
+    check_progress(qualtrics_numeric, quiet = TRUE, print = FALSE
+    ))
 })
 
 test_that("Checks create data frames of correct size", {
@@ -84,14 +100,29 @@ test_that("Exclude output class is same as input class", {
   ))
 })
 
-test_that("Exclude messages displayed by default", {
+test_that("Exclude messages are displayed properly", {
   suppressMessages(expect_message(exclude_progress(qualtrics_numeric)))
-})
-
-test_that("No exclude messages displayed when quiet = TRUE and silent = TRUE", {
+  suppressMessages(expect_message(
+    exclude_progress(qualtrics_numeric, quiet = FALSE),
+    "rows did not complete the study"
+  ))
+  suppressMessages(expect_message(
+    exclude_progress(qualtrics_numeric, silent = FALSE),
+    "rows with incomplete progress were excluded"
+  ))
   expect_message(
     exclude_progress(qualtrics_numeric, quiet = TRUE, silent = TRUE), NA
   )
+})
+
+test_that("Exclude output is printed properly", {
+  expect_visible(
+    exclude_progress(qualtrics_numeric, quiet = TRUE, silent = TRUE
+    ))
+  expect_invisible(
+    exclude_progress(qualtrics_numeric, quiet = TRUE, print = FALSE,
+                     silent = TRUE
+    ))
 })
 
 test_that("Excludes create data frames of correct size", {
