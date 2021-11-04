@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">excluder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
       </span>
     </div>
 
@@ -95,10 +95,13 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version of <a href="https://jeffreyrstevens.github.io/excluder/">excluder</a> <a href="https://github.com/">GitHub</a> with:</p>
+<p>You can install the stable released version of <a href="https://jeffreyrstevens.github.io/excluder/">excluder</a> from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jeffreyrstevens/excluder"</span><span class="op">)</span></code></pre></div>
+<p>You can install the latest developmental version with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jeffreyrstevens/excluder@devel"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="verbs" class="section level2">
 <h2 class="hasAnchor">
@@ -142,7 +145,7 @@
 <h3 class="hasAnchor">
 <a href="#marking" class="anchor"></a>Marking</h3>
 <p>The <code>mark_*()</code> functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be piped together with <code>%&gt;%</code> for multiple exclusion types.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jeffreyrstevens.github.io/excluder/">excluder</a></span><span class="op">)</span>
 <span class="co"># Mark preview and short duration rows</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
@@ -172,7 +175,7 @@
 <span class="co">#&gt; $ exclusion_preview       &lt;chr&gt; "preview", "preview", "", "", "", "", "", "", …</span>
 <span class="co">#&gt; $ exclusion_duration      &lt;chr&gt; "", "", "", "", "duration_quick", "", "duratio…</span></code></pre></div>
 <p>Use the <a href="https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html"><code>unite_exclusions()</code></a> function to unite all of the marked columns into a single column.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Collapse labels for preview and short duration rows</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/mark_preview.html">mark_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
@@ -205,7 +208,7 @@
 <h3 class="hasAnchor">
 <a href="#checking" class="anchor"></a>Checking</h3>
 <p>The <code>check_*()</code> functions output messages about the number of rows that meet the exclusion criteria. Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check for preview rows</span>
 <span class="va">qualtrics_text</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/check_preview.html">check_preview</a></span><span class="op">(</span><span class="op">)</span>
@@ -227,7 +230,7 @@
 <h3 class="hasAnchor">
 <a href="#excluding" class="anchor"></a>Excluding</h3>
 <p>The <code>exclude_*()</code> functions remove the rows that meet exclusion criteria. These, too, can be piped together. Since the output of each function is a subset of the original data with the excluded rows removed, the order of the functions will influence the reported number of rows meeting the exclusion criteria.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude preview then incomplete progress rows</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/exclude_duration.html">exclude_duration</a></span><span class="op">(</span>min_duration <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
@@ -236,7 +239,7 @@
 <span class="co">#&gt; ℹ 4 out of 96 rows with incomplete progress were excluded, leaving 92 rows.</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; [1] 92 16</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude incomplete progress then preview rows</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/exclude_progress.html">exclude_progress</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
@@ -246,7 +249,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; [1] 92 16</span></code></pre></div>
 <p>Though the order of functions should not influence the final data set, it may speed up processing large files by removing preview and incomplete progress data first and waiting to check IP addresses and locations after other exclusions have been performed.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Exclude rows</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">qualtrics_text</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/exclude_preview.html">exclude_preview</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
