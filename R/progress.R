@@ -204,7 +204,7 @@ check_progress <- function(x,
 #' @return
 #' An object of the same type as `x` that excludes rows
 #' that have incomplete progress.
-#' For a function that checs for these rows, use [check_progress()].
+#' For a function that checks for these rows, use [check_progress()].
 #' For a function that marks these rows, use [mark_progress()].
 #' @export
 #'

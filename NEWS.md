@@ -75,7 +75,7 @@
 
 # excluder 0.1.0
 
-* The `check_qualtrics` argument was removed from `remove_label_rows()` because the functionality did not make sense. This breaks backwards compatability.
+* The `check_qualtrics` argument was removed from `remove_label_rows()` because the functionality did not make sense. This breaks backwards compatibility.
 * `remove_label_rows()` now only filters out label rows if label rows are present and outputs invisibly.
 * Tests were added for the `qualtrics_raw` dataset and the `remove_label_rows()` function.
 * Package-level documentation was created.

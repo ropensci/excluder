@@ -12,7 +12,7 @@
 #' resolution). The non-strict level removes only columns associated with
 #' IP address and location.
 #'
-#' Typically, deidenification should be used at the end of a processing pipeline
+#' Typically, deidentification should be used at the end of a processing pipeline
 #' so that these columns can be used to exclude rows.
 #'
 #' @param x Data frame (downloaded from Qualtrics).

@@ -37,7 +37,7 @@ this argument controls the exclude message not the check message.}
 \value{
 An object of the same type as \code{x} that excludes rows
 that have incomplete progress.
-For a function that checs for these rows, use \code{\link[=check_progress]{check_progress()}}.
+For a function that checks for these rows, use \code{\link[=check_progress]{check_progress()}}.
 For a function that marks these rows, use \code{\link[=mark_progress]{mark_progress()}}.
 }
 \description{
