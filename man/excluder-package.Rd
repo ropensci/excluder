@@ -11,9 +11,9 @@ Data that are collected through online sources such as Mechanical Turk may requi
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://jeffreyrstevens.github.io/excluder/}
-  \item \url{https://github.com/jeffreyrstevens/excluder/}
-  \item Report bugs at \url{https://github.com/jeffreyrstevens/excluder/issues/}
+  \item \url{https://docs.ropensci.org/excluder/}
+  \item \url{https://github.com/ropensci/excluder/}
+  \item Report bugs at \url{https://github.com/ropensci/excluder/issues/}
 }
 
 }

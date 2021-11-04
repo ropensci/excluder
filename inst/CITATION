@@ -5,10 +5,10 @@ citEntry(entry = "manual",
          author       = personList(as.person("Jeffrey R. Stevens")),
          year         = "2021",
          notes        = "R package version 0.3.1",
-         url          = "https://jeffreyrstevens.github.io/excluder/",
+         url          = "https://github.com/ropensci/excluder",
          textVersion  =
            paste("Stevens, J.R. (2021).",
                  "excluder: Exclude rows to clean your data.",
                  "R package version 0.3.1,",
-                 "https://jeffreyrstevens.github.io/excluder/.")
+                 "https://github.com/ropensci/excluder.")
 )

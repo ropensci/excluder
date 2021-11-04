@@ -46,14 +46,14 @@ The verbs combine with the exclusion types to generate functions. For instance, 
 
 There are also helper functions:
 
-1. [`unite_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html)  unites all of the columns marked by `mark` functions into a single column (each use of a `mark` function creates a new column).
-1. [`deidentify()`](https://jeffreyrstevens.github.io/excluder/reference/deidentify.html) removes standard Qualtrics columns with identifiable information.
-1. [`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html) removes the first two rows of labels and convert date and numeric columns in the metadata.
+1. [`unite_exclusions()`](https://docs.ropensci.org//excluder/reference/unite_exclusions.html)  unites all of the columns marked by `mark` functions into a single column (each use of a `mark` function creates a new column).
+1. [`deidentify()`](https://docs.ropensci.org//excluder/reference/deidentify.html) removes standard Qualtrics columns with identifiable information.
+1. [`remove_label_rows()`](https://docs.ropensci.org//excluder/reference/remove_label_rows.html) removes the first two rows of labels and convert date and numeric columns in the metadata.
 
 ## Preparing your data
 If you use the [`fetch_survey()`](https://docs.ropensci.org/qualtRics/reference/fetch_survey.html) from the `{qualtRics}` package to import your Qualtrics data, it will automatically remove the first two label rows from the data set. However, if you directly download your data from Qualtrics, it will include two rows in your data set that include label information. This has two side effects: (1) there are non-data rows that need to be removed from your data set, and (2) all of your columns will be imported as character data types.
 
-The [`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html) function will remove these two label rows. Also, by default, it will coerce the Qualtrics metadata columns from character types to the correct formats (e.g., _`StartDate`_ is coerced to a date, _`Progress`_ is coerced to numeric). So if you download your data from Qualtrics, you will need to run this function on your data before proceeding.
+The [`remove_label_rows()`](https://docs.ropensci.org//excluder/reference/remove_label_rows.html) function will remove these two label rows. Also, by default, it will coerce the Qualtrics metadata columns from character types to the correct formats (e.g., _`StartDate`_ is coerced to a date, _`Progress`_ is coerced to numeric). So if you download your data from Qualtrics, you will need to run this function on your data before proceeding.
 
 ```{r}
 dplyr::glimpse(qualtrics_raw)

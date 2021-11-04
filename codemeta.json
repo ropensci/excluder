@@ -292,7 +292,7 @@
         }
       ],
       "name": "{excluder}: Exclude rows to clean your data",
-      "url": "https://jeffreyrstevens.github.io/excluder/"
+      "url": "https://docs.ropensci.org/excluder/"
     }
   ],
   "review": {
