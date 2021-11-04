@@ -7,7 +7,7 @@
 
 [![Status at rOpenSci Software Peer
 Review](https://badges.ropensci.org/455_status.svg)](https://github.com/ropensci/software-review/issues/455)
-[![R-CMD-check](https://github.com/jeffreyrstevens/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyrstevens/excluder/actions)
+[![R-CMD-check](https://github.com/ropensci/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/excluder/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/jeffreyrstevens/excluder/branch/main/graph/badge.svg)](https://app.codecov.io/gh/jeffreyrstevens/excluder?branch=main)
 [![Project Status: Active – The project has reached a stable, usable
@@ -16,11 +16,11 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![lifecycle](man/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
-The goal of [`{excluder}`](https://jeffreyrstevens.github.io/excluder/)
-is to facilitate checking for, marking, and excluding rows of data
-frames for common exclusion criteria. This package applies to data
-collected from [Qualtrics](https://www.qualtrics.com/) surveys, and
-default column names come from importing data with the
+The goal of [`{excluder}`](https://docs.ropensci.org/excluder/) is to
+facilitate checking for, marking, and excluding rows of data frames for
+common exclusion criteria. This package applies to data collected from
+[Qualtrics](https://www.qualtrics.com/) surveys, and default column
+names come from importing data with the
 [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
 
 This may be most useful for [Mechanical Turk](https://www.mturk.com/)
@@ -30,9 +30,8 @@ used more generally to exclude based on response durations, preview
 status, progress, or screen resolution.
 
 More details are available on the package
-[website](https://jeffreyrstevens.github.io/excluder/) and the [getting
-started
-vignette](https://jeffreyrstevens.github.io/excluder/articles/getting_started.html).
+[website](https://docs.ropensci.org/excluder/) and the [getting started
+vignette](https://docs.ropensci.org/excluder/articles/getting_started.html).
 
 ## Installation
 
@@ -41,13 +40,13 @@ You can install the stable released version of `{excluder}` from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("jeffreyrstevens/excluder")
+devtools::install_github("ropensci/excluder")
 ```
 
 You can install the latest developmental version with:
 
 ``` r
-devtools::install_github("jeffreyrstevens/excluder@devel")
+devtools::install_github("ropensci/excluder@devel")
 ```
 
 ## Verbs
@@ -70,10 +69,9 @@ This package provides three primary verbs:
 
 This package provides seven types of exclusions based on Qualtrics
 metadata. If you have ideas for other metadata exclusions, please submit
-them as [issues](https://github.com/jeffreyrstevens/excluder/issues).
-Note, the intent of this package is not to develop functions for
-excluding rows based on survey-specific data but on general, frequently
-used metadata.
+them as [issues](https://github.com/ropensci/excluder/issues). Note, the
+intent of this package is not to develop functions for excluding rows
+based on survey-specific data but on general, frequently used metadata.
 
 -   `duplicates` works with rows that have duplicate IP addresses and/or
     locations (latitude/longitude).
@@ -93,17 +91,17 @@ used metadata.
 
 The verbs and exclusion types combine with `_` to create the functions,
 such as
-[`check_duplicates()`](https://jeffreyrstevens.github.io/excluder/reference/check_duplicates.html),
-[`exclude_ip()`](https://jeffreyrstevens.github.io/excluder/reference/exclude_ip.html),
+[`check_duplicates()`](https://docs.ropensci.org/excluder/reference/check_duplicates.html),
+[`exclude_ip()`](https://docs.ropensci.org/excluder/reference/exclude_ip.html),
 and
-[`mark_duration()`](https://jeffreyrstevens.github.io/excluder/reference/mark_duration.html).
+[`mark_duration()`](https://docs.ropensci.org/excluder/reference/mark_duration.html).
 Multiple functions can be linked together using the
 [`{magrittr}`](https://magrittr.tidyverse.org/) pipe `%>%`. For datasets
 downloaded directly from Qualtrics, use
-[`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html)
+[`remove_label_rows()`](https://docs.ropensci.org/excluder/reference/remove_label_rows.html)
 to remove the first two rows of labels and convert date and numeric
 columns in the metadata, and use
-[`deidentify()`](https://jeffreyrstevens.github.io/excluder/reference/deidentify.html)
+[`deidentify()`](https://docs.ropensci.org/excluder/reference/deidentify.html)
 to remove standard Qualtrics columns with identifiable information
 (e.g., IP addresses, geolocation).
 
@@ -119,33 +117,33 @@ library(excluder)
 df <- qualtrics_text %>%
   mark_preview() %>%
   mark_duration(min_duration = 200)
-#> ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.
-#> ℹ 23 out of 100 rows took less time than 200.
+#> i 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.
+#> i 23 out of 100 rows took less time than 200.
 tibble::glimpse(df)
 #> Rows: 100
 #> Columns: 18
-#> $ StartDate               <dttm> 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202…
-#> $ EndDate                 <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…
-#> $ Status                  <chr> "Survey Preview", "Survey Preview", "IP Addres…
-#> $ IPAddress               <chr> NA, NA, "73.23.43.0", "16.140.105.0", "107.57.…
-#> $ Progress                <dbl> 100, 100, 100, 100, 100, 100, 100, 100, 100, 1…
-#> $ `Duration (in seconds)` <dbl> 465, 545, 651, 409, 140, 213, 177, 662, 296, 2…
-#> $ Finished                <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
-#> $ RecordedDate            <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…
-#> $ ResponseId              <chr> "R_xLWiuPaNuURSFXY", "R_Q5lqYw6emJQZx2o", "R_f…
-#> $ LocationLatitude        <dbl> 29.73694, 39.74107, 34.03852, 44.96581, 27.980…
-#> $ LocationLongitude       <dbl> -94.97599, -121.82490, -118.25739, -93.07187, …
-#> $ UserLanguage            <chr> "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"…
-#> $ Browser                 <chr> "Chrome", "Chrome", "Chrome", "Chrome", "Chrom…
-#> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…
-#> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10…
-#> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864…
-#> $ exclusion_preview       <chr> "preview", "preview", "", "", "", "", "", "", …
-#> $ exclusion_duration      <chr> "", "", "", "", "duration_quick", "", "duratio…
+#> $ StartDate               <dttm> 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202~
+#> $ EndDate                 <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202~
+#> $ Status                  <chr> "Survey Preview", "Survey Preview", "IP Addres~
+#> $ IPAddress               <chr> NA, NA, "73.23.43.0", "16.140.105.0", "107.57.~
+#> $ Progress                <dbl> 100, 100, 100, 100, 100, 100, 100, 100, 100, 1~
+#> $ `Duration (in seconds)` <dbl> 465, 545, 651, 409, 140, 213, 177, 662, 296, 2~
+#> $ Finished                <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE~
+#> $ RecordedDate            <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202~
+#> $ ResponseId              <chr> "R_xLWiuPaNuURSFXY", "R_Q5lqYw6emJQZx2o", "R_f~
+#> $ LocationLatitude        <dbl> 29.73694, 39.74107, 34.03852, 44.96581, 27.980~
+#> $ LocationLongitude       <dbl> -94.97599, -121.82490, -118.25739, -93.07187, ~
+#> $ UserLanguage            <chr> "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"~
+#> $ Browser                 <chr> "Chrome", "Chrome", "Chrome", "Chrome", "Chrom~
+#> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"~
+#> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10~
+#> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864~
+#> $ exclusion_preview       <chr> "preview", "preview", "", "", "", "", "", "", ~
+#> $ exclusion_duration      <chr> "", "", "", "", "duration_quick", "", "duratio~
 ```
 
 Use the
-[`unite_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html)
+[`unite_exclusions()`](https://docs.ropensci.org/excluder/reference/unite_exclusions.html)
 function to unite all of the marked columns into a single column.
 
 ``` r
@@ -154,28 +152,28 @@ df <- qualtrics_text %>%
   mark_preview() %>%
   mark_duration(min_duration = 200) %>%
   unite_exclusions()
-#> ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.
-#> ℹ 23 out of 100 rows took less time than 200.
+#> i 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.
+#> i 23 out of 100 rows took less time than 200.
 tibble::glimpse(df)
 #> Rows: 100
 #> Columns: 17
-#> $ StartDate               <dttm> 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202…
-#> $ EndDate                 <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…
-#> $ Status                  <chr> "Survey Preview", "Survey Preview", "IP Addres…
-#> $ IPAddress               <chr> NA, NA, "73.23.43.0", "16.140.105.0", "107.57.…
-#> $ Progress                <dbl> 100, 100, 100, 100, 100, 100, 100, 100, 100, 1…
-#> $ `Duration (in seconds)` <dbl> 465, 545, 651, 409, 140, 213, 177, 662, 296, 2…
-#> $ Finished                <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
-#> $ RecordedDate            <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202…
-#> $ ResponseId              <chr> "R_xLWiuPaNuURSFXY", "R_Q5lqYw6emJQZx2o", "R_f…
-#> $ LocationLatitude        <dbl> 29.73694, 39.74107, 34.03852, 44.96581, 27.980…
-#> $ LocationLongitude       <dbl> -94.97599, -121.82490, -118.25739, -93.07187, …
-#> $ UserLanguage            <chr> "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"…
-#> $ Browser                 <chr> "Chrome", "Chrome", "Chrome", "Chrome", "Chrom…
-#> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"…
-#> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10…
-#> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864…
-#> $ exclusions              <chr> "preview", "preview", "", "", "duration_quick"…
+#> $ StartDate               <dttm> 2020-12-11 12:06:52, 2020-12-11 12:06:43, 202~
+#> $ EndDate                 <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202~
+#> $ Status                  <chr> "Survey Preview", "Survey Preview", "IP Addres~
+#> $ IPAddress               <chr> NA, NA, "73.23.43.0", "16.140.105.0", "107.57.~
+#> $ Progress                <dbl> 100, 100, 100, 100, 100, 100, 100, 100, 100, 1~
+#> $ `Duration (in seconds)` <dbl> 465, 545, 651, 409, 140, 213, 177, 662, 296, 2~
+#> $ Finished                <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE~
+#> $ RecordedDate            <dttm> 2020-12-11 12:10:30, 2020-12-11 12:11:27, 202~
+#> $ ResponseId              <chr> "R_xLWiuPaNuURSFXY", "R_Q5lqYw6emJQZx2o", "R_f~
+#> $ LocationLatitude        <dbl> 29.73694, 39.74107, 34.03852, 44.96581, 27.980~
+#> $ LocationLongitude       <dbl> -94.97599, -121.82490, -118.25739, -93.07187, ~
+#> $ UserLanguage            <chr> "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN"~
+#> $ Browser                 <chr> "Chrome", "Chrome", "Chrome", "Chrome", "Chrom~
+#> $ Version                 <chr> "88.0.4324.41", "88.0.4324.50", "87.0.4280.88"~
+#> $ `Operating System`      <chr> "Windows NT 10.0", "Macintosh", "Windows NT 10~
+#> $ Resolution              <chr> "1366x768", "1680x1050", "1366x768", "1536x864~
+#> $ exclusions              <chr> "preview", "preview", "", "", "duration_quick"~
 ```
 
 ### Checking
@@ -190,7 +188,7 @@ criterion.
 # Check for preview rows
 qualtrics_text %>%
   check_preview()
-#> ℹ 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.
+#> i 2 rows were collected as previews. It is highly recommended to exclude these rows before further processing.
 #>             StartDate             EndDate         Status IPAddress Progress
 #> 1 2020-12-11 12:06:52 2020-12-11 12:10:30 Survey Preview      <NA>      100
 #> 2 2020-12-11 12:06:43 2020-12-11 12:11:27 Survey Preview      <NA>      100
@@ -218,8 +216,8 @@ of rows meeting the exclusion criteria.
 df <- qualtrics_text %>%
   exclude_duration(min_duration = 100) %>%
   exclude_progress()
-#> ℹ 4 out of 100 rows of short and/or long duration were excluded, leaving 96 rows.
-#> ℹ 4 out of 96 rows with incomplete progress were excluded, leaving 92 rows.
+#> i 4 out of 100 rows of short and/or long duration were excluded, leaving 96 rows.
+#> i 4 out of 96 rows with incomplete progress were excluded, leaving 92 rows.
 dim(df)
 #> [1] 92 16
 ```
@@ -229,8 +227,8 @@ dim(df)
 df <- qualtrics_text %>%
   exclude_progress() %>%
   exclude_duration(min_duration = 100)
-#> ℹ 6 out of 100 rows with incomplete progress were excluded, leaving 94 rows.
-#> ℹ 2 out of 94 rows of short and/or long duration were excluded, leaving 92 rows.
+#> i 6 out of 100 rows with incomplete progress were excluded, leaving 94 rows.
+#> i 2 out of 94 rows of short and/or long duration were excluded, leaving 92 rows.
 dim(df)
 #> [1] 92 16
 ```
@@ -250,13 +248,13 @@ df <- qualtrics_text %>%
   exclude_resolution() %>%
   exclude_ip() %>%
   exclude_location()
-#> ℹ 2 out of 100 preview rows were excluded, leaving 98 rows.
-#> ℹ 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.
-#> ℹ 9 out of 92 duplicate rows were excluded, leaving 83 rows.
-#> ℹ 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.
-#> ℹ 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.
-#> ℹ 2 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 75 rows.
-#> ℹ 4 out of 75 rows outside of the US were excluded, leaving 71 rows.
+#> i 2 out of 100 preview rows were excluded, leaving 98 rows.
+#> i 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.
+#> i 9 out of 92 duplicate rows were excluded, leaving 83 rows.
+#> i 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.
+#> i 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.
+#> i 2 out of 77 rows with IP addresses outside of the specified country were excluded, leaving 75 rows.
+#> i 4 out of 75 rows outside of the US were excluded, leaving 71 rows.
 ```
 
 ## Citing this package
@@ -264,22 +262,22 @@ df <- qualtrics_text %>%
 To cite `{excluder}`, use:
 
 > Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R
-> package version 0.3.0, <https://jeffreyrstevens.github.io/excluder/>.
+> package version 0.3.1, <https://docs.ropensci.org/excluder/>.
 
 ## Contributing to this package
 
-[Contributions](https://jeffreyrstevens.github.io/excluder/CONTRIBUTING.html)
-to `{excluder}` are most welcome! Feel free to check out [open
-issues](https://github.com/jeffreyrstevens/excluder/issues) for ideas.
-And [pull requests](https://github.com/jeffreyrstevens/excluder/pulls)
-are encouraged, but you may want to [raise an
-issue](https://github.com/jeffreyrstevens/excluder/issues/new/choose) or
+[Contributions](https://docs.ropensci.org/excluder/CONTRIBUTING.html) to
+`{excluder}` are most welcome! Feel free to check out [open
+issues](https://github.com/ropensci/excluder/issues) for ideas. And
+[pull requests](https://github.com/ropensci/excluder/pulls) are
+encouraged, but you may want to [raise an
+issue](https://github.com/ropensci/excluder/issues/new/choose) or
 [contact the maintainer](mailto:jeffrey.r.stevens@gmail.com) first.
 
 Please note that the excluder project is released with a [Contributor
 Code of
-Conduct](https://jeffreyrstevens.github.io/excluder/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
+Conduct](https://devguide.ropensci.org/collaboration.html#coc-file). By
+contributing to this project, you agree to abide by its terms.
 
 ## Acknowledgements
 

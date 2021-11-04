@@ -17,17 +17,17 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Status at rOpenSci Software Peer Review](https://badges.ropensci.org/455_status.svg)](https://github.com/ropensci/software-review/issues/455)
-[![R-CMD-check](https://github.com/jeffreyrstevens/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyrstevens/excluder/actions)
+[![R-CMD-check](https://github.com/ropensci/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/excluder/actions)
 [![Codecov test coverage](https://codecov.io/gh/jeffreyrstevens/excluder/branch/main/graph/badge.svg)](https://app.codecov.io/gh/jeffreyrstevens/excluder?branch=main)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![lifecycle](man/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
-The goal of [`{excluder}`](https://jeffreyrstevens.github.io/excluder/) is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from [Qualtrics](https://www.qualtrics.com/) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
+The goal of [`{excluder}`](https://docs.ropensci.org/excluder/) is to facilitate checking for, marking, and excluding rows of data frames for common exclusion criteria. This package applies to data collected from [Qualtrics](https://www.qualtrics.com/) surveys, and default column names come from importing data with the  [`{qualtRics}`](https://docs.ropensci.org/qualtRics/) package.
 
 This may be most useful for [Mechanical Turk](https://www.mturk.com/) data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States. But it can be used more generally to exclude based on response durations, preview status, progress, or screen resolution.
 
-More details are available on the package [website](https://jeffreyrstevens.github.io/excluder/) and the [getting started vignette](https://jeffreyrstevens.github.io/excluder/articles/getting_started.html).
+More details are available on the package [website](https://docs.ropensci.org/excluder/) and the [getting started vignette](https://docs.ropensci.org/excluder/articles/getting_started.html).
 
 ## Installation
 
@@ -35,13 +35,13 @@ You can install the stable released version of `{excluder}` from [GitHub](https:
 
 ```{r eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("jeffreyrstevens/excluder")
+devtools::install_github("ropensci/excluder")
 ```
 
 You can install the latest developmental version with:
 
 ```{r eval = FALSE}
-devtools::install_github("jeffreyrstevens/excluder@devel")
+devtools::install_github("ropensci/excluder@devel")
 ```
 
 
@@ -53,7 +53,7 @@ This package provides three primary verbs:
 * `exclude` functions remove rows meeting the exclusion criteria. This is safest to do after checking the rows to ensure the exclusions are correct.
 
 ## Exclusion types
-This package provides seven types of exclusions based on Qualtrics metadata. If you have ideas for other metadata exclusions, please submit them as [issues](https://github.com/jeffreyrstevens/excluder/issues). Note, the intent of this package is not to develop functions for excluding rows based on survey-specific data but on general, frequently used metadata.
+This package provides seven types of exclusions based on Qualtrics metadata. If you have ideas for other metadata exclusions, please submit them as [issues](https://github.com/ropensci/excluder/issues). Note, the intent of this package is not to develop functions for excluding rows based on survey-specific data but on general, frequently used metadata.
 
 * `duplicates` works with rows that have duplicate IP addresses and/or locations (latitude/longitude).
 * `duration` works with rows whose survey completion time is too short and/or too long.
@@ -66,7 +66,7 @@ This package provides seven types of exclusions based on Qualtrics metadata. If 
 
 ## Usage
 
-The verbs and exclusion types combine with `_` to create the functions, such as [`check_duplicates()`](https://jeffreyrstevens.github.io/excluder/reference/check_duplicates.html), [`exclude_ip()`](https://jeffreyrstevens.github.io/excluder/reference/exclude_ip.html), and [`mark_duration()`](https://jeffreyrstevens.github.io/excluder/reference/mark_duration.html). Multiple functions can be linked together using the [`{magrittr}`](https://magrittr.tidyverse.org/) pipe `%>%`. For datasets downloaded directly from Qualtrics, use [`remove_label_rows()`](https://jeffreyrstevens.github.io/excluder/reference/remove_label_rows.html) to remove the first two rows of labels and convert date and numeric columns in the metadata, and use [`deidentify()`](https://jeffreyrstevens.github.io/excluder/reference/deidentify.html) to remove standard Qualtrics columns with identifiable information (e.g., IP addresses, geolocation).
+The verbs and exclusion types combine with `_` to create the functions, such as [`check_duplicates()`](https://docs.ropensci.org/excluder/reference/check_duplicates.html), [`exclude_ip()`](https://docs.ropensci.org/excluder/reference/exclude_ip.html), and [`mark_duration()`](https://docs.ropensci.org/excluder/reference/mark_duration.html). Multiple functions can be linked together using the [`{magrittr}`](https://magrittr.tidyverse.org/) pipe `%>%`. For datasets downloaded directly from Qualtrics, use [`remove_label_rows()`](https://docs.ropensci.org/excluder/reference/remove_label_rows.html) to remove the first two rows of labels and convert date and numeric columns in the metadata, and use [`deidentify()`](https://docs.ropensci.org/excluder/reference/deidentify.html) to remove standard Qualtrics columns with identifiable information (e.g., IP addresses, geolocation).
 
 ### Marking
 The `mark_*()` functions output the original data set with a new column specifying rows that meet the exclusion criteria. These can be piped together with `%>%` for multiple exclusion types.
@@ -80,7 +80,7 @@ df <- qualtrics_text %>%
 tibble::glimpse(df)
 ```
 
-Use the [`unite_exclusions()`](https://jeffreyrstevens.github.io/excluder/reference/unite_exclusions.html) function to unite all of the marked columns into a single column.
+Use the [`unite_exclusions()`](https://docs.ropensci.org/excluder/reference/unite_exclusions.html) function to unite all of the marked columns into a single column.
 ```{r mark2}
 # Collapse labels for preview and short duration rows
 df <- qualtrics_text %>%
@@ -135,13 +135,13 @@ df <- qualtrics_text %>%
 
 To cite `{excluder}`, use:
 
-> Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R package version 0.3.0, https://jeffreyrstevens.github.io/excluder/.
+> Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R package version 0.3.1, https://docs.ropensci.org/excluder/.
 
 ## Contributing to this package
 
-[Contributions](https://jeffreyrstevens.github.io/excluder/CONTRIBUTING.html) to `{excluder}` are most welcome! Feel free to check out [open issues](https://github.com/jeffreyrstevens/excluder/issues) for ideas. And [pull requests](https://github.com/jeffreyrstevens/excluder/pulls) are encouraged, but you may want to [raise an issue](https://github.com/jeffreyrstevens/excluder/issues/new/choose) or [contact the maintainer](mailto:jeffrey.r.stevens@gmail.com) first.
+[Contributions](https://docs.ropensci.org/excluder/CONTRIBUTING.html) to `{excluder}` are most welcome! Feel free to check out [open issues](https://github.com/ropensci/excluder/issues) for ideas. And [pull requests](https://github.com/ropensci/excluder/pulls) are encouraged, but you may want to [raise an issue](https://github.com/ropensci/excluder/issues/new/choose) or [contact the maintainer](mailto:jeffrey.r.stevens@gmail.com) first.
 
-Please note that the excluder project is released with a [Contributor Code of Conduct](https://jeffreyrstevens.github.io/excluder/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the excluder project is released with a [Contributor Code of Conduct](https://devguide.ropensci.org/collaboration.html#coc-file). By contributing to this project, you agree to abide by its terms.
 
 ## Acknowledgements
 

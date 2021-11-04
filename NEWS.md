@@ -1,3 +1,25 @@
+# excluder 0.3.1
+
+### MINOR IMPROVEMENTS
+
+* The messages now use `{cli}` to generate messages that more clearly outputs numbers and text.
+* All functions now print the output data frames by default but can all be turned off with `print = FALSE`.
+* `*_ip()` functions now include `include_na` as an argument (like `*_duplicates()` and `*_location()` functions), so users can decide whether to include NA values in the data that meet exclusion criteria.
+* There are now five new utility functions that help simplify the primary verb functions. `keep_exclusion_column()` allows users to keep the exclusion column in the output from `check_*()` functions and moves the column the first column in the output. `mark_rows()` does the bulk of the work creating new columns for exclusion criteria and marking rows that meet the criteria. `print_data()` controls whether the output is printed to the console. `print_exclusion()` generates the message about how many rows were excluded by the `exclude_*()` functions. `validate_columns()` validates the number, names, and type of columns that are inputted as arguments in the verb functions.
+* The NEWS.md file is now based on the rOpenSci template.
+
+
+### BUG FIXES
+
+* The `unite_exclusions()` function now properly removes multiple separators when multiple exclusion criteria are used.
+* The `mark_duplicates()` function now properly counts and includes the correct number of NAs for both IP addresses and locations and properly prints data.
+
+
+### PACKAGE DEVELOPMENT
+
+* The `{excluder}` package has now been approved by and transferred to [rOpenSci](https://ropensci.org/). The package was peer reviewed by Joseph O'Brien ([@jmobrien](https://github.com/jmobrien)) and Julia Silge ([@juliasilge](https://github.com/juliasilge)), who are now listed as reviewers in the DESCRIPTION file.
+
+
 # excluder 0.3.0
 
 ### NEW FEATURES
