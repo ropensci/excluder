@@ -5,7 +5,8 @@
 ^deprecated$
 ^LICENSE\.md$
 ^.*DONOTCOMMIT*$
-^create_data$
+^data/create_data$
+^inst/extdata$
 
 ^README\.Rmd$
 ^_pkgdown\.yml$
