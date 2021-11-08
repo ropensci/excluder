@@ -4,13 +4,16 @@
 \alias{remove_label_rows}
 \title{Remove two initial rows created in Qualtrics data}
 \usage{
-remove_label_rows(x, convert = TRUE)
+remove_label_rows(x, convert = TRUE, rename = FALSE)
 }
 \arguments{
 \item{x}{Data frame (downloaded from Qualtrics).}
 
 \item{convert}{Logical indicating whether to convert/coerce date, logical and
 numeric columns from the metadata.}
+
+\item{rename}{Logical indicating whether to rename columns based on first row
+of data.}
 }
 \value{
 An object of the same type as \code{x} that excludes Qualtrics label rows and

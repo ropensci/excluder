@@ -21,6 +21,8 @@
 #' @param x Data frame (downloaded from Qualtrics).
 #' @param convert Logical indicating whether to convert/coerce date, logical and
 #' numeric columns from the metadata.
+#' @param rename Logical indicating whether to rename columns based on first row
+#' of data.
 #'
 #' @concept helper
 #'
@@ -35,7 +37,25 @@
 #' data(qualtrics_raw)
 #' df <- remove_label_rows(qualtrics_raw)
 remove_label_rows <- function(x,
-                              convert = TRUE) {
+                              convert = TRUE,
+                              rename = FALSE) {
+  # Relabel if requested
+  if (identical(rename, TRUE)) {
+    # Keep meta column names
+    col_names_orig <- names(x)
+    resolution_col_num <- grep("_Resolution", col_names_orig)
+    col_names_meta <- col_names_orig[1:resolution_col_num]
+
+    # Remove question number from column names
+    resolution_col <- col_names_meta[resolution_col_num]
+    trash_string <- paste0(strsplit(resolution_col, "_")[[1]][1], "_")
+    col_names_meta <- gsub(trash_string, "", col_names_meta)
+
+    # Combine meta column names with first row labels
+    first_row <- x[1, ]
+    names(x) <- unlist(c(col_names_meta,
+                  first_row[(length(col_names_meta) + 1):length(first_row)]))
+  }
 
   # Check if Qualtrics data set
   if (identical(names(x)[1], "StartDate")) {
@@ -43,6 +63,11 @@ remove_label_rows <- function(x,
     x <- x %>%
       dplyr::filter(.data$Status != "Response Type" &
         .data$Status != '{"ImportId":"status"}')
+  } else if (identical(names(x)[1], "Start Date")) {
+    # Remove label rows
+    x <- x %>%
+      dplyr::filter(.data$`Response Type` != "Response Type" &
+                      .data$`Response Type` != '{"ImportId":"status"}')
   } else {
     message("This data frame does not appear to be a Qualtrics data set.")
   }
