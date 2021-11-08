@@ -60,9 +60,10 @@ addresses (likely due to including preview data---see \code{\link[=check_preview
 will print a message alerting to the number of rows with \code{NA}s.
 }
 \note{
-This function requires internet connectivity as it uses the
+This function \strong{requires internet connectivity} as it uses the
 \code{\link[iptools:country_ranges]{iptools::country_ranges()}} function, which pulls daily updated data
-from \url{http://www.iwik.org/ipcountry/}.
+from \url{http://www.iwik.org/ipcountry/}. It only updates the data once
+per session, as it caches the results for future work during the session.
 }
 \examples{
 # Check for IP addresses outside of the US

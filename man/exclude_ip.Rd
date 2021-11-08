@@ -60,6 +60,12 @@ with IP addresses outside of the specified country. If there are \code{NA}s for 
 addresses (likely due to including preview data---see \code{\link[=check_preview]{check_preview()}}), it
 will print a message alerting to the number of rows with \code{NA}s.
 }
+\note{
+This function \strong{requires internet connectivity} as it uses the
+\code{\link[iptools:country_ranges]{iptools::country_ranges()}} function, which pulls daily updated data
+from \url{http://www.iwik.org/ipcountry/}. It only updates the data once
+per session, as it caches the results for future work during the session.
+}
 \examples{
 # Exclude IP addresses outside of the US
 data(qualtrics_text)

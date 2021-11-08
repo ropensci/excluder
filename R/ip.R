@@ -40,6 +40,12 @@
 #' For a function that excludes these rows, use [exclude_ip()].
 #' @export
 #'
+#' @note
+#' This function **requires internet connectivity** as it uses the
+#' [iptools::country_ranges()] function, which pulls daily updated data
+#' from \url{http://www.iwik.org/ipcountry/}. It only updates the data once
+#' per session, as it caches the results for future work during the session.
+#'
 #' @examples
 #' # Mark IP addresses outside of the US
 #' data(qualtrics_text)
@@ -154,9 +160,10 @@ mark_ip <- function(x,
 #' For a function that excludes these rows, use [exclude_ip()].
 #'
 #' @note
-#' This function requires internet connectivity as it uses the
+#' This function **requires internet connectivity** as it uses the
 #' [iptools::country_ranges()] function, which pulls daily updated data
-#' from \url{http://www.iwik.org/ipcountry/}.
+#' from \url{http://www.iwik.org/ipcountry/}. It only updates the data once
+#' per session, as it caches the results for future work during the session.
 #'
 #' @export
 #' @examples
@@ -228,6 +235,12 @@ check_ip <- function(x,
 #' with IP addresses outside of the specified country.
 #' For a function that checks these rows, use [check_ip()].
 #' For a function that marks these rows, use [mark_ip()].
+#' @note
+#' This function **requires internet connectivity** as it uses the
+#' [iptools::country_ranges()] function, which pulls daily updated data
+#' from \url{http://www.iwik.org/ipcountry/}. It only updates the data once
+#' per session, as it caches the results for future work during the session.
+#'
 #' @export
 #'
 #' @examples
