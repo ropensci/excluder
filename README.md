@@ -5,15 +5,18 @@
 
 <!-- badges: start -->
 
-[![Status at rOpenSci Software Peer
-Review](https://badges.ropensci.org/455_status.svg)](https://github.com/ropensci/software-review/issues/455)
-[![R-CMD-check](https://github.com/ropensci/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/excluder/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/jeffreyrstevens/excluder/branch/main/graph/badge.svg)](https://app.codecov.io/gh/jeffreyrstevens/excluder?branch=main)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![lifecycle](man/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+
+[![R-CMD-check](https://github.com/ropensci/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/excluder/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/jeffreyrstevens/excluder/branch/main/graph/badge.svg)](https://app.codecov.io/gh/jeffreyrstevens/excluder?branch=main)
+
+[![Status at rOpenSci Software Peer
+Review](https://badges.ropensci.org/455_status.svg)](https://github.com/ropensci/software-review/issues/455)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.03893/status.svg)](https://doi.org/10.21105/joss.03893)
 <!-- badges: end -->
 
 The goal of [`{excluder}`](https://docs.ropensci.org/excluder/) is to
