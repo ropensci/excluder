@@ -98,7 +98,7 @@ test_that("Exclude messages are displayed properly", {
   ))
   suppressMessages(expect_message(
     exclude_ip(qualtrics_numeric, silent = FALSE),
-    "IP addresses outside of the specified country were excluded"
+    "IP addresses outside of"
   ))
   expect_message(
     exclude_ip(qualtrics_numeric, quiet = TRUE, silent = TRUE), NA

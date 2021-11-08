@@ -291,10 +291,8 @@ exclude_ip <- function(x,
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {
-    print_exclusion(
-      remaining_data, x,
-      "rows with IP addresses outside of the specified country"
-    )
+    print_exclusion(remaining_data, x,
+                    paste0("rows with IP addresses outside of ", country))
   }
 
   # Determine whether to print results
