@@ -183,9 +183,11 @@ tibble::glimpse(df)
 
 The `check_*()` functions output messages about the number of rows that
 meet the exclusion criteria. Because checks return only the rows meeting
-the criteria, they should not be connected via pipes unless you want to
-subset the second check criterion within the rows that meet the first
-criterion.
+the criteria, they **should not be connected via pipes** unless you want
+to subset the second check criterion within the rows that meet the first
+criterion. Thus, in general, `check_*()` functions should be used
+individually. If you want to view the potential exclusions for multiple
+criteria, use the `mark_*()` functions.
 
 ``` r
 # Check for preview rows

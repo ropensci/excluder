@@ -121,7 +121,7 @@ df %>%
   check_duration(min_duration = 100)
 ```
 
-Because checks return only the rows meeting the criteria, they should not be connected via pipes unless you want to subset the second check criterion within the rows that meet the first criterion.
+Because checks return only the rows meeting the criteria, they **should not be connected via pipes** unless you want to subset the second check criterion within the rows that meet the first criterion.
 
 ```{r check3}
 # Check for rows with durations less than 100 seconds in rows that did not complete the survey
