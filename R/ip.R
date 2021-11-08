@@ -98,32 +98,44 @@ mark_ip <- function(x,
   # Get IP ranges for specified country
   country_ip_ranges <- unlist(iptools::country_ranges(country))
 
-  # Filter data based on IP ranges
-  survey_ips <- filtered_data[[ip_col]]
-  attr(survey_ips, "label") <- NULL
-  outside_country <- !iptools::ip_in_any(survey_ips, country_ip_ranges)
-  filtered_data <- dplyr::bind_cols(filtered_data, outside = outside_country)
-  filtered_data <- dplyr::filter(filtered_data, .data$outside == TRUE) %>%
-    dplyr::select(-.data$outside)
-  n_outside_country <- nrow(filtered_data)
+  # Check if country_ip_ranges is valid
+  if (!curl::has_internet()) {
+    cli::cli_alert_warning("There is no internet connection.")
+    return(invisible(NULL))
+  } else if (identical(country_ip_ranges, NA)) {
+    cli::cli_alert_warning("The website for downloading country IP addresses is not available. Please try again later.")
+    return(invisible(NULL))
+  } else if (identical(country_ip_ranges, NULL)) {
+    cli::cli_alert_warning("'{country}' is not recognized as a valid country code, so IP addresses could not be checked for this country.")
+    return(invisible(NULL))
+  } else {
+    # Filter data based on IP ranges
+    survey_ips <- filtered_data[[ip_col]]
+    attr(survey_ips, "label") <- NULL
+    outside_country <- !iptools::ip_in_any(survey_ips, country_ip_ranges)
+    filtered_data <- dplyr::bind_cols(filtered_data, outside = outside_country)
+    filtered_data <- dplyr::filter(filtered_data, .data$outside == TRUE) %>%
+      dplyr::select(-.data$outside)
+    n_outside_country <- nrow(filtered_data)
 
-  # Filter NAs when requested
-  if (identical(include_na, TRUE)) {
-    na_data <- x[na_rows, ]
-    filtered_data <- dplyr::bind_rows(filtered_data, na_data)
+    # Filter NAs when requested
+    if (identical(include_na, TRUE)) {
+      na_data <- x[na_rows, ]
+      filtered_data <- dplyr::bind_rows(filtered_data, na_data)
+    }
+
+    # Print message and return output
+    if (identical(quiet, FALSE)) {
+      cli::cli_alert_info(
+        "{n_outside_country} out of {nrow(x)} row{?s} had IP address outside of {country}."
+      )
+    }
+
+    # Mark exclusion rows
+    marked_data <- mark_rows(x, filtered_data, id_col, "ip")
+    print_data(marked_data, print)
   }
-
-  # Print message and return output
-  if (identical(quiet, FALSE)) {
-    cli::cli_alert_info(
-      "{n_outside_country} out of {nrow(x)} row{?s} had IP address outside of {country}."
-    )
   }
-
-  # Mark exclusion rows
-  marked_data <- mark_rows(x, filtered_data, id_col, "ip")
-  print_data(marked_data, print)
-}
 
 
 #' Check for IP addresses from outside of a specified country.
@@ -201,10 +213,10 @@ check_ip <- function(x,
 
   # Mark and filter ip
   exclusions <- mark_ip(x,
-    id_col = id_col,
-    ip_col = ip_col,
-    country = country,
-    quiet = quiet
+                        id_col = id_col,
+                        ip_col = ip_col,
+                        country = country,
+                        quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_ip == "ip") %>%
     keep_marked_column(.data$exclusion_ip, keep)
@@ -268,11 +280,11 @@ exclude_ip <- function(x,
 
   # Mark and filter ip
   remaining_data <- mark_ip(x,
-    id_col = id_col,
-    ip_col = ip_col,
-    country = country,
-    include_na = include_na,
-    quiet = quiet
+                            id_col = id_col,
+                            ip_col = ip_col,
+                            country = country,
+                            include_na = include_na,
+                            quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_ip != "ip") %>%
     dplyr::select(-.data$exclusion_ip)
