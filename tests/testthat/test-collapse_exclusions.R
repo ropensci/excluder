@@ -9,6 +9,7 @@ test_that("Output class is same as input class", {
 })
 
 test_that("Data frames are correct size", {
+  skip_on_cran()
   df <- qualtrics_text %>%
     mark_duplicates(quiet = TRUE) %>%
     mark_duration(min_duration = 100, quiet = TRUE) %>%
