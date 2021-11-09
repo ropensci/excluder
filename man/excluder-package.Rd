@@ -6,7 +6,7 @@
 \alias{excluder-package}
 \title{excluder: Checks for Exclusion Criteria in Online Data}
 \description{
-Data that are collected through online sources such as Mechanical Turk may require excluding data because of IP address duplication, geolocation, or completion duration. This package facilitates exclusion of these data for Qualtrics datasets.
+Data that are collected through online sources such as Mechanical Turk may require excluding rows because of IP address duplication, geolocation, or completion duration. This package facilitates exclusion of these data for Qualtrics datasets.
 }
 \seealso{
 Useful links:
@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Jeffrey R. Stevens \email{jeffrey.r.stevens@gmail.com} (\href{https://orcid.org/0000-0003-2375-1360}{ORCID})
+\strong{Maintainer}: Jeffrey R. Stevens \email{jeffrey.r.stevens@gmail.com} (\href{https://orcid.org/0000-0003-2375-1360}{ORCID}) [copyright holder]
 
 Other contributors:
 \itemize{
