@@ -1,3 +1,22 @@
+# excluder 0.3.2
+
+## MINOR IMPROVEMENTS
+
+* The `remove_label_rows()` function can now rename columns to match the default column names used in all of the verb function arguments.
+* The `mark_ip_()` function now checks for (1) internet connectivity, (2) whether the IP address data can be downloaded from https://www.iwik.org/ipcountry/, and (3) if the country code is valid. The function fails gracefully if any of these are not met.
+
+### DOCUMENTATION UPDATES
+
+* The README and vignette have clarified that multiple `check_*()` functions should not be piped.
+* The `*_ip()` function documentation has clarified the internet connectivity requirements.
+
+### PACKAGE DEVELOPMENT
+
+* The paper for the `{excluder}` package has now been published in [Journal of Open Source Software](https://doi.org/10.21105/joss.03893). The JOSS badge has been added to the README.
+* Tests for `*_ip()` functions are now skipped on CRAN to avoid timeout delays.
+* Clean up package in preparation for submission to CRAN.
+
+
 # excluder 0.3.1
 
 ### MINOR IMPROVEMENTS
