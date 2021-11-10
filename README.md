@@ -266,8 +266,9 @@ df <- qualtrics_text %>%
 
 To cite `{excluder}`, use:
 
-> Stevens, J.R. (2021). excluder: Exclude rows to clean your data. R
-> package version 0.3.2, <https://docs.ropensci.org/excluder/>.
+> Stevens, J. R. (2021). excluder: An R package that checks for
+> exclusion criteria in online data. *Journal of Open Source Software*,
+> 6(67), 3893. <https://doi.org/10.21105/joss.03893>
 
 ## Contributing to this package
 
