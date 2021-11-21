@@ -109,6 +109,11 @@ remove_label_rows <- function(x,
     if ("Progress" %in% column_names) {
       x <- dplyr::mutate(x, Progress = as.numeric(.data$Progress))
     }
+    if ("Status" %in% column_names) {
+      if (x$Status[1] %in% c("1", "0")) {
+        x <- dplyr::mutate(x, Status = as.numeric(.data$Status))
+      }
+    }
     if ("Duration (in seconds)" %in% column_names) {
       x <- dplyr::mutate(x,
         `Duration (in seconds)` =
@@ -116,7 +121,15 @@ remove_label_rows <- function(x,
       )
     }
     if ("Finished" %in% column_names) {
-      x <- dplyr::mutate(x, Finished = as.logical(.data$Finished))
+      if (x$Finished[1] %in% c("TRUE", "FALSE")) {
+        x <- dplyr::mutate(x, Finished = as.logical(.data$Finished))
+      } else if (x$Finished[1] %in% c("True", "False")) {
+        x <- dplyr::mutate(x, Finished = as.logical(toupper(.data$Finished)))
+      } else if (x$Finished[1] %in% c("1", "0")) {
+        x <- dplyr::mutate(x, Finished = as.logical(as.numeric(.data$Finished)))
+      } else {
+        cli::cli_alert_danger("The 'Finished' column cannot be converted to logical.")
+      }
     }
     if ("RecordedDate" %in% column_names) {
       x <- dplyr::mutate(x,
