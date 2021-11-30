@@ -71,7 +71,7 @@ mark_location <- function(x,
 
   # Check for participants with no location information
   no_location <-
-    dplyr::filter(x, is.na(dplyr::across(tidyselect::all_of(location_col))))
+    dplyr::filter(x, dplyr::if_all(tidyselect::all_of(location_col), is.na))
   n_no_location <- nrow(no_location)
   no_nas <- tidyr::drop_na(x, tidyselect::all_of(location_col))
 
