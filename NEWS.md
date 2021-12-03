@@ -1,3 +1,10 @@
+# excluder 0.3.3
+
+## BUG FIXES
+
+* Updating `{dplyr}` to 1.0.8 caught problem with using `across()` inside `is.na()`. Instead, it now uses `if_all()` with `is.na()` as argument. Thanks to [@romainfrancois](https://github.com/romainfrancois) for pull request [\#7](https://github.com/ropensci/excluder/pull/7).
+* `remove_label_rows()` now properly converts numeric data in Status and Finished columns.
+
 # excluder 0.3.2
 
 ## MINOR IMPROVEMENTS
@@ -50,9 +57,9 @@
 
 * `exclude__*()` functions now have `print = FALSE` and `quiet = TRUE` set as default argument values.
 * Calls to `rbind()` have been replaced with `bind_cols()` and `dplyr::pull()` has been replaced with `[[]]`.
-* Calls to `all_of()` and `any_of()` now refer to {tidyselect} rather than {dplyr}.
+* Calls to `all_of()` and `any_of()` now refer to `{tidyselect}` rather than `{dplyr}`.
 * `if()` statements are now more robust by using `identical()` rather than `==` and `&&` instead of `&`.
-* The {stringr} package is now imported instead of suggested.
+* The `{stringr}` package is now imported instead of suggested.
 * All mark, check, and exclude functions for a particular exclusion type have been combined into a single R file. So now each exclusion type has its own R file. Similarly, data file scripts have been combined into a single file.
 
 ### BUG FIXES
@@ -61,7 +68,7 @@
 
 ### DEPRECATED AND DEFUNCT
 
-* `collapse_exclusions()` has been renamed `unite_exclusions()` to match {tidyverse} terminology. `collapse_exclusions()` is now deprecated and will be removed in a future version, use `unite_exlusions()`. `unite_exlusions()` also switched from using NA to "" for rows with no exclusions. Combined columns now no longer have leftover separators.
+* `collapse_exclusions()` has been renamed `unite_exclusions()` to match `{tidyverse}` terminology. `collapse_exclusions()` is now deprecated and will be removed in a future version, use `unite_exlusions()`. `unite_exlusions()` also switched from using NA to "" for rows with no exclusions. Combined columns now no longer have leftover separators.
 
 ### DOCUMENTATION FIXES
 
