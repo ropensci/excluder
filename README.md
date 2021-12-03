@@ -43,8 +43,7 @@ vignette](https://docs.ropensci.org/excluder/articles/getting_started.html).
 ## Installation
 
 You can install the stable released version of `{excluder}` from
-[CRAN](https://cran.r-project.org/web/packages/excluder/index.html)
-with:
+[CRAN](https://cran.r-project.org/package=excluder) with:
 
 ``` r
 install.packages("excluder")

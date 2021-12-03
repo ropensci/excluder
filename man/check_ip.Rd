@@ -62,7 +62,7 @@ will print a message alerting to the number of rows with \code{NA}s.
 \note{
 This function \strong{requires internet connectivity} as it uses the
 \code{\link[iptools:country_ranges]{iptools::country_ranges()}} function, which pulls daily updated data
-from \url{http://www.iwik.org/ipcountry/}. It only updates the data once
+from \url{https://www.iwik.org/ipcountry/}. It only updates the data once
 per session, as it caches the results for future work during the session.
 }
 \examples{

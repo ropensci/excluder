@@ -39,7 +39,7 @@ More details are available on the package [website](https://docs.ropensci.org/ex
 
 ## Installation
 
-You can install the stable released version of `{excluder}` from [CRAN](https://cran.r-project.org/web/packages/excluder/index.html) with:
+You can install the stable released version of `{excluder}` from [CRAN](https://cran.r-project.org/package=excluder) with:
 
 ```{r eval = FALSE}
 install.packages("excluder")
