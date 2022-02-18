@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# excluder
+# excluder <a href="https://docs.ropensci.org/excluder/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -10,8 +10,8 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![lifecycle](man/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/excluder)](https://cran.r-project.org/package=excluder)
-<!-- [![Downloads](https://cranlogs.r-pkg.org/badges/excluder)](https://CRAN.R-project.org/package=excluder) -->
-<!-- [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/excluder?color=orange)](https://CRAN.R-project.org/package=excluder) -->
+[![Total
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/excluder)](https://CRAN.R-project.org/package=excluder)
 
 [![R-CMD-check](https://github.com/ropensci/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/excluder/actions)
 [![Codecov test
