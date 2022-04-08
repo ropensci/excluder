@@ -39,6 +39,7 @@ These data were randomly generated using \code{\link[iptools:ip_random]{iptools:
 }
 \seealso{
 Other data: 
+\code{\link{qualtrics_fetch}},
 \code{\link{qualtrics_numeric}},
 \code{\link{qualtrics_raw}}
 }
