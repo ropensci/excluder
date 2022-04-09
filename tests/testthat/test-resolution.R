@@ -1,5 +1,18 @@
 # Test mark_resolution()
 
+test_that("Column names are renamed correctly", {
+  suppressMessages(expect_true(names(mark_resolution(qualtrics_fetch))[1] ==
+                                 "StartDate"))
+  suppressMessages(expect_true(names(mark_resolution(qualtrics_numeric))[1] ==
+                                 "StartDate"))
+  suppressMessages(expect_true(names(mark_resolution(qualtrics_numeric,
+                                                   rename = FALSE))[1] ==
+                                 "StartDate"))
+  suppressMessages(expect_error(mark_resolution(qualtrics_fetch,
+                                              rename = FALSE)))
+  suppressMessages(expect_message(mark_resolution(qualtrics_numeric)))
+})
+
 test_that("Mark output class is same as input class", {
   expect_s3_class(
     mark_resolution(qualtrics_numeric, quiet = TRUE),
@@ -45,6 +58,19 @@ test_that("Marks create data frames of correct size", {
 })
 
 # Test check_resolution()
+
+test_that("Column names are renamed correctly", {
+  suppressMessages(expect_true(names(check_resolution(qualtrics_fetch))[1] ==
+                                 "StartDate"))
+  suppressMessages(expect_true(names(check_resolution(qualtrics_numeric))[1] ==
+                                 "StartDate"))
+  suppressMessages(expect_true(names(check_resolution(qualtrics_numeric,
+                                                     rename = FALSE))[1] ==
+                                 "StartDate"))
+  suppressMessages(expect_error(check_resolution(qualtrics_fetch,
+                                                rename = FALSE)))
+  suppressMessages(expect_message(check_resolution(qualtrics_numeric)))
+})
 
 test_that("Check output class is same as input class", {
   expect_s3_class(
@@ -104,6 +130,19 @@ test_that("Exclusion column moved to first column when keep = TRUE", {
 })
 
 # Test exclude_resolution()
+
+test_that("Column names are renamed correctly", {
+  suppressMessages(expect_true(names(exclude_resolution(qualtrics_fetch))[1] ==
+                                 "StartDate"))
+  suppressMessages(expect_true(names(exclude_resolution(qualtrics_numeric))[1]
+                               == "StartDate"))
+  suppressMessages(expect_true(names(exclude_resolution(qualtrics_numeric,
+                                                      rename = FALSE))[1] ==
+                                 "StartDate"))
+  suppressMessages(expect_error(exclude_resolution(qualtrics_fetch,
+                                                 rename = FALSE)))
+  suppressMessages(expect_message(exclude_resolution(qualtrics_numeric)))
+})
 
 test_that("Exclude output class is same as input class", {
   suppressMessages(expect_s3_class(

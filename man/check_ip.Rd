@@ -8,6 +8,7 @@ check_ip(
   x,
   id_col = "ResponseId",
   ip_col = "IPAddress",
+  rename = TRUE,
   country = "US",
   include_na = FALSE,
   keep = FALSE,
@@ -22,6 +23,8 @@ check_ip(
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{ip_col}{Column name for IP addresses.}
+
+\item{rename}{Logical indicating whether to rename columns (using \code{\link[=rename_columns]{rename_columns()}})}
 
 \item{country}{Two-letter abbreviation of country to check (default is "US").}
 

@@ -23,6 +23,7 @@
 #' @param ip_col Column name for IP addresses.
 #' @param location_col Two element vector specifying columns for latitude and
 #' longitude (in that order).
+#' @param rename Logical indicating whether to rename columns (using [rename_columns()])
 #' @param dupl_ip Logical indicating whether to check IP addresses.
 #' @param dupl_location Logical indicating whether to check latitude and
 #' longitude.
@@ -64,11 +65,17 @@ mark_duplicates <- function(x,
                               "LocationLatitude",
                               "LocationLongitude"
                             ),
+                            rename = TRUE,
                             dupl_ip = TRUE,
                             dupl_location = TRUE,
                             include_na = FALSE,
                             quiet = FALSE,
                             print = TRUE) {
+
+  # Rename columns
+  if (rename) {
+    x <- rename_columns(x, alert = FALSE)
+  }
 
   # Check for presence of required columns
   validate_columns(x, id_col)
@@ -213,6 +220,7 @@ check_duplicates <- function(x,
                                "LocationLatitude",
                                "LocationLongitude"
                              ),
+                             rename = TRUE,
                              dupl_ip = TRUE,
                              dupl_location = TRUE,
                              include_na = FALSE,
@@ -225,6 +233,7 @@ check_duplicates <- function(x,
     id_col = id_col,
     ip_col = ip_col,
     location_col = location_col,
+    rename = rename,
     dupl_ip = dupl_ip,
     dupl_location = dupl_location,
     include_na = include_na,
@@ -284,6 +293,7 @@ exclude_duplicates <- function(x,
                                  "LocationLatitude",
                                  "LocationLongitude"
                                ),
+                               rename = TRUE,
                                dupl_ip = TRUE,
                                dupl_location = TRUE,
                                include_na = FALSE,
@@ -296,6 +306,7 @@ exclude_duplicates <- function(x,
     id_col = id_col,
     ip_col = ip_col,
     location_col = location_col,
+    rename = rename,
     dupl_ip = dupl_ip,
     dupl_location = dupl_location,
     include_na = include_na,

@@ -22,6 +22,7 @@
 #' @param max_duration Maximum duration that is too slow in seconds.
 #' @param id_col Column name for unique row ID (e.g., participant).
 #' @param duration_col Column name for durations.
+#' @param rename Logical indicating whether to rename columns (using [rename_columns()])
 #' @param quiet Logical indicating whether to print message to console.
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
@@ -54,8 +55,14 @@ mark_duration <- function(x,
                           max_duration = NULL,
                           id_col = "ResponseId",
                           duration_col = "Duration (in seconds)",
+                          rename = TRUE,
                           quiet = FALSE,
                           print = TRUE) {
+
+  # Rename columns
+  if (rename) {
+    x <- rename_columns(x, alert = FALSE)
+  }
 
   # Check for presence of required columns
   validate_columns(x, id_col)
@@ -171,6 +178,7 @@ check_duration <- function(x,
                            max_duration = NULL,
                            id_col = "ResponseId",
                            duration_col = "Duration (in seconds)",
+                           rename = TRUE,
                            keep = FALSE,
                            quiet = FALSE,
                            print = TRUE) {
@@ -181,6 +189,7 @@ check_duration <- function(x,
     max_duration = max_duration,
     id_col = id_col,
     duration_col = duration_col,
+    rename = rename,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_duration == "duration_quick" |
@@ -234,6 +243,7 @@ exclude_duration <- function(x,
                              max_duration = NULL,
                              id_col = "ResponseId",
                              duration_col = "Duration (in seconds)",
+                             rename = TRUE,
                              quiet = TRUE,
                              print = TRUE,
                              silent = FALSE) {
@@ -244,6 +254,7 @@ exclude_duration <- function(x,
     max_duration = max_duration,
     id_col = id_col,
     duration_col = duration_col,
+    rename = rename,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_duration != "duration_quick" &

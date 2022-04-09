@@ -10,6 +10,7 @@ mark_duration(
   max_duration = NULL,
   id_col = "ResponseId",
   duration_col = "Duration (in seconds)",
+  rename = TRUE,
   quiet = FALSE,
   print = TRUE
 )
@@ -24,6 +25,8 @@ mark_duration(
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{duration_col}{Column name for durations.}
+
+\item{rename}{Logical indicating whether to rename columns (using \code{\link[=rename_columns]{rename_columns()}})}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 

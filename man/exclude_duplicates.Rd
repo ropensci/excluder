@@ -9,6 +9,7 @@ exclude_duplicates(
   id_col = "ResponseId",
   ip_col = "IPAddress",
   location_col = c("LocationLatitude", "LocationLongitude"),
+  rename = TRUE,
   dupl_ip = TRUE,
   dupl_location = TRUE,
   include_na = FALSE,
@@ -26,6 +27,8 @@ exclude_duplicates(
 
 \item{location_col}{Two element vector specifying columns for latitude and
 longitude (in that order).}
+
+\item{rename}{Logical indicating whether to rename columns (using \code{\link[=rename_columns]{rename_columns()}})}
 
 \item{dupl_ip}{Logical indicating whether to check IP addresses.}
 

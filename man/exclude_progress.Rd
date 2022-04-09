@@ -10,6 +10,7 @@ exclude_progress(
   id_col = "ResponseId",
   finished_col = "Finished",
   progress_col = "Progress",
+  rename = TRUE,
   quiet = TRUE,
   print = TRUE,
   silent = FALSE
@@ -25,6 +26,8 @@ exclude_progress(
 \item{finished_col}{Column name for whether survey was completed.}
 
 \item{progress_col}{Column name for percentage of survey completed.}
+
+\item{rename}{Logical indicating whether to rename columns (using \code{\link[=rename_columns]{rename_columns()}})}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 

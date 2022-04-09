@@ -25,6 +25,7 @@
 #' @param id_col Column name for unique row ID (e.g., participant).
 #' @param finished_col Column name for whether survey was completed.
 #' @param progress_col Column name for percentage of survey completed.
+#' @param rename Logical indicating whether to rename columns (using [rename_columns()])
 #' @param quiet Logical indicating whether to print message to console.
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
@@ -57,8 +58,14 @@ mark_progress <- function(x,
                           id_col = "ResponseId",
                           finished_col = "Finished",
                           progress_col = "Progress",
+                          rename = TRUE,
                           quiet = FALSE,
                           print = TRUE) {
+
+  # Rename columns
+  if (rename) {
+    x <- rename_columns(x, alert = FALSE)
+  }
 
   # Check for presence of required column
   validate_columns(x, id_col)
@@ -165,6 +172,7 @@ check_progress <- function(x,
                            id_col = "ResponseId",
                            finished_col = "Finished",
                            progress_col = "Progress",
+                           rename = TRUE,
                            keep = FALSE,
                            quiet = FALSE,
                            print = TRUE) {
@@ -175,6 +183,7 @@ check_progress <- function(x,
     id_col = id_col,
     finished_col = finished_col,
     progress_col = progress_col,
+    rename = rename,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_progress == "progress") %>%
@@ -232,6 +241,7 @@ exclude_progress <- function(x,
                              id_col = "ResponseId",
                              finished_col = "Finished",
                              progress_col = "Progress",
+                             rename = TRUE,
                              quiet = TRUE,
                              print = TRUE,
                              silent = FALSE) {
@@ -242,6 +252,7 @@ exclude_progress <- function(x,
     id_col = id_col,
     finished_col = finished_col,
     progress_col = progress_col,
+    rename = rename,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_progress != "progress") %>%

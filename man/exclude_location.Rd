@@ -8,6 +8,7 @@ exclude_location(
   x,
   id_col = "ResponseId",
   location_col = c("LocationLatitude", "LocationLongitude"),
+  rename = TRUE,
   include_na = FALSE,
   quiet = TRUE,
   print = TRUE,
@@ -21,6 +22,8 @@ exclude_location(
 
 \item{location_col}{Two element vector specifying columns for latitude
 and longitude (in that order).}
+
+\item{rename}{Logical indicating whether to rename columns (using \code{\link[=rename_columns]{rename_columns()}})}
 
 \item{include_na}{Logical indicating whether to include rows with NA in
 latitude and longitude columns in the output list of potentially excluded

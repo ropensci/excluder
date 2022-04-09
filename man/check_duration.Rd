@@ -10,6 +10,7 @@ check_duration(
   max_duration = NULL,
   id_col = "ResponseId",
   duration_col = "Duration (in seconds)",
+  rename = TRUE,
   keep = FALSE,
   quiet = FALSE,
   print = TRUE
@@ -25,6 +26,8 @@ check_duration(
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{duration_col}{Column name for durations.}
+
+\item{rename}{Logical indicating whether to rename columns (using \code{\link[=rename_columns]{rename_columns()}})}
 
 \item{keep}{Logical indicating whether to keep or remove exclusion column.}
 

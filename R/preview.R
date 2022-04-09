@@ -20,6 +20,7 @@
 #' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
 #' @param id_col Column name for unique row ID (e.g., participant).
 #' @param preview_col Column name for survey preview.
+#' @param rename Logical indicating whether to rename columns (using [rename_columns()])
 #' @param quiet Logical indicating whether to print message to console.
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
@@ -44,8 +45,14 @@
 mark_preview <- function(x,
                          id_col = "ResponseId",
                          preview_col = "Status",
+                         rename = TRUE,
                          quiet = FALSE,
                          print = TRUE) {
+
+  # Rename columns
+  if (rename) {
+    x <- rename_columns(x, alert = FALSE)
+  }
 
   # Check for presence of required column
   validate_columns(x, id_col)
@@ -130,6 +137,7 @@ mark_preview <- function(x,
 check_preview <- function(x,
                           id_col = "ResponseId",
                           preview_col = "Status",
+                          rename = TRUE,
                           keep = FALSE,
                           quiet = FALSE,
                           print = TRUE) {
@@ -138,6 +146,7 @@ check_preview <- function(x,
   exclusions <- mark_preview(x,
     id_col = id_col,
     preview_col = preview_col,
+    rename = rename,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_preview == "preview") %>%
@@ -186,6 +195,7 @@ check_preview <- function(x,
 exclude_preview <- function(x,
                             id_col = "ResponseId",
                             preview_col = "Status",
+                            rename = TRUE,
                             quiet = TRUE,
                             print = TRUE,
                             silent = FALSE) {
@@ -194,6 +204,7 @@ exclude_preview <- function(x,
   remaining_data <- mark_preview(x,
     id_col = id_col,
     preview_col = preview_col,
+    rename = rename,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_preview != "preview") %>%

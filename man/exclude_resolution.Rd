@@ -10,6 +10,7 @@ exclude_resolution(
   height_min = 0,
   id_col = "ResponseId",
   res_col = "Resolution",
+  rename = TRUE,
   quiet = TRUE,
   print = TRUE,
   silent = FALSE
@@ -25,6 +26,8 @@ exclude_resolution(
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{res_col}{Column name for screen resolution (in format widthxheight).}
+
+\item{rename}{Logical indicating whether to rename columns (using \code{\link[=rename_columns]{rename_columns()}})}
 
 \item{quiet}{Logical indicating whether to print message to console.}
 

@@ -8,6 +8,7 @@ check_preview(
   x,
   id_col = "ResponseId",
   preview_col = "Status",
+  rename = TRUE,
   keep = FALSE,
   quiet = FALSE,
   print = TRUE
@@ -19,6 +20,8 @@ check_preview(
 \item{id_col}{Column name for unique row ID (e.g., participant).}
 
 \item{preview_col}{Column name for survey preview.}
+
+\item{rename}{Logical indicating whether to rename columns (using \code{\link[=rename_columns]{rename_columns()}})}
 
 \item{keep}{Logical indicating whether to keep or remove exclusion column.}
 

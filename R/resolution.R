@@ -19,6 +19,7 @@
 #' @param height_min Minimum acceptable screen height.
 #' @param id_col Column name for unique row ID (e.g., participant).
 #' @param res_col Column name for screen resolution (in format widthxheight).
+#' @param rename Logical indicating whether to rename columns (using [rename_columns()])
 #' @param quiet Logical indicating whether to print message to console.
 #' @param print Logical indicating whether to print returned tibble to
 #' console.
@@ -46,8 +47,14 @@ mark_resolution <- function(x,
                             height_min = 0,
                             id_col = "ResponseId",
                             res_col = "Resolution",
+                            rename = TRUE,
                             quiet = FALSE,
                             print = TRUE) {
+
+  # Rename columns
+  if (rename) {
+    x <- rename_columns(x, alert = FALSE)
+  }
 
   # Check for presence of required column
   validate_columns(x, id_col)
@@ -151,6 +158,7 @@ check_resolution <- function(x,
                              height_min = 0,
                              id_col = "ResponseId",
                              res_col = "Resolution",
+                             rename = TRUE,
                              keep = FALSE,
                              quiet = FALSE,
                              print = TRUE) {
@@ -161,6 +169,7 @@ check_resolution <- function(x,
     height_min = height_min,
     id_col = id_col,
     res_col = res_col,
+    rename = rename,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_resolution == "resolution") %>%
@@ -208,6 +217,7 @@ exclude_resolution <- function(x,
                                height_min = 0,
                                id_col = "ResponseId",
                                res_col = "Resolution",
+                               rename = TRUE,
                                quiet = TRUE,
                                print = TRUE,
                                silent = FALSE) {
@@ -218,6 +228,7 @@ exclude_resolution <- function(x,
     height_min = height_min,
     id_col = id_col,
     res_col = res_col,
+    rename = rename,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_resolution != "resolution") %>%
