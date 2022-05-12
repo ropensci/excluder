@@ -283,7 +283,7 @@ issues](https://github.com/ropensci/excluder/issues) for ideas. And
 [pull requests](https://github.com/ropensci/excluder/pulls) are
 encouraged, but you may want to [raise an
 issue](https://github.com/ropensci/excluder/issues/new/choose) or
-[contact the maintainer](mailto:jeffrey.r.stevens@gmail.com) first.
+[contact the maintainer](mailto:jeffrey.r.stevens@protonmail.com) first.
 
 Please note that the excluder project is released with a [Contributor
 Code of Conduct](https://ropensci.org/code-of-conduct/). By contributing
