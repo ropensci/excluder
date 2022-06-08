@@ -17,6 +17,13 @@ test_that("non-Qualtrics data is identified", {
   )
 })
 
+test_that("column names are correct", {
+  expect_true(names(remove_label_rows(qualtrics_fetch,
+                                      rename = FALSE))[16] == "Q1_Resolution")
+  expect_true(names(remove_label_rows(qualtrics_fetch,
+                                      rename = TRUE))[16] == "Resolution")
+})
+
 test_that("columns are converted when requested", {
   expect_true(inherits(remove_label_rows(qualtrics_raw,
     convert = TRUE

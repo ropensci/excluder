@@ -49,9 +49,9 @@ rename_columns <- function(x, alert = TRUE) {
 
     # Find extraneous text to remove from computer info columns
     text <- x %>%
-      dplyr::select(dplyr::contains(" - Resolution")) %>%
+      dplyr::select(dplyr::contains("Resolution")) %>%
       names() %>%
-      strsplit(split = " - ")
+      strsplit(split = c(" - ", "_"))
     throwaway <- paste0(text[[1]][1], " - ")
 
     # Rename columns
