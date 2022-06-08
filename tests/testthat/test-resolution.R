@@ -6,10 +6,10 @@ test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(mark_resolution(qualtrics_numeric))[1] ==
                                  "StartDate"))
   suppressMessages(expect_true(names(mark_resolution(qualtrics_numeric,
-                                                   rename = FALSE))[1] ==
+                                                     rename = FALSE))[1] ==
                                  "StartDate"))
   suppressMessages(expect_error(mark_resolution(qualtrics_fetch,
-                                              rename = FALSE)))
+                                                rename = FALSE)))
   suppressMessages(expect_message(mark_resolution(qualtrics_numeric)))
 })
 
@@ -65,10 +65,10 @@ test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(check_resolution(qualtrics_numeric))[1] ==
                                  "StartDate"))
   suppressMessages(expect_true(names(check_resolution(qualtrics_numeric,
-                                                     rename = FALSE))[1] ==
+                                                      rename = FALSE))[1] ==
                                  "StartDate"))
   suppressMessages(expect_error(check_resolution(qualtrics_fetch,
-                                                rename = FALSE)))
+                                                 rename = FALSE)))
   suppressMessages(expect_message(check_resolution(qualtrics_numeric)))
 })
 
@@ -137,10 +137,10 @@ test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(exclude_resolution(qualtrics_numeric))[1]
                                == "StartDate"))
   suppressMessages(expect_true(names(exclude_resolution(qualtrics_numeric,
-                                                      rename = FALSE))[1] ==
+                                                        rename = FALSE))[1] ==
                                  "StartDate"))
   suppressMessages(expect_error(exclude_resolution(qualtrics_fetch,
-                                                 rename = FALSE)))
+                                                   rename = FALSE)))
   suppressMessages(expect_message(exclude_resolution(qualtrics_numeric)))
 })
 

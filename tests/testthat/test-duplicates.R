@@ -3,13 +3,14 @@
 test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(mark_duplicates(qualtrics_fetch))[1] ==
                                  "StartDate"))
+  suppressMessages(expect_true(names(mark_duplicates(qualtrics_fetch,
+                                                      rename = FALSE))[1] ==
+                                 "StartDate"))
   suppressMessages(expect_true(names(mark_duplicates(qualtrics_numeric))[1] ==
                                  "StartDate"))
   suppressMessages(expect_true(names(mark_duplicates(qualtrics_numeric,
                                                      rename = FALSE))[1] ==
                                  "StartDate"))
-  suppressMessages(expect_error(mark_duplicates(qualtrics_fetch,
-                                                  rename = FALSE)))
   suppressMessages(expect_message(mark_duplicates(qualtrics_numeric)))
 })
 
@@ -68,13 +69,14 @@ test_that("Marks create data frames of correct size", {
 test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(check_duplicates(qualtrics_fetch))[1] ==
                                  "StartDate"))
+  suppressMessages(expect_true(names(check_duplicates(qualtrics_fetch,
+                                                      rename = FALSE))[1] ==
+                                 "StartDate"))
   suppressMessages(expect_true(names(check_duplicates(qualtrics_numeric))[1] ==
                                  "StartDate"))
   suppressMessages(expect_true(names(check_duplicates(qualtrics_numeric,
-                                                     rename = FALSE))[1] ==
+                                                      rename = FALSE))[1] ==
                                  "StartDate"))
-  suppressMessages(expect_error(check_duplicates(qualtrics_fetch,
-                                                rename = FALSE)))
   suppressMessages(expect_message(check_duplicates(qualtrics_numeric)))
 })
 
@@ -144,15 +146,16 @@ test_that("Exclusion column moved to first column when keep = TRUE", {
 # Test exclude_duplicates()
 
 test_that("Column names are renamed correctly", {
+  suppressMessages(expect_true(names(exclude_duplicates(qualtrics_fetch,
+                                                        rename = FALSE))[1] ==
+                                 "StartDate"))
   suppressMessages(expect_true(names(exclude_duplicates(qualtrics_fetch))[1] ==
                                  "StartDate"))
   suppressMessages(expect_true(names(exclude_duplicates(qualtrics_numeric))[1]
                                == "StartDate"))
   suppressMessages(expect_true(names(exclude_duplicates(qualtrics_numeric,
-                                                      rename = FALSE))[1] ==
+                                                        rename = FALSE))[1] ==
                                  "StartDate"))
-  suppressMessages(expect_error(exclude_duplicates(qualtrics_fetch,
-                                                 rename = FALSE)))
   suppressMessages(expect_message(exclude_duplicates(qualtrics_numeric)))
 })
 

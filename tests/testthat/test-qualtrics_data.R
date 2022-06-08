@@ -131,18 +131,18 @@ test_that("Data sets include exclusion criteria", {
 # Test qualtrics_fetch()
 
 test_that("Column names are correct", {
-  expect_true(names(qualtrics_fetch)[1] == "Start Date")
-  expect_true(names(qualtrics_fetch)[3] == "Response Type")
+  expect_true(names(qualtrics_fetch)[1] == "StartDate")
+  expect_true(names(qualtrics_fetch)[3] == "Status")
 })
 
 test_that("Columns are of correct type in fetch data", {
-  expect_type(qualtrics_fetch$`Response Type`, "double")
+  expect_type(qualtrics_fetch$Status, "double")
   expect_type(qualtrics_fetch$Finished, "double")
 })
 
 test_that("Data sets include exclusion criteria", {
   # Check for preview surveys
-  expect_true(any(qualtrics_fetch$`Response Type` == 1))
+  expect_true(any(qualtrics_fetch$Status == 1))
 
   # Check for incomplete progress
   expect_true(any(qualtrics_fetch$Finished == 0))
@@ -151,13 +151,13 @@ test_that("Data sets include exclusion criteria", {
   expect_true(any(qualtrics_fetch$`Duration (in seconds)` < 100))
 
   # Check for small screen resolution
-  expect_true(any(as.numeric(stringr::str_split(qualtrics_fetch$`Click to write the question text - Resolution`,
+  expect_true(any(as.numeric(stringr::str_split(qualtrics_fetch$Q1_Resolution,
                                                 "x",
                                                 simplify = TRUE
   )[, 1]) < 1000))
 
   # Check for duplicate IP addresses
-  expect_true(nrow(janitor::get_dupes(qualtrics_fetch, `IP Address`)) > 0)
+  expect_true(nrow(janitor::get_dupes(qualtrics_fetch, IPAddress)) > 0)
 
   # Check for duplicate latitude and longitude
   expect_true(

@@ -43,7 +43,8 @@
 rename_columns <- function(x, alert = TRUE) {
 
   # Check if data frame uses secondary label column names
-  if (names(x)[1] == "Start Date") {
+  column_names <- colnames(x)
+  if (column_names[1] == "Start Date") {
 
     # Find extraneous text to remove from computer info columns
     text <- x %>%
@@ -63,6 +64,19 @@ rename_columns <- function(x, alert = TRUE) {
              LocationLatitude = .data$`Location Latitude`,
              LocationLongitude = .data$`Location Longitude`,
              UserLanguage = .data$`User Language`) %>%
+      dplyr::rename_with(~ gsub(throwaway, "", .x), dplyr::contains(throwaway))
+
+  } else if (any(grepl("_Resolution", column_names))) {
+
+    # Find extraneous text to remove from computer info columns
+    text <- x %>%
+      dplyr::select(dplyr::contains("_Resolution")) %>%
+      names() %>%
+      strsplit(split = "_")
+    throwaway <- paste0(text[[1]][1], "_")
+
+    # Rename columns
+    x %>%
       dplyr::rename_with(~ gsub(throwaway, "", .x), dplyr::contains(throwaway))
 
   } else {  # if first column is not `Started Date`
