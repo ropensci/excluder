@@ -18,6 +18,7 @@
 #' columns do not match the secondary labels and therefore cannot be renamed.
 #'
 #' @concept helper
+#' @family column name functions
 #'
 #' @return
 #' An object of the same type as `x` that has column names that match standard

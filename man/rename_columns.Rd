@@ -45,4 +45,9 @@ rename_columns(qualtrics_numeric)
 rename_columns(qualtrics_numeric, alert = FALSE)
 
 }
+\seealso{
+Other column name functions: 
+\code{\link{use_labels}()}
+}
+\concept{column name functions}
 \concept{helper}
