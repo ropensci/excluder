@@ -1,9 +1,33 @@
+# excluder 0.4.0
+
+## NEW FEATURES
+
+* The `use_labels()` function extracts the Qualtrics question labels included when importing with `qualtRics::fetch_survey()` and renames the column names with these labels.
+* The `qualtrics_fetch` data set offers an example data set that is imported using the `qualtRics::fetch_survey()` function.
+* The `rename_columns()` function renames the columns to match standard Qualtrics column names. This is primarily a utility function for the `mark_*()` functions but may be useful to users in some circumstances.
+
+## MINOR IMPROVEMENTS
+
+* For excluding based on screen resolution, previously you had to provide a minimum width or height. This works fine if all screens are in the same orientation, but if screens differ in their orientation, this isn't sufficient. Now there is an overall minimum argument `res_min` that will apply to both width and height. That is, now you can test if at least one of the dimensions has a resolution greater than `res_min`. (#9)
+
+## DOCUMENTATION UPDATES
+
+* To use several of the exclusion criteria, you must collect non-anonymized data and/or computer metadata. The documentation now points to the Qualtrics documentation about non-anonymized data and computer metadata.
+
+### PACKAGE DEVELOPMENT
+
+* The package now has a logo!
+* The number of CRAN downloads is now indicated by a badge.
+* Tests for helper functions have been improved.
+
+
 # excluder 0.3.3
 
 ## BUG FIXES
 
 * Updating `{dplyr}` to 1.0.8 caught problem with using `across()` inside `is.na()`. Instead, it now uses `if_all()` with `is.na()` as argument. Thanks to [@romainfrancois](https://github.com/romainfrancois) for pull request [\#7](https://github.com/ropensci/excluder/pull/7).
 * `remove_label_rows()` now properly converts numeric data in Status and Finished columns.
+
 
 # excluder 0.3.2
 
@@ -34,12 +58,10 @@
 * There are now five new utility functions that help simplify the primary verb functions. `keep_exclusion_column()` allows users to keep the exclusion column in the output from `check_*()` functions and moves the column the first column in the output. `mark_rows()` does the bulk of the work creating new columns for exclusion criteria and marking rows that meet the criteria. `print_data()` controls whether the output is printed to the console. `print_exclusion()` generates the message about how many rows were excluded by the `exclude_*()` functions. `validate_columns()` validates the number, names, and type of columns that are inputted as arguments in the verb functions.
 * The NEWS.md file is now based on the rOpenSci template.
 
-
 ### BUG FIXES
 
 * The `unite_exclusions()` function now properly removes multiple separators when multiple exclusion criteria are used.
 * The `mark_duplicates()` function now properly counts and includes the correct number of NAs for both IP addresses and locations and properly prints data.
-
 
 ### PACKAGE DEVELOPMENT
 

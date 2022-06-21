@@ -1,6 +1,6 @@
 Package: excluder
 Title: Checks for Exclusion Criteria in Online Data
-Version: 0.3.3
+Version: 0.4.0
 Authors@R: 
   c(person(given = "Jeffrey R.",
            family = "Stevens",
