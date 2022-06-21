@@ -7,6 +7,9 @@
 #' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
 #' @details
+#' To record this information in your Qualtrics survey, you must
+#' [insert a meta info question](https://www.qualtrics.com/support/survey-platform/survey-module/editing-questions/question-types-guide/advanced/meta-info-question/).
+#'
 #' Default column names are set based on output from the
 #' [`qualtRics::fetch_survey()`](
 #' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
@@ -15,6 +18,7 @@
 #' with unacceptable screen resolution.
 #'
 #' @param x Data frame (preferably imported from Qualtrics using \{qualtRics\}).
+#' @param res_min Minimum acceptable screen resolution (width and height).
 #' @param width_min Minimum acceptable screen width.
 #' @param height_min Minimum acceptable screen height.
 #' @param id_col Column name for unique row ID (e.g., participant).
@@ -43,7 +47,8 @@
 #'   exclude_preview() %>%
 #'   mark_resolution()
 mark_resolution <- function(x,
-                            width_min = 1000,
+                            res_min = 1000,
+                            width_min = 0,
                             height_min = 0,
                             id_col = "ResponseId",
                             res_col = "Resolution",
@@ -66,7 +71,8 @@ mark_resolution <- function(x,
   # Check width or height minimum
   stopifnot("width_min should have a single value" = length(width_min) == 1L)
   stopifnot("height_min should have a single value" = length(height_min) == 1L)
-  if (identical(width_min, 0) && identical(height_min, 0)) {
+  if (identical(res_min, 0) && identical(width_min, 0) &&
+      identical(height_min, 0)) {
     stop(paste0(
       "You must specify a minimum resolution for width or height ",
       "with 'width_min' or 'height_min'."
@@ -90,7 +96,10 @@ mark_resolution <- function(x,
       width = readr::parse_number(.data$width),
       height = readr::parse_number(.data$height)
     ) %>%
-    dplyr::filter(.data$width < width_min | .data$height < height_min)
+    dplyr::rowwise() %>%
+    dplyr::mutate(max_res = max(dplyr::across(c(.data$width, .data$height)))) %>%
+    dplyr::filter(.data$max_res < res_min | .data$width < width_min |
+                    .data$height < height_min)
   n_wrong_resolution <- nrow(filtered_data)
 
   # Print message and return output
@@ -154,7 +163,8 @@ mark_resolution <- function(x,
 #'   exclude_preview() %>%
 #'   check_resolution(quiet = TRUE)
 check_resolution <- function(x,
-                             width_min = 1000,
+                             res_min = 1000,
+                             width_min = 0,
                              height_min = 0,
                              id_col = "ResponseId",
                              res_col = "Resolution",
@@ -213,7 +223,8 @@ check_resolution <- function(x,
 #'   exclude_preview() %>%
 #'   exclude_resolution()
 exclude_resolution <- function(x,
-                               width_min = 1000,
+                               res_min = 1000,
+                               width_min = 0,
                                height_min = 0,
                                id_col = "ResponseId",
                                res_col = "Resolution",

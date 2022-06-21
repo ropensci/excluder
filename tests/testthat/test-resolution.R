@@ -97,7 +97,11 @@ test_that("Check output is printed properly", {
 
 test_that("Checks create data frames of correct size", {
   suppressMessages(expect_true(
-    nrow(check_resolution(qualtrics_numeric)) == 4
+    nrow(check_resolution(qualtrics_numeric)) == 3
+  ))
+  suppressMessages(expect_true(
+    nrow(check_resolution(qualtrics_numeric,
+                          res_min = 0, width_min = 1000)) == 4
   ))
   suppressMessages(expect_true(
     ncol(check_resolution(qualtrics_numeric)) == 16
@@ -115,7 +119,11 @@ test_that("Checks create data frames of correct size", {
     )) == 16
   ))
   suppressMessages(expect_true(
-    nrow(check_resolution(qualtrics_numeric, keep = TRUE)) == 4
+    nrow(check_resolution(qualtrics_numeric, keep = TRUE)) == 3
+  ))
+  suppressMessages(expect_true(
+    nrow(check_resolution(qualtrics_numeric,
+                          res_min = 0, width_min = 1000, keep = TRUE)) == 4
   ))
   suppressMessages(expect_true(
     ncol(check_resolution(qualtrics_numeric, keep = TRUE)) == 17
@@ -178,7 +186,11 @@ test_that("Exclude output is printed properly", {
 
 test_that("Excludes create data frames of correct size", {
   suppressMessages(
-    expect_true(nrow(exclude_resolution(qualtrics_numeric)) == 96)
+    expect_true(nrow(exclude_resolution(qualtrics_numeric,
+                                        res_min = 0, width_min = 1000)) == 96)
+  )
+  suppressMessages(
+    expect_true(nrow(exclude_resolution(qualtrics_numeric)) == 97)
   )
   suppressMessages(
     expect_true(ncol(exclude_resolution(qualtrics_numeric)) == 16)

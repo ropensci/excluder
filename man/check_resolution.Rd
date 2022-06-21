@@ -6,7 +6,8 @@
 \usage{
 check_resolution(
   x,
-  width_min = 1000,
+  res_min = 1000,
+  width_min = 0,
   height_min = 0,
   id_col = "ResponseId",
   res_col = "Resolution",
@@ -18,6 +19,8 @@ check_resolution(
 }
 \arguments{
 \item{x}{Data frame (preferably imported from Qualtrics using \{qualtRics\}).}
+
+\item{res_min}{Minimum acceptable screen resolution (width and height).}
 
 \item{width_min}{Minimum acceptable screen width.}
 
