@@ -262,9 +262,9 @@ df <- qualtrics_text %>%
 #> ℹ 6 out of 98 rows with incomplete progress were excluded, leaving 92 rows.
 #> ℹ 9 out of 92 duplicate rows were excluded, leaving 83 rows.
 #> ℹ 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.
-#> ℹ 4 out of 81 rows with unacceptable screen resolution were excluded, leaving 77 rows.
-#> ℹ 2 out of 77 rows with IP addresses outside of US were excluded, leaving 75 rows.
-#> ℹ 4 out of 75 rows outside of the US were excluded, leaving 71 rows.
+#> ℹ 3 out of 81 rows with unacceptable screen resolution were excluded, leaving 78 rows.
+#> ℹ 2 out of 78 rows with IP addresses outside of US were excluded, leaving 76 rows.
+#> ℹ 4 out of 76 rows outside of the US were excluded, leaving 72 rows.
 ```
 
 ## Citing this package
