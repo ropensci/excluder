@@ -3,7 +3,7 @@
 \docType{data}
 \name{qualtrics_fetch}
 \alias{qualtrics_fetch}
-\title{Example numeric metadata imported with qualtRics::fetch_survey() from
+\title{Example numeric metadata imported with \code{qualtRics::fetch_survey()} from
 simulated Qualtrics study}
 \format{
 A data frame with 100 rows and 17 variables:
@@ -37,8 +37,10 @@ qualtrics_fetch
 \description{
 A dataset containing the metadata from a standard Qualtrics survey with
 browser metadata collected and exported with "Use numeric values". The data
-were imported using \code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}} and then the secondary labels
-were assigned as column names with \code{\link[sjlabelled:get_label]{sjlabelled::get_label()}}.
+were imported using
+\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{\code{qualtRics::fetch_survey()}}.
+and then the secondary labels were assigned as column names with
+\href{https://strengejacke.github.io/sjlabelled/reference/get_label.html}{\code{sjlabelled::get_label()}}.
 These data were randomly generated using \code{\link[iptools:ip_random]{iptools::ip_random()}} and
 \href{https://cran.r-project.org/package=rgeolocate}{rgeolocate::ip2location()} functions.
 }

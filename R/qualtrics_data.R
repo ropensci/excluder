@@ -99,13 +99,17 @@
 #' @family data
 "qualtrics_text"
 
-#' Example numeric metadata imported with qualtRics::fetch_survey() from
+#' Example numeric metadata imported with `qualtRics::fetch_survey()` from
 #' simulated Qualtrics study
 #'
 #' A dataset containing the metadata from a standard Qualtrics survey with
 #' browser metadata collected and exported with "Use numeric values". The data
-#' were imported using [qualtRics::fetch_survey()] and then the secondary labels
-#' were assigned as column names with [sjlabelled::get_label()].
+#' were imported using
+#' [`qualtRics::fetch_survey()`](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
+#' and then the secondary labels were assigned as column names with
+#' [`sjlabelled::get_label()`](
+#' https://strengejacke.github.io/sjlabelled/reference/get_label.html).
 #' These data were randomly generated using [iptools::ip_random()] and
 #' [rgeolocate::ip2location()](
 #' https://cran.r-project.org/package=rgeolocate) functions.

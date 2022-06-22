@@ -5,9 +5,13 @@
 #' standard Qualtrics names.
 #'
 #' @details
-#' When importing Qualtrics data using [qualtRics::fetch_survey()], labels
-#' entered in Qualtrics questions are saved as 'subtitles' for column names.
-#' Using [sjlabelled::get_label()] can make these secondary labels be the
+#' When importing Qualtrics data using
+#' [`qualtRics::fetch_survey()`](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
+#' labels entered in Qualtrics questions are saved as 'subtitles' for column
+#' names. Using [`sjlabelled::get_label()`](
+#' https://strengejacke.github.io/sjlabelled/reference/get_label.html)
+#' can make these secondary labels be the
 #' primary column names. However, this results in a different set of names for
 #' the metadata columns than is used in all of the `mark_()`, `check_()`, and
 #' `exclude_()` functions. This function renames these columns to match the

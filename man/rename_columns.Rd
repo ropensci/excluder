@@ -21,9 +21,11 @@ The \code{rename_columns()} function renames the metadata columns to match
 standard Qualtrics names.
 }
 \details{
-When importing Qualtrics data using \code{\link[qualtRics:fetch_survey]{qualtRics::fetch_survey()}}, labels
-entered in Qualtrics questions are saved as 'subtitles' for column names.
-Using \code{\link[sjlabelled:get_label]{sjlabelled::get_label()}} can make these secondary labels be the
+When importing Qualtrics data using
+\href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{\code{qualtRics::fetch_survey()}}.
+labels entered in Qualtrics questions are saved as 'subtitles' for column
+names. Using \href{https://strengejacke.github.io/sjlabelled/reference/get_label.html}{\code{sjlabelled::get_label()}}
+can make these secondary labels be the
 primary column names. However, this results in a different set of names for
 the metadata columns than is used in all of the \code{mark_()}, \code{check_()}, and
 \code{exclude_()} functions. This function renames these columns to match the
