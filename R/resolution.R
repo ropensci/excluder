@@ -125,6 +125,9 @@ mark_resolution <- function(x,
 #' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
 #' @details
+#' To record this information in your Qualtrics survey, you must
+#' [insert a meta info question](https://www.qualtrics.com/support/survey-platform/survey-module/editing-questions/question-types-guide/advanced/meta-info-question/).
+#'
 #' Default column names are set based on output from the
 #' [`qualtRics::fetch_survey()`](
 #' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).

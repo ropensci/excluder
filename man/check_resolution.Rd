@@ -53,6 +53,9 @@ The function is written to work with data from
 \href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
+To record this information in your Qualtrics survey, you must
+\href{https://www.qualtrics.com/support/survey-platform/survey-module/editing-questions/question-types-guide/advanced/meta-info-question/}{insert a meta info question}.
+
 Default column names are set based on output from the
 \href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{\code{qualtRics::fetch_survey()}}.
 

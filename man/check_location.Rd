@@ -49,6 +49,9 @@ The function is written to work with data from
 \href{https://www.qualtrics.com/}{Qualtrics} surveys.
 }
 \details{
+To record this information in your Qualtrics survey, you must ensure that
+\href{https://www.qualtrics.com/support/survey-platform/survey-module/survey-options/survey-protection/#AnonymizingResponses}{Anonymize responses is disabled}.
+
 Default column names are set based on output from the
 \href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{\code{qualtRics::fetch_survey()}}.
 The function only works for the United States.

@@ -127,6 +127,9 @@ mark_location <- function(x,
 #' [Qualtrics](https://www.qualtrics.com/) surveys.
 #'
 #' @details
+#' To record this information in your Qualtrics survey, you must ensure that
+#' [Anonymize responses is disabled](https://www.qualtrics.com/support/survey-platform/survey-module/survey-options/survey-protection/#AnonymizingResponses).
+#'
 #' Default column names are set based on output from the
 #' [`qualtRics::fetch_survey()`](
 #' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
