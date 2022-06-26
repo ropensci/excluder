@@ -1,8 +1,8 @@
 ---
-title: "Get started excluding data"
+title: "excluder"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Get started}
+  %\VignetteIndexEntry{excluder}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -59,7 +59,7 @@ The [`remove_label_rows()`](https://docs.ropensci.org//excluder/reference/remove
 dplyr::glimpse(qualtrics_raw)
 #
 # Remove label rows and coerce metadata columns
-df <- remove_label_rows(qualtrics_raw) %>% 
+df <- remove_label_rows(qualtrics_raw) %>%
   dplyr::glimpse()
 ```
 
@@ -69,8 +69,8 @@ The core verbs in this package mark them for future processing. The `mark_*()` s
 
 ```{r mark1}
 # Mark observations run as preview
-df %>% 
-  mark_preview() %>% 
+df %>%
+  mark_preview() %>%
   dplyr::glimpse()
 ```
 
@@ -80,29 +80,29 @@ Piping multiple mark functions will create multiple rows marking observations fo
 
 ```{r mark2}
 # Mark preview and incomplete observations
-df %>% 
-  mark_preview() %>% 
-  mark_progress() %>% 
+df %>%
+  mark_preview() %>%
+  mark_progress() %>%
   dplyr::glimpse()
 ```
 
 To unite all of the marked columns into a single column, use the `unite_exclusions()` function. This will create a new `exclusions` columns that will unite all exclusions in each observation into a single column. Here we move the combined _`exclusions`_ column to the beginning of the data frame to view it.
 
 ```{r mark3}
-df %>% 
-  mark_preview() %>% 
-  mark_duration(min = 500) %>% 
-  unite_exclusions() %>% 
+df %>%
+  mark_preview() %>%
+  mark_duration(min = 500) %>%
+  unite_exclusions() %>%
   dplyr::relocate(exclusions, .before = StartDate)
 ```
 
 Multiple exclusions are separated by `,` by default, but the separating character can be controlled by the `separator` argument. By default, the multiple exclusion columns are removed from the final data frame, but this can be turned off by setting the `remove` argument to `FALSE`. 
 
 ```{r mark4}
-df %>% 
-  mark_preview() %>% 
-  mark_duration(min = 500) %>% 
-  unite_exclusions(separator = ";", remove = FALSE) %>% 
+df %>%
+  mark_preview() %>%
+  mark_duration(min = 500) %>%
+  unite_exclusions(separator = ";", remove = FALSE) %>%
   dplyr::relocate(exclusions, .before = StartDate)
 ```
 
@@ -117,7 +117,7 @@ df %>%
 ```
 ```{r check2}
 # Check for rows with durations less than 100 seconds
-df %>% 
+df %>%
   check_duration(min_duration = 100)
 ```
 
@@ -134,10 +134,10 @@ To check all data for multiple criteria, use the `mark_*()` functions followed b
 
 ```{r mark_check}
 # Check for multiple criteria
-df %>% 
-  mark_preview() %>% 
-  mark_duration(min = 500) %>% 
-  unite_exclusions() %>% 
+df %>%
+  mark_preview() %>%
+  mark_duration(min = 500) %>%
+  unite_exclusions() %>%
   dplyr::filter(exclusions != "")
 ```
 
@@ -146,8 +146,8 @@ The `exclude_*()` suite of function will return a data frame that has removed ob
 
 ```{r exclude1}
 # Exclude survey responses used to preview the survey
-df %>% 
-  exclude_preview() %>% 
+df %>%
+  exclude_preview() %>%
   dplyr::glimpse()
 ```
 
@@ -213,4 +213,3 @@ df %>%
   deidentify(strict = FALSE) %>%
   dplyr::glimpse()
 ```
-
