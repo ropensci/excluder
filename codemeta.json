@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/ropensci/excluder/",
   "issueTracker": "https://github.com/ropensci/excluder/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.4.0",
+  "version": "0.4.0.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -288,7 +288,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "347.59KB",
+  "fileSize": "351.21KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
