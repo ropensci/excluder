@@ -10,7 +10,7 @@
 #' Default column names are set based on output from the
 #' [`qualtRics::fetch_survey()`](
 #' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
-#' The function uses [iptools::country_ranges()] to assign IP addresses to
+#' The function uses [ipaddress::country_networks()] to assign IP addresses to
 #' specific countries using
 #' [ISO 3166-1 alpha-2 country codes](
 #' https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
@@ -43,7 +43,7 @@
 #'
 #' @note
 #' This function **requires internet connectivity** as it uses the
-#' [iptools::country_ranges()] function, which pulls daily updated data
+#' [ipaddress::country_networks()] function, which pulls daily updated data
 #' from \url{https://www.iwik.org/ipcountry/}. It only updates the data once
 #' per session, as it caches the results for future work during the session.
 #'
@@ -83,8 +83,8 @@ mark_ip <- function(x,
   ip_vector <- x[[ip_col]]
 
   # Check for valid IP addresses
-  classify_ip <- iptools::ip_classify(ip_vector)
-  if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) {
+  classify_ip <- ipaddress::is_ipv4(ipaddress::ip_address(ip_vector))
+  if (any(!classify_ip | all(is.na(classify_ip)), na.rm = TRUE)) {
     stop("Invalid IP addresses in 'ip_col'.")
   }
 
@@ -103,7 +103,7 @@ mark_ip <- function(x,
   }
 
   # Get IP ranges for specified country
-  country_ip_ranges <- unlist(iptools::country_ranges(country))
+  country_ip_ranges <- ipaddress::country_networks(country)$networks[[1]]
 
   # Check if country_ip_ranges is valid
   if (!curl::has_internet()) {
@@ -117,9 +117,10 @@ mark_ip <- function(x,
     return(invisible(NULL))
   } else {
     # Filter data based on IP ranges
-    survey_ips <- filtered_data[[ip_col]]
-    attr(survey_ips, "label") <- NULL
-    outside_country <- !iptools::ip_in_any(survey_ips, country_ip_ranges)
+    survey_ips <- ipaddress::ip_address(filtered_data[[ip_col]])
+    # attr(survey_ips, "label") <- NULL
+    outside_country <- !ipaddress::is_within_any(survey_ips,
+                                                 country_ip_ranges)
     filtered_data <- dplyr::bind_cols(filtered_data, outside = outside_country)
     filtered_data <- dplyr::filter(filtered_data, .data$outside == TRUE) %>%
       dplyr::select(-.data$outside)
@@ -142,7 +143,7 @@ mark_ip <- function(x,
     marked_data <- mark_rows(x, filtered_data, id_col, "ip")
     print_data(marked_data, print)
   }
-  }
+}
 
 
 #' Check for IP addresses from outside of a specified country.
@@ -157,7 +158,7 @@ mark_ip <- function(x,
 #' Default column names are set based on output from the
 #' [`qualtRics::fetch_survey()`](
 #' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
-#' The function uses [iptools::country_ranges()] to assign IP addresses to
+#' The function uses [ipaddress::country_networks()] to assign IP addresses to
 #' specific countries using
 #' [ISO 3166-1 alpha-2 country codes](
 #' https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
@@ -180,7 +181,7 @@ mark_ip <- function(x,
 #'
 #' @note
 #' This function **requires internet connectivity** as it uses the
-#' [iptools::country_ranges()] function, which pulls daily updated data
+#' [ipaddress::country_networks()] function, which pulls daily updated data
 #' from \url{https://www.iwik.org/ipcountry/}. It only updates the data once
 #' per session, as it caches the results for future work during the session.
 #'
@@ -258,7 +259,7 @@ check_ip <- function(x,
 #' For a function that marks these rows, use [mark_ip()].
 #' @note
 #' This function **requires internet connectivity** as it uses the
-#' [iptools::country_ranges()] function, which pulls daily updated data
+#' [ipaddress::country_networks()] function, which pulls daily updated data
 #' from \url{http://www.iwik.org/ipcountry/}. It only updates the data once
 #' per session, as it caches the results for future work during the session.
 #'
