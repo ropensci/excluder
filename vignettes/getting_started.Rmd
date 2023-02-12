@@ -36,7 +36,7 @@ The package provides seven types of exclusions based on Qualtrics metadata:
 
 1. `duplicates` works with rows that have duplicate IP addresses and/or locations (latitude/longitude), using [`janitor::get_dupes()`](https://sfirke.github.io/janitor/reference/get_dupes.html).
 1. `duration` works with rows whose survey completion time is too short and/or too long.
-1. `ip` works with rows whose IP addresses are not found in the specified country (note: this exclusion type requires an internet connection to download the country's IP ranges), using package [`{iptools}`](https://github.com/hrbrmstr/iptools).
+1. `ip` works with rows whose IP addresses are not found in the specified country (note: this exclusion type requires an internet connection to download the country's IP ranges), using package [`{ipaddress}`](https://github.com/davidchall/ipaddress).
 1. `location` works with rows whose latitude and longitude are not found in the United States.
 1. `preview` works with rows that are survey previews.
 1. `progress` works with rows in which the survey was not complete.
