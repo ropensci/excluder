@@ -57,7 +57,7 @@ To record this information in your Qualtrics survey, you must ensure that
 
 Default column names are set based on output from the
 \href{https://docs.ropensci.org/qualtRics/reference/fetch_survey.html}{\code{qualtRics::fetch_survey()}}.
-The function uses \code{\link[iptools:country_ranges]{iptools::country_ranges()}} to assign IP addresses to
+The function uses \code{\link[ipaddress:country_networks]{ipaddress::country_networks()}} to assign IP addresses to
 specific countries using
 \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2}{ISO 3166-1 alpha-2 country codes}.
 
@@ -68,7 +68,7 @@ will print a message alerting to the number of rows with \code{NA}s.
 }
 \note{
 This function \strong{requires internet connectivity} as it uses the
-\code{\link[iptools:country_ranges]{iptools::country_ranges()}} function, which pulls daily updated data
+\code{\link[ipaddress:country_networks]{ipaddress::country_networks()}} function, which pulls daily updated data
 from \url{http://www.iwik.org/ipcountry/}. It only updates the data once
 per session, as it caches the results for future work during the session.
 }
