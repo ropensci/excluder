@@ -6,8 +6,8 @@
 \usage{
 unite_exclusions(
   x,
-  exclusion_types = c("duplicates", "duration", "ip", "location", "preview",
-    "progress", "resolution"),
+  exclusion_types = c("duplicates", "duration", "ip", "location", "preview", "progress",
+    "resolution"),
   separator = ",",
   remove = TRUE
 )

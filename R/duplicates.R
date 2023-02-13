@@ -91,8 +91,8 @@ mark_duplicates <- function(x,
   longitude <- x[[location_col[2]]]
 
   # Check for valid IP addresses
-  classify_ip <- iptools::ip_classify(ip_vector)
-  if (any(classify_ip == "Invalid" | all(is.na(classify_ip)), na.rm = TRUE)) {
+  classify_ip <- ipaddress::is_ipv4(ipaddress::ip_address(ip_vector))
+  if (any(!classify_ip | all(is.na(classify_ip)), na.rm = TRUE)) {
     stop("Invalid IP addresses in 'ip_col'.")
   }
 
