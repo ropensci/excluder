@@ -22,7 +22,6 @@
 #'   use_labels()
 #' names(qualtrics_fetch)
 #' names(qualtrics_renamed)
-
 use_labels <- function(x) {
   if (is.null(attributes(x)$column_map$description)) {
     cli::cli_abort("Data frame does not have proper Qualtrics labels from `qualtRics::fetch_survey()`.")

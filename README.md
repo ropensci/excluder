@@ -38,7 +38,7 @@ status, progress, or screen resolution.
 
 More details are available on the package
 [website](https://docs.ropensci.org/excluder/) and the [getting started
-vignette](https://docs.ropensci.org/excluder/articles/getting_started.html).
+vignette](https://docs.ropensci.org/excluder/articles/excluder.html).
 
 ## Installation
 
@@ -61,17 +61,17 @@ devtools::install_github("ropensci/excluder")
 
 This package provides three primary verbs:
 
--   `mark` functions add a new column to the original data frame that
-    labels the rows meeting the exclusion criteria. This is useful to
-    label the potential exclusions for future processing without
-    changing the original data frame.
--   `check` functions search for the exclusion criteria and output a
-    message with the number of rows meeting the criteria and a data
-    frame of the rows meeting the criteria. This is useful for viewing
-    the potential exclusions.
--   `exclude` functions remove rows meeting the exclusion criteria. This
-    is safest to do after checking the rows to ensure the exclusions are
-    correct.
+- `mark` functions add a new column to the original data frame that
+  labels the rows meeting the exclusion criteria. This is useful to
+  label the potential exclusions for future processing without changing
+  the original data frame.
+- `check` functions search for the exclusion criteria and output a
+  message with the number of rows meeting the criteria and a data frame
+  of the rows meeting the criteria. This is useful for viewing the
+  potential exclusions.
+- `exclude` functions remove rows meeting the exclusion criteria. This
+  is safest to do after checking the rows to ensure the exclusions are
+  correct.
 
 ## Exclusion types
 
@@ -81,19 +81,19 @@ them as [issues](https://github.com/ropensci/excluder/issues). Note, the
 intent of this package is not to develop functions for excluding rows
 based on survey-specific data but on general, frequently used metadata.
 
--   `duplicates` works with rows that have duplicate IP addresses and/or
-    locations (latitude/longitude).
--   `duration` works with rows whose survey completion time is too short
-    and/or too long.
--   `ip` works with rows whose IP addresses are not found in the
-    specified country (note: this exclusion type requires an internet
-    connection to download the country’s IP ranges).
--   `location` works with rows whose latitude and longitude are not
-    found in the United States.
--   `preview` works with rows that are survey previews.
--   `progress` works with rows in which the survey was not complete.
--   `resolution` works with rows whose screen resolution is not
-    acceptable.
+- `duplicates` works with rows that have duplicate IP addresses and/or
+  locations (latitude/longitude).
+- `duration` works with rows whose survey completion time is too short
+  and/or too long.
+- `ip` works with rows whose IP addresses are not found in the specified
+  country (note: this exclusion type requires an internet connection to
+  download the country’s IP ranges).
+- `location` works with rows whose latitude and longitude are not found
+  in the United States.
+- `preview` works with rows that are survey previews.
+- `progress` works with rows in which the survey was not complete.
+- `resolution` works with rows whose screen resolution is not
+  acceptable.
 
 ## Usage
 

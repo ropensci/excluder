@@ -48,7 +48,6 @@ mark_preview <- function(x,
                          rename = TRUE,
                          quiet = FALSE,
                          print = TRUE) {
-
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
@@ -141,7 +140,6 @@ check_preview <- function(x,
                           keep = FALSE,
                           quiet = FALSE,
                           print = TRUE) {
-
   # Mark and filter preview
   exclusions <- mark_preview(x,
     id_col = id_col,
@@ -199,7 +197,6 @@ exclude_preview <- function(x,
                             quiet = TRUE,
                             print = TRUE,
                             silent = FALSE) {
-
   # Mark and filter preview
   remaining_data <- mark_preview(x,
     id_col = id_col,

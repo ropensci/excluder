@@ -72,7 +72,6 @@ mark_ip <- function(x,
                     include_na = FALSE,
                     quiet = FALSE,
                     print = TRUE) {
-
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
@@ -223,14 +222,13 @@ check_ip <- function(x,
                      keep = FALSE,
                      quiet = FALSE,
                      print = TRUE) {
-
   # Mark and filter ip
   exclusions <- mark_ip(x,
-                        id_col = id_col,
-                        ip_col = ip_col,
-                        rename = rename,
-                        country = country,
-                        quiet = quiet
+    id_col = id_col,
+    ip_col = ip_col,
+    rename = rename,
+    country = country,
+    quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_ip == "ip") %>%
     keep_marked_column(.data$exclusion_ip, keep)
@@ -292,23 +290,24 @@ exclude_ip <- function(x,
                        quiet = TRUE,
                        print = TRUE,
                        silent = FALSE) {
-
   # Mark and filter ip
   remaining_data <- mark_ip(x,
-                            id_col = id_col,
-                            ip_col = ip_col,
-                            rename = rename,
-                            country = country,
-                            include_na = include_na,
-                            quiet = quiet
+    id_col = id_col,
+    ip_col = ip_col,
+    rename = rename,
+    country = country,
+    include_na = include_na,
+    quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_ip != "ip") %>%
     dplyr::select(-.data$exclusion_ip)
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {
-    print_exclusion(remaining_data, x,
-                    paste0("rows with IP addresses outside of ", country))
+    print_exclusion(
+      remaining_data, x,
+      paste0("rows with IP addresses outside of ", country)
+    )
   }
 
   # Determine whether to print results

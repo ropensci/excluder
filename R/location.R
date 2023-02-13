@@ -62,7 +62,6 @@ mark_location <- function(x,
                           include_na = FALSE,
                           quiet = FALSE,
                           print = TRUE) {
-
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
@@ -181,7 +180,6 @@ check_location <- function(x,
                            keep = FALSE,
                            quiet = FALSE,
                            print = TRUE) {
-
   # Mark and filter location
   exclusions <- mark_location(x,
     id_col = id_col,
@@ -242,7 +240,6 @@ exclude_location <- function(x,
                              quiet = TRUE,
                              print = TRUE,
                              silent = FALSE) {
-
   # Mark and filter location
   remaining_data <- mark_location(x,
     id_col = id_col,

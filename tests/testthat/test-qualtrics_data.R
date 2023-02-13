@@ -152,8 +152,8 @@ test_that("Data sets include exclusion criteria", {
 
   # Check for small screen resolution
   expect_true(any(as.numeric(stringr::str_split(qualtrics_fetch$Q1_Resolution,
-                                                "x",
-                                                simplify = TRUE
+    "x",
+    simplify = TRUE
   )[, 1]) < 1000))
 
   # Check for duplicate IP addresses
@@ -169,4 +169,3 @@ test_that("Data sets include exclusion criteria", {
     )) > 0
   )
 })
-

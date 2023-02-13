@@ -58,7 +58,6 @@ mark_duration <- function(x,
                           rename = TRUE,
                           quiet = FALSE,
                           print = TRUE) {
-
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
@@ -182,7 +181,6 @@ check_duration <- function(x,
                            keep = FALSE,
                            quiet = FALSE,
                            print = TRUE) {
-
   # Mark and filter duration
   exclusions <- mark_duration(x,
     min_duration = min_duration,
@@ -247,7 +245,6 @@ exclude_duration <- function(x,
                              quiet = TRUE,
                              print = TRUE,
                              silent = FALSE) {
-
   # Mark and filter duration
   remaining_data <- mark_duration(x,
     min_duration = min_duration,

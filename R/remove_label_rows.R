@@ -53,8 +53,10 @@ remove_label_rows <- function(x,
 
     # Combine meta column names with first row labels
     first_row <- x[1, ]
-    names(x) <- unlist(c(col_names_meta,
-                  first_row[(length(col_names_meta) + 1):length(first_row)]))
+    names(x) <- unlist(c(
+      col_names_meta,
+      first_row[(length(col_names_meta) + 1):length(first_row)]
+    ))
   }
 
   # Check if Qualtrics data set
@@ -67,7 +69,7 @@ remove_label_rows <- function(x,
     # Remove label rows
     x <- x %>%
       dplyr::filter(.data$`Response Type` != "Response Type" &
-                      .data$`Response Type` != '{"ImportId":"status"}')
+        .data$`Response Type` != '{"ImportId":"status"}')
   } else {
     message("This data frame does not appear to be a Qualtrics data set.")
   }

@@ -72,7 +72,6 @@ unite_exclusions <- function(x,
                              ),
                              separator = ",",
                              remove = TRUE) {
-
   # Create vectors of exclusion columns to unite
   exclusion_columns_selected <- paste0("exclusion_", exclusion_types)
   exclusion_columns_to_unite <-

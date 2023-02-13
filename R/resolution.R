@@ -55,7 +55,6 @@ mark_resolution <- function(x,
                             rename = TRUE,
                             quiet = FALSE,
                             print = TRUE) {
-
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
@@ -72,7 +71,7 @@ mark_resolution <- function(x,
   stopifnot("width_min should have a single value" = length(width_min) == 1L)
   stopifnot("height_min should have a single value" = length(height_min) == 1L)
   if (identical(res_min, 0) && identical(width_min, 0) &&
-      identical(height_min, 0)) {
+    identical(height_min, 0)) {
     stop(paste0(
       "You must specify a minimum resolution for width or height ",
       "with 'width_min' or 'height_min'."
@@ -99,7 +98,7 @@ mark_resolution <- function(x,
     dplyr::rowwise() %>%
     dplyr::mutate(max_res = max(dplyr::across(c(.data$width, .data$height)))) %>%
     dplyr::filter(.data$max_res < res_min | .data$width < width_min |
-                    .data$height < height_min)
+      .data$height < height_min)
   n_wrong_resolution <- nrow(filtered_data)
 
   # Print message and return output
@@ -175,7 +174,6 @@ check_resolution <- function(x,
                              keep = FALSE,
                              quiet = FALSE,
                              print = TRUE) {
-
   # Mark and filter resolution
   exclusions <- mark_resolution(x,
     width_min = width_min,
@@ -235,7 +233,6 @@ exclude_resolution <- function(x,
                                quiet = TRUE,
                                print = TRUE,
                                silent = FALSE) {
-
   # Mark and filter resolution
   remaining_data <- mark_resolution(x,
     width_min = width_min,

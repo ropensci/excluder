@@ -39,7 +39,6 @@
 #' names(deid2)
 deidentify <- function(x,
                        strict = TRUE) {
-
   # Define columns to remove
   location_cols <- c(
     "IPAddress", "LocationLatitude", "LocationLongitude",

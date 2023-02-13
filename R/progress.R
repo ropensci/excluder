@@ -61,7 +61,6 @@ mark_progress <- function(x,
                           rename = TRUE,
                           quiet = FALSE,
                           print = TRUE) {
-
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
@@ -176,7 +175,6 @@ check_progress <- function(x,
                            keep = FALSE,
                            quiet = FALSE,
                            print = TRUE) {
-
   # Mark and filter progress
   exclusions <- mark_progress(x,
     min_progress = min_progress,
@@ -245,7 +243,6 @@ exclude_progress <- function(x,
                              quiet = TRUE,
                              print = TRUE,
                              silent = FALSE) {
-
   # Mark and filter progress
   remaining_data <- mark_progress(x,
     min_progress = min_progress,

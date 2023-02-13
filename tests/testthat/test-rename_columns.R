@@ -14,5 +14,5 @@ test_that("column names are correct", {
   expect_true(names(rename_columns(use_labels(qualtrics_fetch)))[3] == "Status")
   expect_true(names(rename_columns(use_labels(qualtrics_fetch)))[16] == "Resolution")
   expect_true(names(rename_columns(qualtrics_numeric, alert = FALSE))[1] ==
-                "StartDate")
+    "StartDate")
 })

@@ -2,15 +2,17 @@
 
 test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(mark_duplicates(qualtrics_fetch))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(mark_duplicates(qualtrics_fetch,
-                                                      rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_true(names(mark_duplicates(qualtrics_numeric))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(mark_duplicates(qualtrics_numeric,
-                                                     rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_message(mark_duplicates(qualtrics_numeric)))
 })
 
@@ -33,8 +35,8 @@ test_that("Mark messages are displayed properly", {
 test_that("Mark output is printed properly", {
   expect_visible(mark_duplicates(qualtrics_numeric, quiet = TRUE))
   expect_invisible(
-    mark_duplicates(qualtrics_numeric, quiet = TRUE, print = FALSE
-    ))
+    mark_duplicates(qualtrics_numeric, quiet = TRUE, print = FALSE)
+  )
 })
 
 test_that("Marks create data frames of correct size", {
@@ -68,15 +70,17 @@ test_that("Marks create data frames of correct size", {
 
 test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(check_duplicates(qualtrics_fetch))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(check_duplicates(qualtrics_fetch,
-                                                      rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_true(names(check_duplicates(qualtrics_numeric))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(check_duplicates(qualtrics_numeric,
-                                                      rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_message(check_duplicates(qualtrics_numeric)))
 })
 
@@ -99,8 +103,8 @@ test_that("Check messages are displayed properly", {
 test_that("Check output is printed properly", {
   expect_visible(check_duplicates(qualtrics_numeric, quiet = TRUE))
   expect_invisible(
-    check_duplicates(qualtrics_numeric, quiet = TRUE, print = FALSE
-    ))
+    check_duplicates(qualtrics_numeric, quiet = TRUE, print = FALSE)
+  )
 })
 
 test_that("Checks create data frames of correct size", {
@@ -147,15 +151,17 @@ test_that("Exclusion column moved to first column when keep = TRUE", {
 
 test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(exclude_duplicates(qualtrics_fetch,
-                                                        rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_true(names(exclude_duplicates(qualtrics_fetch))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(exclude_duplicates(qualtrics_numeric))[1]
-                               == "StartDate"))
+  == "StartDate"))
   suppressMessages(expect_true(names(exclude_duplicates(qualtrics_numeric,
-                                                        rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_message(exclude_duplicates(qualtrics_numeric)))
 })
 
@@ -183,12 +189,14 @@ test_that("Exclude messages are displayed properly", {
 
 test_that("Exclude output is printed properly", {
   expect_visible(
-    exclude_duplicates(qualtrics_numeric, quiet = TRUE, silent = TRUE
-    ))
+    exclude_duplicates(qualtrics_numeric, quiet = TRUE, silent = TRUE)
+  )
   expect_invisible(
-    exclude_duplicates(qualtrics_numeric, quiet = TRUE, print = FALSE,
-                       silent = TRUE
-    ))
+    exclude_duplicates(qualtrics_numeric,
+      quiet = TRUE, print = FALSE,
+      silent = TRUE
+    )
+  )
 })
 
 test_that("Excludes create data frames of correct size", {

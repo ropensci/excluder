@@ -2,15 +2,17 @@
 
 test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(mark_ip(qualtrics_fetch))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(mark_ip(qualtrics_fetch,
-                                             rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_true(names(mark_ip(qualtrics_numeric))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(mark_ip(qualtrics_numeric,
-                                             rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_message(mark_ip(qualtrics_numeric)))
 })
 
@@ -36,8 +38,8 @@ test_that("Mark output is printed properly", {
   skip_on_cran()
   expect_visible(mark_ip(qualtrics_numeric, quiet = TRUE))
   expect_invisible(
-    mark_ip(qualtrics_numeric, quiet = TRUE, print = FALSE
-    ))
+    mark_ip(qualtrics_numeric, quiet = TRUE, print = FALSE)
+  )
 })
 
 test_that("Marks create data frames of correct size", {
@@ -56,15 +58,17 @@ test_that("Marks create data frames of correct size", {
 
 test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(check_ip(qualtrics_fetch))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(check_ip(qualtrics_fetch,
-                                              rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_true(names(check_ip(qualtrics_numeric))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(check_ip(qualtrics_numeric,
-                                              rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_message(check_ip(qualtrics_numeric)))
 })
 
@@ -122,15 +126,17 @@ test_that("Exclusion column moved to first column when keep = TRUE", {
 
 test_that("Column names are renamed correctly", {
   suppressMessages(expect_true(names(exclude_ip(qualtrics_fetch))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(exclude_ip(qualtrics_fetch,
-                                                rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_true(names(exclude_ip(qualtrics_numeric))[1] ==
-                                 "StartDate"))
+    "StartDate"))
   suppressMessages(expect_true(names(exclude_ip(qualtrics_numeric,
-                                                rename = FALSE))[1] ==
-                                 "StartDate"))
+    rename = FALSE
+  ))[1] ==
+    "StartDate"))
   suppressMessages(expect_message(exclude_ip(qualtrics_numeric)))
 })
 
@@ -162,8 +168,8 @@ test_that("Exclude output is printed properly", {
   skip_on_cran()
   expect_visible(exclude_ip(qualtrics_numeric, quiet = TRUE, silent = TRUE))
   expect_invisible(
-    exclude_ip(qualtrics_numeric, quiet = TRUE, print = FALSE, silent = TRUE
-    ))
+    exclude_ip(qualtrics_numeric, quiet = TRUE, print = FALSE, silent = TRUE)
+  )
 })
 
 test_that("Excludes create data frames of correct size", {

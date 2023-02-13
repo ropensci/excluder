@@ -35,7 +35,7 @@ The goal of [`{excluder}`](https://docs.ropensci.org/excluder/) is to facilitate
 
 This may be most useful for [Mechanical Turk](https://www.mturk.com/) data to screen for duplicate entries from the same location/IP address or entries from locations outside of the United States. But it can be used more generally to exclude based on response durations, preview status, progress, or screen resolution.
 
-More details are available on the package [website](https://docs.ropensci.org/excluder/) and the [getting started vignette](https://docs.ropensci.org/excluder/articles/getting_started.html).
+More details are available on the package [website](https://docs.ropensci.org/excluder/) and the [getting started vignette](https://docs.ropensci.org/excluder/articles/excluder.html).
 
 ## Installation
 
