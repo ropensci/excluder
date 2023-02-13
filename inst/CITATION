@@ -1,6 +1,6 @@
 citHeader("To cite excluder in publications, please use:")
 
-bibentry(entry =  "article",
+bibentry(bibtype =  "Article",
          title        = "excluder: An R package that checks for exclusion criteria in online data",
          author       = c(as.person("Jeffrey R. Stevens")),
          year         = "2021",

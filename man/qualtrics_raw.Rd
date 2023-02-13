@@ -34,8 +34,8 @@ qualtrics_raw
 \description{
 A dataset containing the metadata from a standard Qualtrics survey with
 browser metadata collected and exported with "Use choice text".
-These data were randomly generated using \code{\link[iptools:ip_random]{iptools::ip_random()}} and
-\href{https://cran.r-project.org/package=rgeolocate}{rgeolocate::ip2location()} functions.
+These data were randomly generated using \href{https://hrbrmstr.github.io/iptools/reference/ip_random.html}{iptools::ip_random()}
+and \href{https://cran.r-project.org/package=rgeolocate}{rgeolocate::ip2location()} functions.
 This dataset includes the two header rows of with column information that is
 exported by Qualtrics.
 }
