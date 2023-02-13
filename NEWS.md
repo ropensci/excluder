@@ -1,3 +1,14 @@
+# excluder 0.5.0
+
+### PACKAGE DEVELOPMENT
+
+* The `{iptools}` package has been replaced with the [`{ipaddress}`](https://github.com/davidchall/ipaddress) package.
+
+## DOCUMENTATION UPDATES
+
+* The _Getting started_ vignette has been renamed _excluder_.
+* The data sets have been added to the References page.
+
 # excluder 0.4.0
 
 ## NEW FEATURES
