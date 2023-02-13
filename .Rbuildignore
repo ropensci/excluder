@@ -18,3 +18,4 @@
 ^excluder\.Rproj$
 ^inst/extdata$
 ^pkgdown$
+^rstudio$
