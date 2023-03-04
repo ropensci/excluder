@@ -53,8 +53,8 @@ You can install developmental versions from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("ropensci/excluder")
+# install.packages("remotes")
+remotes::install_github("ropensci/excluder")
 ```
 
 ## Verbs
