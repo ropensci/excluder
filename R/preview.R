@@ -51,6 +51,8 @@ mark_preview <- function(x,
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
+    id_col <- "ResponseId"
+    preview_col <- "Status"
   }
 
   # Check for presence of required column

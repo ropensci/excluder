@@ -65,6 +65,8 @@ mark_location <- function(x,
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
+    id_col <- "ResponseId"
+    location_col <- c("LocationLatitude", "LocationLongitude")
   }
 
   # Check for presence of required column

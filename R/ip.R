@@ -75,6 +75,8 @@ mark_ip <- function(x,
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
+    id_col <- "ResponseId"
+    ip_col <- "IPAddress"
   }
 
   # Check for presence of required column

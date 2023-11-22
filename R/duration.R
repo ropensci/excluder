@@ -61,6 +61,7 @@ mark_duration <- function(x,
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
+    id_col <- "ResponseId"
   }
 
   # Check for presence of required columns

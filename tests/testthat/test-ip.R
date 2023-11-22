@@ -14,6 +14,8 @@ test_that("Column names are renamed correctly", {
   ))[1] ==
     "StartDate"))
   suppressMessages(expect_message(mark_ip(qualtrics_numeric)))
+  suppressMessages(expect_no_error(names(mark_ip(qualtrics_fetch2,
+    id_col = "Response ID"))))
 })
 
 test_that("Mark output class is same as input class", {
