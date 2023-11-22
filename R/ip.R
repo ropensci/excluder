@@ -124,8 +124,8 @@ mark_ip <- function(x,
     survey_ips <- ipaddress::ip_address(filtered_data[[ip_col]])
     outside_country <- !ipaddress::is_within_any(survey_ips, country_ip_ranges)
     filtered_data <- dplyr::bind_cols(filtered_data, outside = outside_country)
-    filtered_data <- dplyr::filter(filtered_data, .data$outside == TRUE) %>%
-      dplyr::select(-.data$outside)
+    filtered_data <- dplyr::filter(filtered_data, outside == TRUE) %>%
+      dplyr::select(-"outside")
     n_outside_country <- nrow(filtered_data)
 
     # Filter NAs when requested
@@ -232,8 +232,8 @@ check_ip <- function(x,
     country = country,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_ip == "ip") %>%
-    keep_marked_column(.data$exclusion_ip, keep)
+    dplyr::filter(exclusion_ip == "ip") %>%
+    keep_marked_column(exclusion_ip, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)
@@ -301,8 +301,8 @@ exclude_ip <- function(x,
     include_na = include_na,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_ip != "ip") %>%
-    dplyr::select(-.data$exclusion_ip)
+    dplyr::filter(exclusion_ip != "ip") %>%
+    dplyr::select(-exclusion_ip)
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {

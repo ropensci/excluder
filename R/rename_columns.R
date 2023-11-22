@@ -58,15 +58,15 @@ rename_columns <- function(x, alert = TRUE) {
     # Rename columns
     x %>%
       dplyr::rename(
-        StartDate = .data$`Start Date`,
-        EndDate = .data$`End Date`,
-        Status = .data$`Response Type`,
-        IPAddress = .data$`IP Address`,
-        RecordedDate = .data$`Recorded Date`,
-        ResponseId = .data$`Response ID`,
-        LocationLatitude = .data$`Location Latitude`,
-        LocationLongitude = .data$`Location Longitude`,
-        UserLanguage = .data$`User Language`
+        StartDate = `Start Date`,
+        EndDate = `End Date`,
+        Status = `Response Type`,
+        IPAddress = `IP Address`,
+        RecordedDate = `Recorded Date`,
+        ResponseId = `Response ID`,
+        LocationLatitude = `Location Latitude`,
+        LocationLongitude = `Location Longitude`,
+        UserLanguage = `User Language`
       ) %>%
       dplyr::rename_with(~ gsub(throwaway, "", .x), dplyr::contains(throwaway))
   } else if (any(grepl("_Resolution", column_names))) {

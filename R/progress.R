@@ -185,8 +185,8 @@ check_progress <- function(x,
     rename = rename,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_progress == "progress") %>%
-    keep_marked_column(.data$exclusion_progress, keep)
+    dplyr::filter(exclusion_progress == "progress") %>%
+    keep_marked_column(exclusion_progress, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)
@@ -253,8 +253,8 @@ exclude_progress <- function(x,
     rename = rename,
     quiet = quiet
   ) %>%
-    dplyr::filter(.data$exclusion_progress != "progress") %>%
-    dplyr::select(-.data$exclusion_progress)
+    dplyr::filter(exclusion_progress != "progress") %>%
+    dplyr::select(-exclusion_progress)
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {
