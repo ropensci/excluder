@@ -93,13 +93,13 @@ mark_resolution <- function(x,
       remove = FALSE
     ) %>%
     dplyr::mutate(
-      width = readr::parse_number(width),
-      height = readr::parse_number(height)
+      width = readr::parse_number(.data$width),
+      height = readr::parse_number(.data$height)
     ) %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(max_res = max(dplyr::across(c(width, height)))) %>%
-    dplyr::filter(max_res < res_min | width < width_min |
-      height < height_min)
+    dplyr::mutate(max_res = max(dplyr::across(c(.data$width, .data$height)))) %>%
+    dplyr::filter(.data$max_res < res_min | .data$width < width_min |
+      .data$height < height_min)
   n_wrong_resolution <- nrow(filtered_data)
 
   # Print message and return output
@@ -184,8 +184,8 @@ check_resolution <- function(x,
     rename = rename,
     quiet = quiet
   ) %>%
-    dplyr::filter(exclusion_resolution == "resolution") %>%
-    keep_marked_column(exclusion_resolution, keep)
+    dplyr::filter(.data$exclusion_resolution == "resolution") %>%
+    keep_marked_column(.data$exclusion_resolution, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)
@@ -243,8 +243,8 @@ exclude_resolution <- function(x,
     rename = rename,
     quiet = quiet
   ) %>%
-    dplyr::filter(exclusion_resolution != "resolution") %>%
-    dplyr::select(-exclusion_resolution)
+    dplyr::filter(.data$exclusion_resolution != "resolution") %>%
+    dplyr::select(-.data$exclusion_resolution)
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {

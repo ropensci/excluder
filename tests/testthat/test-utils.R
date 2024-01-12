@@ -34,7 +34,7 @@ test_that("print_exclusions() calculates correctly", {
 
 test_that("validate_columns() checks column number properly", {
   expect_error(
-    mark_duplicates(qualtrics_numeric, rename = FALSE,
+    mark_duplicates(qualtrics_numeric,
       id_col = c("ResponseID", "IPAddress")
     ),
     "requires 1 column name"
@@ -58,7 +58,7 @@ test_that("validate_columns() checks column names properly", {
     "was not found in the data frame"
   )
   expect_error(
-    mark_duplicates(qualtrics_numeric, id_col = "ResponseID", rename = FALSE),
+    mark_duplicates(qualtrics_numeric, id_col = "ResponseID"),
     "was not found in the data frame"
   )
   expect_error(
@@ -77,8 +77,7 @@ test_that("validate_columns() checks column names properly", {
 
 test_that("validate_columns() checks column type properly", {
   expect_error(
-    mark_duplicates(qualtrics_numeric, ip_col = "LocationLatitude",
-    rename = FALSE),
+    mark_duplicates(qualtrics_numeric, ip_col = "LocationLatitude"),
     "data type is character"
   )
   expect_error(
@@ -92,7 +91,7 @@ test_that("validate_columns() checks column type properly", {
     "data type is numeric"
   )
   expect_error(
-    mark_preview(qualtrics_text, preview_col = "Finished", rename = FALSE),
+    mark_preview(qualtrics_text, preview_col = "Finished"),
     "data type is character or numeric"
   )
   expect_error(

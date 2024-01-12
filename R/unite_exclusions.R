@@ -93,20 +93,20 @@ unite_exclusions <- function(x,
     ) %>%
     dplyr::mutate( # remove extraneous separators from unite
       exclusions = # remove multiple adjacent separators
-        stringr::str_replace("exclusions",
+        stringr::str_replace(.data$exclusions,
           pattern = paste0(separator, "{2,}"),
           replacement = separator
         ),
       exclusions = # remove separators as first character
-        ifelse(substr("exclusions", 1, 1) == separator,
-          sub("^.", "", "exclusions"), "exclusions"
+        ifelse(substr(.data$exclusions, 1, 1) == separator,
+          sub("^.", "", .data$exclusions), .data$exclusions
         ),
       exclusions = # remove separators as last character
         ifelse(substr(
-          "exclusions", nchar("exclusions"),
-          nchar("exclusions")
+          .data$exclusions, nchar(.data$exclusions),
+          nchar(.data$exclusions)
         ) == separator,
-        sub(".$", "", "exclusions"), "exclusions"
+        sub(".$", "", .data$exclusions), .data$exclusions
         )
     )
 }

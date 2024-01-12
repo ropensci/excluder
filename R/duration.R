@@ -191,9 +191,9 @@ check_duration <- function(x,
     rename = rename,
     quiet = quiet
   ) %>%
-    dplyr::filter(exclusion_duration == "duration_quick" |
-      exclusion_duration == "duration_slow") %>%
-    keep_marked_column("exclusion_duration", keep)
+    dplyr::filter(.data$exclusion_duration == "duration_quick" |
+      .data$exclusion_duration == "duration_slow") %>%
+    keep_marked_column(.data$exclusion_duration, keep)
 
   # Determine whether to print results
   print_data(exclusions, print)
@@ -255,9 +255,9 @@ exclude_duration <- function(x,
     rename = rename,
     quiet = quiet
   ) %>%
-    dplyr::filter(exclusion_duration != "duration_quick" &
-      exclusion_duration != "duration_slow") %>%
-    dplyr::select(-"exclusion_duration")
+    dplyr::filter(.data$exclusion_duration != "duration_quick" &
+      .data$exclusion_duration != "duration_slow") %>%
+    dplyr::select(-.data$exclusion_duration)
 
   # Print exclusion statement
 
