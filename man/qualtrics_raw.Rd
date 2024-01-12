@@ -41,6 +41,7 @@ exported by Qualtrics.
 }
 \seealso{
 Other data: 
+\code{\link{qualtrics_fetch2}},
 \code{\link{qualtrics_fetch}},
 \code{\link{qualtrics_numeric}},
 \code{\link{qualtrics_text}}

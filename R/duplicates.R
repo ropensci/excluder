@@ -77,6 +77,8 @@ mark_duplicates <- function(x,
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
+    id_col <- "ResponseId"
+    ip_col <- "IPAddress"
   }
 
   # Check for presence of required columns
@@ -100,7 +102,7 @@ mark_duplicates <- function(x,
     no_nas_ip <- tidyr::drop_na(x, tidyselect::all_of(ip_col))
     n_nas_ip <- nrow(x) - nrow(no_nas_ip)
     same_ip <- janitor::get_dupes(no_nas_ip, tidyselect::all_of(ip_col)) %>%
-      dplyr::select(-.data$dupe_count)
+      dplyr::select(-"dupe_count")
     n_same_ip <- nrow(same_ip)
     if (identical(quiet, FALSE)) {
       cli::cli_alert_info(
@@ -125,7 +127,7 @@ mark_duplicates <- function(x,
       no_nas_loc,
       tidyselect::all_of(location_col)
     ) %>%
-      dplyr::select(-.data$dupe_count)
+      dplyr::select(-"dupe_count")
     n_same_location <- nrow(same_location)
     if (identical(quiet, FALSE)) {
       cli::cli_alert_info(
@@ -244,7 +246,7 @@ check_duplicates <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_duplicates == "duplicates") %>%
-    keep_marked_column(.data$exclusion_duplicates, keep)
+    keep_marked_column("exclusion_duplicates", keep)
 
   # Determine whether to print results
   print_data(exclusions, print)
@@ -316,7 +318,7 @@ exclude_duplicates <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_duplicates != "duplicates") %>%
-    dplyr::select(-.data$exclusion_duplicates)
+    dplyr::select(-"exclusion_duplicates")
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {
