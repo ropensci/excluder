@@ -150,7 +150,7 @@ check_preview <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_preview == "preview") %>%
-    keep_marked_column(.data$exclusion_preview, keep)
+    keep_marked_column("exclusion_preview", keep)
 
   # Determine whether to print results
   print_data(exclusions, print)
@@ -207,7 +207,7 @@ exclude_preview <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_preview != "preview") %>%
-    dplyr::select(-.data$exclusion_preview)
+    dplyr::select(-"exclusion_preview")
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {

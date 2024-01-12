@@ -93,7 +93,7 @@ mark_location <- function(x,
   # Determine if geolocation is within US
   no_nas$country <- maps::map.where(database = "usa", longitude, latitude)
   outside_us <- dplyr::filter(no_nas, is.na(.data$country)) %>%
-    dplyr::select(-.data$country)
+    dplyr::select(-"country")
   n_outside_us <- nrow(outside_us)
 
   # Combine no location with outside US
@@ -191,7 +191,7 @@ check_location <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_location == "location") %>%
-    keep_marked_column(.data$exclusion_location, keep)
+    keep_marked_column("exclusion_location", keep)
 
   # Determine whether to print results
   print_data(exclusions, print)
@@ -251,7 +251,7 @@ exclude_location <- function(x,
     quiet = quiet
   ) %>%
     dplyr::filter(.data$exclusion_location != "location") %>%
-    dplyr::select(-.data$exclusion_location)
+    dplyr::select(-"exclusion_location")
 
   # Print exclusion statement
   if (identical(silent, FALSE)) {
