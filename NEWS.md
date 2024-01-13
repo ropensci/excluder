@@ -1,27 +1,49 @@
-# excluder 0.5.0
+# excluder 0.5.1 (2024-01-13)
+
+### NEW FEATURES
+
+* Added new `qualtrics_fetch2` dataset that includes labels as column names.
+
+### PACKAGE DEVELOPMENT
+
+* The {tidyselect} package has deprecated using the `.data` pronoun in tidy selections. So `.data` is no longer used in `select()` or other selection functions.
+* We used the `usethis::use_tidy_description()` to tidy up DESCRIPTION file.
+
+### BUG FIXES
+
+* Fixed bug to now reassign column names when `rename = TRUE`.
+
+### DOCUMENTATION UPDATES
+
+* We have switched from the {devtools} to the {remotes} version of `install_github()` in the README to reduce dependencies.
+* Because the {iptools} package has been removed from CRAN, the links to {iptools} functions now refer to the GitHub site.
+
+
+# excluder 0.5.0 (2023-02-13)
 
 ### PACKAGE DEVELOPMENT
 
 * The `{iptools}` package has been replaced with the [`{ipaddress}`](https://github.com/davidchall/ipaddress) package.
 
-## DOCUMENTATION UPDATES
+### DOCUMENTATION UPDATES
 
 * The _Getting started_ vignette has been renamed _excluder_.
 * The data sets have been added to the References page.
 
-# excluder 0.4.0
 
-## NEW FEATURES
+# excluder 0.4.0 (2022-06-22)
+
+### NEW FEATURES
 
 * The `use_labels()` function extracts the Qualtrics question labels included when importing with `qualtRics::fetch_survey()` and renames the column names with these labels.
 * The `qualtrics_fetch` data set offers an example data set that is imported using the `qualtRics::fetch_survey()` function.
 * The `rename_columns()` function renames the columns to match standard Qualtrics column names. This is primarily a utility function for the `mark_*()` functions but may be useful to users in some circumstances.
 
-## MINOR IMPROVEMENTS
+### MINOR IMPROVEMENTS
 
 * For excluding based on screen resolution, previously you had to provide a minimum width or height. This works fine if all screens are in the same orientation, but if screens differ in their orientation, this isn't sufficient. Now there is an overall minimum argument `res_min` that will apply to both width and height. That is, now you can test if at least one of the dimensions has a resolution greater than `res_min`. (#9)
 
-## DOCUMENTATION UPDATES
+### DOCUMENTATION UPDATES
 
 * To use several of the exclusion criteria, you must collect non-anonymized data and/or computer metadata. The documentation now points to the Qualtrics documentation about non-anonymized data and computer metadata.
 
@@ -32,17 +54,17 @@
 * Tests for helper functions have been improved.
 
 
-# excluder 0.3.3
+# excluder 0.3.3 (2021-12-03)
 
-## BUG FIXES
+### BUG FIXES
 
 * Updating `{dplyr}` to 1.0.8 caught problem with using `across()` inside `is.na()`. Instead, it now uses `if_all()` with `is.na()` as argument. Thanks to [@romainfrancois](https://github.com/romainfrancois) for pull request [\#7](https://github.com/ropensci/excluder/pull/7).
 * `remove_label_rows()` now properly converts numeric data in Status and Finished columns.
 
 
-# excluder 0.3.2
+# excluder 0.3.2 (2021-11-10)
 
-## MINOR IMPROVEMENTS
+### MINOR IMPROVEMENTS
 
 * The `remove_label_rows()` function can now rename columns to match the default column names used in all of the verb function arguments.
 * The `mark_ip_()` function now checks for (1) internet connectivity, (2) whether the IP address data can be downloaded from https://www.iwik.org/ipcountry/, and (3) if the country code is valid. The function fails gracefully if any of these are not met.
@@ -59,7 +81,7 @@
 * Clean up package in preparation for submission to CRAN.
 
 
-# excluder 0.3.1
+# excluder 0.3.1 (2021-11-04)
 
 ### MINOR IMPROVEMENTS
 
@@ -79,7 +101,7 @@
 * The `{excluder}` package has now been approved by and transferred to [rOpenSci](https://ropensci.org/). The package was peer reviewed by Joseph O'Brien ([@jmobrien](https://github.com/jmobrien)) and Julia Silge ([@juliasilge](https://github.com/juliasilge)), who are now listed as reviewers in the DESCRIPTION file.
 
 
-# excluder 0.3.0
+# excluder 0.3.0 (2021-10-13)
 
 ### NEW FEATURES
 
