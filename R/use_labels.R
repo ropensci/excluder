@@ -31,16 +31,17 @@ use_labels <- function(x) {
     colnames(x) <- attributes(x)$column_map[attributes(x)$column_map$qname %in% column_names, ]$description
 
     # Find extraneous text to remove from computer info columns
-    text <- x %>%
-      dplyr::select(dplyr::contains(" - Resolution")) %>%
-      names() %>%
-      strsplit(split = " - ")
-    throwaway <- paste0(text[[1]][1], " - ")
+    if (any(grepl("Resolution", column_names))) {
+      text <- x %>%
+        dplyr::select(dplyr::contains("Resolution")) %>%
+        names() %>%
+        strsplit(split = " - ")
+      throwaway <- paste0(text[[1]][1], " - ")
 
-    # Rename columns
-    x <- x %>%
-      dplyr::rename_with(~ gsub(throwaway, "", .x), dplyr::contains(throwaway))
-
+      # Rename columns
+      x <- x %>%
+        dplyr::rename_with(~ gsub(throwaway, "", .x), dplyr::contains(throwaway))
+    }
     return(x)
   }
 }
