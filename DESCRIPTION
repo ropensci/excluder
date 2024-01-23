@@ -17,9 +17,9 @@ License: GPL (>= 3)
 URL: https://docs.ropensci.org/excluder/,
     https://github.com/ropensci/excluder/
 BugReports: https://github.com/ropensci/excluder/issues/
-Depends: 
+Depends:
     R (>= 3.5.0)
-Imports: 
+Imports:
     cli,
     curl,
     dplyr,
@@ -32,7 +32,7 @@ Imports:
     stringr,
     tidyr,
     tidyselect
-Suggests: 
+Suggests:
     covr,
     knitr,
     lifecycle,
@@ -40,7 +40,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     withr
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Config/testthat/edition: 3
 Encoding: UTF-8

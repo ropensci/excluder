@@ -69,7 +69,7 @@ rename_columns <- function(x, alert = TRUE) {
         UserLanguage = "User Language"
       ) %>%
       dplyr::rename_with(~ gsub(throwaway, "", .x), dplyr::contains(throwaway))
-  } else if (any(grepl("_Resolution", column_names))) {
+  } else if (column_names[1] == "StartDate" & any(grepl("_Resolution", column_names))) {
     # Find extraneous text to remove from computer info columns
     text <- x %>%
       dplyr::select(dplyr::contains("_Resolution")) %>%
@@ -80,6 +80,11 @@ rename_columns <- function(x, alert = TRUE) {
     # Rename columns
     x %>%
       dplyr::rename_with(~ gsub(throwaway, "", .x), dplyr::contains(throwaway))
+  } else if (column_names[1] == "StartDate") {
+    if (alert) {
+      cli::cli_alert_warning("The columns are already named correctly.")
+    }
+    invisible(x)
   } else { # if first column is not `Started Date`
     if (alert) {
       cli::cli_alert_warning("The columns cannot be renamed.")
