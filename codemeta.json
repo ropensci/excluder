@@ -4,17 +4,17 @@
   "identifier": "excluder",
   "description": "Data that are collected through online sources such as Mechanical Turk may require excluding rows because of IP address duplication, geolocation, or completion duration. This package facilitates exclusion of these data for Qualtrics datasets.",
   "name": "excluder: Checks for Exclusion Criteria in Online Data",
-  "relatedLink": "https://docs.ropensci.org/excluder/",
+  "relatedLink": ["https://docs.ropensci.org/excluder/", "https://CRAN.R-project.org/package=excluder"],
   "codeRepository": "https://github.com/ropensci/excluder/",
   "issueTracker": "https://github.com/ropensci/excluder/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 Patched (2022-11-10 r83330)",
+  "runtimePlatform": "R version 4.3.2 (2023-10-31)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -138,6 +138,12 @@
   "softwareRequirements": {
     "1": {
       "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.5.0"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
       "identifier": "cli",
       "name": "cli",
       "provider": {
@@ -148,7 +154,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=cli"
     },
-    "2": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "curl",
       "name": "curl",
@@ -160,7 +166,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=curl"
     },
-    "3": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
@@ -172,7 +178,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
-    "4": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "ipaddress",
       "name": "ipaddress",
@@ -184,7 +190,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ipaddress"
     },
-    "5": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "janitor",
       "name": "janitor",
@@ -196,7 +202,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=janitor"
     },
-    "6": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -208,7 +214,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    "7": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
@@ -220,7 +226,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
-    "8": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "maps",
       "name": "maps",
@@ -232,7 +238,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=maps"
     },
-    "9": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
@@ -244,7 +250,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     },
-    "10": {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -256,7 +262,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    "11": {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -268,7 +274,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
-    "12": {
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "tidyselect",
       "name": "tidyselect",
@@ -280,15 +286,9 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyselect"
     },
-    "13": {
-      "@type": "SoftwareApplication",
-      "identifier": "R",
-      "name": "R",
-      "version": ">= 3.5.0"
-    },
     "SystemRequirements": null
   },
-  "fileSize": "335.041KB",
+  "fileSize": "360.275KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -317,5 +317,15 @@
         }
       }
     }
-  ]
+  ],
+  "releaseNotes": "https://github.com/ropensci/excluder/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/excluder/blob/main/README.md",
+  "contIntegration": ["https://github.com/ropensci/excluder/actions", "https://app.codecov.io/gh/jeffreyrstevens/excluder?branch=main"],
+  "developmentStatus": ["https://www.repostatus.org/#active", "https://lifecycle.r-lib.org/articles/stages.html#stable"],
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/software-review/issues/455",
+    "provider": "https://ropensci.org"
+  },
+  "keywords": ["qualtrics", "mturk", "datacleaning", "exclusion", "r", "rstats", "r-package"]
 }
