@@ -184,3 +184,37 @@
 #' }
 #' @family data
 "qualtrics_fetch2"
+
+#' Example numeric metadata imported with `qualtRics::fetch_survey()` from
+#' simulated Qualtrics study with anonymized data
+#'
+#' A dataset containing the metadata from a standard Qualtrics survey with
+#' anonymized data collection and exported with "Use numeric values". This data
+#' do not include IP addresses, location, or computer information. The data
+#' were imported using
+#' [`qualtRics::fetch_survey()`](
+#' https://docs.ropensci.org/qualtRics/reference/fetch_survey.html).
+#' These data were randomly generated using [iptools::ip_random()](
+#' https://hrbrmstr.github.io/iptools/reference/ip_random.html) and
+#' [rgeolocate::ip2location()](
+#' https://cran.r-project.org/package=rgeolocate) functions.
+#'
+#' @format A data frame with 100 rows and 10 variables:
+#' \describe{
+#'   \item{StartDate}{date and time data collection started, in ISO 8601 format}
+#'   \item{EndDate}{date and time data collection ended, in ISO 8601 format}
+#'   \item{Status}{numeric flag for preview (1) vs. implemented survey (0)
+#'   entries}
+#'   \item{Progress}{percentage of survey completed}
+#'   \item{Duration (in seconds)}{duration of time required to complete survey,
+#'   in seconds}
+#'   \item{Finished}{numeric flag for whether survey was completed (1) or
+#'   progress was < 100 (0)}
+#'   \item{RecordedDate}{date and time survey was recorded, in ISO 8601 format}
+#'   \item{ResponseId}{random ID for participants}
+#'   \item{UserLanguage}{language set in Qualtrics}
+#'   \item{Q2}{response to question about whether the user liked the survey
+#'   (1 = Yes, 0 = No)}
+#' }
+#' @family data
+"qualtrics_anonymous"

@@ -39,8 +39,9 @@ These data were randomly generated using \href{https://hrbrmstr.github.io/iptool
 }
 \seealso{
 Other data: 
-\code{\link{qualtrics_fetch2}},
+\code{\link{qualtrics_anonymous}},
 \code{\link{qualtrics_fetch}},
+\code{\link{qualtrics_fetch2}},
 \code{\link{qualtrics_numeric}},
 \code{\link{qualtrics_raw}}
 }
