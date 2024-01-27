@@ -13,8 +13,13 @@ test_that("Column names are renamed correctly", {
     rename = FALSE
   )))
   suppressMessages(expect_message(mark_resolution(qualtrics_numeric)))
-  suppressMessages(expect_no_error(names(mark_resolution(qualtrics_fetch2,
-    id_col = "Response ID"))))
+  suppressMessages(expect_no_error(mark_resolution(qualtrics_fetch2,
+    id_col = "Response ID"
+  )))
+  suppressMessages(expect_error(
+    mark_resolution(qualtrics_anonymous),
+    "The column 'Resolution' was not found in the data frame"
+  ))
 })
 
 test_that("Mark output class is same as input class", {

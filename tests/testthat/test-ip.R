@@ -14,8 +14,13 @@ test_that("Column names are renamed correctly", {
   ))[1] ==
     "StartDate"))
   suppressMessages(expect_message(mark_ip(qualtrics_numeric)))
-  suppressMessages(expect_no_error(names(mark_ip(qualtrics_fetch2,
-    id_col = "Response ID"))))
+  suppressMessages(expect_no_error(mark_ip(qualtrics_fetch2,
+    id_col = "Response ID"
+  )))
+  suppressMessages(expect_error(
+    mark_ip(qualtrics_anonymous),
+    "The column 'IPAddress' was not found in the data frame"
+  ))
 })
 
 test_that("Mark output class is same as input class", {

@@ -11,6 +11,14 @@ test_that("deidentify() creates data frames of correct size", {
   expect_true(ncol(qualtrics_raw) == 16)
   expect_true(ncol(deidentify(qualtrics_raw)) == 8)
   expect_true(ncol(deidentify(qualtrics_raw, strict = FALSE)) == 12)
+  expect_true(ncol(deidentify(qualtrics_raw)) == 8)
+  expect_true(ncol(deidentify(qualtrics_raw, strict = FALSE)) == 12)
+  expect_true(ncol(deidentify(qualtrics_fetch)) == 9)
+  expect_true(ncol(deidentify(qualtrics_fetch, strict = FALSE)) == 13)
+  expect_true(ncol(deidentify(qualtrics_fetch2)) == 9)
+  expect_true(ncol(deidentify(qualtrics_fetch2, strict = FALSE)) == 13)
+  expect_true(ncol(deidentify(qualtrics_anonymous)) == 9)
+  expect_true(ncol(deidentify(qualtrics_anonymous, strict = FALSE)) == 9)
 })
 
 test_that("non-strict columns are removed", {

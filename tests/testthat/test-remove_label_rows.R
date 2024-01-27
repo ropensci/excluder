@@ -8,11 +8,17 @@ test_that("remove_label_rows() creates data frames of correct size", {
   expect_true(nrow(remove_label_rows(qualtrics_text)) == 100)
   expect_true(nrow(qualtrics_raw) == 102)
   expect_true(nrow(remove_label_rows(qualtrics_raw)) == 100)
+  expect_true(nrow(qualtrics_fetch) == 100)
+  expect_true(nrow(remove_label_rows(qualtrics_fetch)) == 100)
+  expect_true(nrow(qualtrics_fetch2) == 100)
+  expect_true(nrow(remove_label_rows(qualtrics_fetch2)) == 100)
+  expect_true(nrow(qualtrics_anonymous) == 100)
+  expect_true(nrow(remove_label_rows(qualtrics_anonymous)) == 100)
 })
 
 test_that("non-Qualtrics data is identified", {
   expect_message(
-    remove_label_rows(iris),
+    remove_label_rows(mtcars),
     "This data frame does not appear to be a Qualtrics data set."
   )
 })

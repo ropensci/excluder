@@ -12,5 +12,5 @@ test_that("labels are correct", {
 })
 
 test_that("dataframes without resolution are OK", {
-  expect_no_error(use_labels(qualtrics_fetch %>% dplyr::select(!contains("Resolution"))))
+  expect_no_error(use_labels(qualtrics_anonymous))
 })

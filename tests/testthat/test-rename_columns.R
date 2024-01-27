@@ -8,6 +8,8 @@ test_that("alert works", {
   expect_message(rename_columns(qualtrics_wrong), "The columns cannot be renamed")
   expect_no_message(rename_columns(qualtrics_numeric, alert = FALSE))
   expect_no_message(rename_columns(qualtrics_fetch))
+  expect_no_message(rename_columns(qualtrics_fetch2))
+  expect_message(rename_columns(qualtrics_anonymous), "The columns are already named correctly")
 })
 
 test_that("column names are correct", {
@@ -21,5 +23,5 @@ test_that("column names are correct", {
 })
 
 test_that("dataframes without resolution column are OK", {
-  suppressMessages(expect_no_error(rename_columns(qualtrics_fetch %>% dplyr::select(!contains("Resolution")))))
+  suppressMessages(expect_no_error(rename_columns(qualtrics_anonymous)))
 })
