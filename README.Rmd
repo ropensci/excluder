@@ -22,10 +22,8 @@ knitr::opts_chunk$set(
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/excluder)](https://cran.r-project.org/package=excluder)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/excluder)](https://CRAN.R-project.org/package=excluder)
 
-
 [![R-CMD-check](https://github.com/ropensci/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/excluder/actions)
-[![Codecov test coverage](https://codecov.io/gh/jeffreyrstevens/excluder/branch/main/graph/badge.svg)](https://app.codecov.io/gh/jeffreyrstevens/excluder?branch=main)
-
+[![Codecov test coverage](https://codecov.io/gh/ropensci/excluder/graph/badge.svg)](https://app.codecov.io/gh/ropensci/excluder)
 [![Status at rOpenSci Software Peer Review](https://badges.ropensci.org/455_status.svg)](https://github.com/ropensci/software-review/issues/455)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.03893/status.svg)](https://doi.org/10.21105/joss.03893)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5648202.svg)](https://doi.org/10.5281/zenodo.5648202)

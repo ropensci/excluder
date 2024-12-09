@@ -15,8 +15,7 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/excluder)](https://CRAN
 
 [![R-CMD-check](https://github.com/ropensci/excluder/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/excluder/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/jeffreyrstevens/excluder/branch/main/graph/badge.svg)](https://app.codecov.io/gh/jeffreyrstevens/excluder?branch=main)
-
+coverage](https://codecov.io/gh/ropensci/excluder/graph/badge.svg)](https://app.codecov.io/gh/ropensci/excluder)
 [![Status at rOpenSci Software Peer
 Review](https://badges.ropensci.org/455_status.svg)](https://github.com/ropensci/software-review/issues/455)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.03893/status.svg)](https://doi.org/10.21105/joss.03893)
@@ -263,8 +262,8 @@ df <- qualtrics_text %>%
 #> ℹ 9 out of 92 duplicate rows were excluded, leaving 83 rows.
 #> ℹ 2 out of 83 rows of short and/or long duration were excluded, leaving 81 rows.
 #> ℹ 3 out of 81 rows with unacceptable screen resolution were excluded, leaving 78 rows.
-#> ℹ 2 out of 78 rows with IP addresses outside of US were excluded, leaving 76 rows.
-#> ℹ 4 out of 76 rows outside of the US were excluded, leaving 72 rows.
+#> ℹ 10 out of 78 rows with IP addresses outside of US were excluded, leaving 68 rows.
+#> ℹ 4 out of 68 rows outside of the US were excluded, leaving 64 rows.
 ```
 
 ## Citing this package
