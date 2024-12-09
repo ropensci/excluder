@@ -100,16 +100,16 @@ test_that("Check output is printed properly", {
 
 test_that("Checks create data frames of correct size", {
   skip_on_cran()
-  suppressMessages(expect_true(nrow(check_ip(qualtrics_numeric)) == 4))
+  suppressMessages(expect_true(nrow(check_ip(qualtrics_numeric)) == 14))
   suppressMessages(expect_true(ncol(check_ip(qualtrics_numeric)) == 16))
   suppressMessages(expect_true(
-    nrow(check_ip(qualtrics_numeric, include_na = TRUE)) == 4
+    nrow(check_ip(qualtrics_numeric, include_na = TRUE)) == 14
   ))
   suppressMessages(expect_true(
     ncol(check_ip(qualtrics_numeric, include_na = TRUE)) == 16
   ))
   suppressMessages(expect_true(
-    nrow(check_ip(qualtrics_numeric, keep = TRUE)) == 4
+    nrow(check_ip(qualtrics_numeric, keep = TRUE)) == 14
   ))
   suppressMessages(expect_true(
     ncol(check_ip(qualtrics_numeric, keep = TRUE)) == 17
@@ -176,10 +176,10 @@ test_that("Exclude output is printed properly", {
 
 test_that("Excludes create data frames of correct size", {
   skip_on_cran()
-  suppressMessages(expect_true(nrow(exclude_ip(qualtrics_numeric)) == 96))
+  suppressMessages(expect_true(nrow(exclude_ip(qualtrics_numeric)) == 86))
   suppressMessages(expect_true(ncol(exclude_ip(qualtrics_numeric)) == 16))
   suppressMessages(expect_true(
-    nrow(exclude_ip(qualtrics_numeric, include_na = TRUE)) == 94
+    nrow(exclude_ip(qualtrics_numeric, include_na = TRUE)) == 84
   ))
   suppressMessages(expect_true(
     ncol(exclude_ip(qualtrics_numeric, include_na = TRUE)) == 16
