@@ -50,7 +50,7 @@
 #' from \url{https://www.iwik.org/ipcountry/}. It only updates the data once
 #' per session, as it caches the results for future work during the session.
 #'
-#' @examples
+#' @examplesIf interactive()
 #' # Mark IP addresses outside of the US
 #' data(qualtrics_text)
 #' df <- mark_ip(qualtrics_text)
