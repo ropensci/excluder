@@ -64,14 +64,16 @@
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   mark_ip(country = "DE")
-mark_ip <- function(x,
-                    id_col = "ResponseId",
-                    ip_col = "IPAddress",
-                    rename = TRUE,
-                    country = "US",
-                    include_na = FALSE,
-                    quiet = FALSE,
-                    print = TRUE) {
+mark_ip <- function(
+  x,
+  id_col = "ResponseId",
+  ip_col = "IPAddress",
+  rename = TRUE,
+  country = "US",
+  include_na = FALSE,
+  quiet = FALSE,
+  print = TRUE
+) {
   # Rename columns
   if (rename) {
     x <- rename_columns(x, alert = FALSE)
@@ -114,10 +116,14 @@ mark_ip <- function(x,
     cli::cli_alert_warning("There is no internet connection.")
     return(invisible(NULL))
   } else if (identical(country_ip_ranges, NA)) {
-    cli::cli_alert_warning("The website for downloading country IP addresses is not available. Please try again later.")
+    cli::cli_alert_warning(
+      "The website for downloading country IP addresses is not available. Please try again later."
+    )
     return(invisible(NULL))
   } else if (identical(country_ip_ranges, NULL)) {
-    cli::cli_alert_warning("'{country}' is not recognized as a valid country code, so IP addresses could not be checked for this country.")
+    cli::cli_alert_warning(
+      "'{country}' is not recognized as a valid country code, so IP addresses could not be checked for this country."
+    )
     return(invisible(NULL))
   } else {
     # Filter data based on IP ranges
@@ -191,7 +197,7 @@ mark_ip <- function(x,
 #' per session, as it caches the results for future work during the session.
 #'
 #' @export
-#' @examples
+#' @examplesIf interactive()
 #' # Check for IP addresses outside of the US
 #' data(qualtrics_text)
 #' check_ip(qualtrics_text)
@@ -215,17 +221,20 @@ mark_ip <- function(x,
 #' qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   check_ip(quiet = TRUE)
-check_ip <- function(x,
-                     id_col = "ResponseId",
-                     ip_col = "IPAddress",
-                     rename = TRUE,
-                     country = "US",
-                     include_na = FALSE,
-                     keep = FALSE,
-                     quiet = FALSE,
-                     print = TRUE) {
+check_ip <- function(
+  x,
+  id_col = "ResponseId",
+  ip_col = "IPAddress",
+  rename = TRUE,
+  country = "US",
+  include_na = FALSE,
+  keep = FALSE,
+  quiet = FALSE,
+  print = TRUE
+) {
   # Mark and filter ip
-  exclusions <- mark_ip(x,
+  exclusions <- mark_ip(
+    x,
     id_col = id_col,
     ip_col = ip_col,
     rename = rename,
@@ -269,7 +278,7 @@ check_ip <- function(x,
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf interactive()
 #' # Exclude IP addresses outside of the US
 #' data(qualtrics_text)
 #' df <- exclude_ip(qualtrics_text)
@@ -283,17 +292,20 @@ check_ip <- function(x,
 #' df <- qualtrics_text %>%
 #'   exclude_preview() %>%
 #'   exclude_ip(country = "DE")
-exclude_ip <- function(x,
-                       id_col = "ResponseId",
-                       ip_col = "IPAddress",
-                       rename = TRUE,
-                       country = "US",
-                       include_na = FALSE,
-                       quiet = TRUE,
-                       print = TRUE,
-                       silent = FALSE) {
+exclude_ip <- function(
+  x,
+  id_col = "ResponseId",
+  ip_col = "IPAddress",
+  rename = TRUE,
+  country = "US",
+  include_na = FALSE,
+  quiet = TRUE,
+  print = TRUE,
+  silent = FALSE
+) {
   # Mark and filter ip
-  remaining_data <- mark_ip(x,
+  remaining_data <- mark_ip(
+    x,
     id_col = id_col,
     ip_col = ip_col,
     rename = rename,
@@ -307,7 +319,8 @@ exclude_ip <- function(x,
   # Print exclusion statement
   if (identical(silent, FALSE)) {
     print_exclusion(
-      remaining_data, x,
+      remaining_data,
+      x,
       paste0("rows with IP addresses outside of ", country)
     )
   }
