@@ -1,3 +1,26 @@
+# excluder 0.5.2
+
+### MINOR IMPROVEMENTS
+
+* User is alerted when applying `rename_columns()` when columns are already renamed.
+
+### PACKAGE DEVELOPMENT
+
+* Tests for `*_ip()` have been updated to account for new IP addresses outside of US.
+
+* Examples requiring internet access are now interactive.
+
+* Tests requiring internet access are now skipped on CI in addition to CRAN.
+
+### BUG FIXES
+
+* Fixed bug where data frames missing resolution columns could not rename columns.
+
+### DOCUMENTATION UPDATES
+
+* URLs for `{rgeolocate}` package now point toward URL for package archive.
+
+
 # excluder 0.5.1 (2024-01-13)
 
 ### NEW FEATURES

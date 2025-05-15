@@ -4,17 +4,17 @@
   "identifier": "excluder",
   "description": "Data that are collected through online sources such as Mechanical Turk may require excluding rows because of IP address duplication, geolocation, or completion duration. This package facilitates exclusion of these data for Qualtrics datasets.",
   "name": "excluder: Checks for Exclusion Criteria in Online Data",
-  "relatedLink": ["https://docs.ropensci.org/excluder/", "https://CRAN.R-project.org/package=excluder"],
+  "relatedLink": "https://docs.ropensci.org/excluder/",
   "codeRepository": "https://github.com/ropensci/excluder/",
   "issueTracker": "https://github.com/ropensci/excluder/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.2 (2023-10-31)",
+  "runtimePlatform": "R version 4.5.0 (2025-04-11)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -288,7 +288,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "360.275KB",
+  "fileSize": "362.21KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -317,15 +317,5 @@
         }
       }
     }
-  ],
-  "releaseNotes": "https://github.com/ropensci/excluder/blob/master/NEWS.md",
-  "readme": "https://github.com/ropensci/excluder/blob/main/README.md",
-  "contIntegration": ["https://github.com/ropensci/excluder/actions", "https://app.codecov.io/gh/jeffreyrstevens/excluder?branch=main"],
-  "developmentStatus": ["https://www.repostatus.org/#active", "https://lifecycle.r-lib.org/articles/stages.html#stable"],
-  "review": {
-    "@type": "Review",
-    "url": "https://github.com/ropensci/software-review/issues/455",
-    "provider": "https://ropensci.org"
-  },
-  "keywords": ["qualtrics", "mturk", "datacleaning", "exclusion", "r", "rstats", "r-package"]
+  ]
 }
