@@ -77,8 +77,10 @@ test_that("validate_columns() checks column names properly", {
 
 test_that("validate_columns() checks column type properly", {
   expect_error(
-    mark_duplicates(qualtrics_numeric, ip_col = "LocationLatitude",
-                    rename = FALSE),
+    mark_duplicates(qualtrics_numeric,
+      ip_col = "LocationLatitude",
+      rename = FALSE
+    ),
     "data type is character"
   )
   expect_error(
