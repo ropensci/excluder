@@ -5,7 +5,7 @@
 #' These data were randomly generated using [iptools::ip_random()](
 #' https://hrbrmstr.github.io/iptools/reference/ip_random.html)
 #' and [rgeolocate::ip2location()](
-#' https://cran.r-project.org/package=rgeolocate) functions.
+#' https://cran.r-project.org/src/contrib/Archive/rgeolocate/) functions.
 #' This dataset includes the two header rows of with column information that is
 #' exported by Qualtrics.
 #'
@@ -41,7 +41,7 @@
 #' These data were randomly generated using [iptools::ip_random()](
 #' https://hrbrmstr.github.io/iptools/reference/ip_random.html) and
 #' [rgeolocate::ip2location()](
-#' https://cran.r-project.org/package=rgeolocate) functions.
+#' https://cran.r-project.org/src/contrib/Archive/rgeolocate/) functions.
 #'
 #' @format A data frame with 100 rows and 16 variables:
 #' \describe{
@@ -75,7 +75,7 @@
 #' These data were randomly generated using [iptools::ip_random()](
 #' https://hrbrmstr.github.io/iptools/reference/ip_random.html) and
 #' [rgeolocate::ip2location()](
-#' https://cran.r-project.org/package=rgeolocate) functions.
+#' https://cran.r-project.org/src/contrib/Archive/rgeolocate/) functions.
 #'
 #' @format A data frame with 100 rows and 16 variables:
 #' \describe{
@@ -113,7 +113,7 @@
 #' These data were randomly generated using [iptools::ip_random()](
 #' https://hrbrmstr.github.io/iptools/reference/ip_random.html) and
 #' [rgeolocate::ip2location()](
-#' https://cran.r-project.org/package=rgeolocate) functions.
+#' https://cran.r-project.org/src/contrib/Archive/rgeolocate/) functions.
 #'
 #' @format A data frame with 100 rows and 17 variables:
 #' \describe{
@@ -156,7 +156,7 @@
 #' These data were randomly generated using [iptools::ip_random()](
 #' https://hrbrmstr.github.io/iptools/reference/ip_random.html) and
 #' [rgeolocate::ip2location()](
-#' https://cran.r-project.org/package=rgeolocate) functions.
+#' https://cran.r-project.org/src/contrib/Archive/rgeolocate/) functions.
 #'
 #' @format A data frame with 100 rows and 17 variables:
 #' \describe{

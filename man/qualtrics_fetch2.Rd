@@ -42,7 +42,7 @@ were imported using
 and then the secondary labels were assigned as column names with
 \href{https://strengejacke.github.io/sjlabelled/reference/get_label.html}{\code{sjlabelled::get_label()}}.
 These data were randomly generated using \href{https://hrbrmstr.github.io/iptools/reference/ip_random.html}{iptools::ip_random()} and
-\href{https://cran.r-project.org/package=rgeolocate}{rgeolocate::ip2location()} functions.
+\href{https://cran.r-project.org/src/contrib/Archive/rgeolocate/}{rgeolocate::ip2location()} functions.
 }
 \seealso{
 Other data: 
