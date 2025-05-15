@@ -69,6 +69,7 @@ from \url{https://www.iwik.org/ipcountry/}. It only updates the data once
 per session, as it caches the results for future work during the session.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Mark IP addresses outside of the US
 data(qualtrics_text)
 df <- mark_ip(qualtrics_text)
@@ -82,6 +83,7 @@ df <- qualtrics_text \%>\%
 df <- qualtrics_text \%>\%
   exclude_preview() \%>\%
   mark_ip(country = "DE")
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other ip functions: 
