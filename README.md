@@ -297,3 +297,6 @@ Lepore](https://orcid.org/0000-0002-1986-7988) and reviewers [Joseph
 O’Brien](https://orcid.org/0000-0001-9851-5077) and [Julia
 Silge](https://orcid.org/0000-0002-3671-836X). This work was funded by
 US National Science Foundation grant NSF-1658837.
+
+The border collie and sheep featured in the logo were created by
+[PrecisionK9Krafts](https://www.etsy.com/shop/PrecisionK9Krafts).
